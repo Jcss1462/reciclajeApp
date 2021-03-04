@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "844144084742",
+    "project_id": "reciclajeapp-514d0",
+    "storage_bucket": "reciclajeapp-514d0.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:844144084742:android:183fe6658ad878fde68087",
+        "android_client_info": {
+          "package_name": "com.example.reciclaje_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "844144084742-2ojlct2nji64pqnug5av57a7n40l81q0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDVQrv4q7vYdtqa60I_tCJB5Xo2-Kip2PA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "844144084742-2ojlct2nji64pqnug5av57a7n40l81q0.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
