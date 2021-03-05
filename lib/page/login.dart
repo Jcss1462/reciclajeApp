@@ -48,7 +48,7 @@ class _LoginState extends State<Login> {
             ),
             child: Center(
               child: SingleChildScrollView(
-                              child: Container(
+                child: Container(
                   decoration: BoxDecoration(
                       //color: Colors.black,
                       ),
@@ -102,6 +102,7 @@ class _LoginState extends State<Login> {
                             Container(
                               height: 50,
                               child: TextFormField(
+                                obscureText: true,
                                 decoration: InputDecoration(
                                   hintText: "Contraseña",
                                   contentPadding: EdgeInsets.all(11),
@@ -171,7 +172,8 @@ class _LoginState extends State<Login> {
                               color: Color.fromRGBO(46, 99, 238, 1)),
                         ),
                         //valido y guardo
-                        onPressed:  () => Navigator.pushNamed(context, registerRoute),
+                        onPressed: () =>
+                            Navigator.pushNamed(context, registerRoute),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(30.0),
                         ),

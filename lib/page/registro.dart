@@ -1,6 +1,8 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 
-import  'package:reciclaje_app/page/index.dart';
+import 'package:reciclaje_app/page/index.dart';
 
 class RegistroPage extends StatefulWidget {
   const RegistroPage({Key key}) : super(key: key);
@@ -21,19 +23,14 @@ class _RegitroState extends State<RegistroPage> {
   String usuario;
 
   final allChecked = CheckBoxModal(title: "Al checked");
-  final checkBoxList = [
+  List checkBoxList = [
     CheckBoxModal(
-        title: 'Civil: ',
-        descripcion:
-            'Solicita que uno de nuestro Recicaldores recoja tus residuos reciclables.'),
+        title: 'Civil: ', descripcion: 'Ciudadano que Recicle en su hogar'),
     CheckBoxModal(
         title: 'Reciclador:',
-        descripcion:
-            'Obten Ingresos recogiendo residuos reciclables a travez de la ciudad y vendiendolos a empresas verdes.'),
+        descripcion: 'Persona que trabaje por medio del Reciclaje'),
     CheckBoxModal(
-        title: 'Empresa: ',
-        descripcion:
-            'Usa esta app para programar y gestionar la recolección de los residuos reciclables que necesites para tu producción.')
+        title: 'Empresa: ', descripcion: 'Empresa legalmente conformada')
   ];
 
   @override
@@ -44,8 +41,7 @@ class _RegitroState extends State<RegistroPage> {
           new Container(
             decoration: new BoxDecoration(
               image: new DecorationImage(
-                image: new AssetImage(
-                    "assets/images/background.png"),
+                image: new AssetImage("assets/images/background.png"),
                 fit: BoxFit.cover,
               ),
             ),
@@ -78,7 +74,9 @@ class _RegitroState extends State<RegistroPage> {
                     Text(
                       "Registro",
                       style: TextStyle(
-                          color: Color.fromRGBO(46, 99, 238, 1), fontSize: 28),
+                          color: Color.fromRGBO(46, 99, 238, 1),
+                          fontWeight: FontWeight.bold,
+                          fontSize: 28),
                     ),
                     SizedBox(height: 20),
                     Form(
@@ -183,6 +181,7 @@ class _RegitroState extends State<RegistroPage> {
                           Container(
                             height: 50,
                             child: TextFormField(
+                              obscureText: true,
                               decoration: InputDecoration(
                                 hintText: "Password",
                                 contentPadding: EdgeInsets.all(11),
@@ -247,18 +246,28 @@ class _RegitroState extends State<RegistroPage> {
                                 "Tipo de Usuario",
                                 style: TextStyle(
                                     color: Color.fromRGBO(46, 99, 238, 1),
+                                    fontWeight: FontWeight.bold,
                                     fontSize: 20),
                               ),
                               ...checkBoxList
                                   .map(
                                     (item) => CheckboxListTile(
-                                      title: Text(item.title),
+                                      title: Text(
+                                        item.title,
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 15,
+                                        ),
+                                      ),
+                                      subtitle: Text(item.descripcion),
                                       value: item.value,
                                       onChanged: (val) {
                                         setState(() {
                                           item.value = val;
                                           if (val == true) {
                                             usuario = item.title;
+                                          } else {
+                                            checkBoxList.single;
                                           }
                                         });
                                       },
@@ -278,7 +287,10 @@ class _RegitroState extends State<RegistroPage> {
                       textColor: Colors.white,
                       child: new Text(
                         "Registrar",
-                        style: TextStyle(fontSize: 20),
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20,
+                        ),
                       ),
 
                       //Registrar
@@ -296,12 +308,26 @@ class _RegitroState extends State<RegistroPage> {
                         showDialog(
                           context: context,
                           builder: (context) => AlertDialog(
-                            title: Text("Usuario Registrado"),
+                            title: Text(
+                              "Usuario Registrado",
+                              style: TextStyle(
+                                color: Color.fromRGBO(46, 99, 238, 1),
+                                fontWeight: FontWeight.bold,
+                                fontSize: 20,
+                              ),
+                            ),
                             content:
                                 Text("El Usuario fue Registrado Correctamenta"),
                             actions: <Widget>[
                               TextButton(
-                                child: Text('Ok'),
+                                child: Text(
+                                  'Ok',
+                                  style: TextStyle(
+                                    color: Color.fromRGBO(46, 99, 238, 1),
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 15,
+                                  ),
+                                ),
                                 onPressed: () {
                                   Navigator.push(
                                       context,
