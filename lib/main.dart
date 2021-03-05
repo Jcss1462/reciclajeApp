@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:reciclaje_app/core/constants.dart';
 import 'package:reciclaje_app/core/routers.dart';
 import  'package:firebase_core/firebase_core.dart';
 import  'package:reciclaje_app/page/index.dart';
