@@ -9,6 +9,8 @@ class Routers {
     switch (settings.name) {
       case intialRoute:
         return MaterialPageRoute(builder: (_) => Login());
+      case registerRoute:
+        return MaterialPageRoute(builder: (_) => RegistroPage());
       default:
         return MaterialPageRoute(
           builder: (_) => Scaffold(

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:reciclaje_app/core/constants.dart';
 
 class Login extends StatefulWidget {
   const Login({Key key}) : super(key: key);
@@ -170,7 +171,7 @@ class _LoginState extends State<Login> {
                               color: Color.fromRGBO(46, 99, 238, 1)),
                         ),
                         //valido y guardo
-                        onPressed: () async {},
+                        onPressed:  () => Navigator.pushNamed(context, registerRoute),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(30.0),
                         ),

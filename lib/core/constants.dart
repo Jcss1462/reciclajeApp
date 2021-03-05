@@ -1,6 +1,7 @@
 //import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 const String intialRoute = '/';
+const String registerRoute = '/registro';
 
 
 
