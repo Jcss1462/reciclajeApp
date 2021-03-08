@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:reciclaje_app/data/datasources/usuario_datasource.dart';
+import 'package:reciclaje_app/data/model/usuario.dart';
+import 'package:reciclaje_app/service/authentication_service.dart';
 
 import 'package:reciclaje_app/page/index.dart';
 
@@ -302,6 +306,18 @@ class _RegitroState extends State<RegistroPage> {
                           debugPrint(this.password);
                           debugPrint(this.direccion);
                           debugPrint(this.usuario);
+
+                          //guardo en firebase
+                          context.read<AutenticationService>().singUp(
+                            email: this.email,
+                            password: this.password
+                          );
+
+                          //guardo en el backend
+                          Usuario newUser = new Usuario(this.email,this.direccion,this.apellido, this.nombre, true, this.password, 1);
+                          debugPrint(newUser.email);
+                          AsociadoDatasourceImpl dataSource = new AsociadoDatasourceImpl();
+                          await dataSource.createUserHk(newUser);
                           
                           showDialog(
                             context: context,

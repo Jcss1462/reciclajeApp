@@ -33,7 +33,7 @@ class _LoginState extends State<Login> {
           //recuadro blanco contenedor
           child: Container(
             width: MediaQuery.of(context).size.width / 1.3,
-            height: MediaQuery.of(context).size.height / 1.33,
+            height: MediaQuery.of(context).size.height / 1.57,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10),
               color: Colors.white,
