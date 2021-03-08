@@ -307,18 +307,24 @@ class _RegitroState extends State<RegistroPage> {
                           debugPrint(this.direccion);
                           debugPrint(this.usuario);
 
+  
                           //guardo en firebase
-                          context.read<AutenticationService>().singUp(
+                          final model= context.read<AutenticationService>();
+                          
+                          model.singUp(
                             email: this.email,
                             password: this.password
-                          );
+                          ).then((value) => model.sendEmailVerification());
 
+                          
+                          
                           //guardo en el backend
                           Usuario newUser = new Usuario(this.email,this.direccion,this.apellido, this.nombre, true, this.password, 1);
                           debugPrint(newUser.email);
                           AsociadoDatasourceImpl dataSource = new AsociadoDatasourceImpl();
                           await dataSource.createUserHk(newUser);
                           
+
                           showDialog(
                             context: context,
                             builder: (context) => AlertDialog(
@@ -331,7 +337,7 @@ class _RegitroState extends State<RegistroPage> {
                                 ),
                               ),
                               content: Text(
-                                  "El Usuario fue Registrado Correctamenta"),
+                                  "El Usuario fue Registrado Correctamenta\n\nVerifica tu usuario en el correo"),
                               actions: <Widget>[
                                 TextButton(
                                   child: Text(

@@ -11,6 +11,8 @@ class Routers {
         return MaterialPageRoute(builder: (_) => Login());
       case registerRoute:
         return MaterialPageRoute(builder: (_) => RegistroPage());
+      case inicioReciclador:
+        return MaterialPageRoute(builder: (_) => InicioReciclador());
       default:
         return MaterialPageRoute(
           builder: (_) => Scaffold(

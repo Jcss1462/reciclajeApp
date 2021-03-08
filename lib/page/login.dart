@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:reciclaje_app/core/constants.dart';
+import 'package:reciclaje_app/service/authentication_service.dart';
 
 class Login extends StatefulWidget {
   const Login({Key key}) : super(key: key);
@@ -150,6 +152,84 @@ class _LoginState extends State<Login> {
                             formKey.currentState.save();
                             debugPrint(this.email);
                             debugPrint(this.password);
+
+                            //accedo por firebase
+                            final model = context.read<AutenticationService>();
+                            model
+                                .singIn(
+                                    email: this.email, password: this.password)
+                                .then((value) {
+                              if (value.user.emailVerified == false) {
+                                debugPrint("Debe confirmar cuenta");
+                                showDialog(
+                                  context: context,
+                                  builder: (context) => AlertDialog(
+                                    title: Text(
+                                      "Cuneta no verificada",
+                                      style: TextStyle(
+                                        color: Color.fromRGBO(46, 99, 238, 1),
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 20,
+                                      ),
+                                    ),
+                                    content: Text(
+                                        "Porfavor verifique su cuenta\ncon el enlace enviado a su correo"),
+                                    actions: <Widget>[
+                                      TextButton(
+                                        child: Text(
+                                          'Ok',
+                                          style: TextStyle(
+                                            color:
+                                                Color.fromRGBO(46, 99, 238, 1),
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 15,
+                                          ),
+                                        ),
+                                        onPressed: () {
+                                          Navigator.pop(context);
+                                        },
+                                      ),
+                                    ],
+                                  ),
+                                );
+                              } else {
+                                debugPrint("Secion iniciada");
+                                Navigator.pushNamed(context, inicioReciclador);
+                              }
+                            }).onError((error, stackTrace) {
+                              debugPrint("Usuario no existe");
+                              showDialog(
+                                  context: context,
+                                  builder: (context) => AlertDialog(
+                                    title: Text(
+                                      "Usuario no registrado",
+                                      style: TextStyle(
+                                        color: Color.fromRGBO(46, 99, 238, 1),
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 20,
+                                      ),
+                                    ),
+                                    content: Text(
+                                        "Usuario inexistente"),
+                                    actions: <Widget>[
+                                      TextButton(
+                                        child: Text(
+                                          'Ok',
+                                          style: TextStyle(
+                                            color:
+                                                Color.fromRGBO(46, 99, 238, 1),
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 15,
+                                          ),
+                                        ),
+                                        onPressed: () {
+                                          Navigator.pop(context);
+                                        },
+                                      ),
+                                    ],
+                                  ),
+                                );
+                            });
                           }
                         },
                         shape: RoundedRectangleBorder(

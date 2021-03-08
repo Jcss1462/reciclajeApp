@@ -7,14 +7,10 @@ class AutenticationService {
 
   Stream<User> get authStateChanges => _firebaseAuth.authStateChanges();
 
-  Future<String> singIn({String email, String password}) async {
-    try {
-      await _firebaseAuth.signInWithEmailAndPassword(
+  Future<UserCredential> singIn({String email, String password}) async {
+    
+      return await _firebaseAuth.signInWithEmailAndPassword(
           email: email, password: password);
-      return "Signed in";
-    } on FirebaseAuthException catch (e) {
-      return e.message;
-    }
   }
 
   Future<String> singUp({String email, String password}) async {
@@ -30,4 +26,10 @@ class AutenticationService {
   Future<void> singOut() async {
     await _firebaseAuth.signOut();
   }
+
+  Future<void>  sendEmailVerification() async {
+    await _firebaseAuth.currentUser.sendEmailVerification();
+  }
+  
+  
 }
