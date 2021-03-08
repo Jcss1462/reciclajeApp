@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 
 import 'package:reciclaje_app/page/index.dart';
@@ -304,40 +302,41 @@ class _RegitroState extends State<RegistroPage> {
                           debugPrint(this.password);
                           debugPrint(this.direccion);
                           debugPrint(this.usuario);
-                        }
-                        showDialog(
-                          context: context,
-                          builder: (context) => AlertDialog(
-                            title: Text(
-                              "Usuario Registrado",
-                              style: TextStyle(
-                                color: Color.fromRGBO(46, 99, 238, 1),
-                                fontWeight: FontWeight.bold,
-                                fontSize: 20,
-                              ),
-                            ),
-                            content:
-                                Text("El Usuario fue Registrado Correctamenta"),
-                            actions: <Widget>[
-                              TextButton(
-                                child: Text(
-                                  'Ok',
-                                  style: TextStyle(
-                                    color: Color.fromRGBO(46, 99, 238, 1),
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 15,
-                                  ),
+                          
+                          showDialog(
+                            context: context,
+                            builder: (context) => AlertDialog(
+                              title: Text(
+                                "Usuario Registrado",
+                                style: TextStyle(
+                                  color: Color.fromRGBO(46, 99, 238, 1),
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 20,
                                 ),
-                                onPressed: () {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) => Login()));
-                                },
                               ),
-                            ],
-                          ),
-                        );
+                              content: Text(
+                                  "El Usuario fue Registrado Correctamenta"),
+                              actions: <Widget>[
+                                TextButton(
+                                  child: Text(
+                                    'Ok',
+                                    style: TextStyle(
+                                      color: Color.fromRGBO(46, 99, 238, 1),
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 15,
+                                    ),
+                                  ),
+                                  onPressed: () {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) => Login()));
+                                  },
+                                ),
+                              ],
+                            ),
+                          );
+                        }
                       },
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(30.0),
