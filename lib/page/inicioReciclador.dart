@@ -1,6 +1,5 @@
-import 'dart:html';
-
 import 'package:flutter/material.dart';
+import 'package:reciclaje_app/page/NavBar.dart';
 
 class InicioReciclador extends StatefulWidget {
   InicioReciclador({Key key}) : super(key: key);
@@ -15,6 +14,15 @@ class _InicioRecicladorState extends State<InicioReciclador> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: NavBar(),
+      appBar: AppBar(
+        backgroundColor: Color.fromRGBO(46, 99, 238, 1),
+        title: Text(
+          "Reciclador Oficial",
+          style: TextStyle(
+              color: Colors.white, fontWeight: FontWeight.bold, fontSize: 20),
+        ),
+      ),
       body: new Stack(
         children: <Widget>[
           new Container(
@@ -32,8 +40,11 @@ class _InicioRecicladorState extends State<InicioReciclador> {
                       "Bienvenido",
                       style: TextStyle(
                           color: Colors.white,
-                          fontWeight: FontWeight.normal,
-                          fontSize: 20),
+                          fontWeight: FontWeight.bold,
+                          fontSize: 28),
+                    ),
+                    SizedBox(
+                      height: 20,
                     ),
                     _crearCard1(),
                     _crearCard2(),
