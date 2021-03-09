@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:reciclaje_app/widgets/NavBar.dart';
 
-import '../core/constants.dart';
-
 class CarrodeVentas extends StatefulWidget {
   CarrodeVentas({Key key}) : super(key: key);
 
