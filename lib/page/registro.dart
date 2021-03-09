@@ -307,23 +307,27 @@ class _RegitroState extends State<RegistroPage> {
                           debugPrint(this.direccion);
                           debugPrint(this.usuario);
 
-  
                           //guardo en firebase
-                          final model= context.read<AutenticationService>();
-                          
-                          model.singUp(
-                            email: this.email,
-                            password: this.password
-                          ).then((value) => model.sendEmailVerification());
+                          final model = context.read<AutenticationService>();
 
-                          
-                          
+                          model
+                              .singUp(
+                                  email: this.email, password: this.password)
+                              .then((value) => model.sendEmailVerification());
+
                           //guardo en el backend
-                          Usuario newUser = new Usuario(this.email,this.direccion,this.apellido, this.nombre, true, this.password, 1);
+                          Usuario newUser = new Usuario(
+                              this.email,
+                              this.direccion,
+                              this.apellido,
+                              this.nombre,
+                              true,
+                              this.password,
+                              1);
                           debugPrint(newUser.email);
-                          AsociadoDatasourceImpl dataSource = new AsociadoDatasourceImpl();
+                          AsociadoDatasourceImpl dataSource =
+                              new AsociadoDatasourceImpl();
                           await dataSource.createUserHk(newUser);
-                          
 
                           showDialog(
                             context: context,
