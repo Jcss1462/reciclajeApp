@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:reciclaje_app/core/constants.dart';
+
+import '../core/constants.dart';
 
 class NavBar extends StatelessWidget {
   @override
@@ -38,7 +41,7 @@ class NavBar extends StatelessWidget {
                   fontWeight: FontWeight.normal,
                   fontSize: 18),
             ),
-            onTap: null,
+            onTap: () => Navigator.pushNamed(context, carrodeVentas),
           ),
           ListTile(
             leading: Icon(

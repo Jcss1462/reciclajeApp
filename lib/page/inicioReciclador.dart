@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:reciclaje_app/page/NavBar.dart';
+import 'package:reciclaje_app/widgets/NavBar.dart';
 
 class InicioReciclador extends StatefulWidget {
   InicioReciclador({Key key}) : super(key: key);
