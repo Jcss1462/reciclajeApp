@@ -77,46 +77,48 @@ class _InicioRecicladorState extends State<InicioReciclador> {
             ),
           ],
         ),
-        child: Column(
-          children: [
-            Text(
-              "Ventas de la Semana",
-              style: TextStyle(
-                  color: Color.fromRGBO(46, 99, 238, 1),
-                  fontWeight: FontWeight.bold,
-                  fontSize: 26),
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            Text(
-              "Papel 10 Kg",
-              style: TextStyle(
-                  color: Color.fromRGBO(46, 99, 238, 1),
-                  fontWeight: FontWeight.normal,
-                  fontSize: 20),
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            Text(
-              "Vidrio 20 Kg",
-              style: TextStyle(
-                  color: Color.fromRGBO(46, 99, 238, 1),
-                  fontWeight: FontWeight.normal,
-                  fontSize: 20),
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            Text(
-              "Cartón 20 Kg",
-              style: TextStyle(
-                  color: Color.fromRGBO(46, 99, 238, 1),
-                  fontWeight: FontWeight.normal,
-                  fontSize: 20),
-            ),
-          ],
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              Text(
+                "Ventas de la Semana",
+                style: TextStyle(
+                    color: Color.fromRGBO(46, 99, 238, 1),
+                    fontWeight: FontWeight.bold,
+                    fontSize: 26),
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              Text(
+                "Papel 10 Kg",
+                style: TextStyle(
+                    color: Color.fromRGBO(46, 99, 238, 1),
+                    fontWeight: FontWeight.normal,
+                    fontSize: 20),
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              Text(
+                "Vidrio 20 Kg",
+                style: TextStyle(
+                    color: Color.fromRGBO(46, 99, 238, 1),
+                    fontWeight: FontWeight.normal,
+                    fontSize: 20),
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              Text(
+                "Cartón 20 Kg",
+                style: TextStyle(
+                    color: Color.fromRGBO(46, 99, 238, 1),
+                    fontWeight: FontWeight.normal,
+                    fontSize: 20),
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -140,46 +142,48 @@ class _InicioRecicladorState extends State<InicioReciclador> {
             ),
           ],
         ),
-        child: Column(
-          children: [
-            Text(
-              "Precios Actuales",
-              style: TextStyle(
-                  color: Color.fromRGBO(46, 99, 238, 1),
-                  fontWeight: FontWeight.bold,
-                  fontSize: 26),
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            Text(
-              "Papel 1.000 cada Kg",
-              style: TextStyle(
-                  color: Color.fromRGBO(46, 99, 238, 1),
-                  fontWeight: FontWeight.normal,
-                  fontSize: 20),
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            Text(
-              "Vidrio 2.000 cada Kg",
-              style: TextStyle(
-                  color: Color.fromRGBO(46, 99, 238, 1),
-                  fontWeight: FontWeight.normal,
-                  fontSize: 20),
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            Text(
-              "Cartón 2.500 cada Kg",
-              style: TextStyle(
-                  color: Color.fromRGBO(46, 99, 238, 1),
-                  fontWeight: FontWeight.normal,
-                  fontSize: 20),
-            ),
-          ],
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              Text(
+                "Precios Actuales",
+                style: TextStyle(
+                    color: Color.fromRGBO(46, 99, 238, 1),
+                    fontWeight: FontWeight.bold,
+                    fontSize: 26),
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              Text(
+                "Papel 1.000 cada Kg",
+                style: TextStyle(
+                    color: Color.fromRGBO(46, 99, 238, 1),
+                    fontWeight: FontWeight.normal,
+                    fontSize: 20),
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              Text(
+                "Vidrio 2.000 cada Kg",
+                style: TextStyle(
+                    color: Color.fromRGBO(46, 99, 238, 1),
+                    fontWeight: FontWeight.normal,
+                    fontSize: 20),
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              Text(
+                "Cartón 2.500 cada Kg",
+                style: TextStyle(
+                    color: Color.fromRGBO(46, 99, 238, 1),
+                    fontWeight: FontWeight.normal,
+                    fontSize: 20),
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -203,26 +207,28 @@ class _InicioRecicladorState extends State<InicioReciclador> {
             ),
           ],
         ),
-        child: Column(
-          children: [
-            Text(
-              "Numero de Lugares Visitados",
-              style: TextStyle(
-                  color: Color.fromRGBO(46, 99, 238, 1),
-                  fontWeight: FontWeight.bold,
-                  fontSize: 18),
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            Text(
-              "25",
-              style: TextStyle(
-                  color: Color.fromRGBO(46, 99, 238, 1),
-                  fontWeight: FontWeight.normal,
-                  fontSize: 30),
-            ),
-          ],
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              Text(
+                "Numero de Lugares Visitados",
+                style: TextStyle(
+                    color: Color.fromRGBO(46, 99, 238, 1),
+                    fontWeight: FontWeight.bold,
+                    fontSize: 18),
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              Text(
+                "25",
+                style: TextStyle(
+                    color: Color.fromRGBO(46, 99, 238, 1),
+                    fontWeight: FontWeight.normal,
+                    fontSize: 30),
+              ),
+            ],
+          ),
         ),
       ),
     );
