@@ -24,16 +24,24 @@ class _RegitroState extends State<RegistroPage> {
 
   String usuario;
 
-  final allChecked = CheckBoxModal(title: "Al checked");
-  List checkBoxList = [
-    CheckBoxModal(
-        title: 'Civil: ', descripcion: 'Ciudadano que Recicle en su hogar'),
-    CheckBoxModal(
-        title: 'Reciclador:',
-        descripcion: 'Persona que trabaje por medio del Reciclaje'),
-    CheckBoxModal(
-        title: 'Empresa: ', descripcion: 'Empresa legalmente conformada')
-  ];
+  List<CheckBoxModal> userList = [];
+
+  @override
+  void initState() {
+    userList.add(CheckBoxModal(
+        title: 'Civil',
+        descripcion: 'Ciudadano qye recicle en su hogar',
+        value: false));
+    userList.add(CheckBoxModal(
+        title: 'Reciclador',
+        descripcion: 'Persona que trabaje por medio del reciclaje',
+        value: false));
+    userList.add(CheckBoxModal(
+        title: 'Empresa',
+        descripcion: 'Empresa legalmente conformada',
+        value: false));
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -251,7 +259,7 @@ class _RegitroState extends State<RegistroPage> {
                                     fontWeight: FontWeight.bold,
                                     fontSize: 20),
                               ),
-                              ...checkBoxList
+                              ...userList
                                   .map(
                                     (item) => CheckboxListTile(
                                       title: Text(
@@ -265,12 +273,10 @@ class _RegitroState extends State<RegistroPage> {
                                       value: item.value,
                                       onChanged: (val) {
                                         setState(() {
-                                          item.value = val;
-                                          if (val == true) {
-                                            usuario = item.title;
-                                          } else {
-                                            checkBoxList.single;
-                                          }
+                                          userList.forEach((element) {
+                                            element.value = false;
+                                          });
+                                          item.value = true;
                                         });
                                       },
                                     ),
