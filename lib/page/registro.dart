@@ -277,6 +277,7 @@ class _RegitroState extends State<RegistroPage> {
                                             element.value = false;
                                           });
                                           item.value = true;
+                                          usuario = item.title;
                                         });
                                       },
                                     ),

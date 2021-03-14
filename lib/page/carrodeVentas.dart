@@ -19,16 +19,30 @@ class _CarrodeVentasState extends State<CarrodeVentas> {
   int precioCarton = 2000;
   int precioVidirio = 2500;
 
-  String estado;
+  var estados = [];
 
-  final allChecked = CheckBoxModalCarro(title: "Al checked");
-  List checkBoxList = [
-    CheckBoxModalCarro(title: 'Mojado'),
-    CheckBoxModalCarro(title: 'Molido'),
-    CheckBoxModalCarro(title: 'Contaminado'),
-    CheckBoxModalCarro(title: 'Hoja'),
-    CheckBoxModalCarro(title: 'Pliegos')
-  ];
+  List<CheckBoxModalCarro> estadoList = [];
+
+  @override
+  void initState() {
+    estadoList.add(CheckBoxModalCarro(title: 'Mojado', value: false));
+    estadoList.add(CheckBoxModalCarro(title: 'Molido', value: false));
+    estadoList.add(CheckBoxModalCarro(title: 'Contaminado', value: false));
+    estadoList.add(CheckBoxModalCarro(title: 'Hoja', value: false));
+    estadoList.add(CheckBoxModalCarro(title: 'Pliegos', value: false));
+    super.initState();
+  }
+
+  getItems() {
+    estadoList.forEach((element) {
+      if (element.value == true) {
+        estados.add(element.title);
+      }
+    });
+
+    print(estados);
+    estados.clear();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -158,7 +172,7 @@ class _CarrodeVentasState extends State<CarrodeVentas> {
                                       fontWeight: FontWeight.bold,
                                       fontSize: 20),
                                 ),
-                                ...checkBoxList
+                                ...estadoList
                                     .map(
                                       (item) => CheckboxListTile(
                                         title: Text(
@@ -172,9 +186,6 @@ class _CarrodeVentasState extends State<CarrodeVentas> {
                                         onChanged: (val) {
                                           setState(() {
                                             item.value = val;
-                                            if (val == true) {
-                                              estadodelResiduo = item.title;
-                                            }
                                           });
                                         },
                                       ),
@@ -214,8 +225,8 @@ class _CarrodeVentasState extends State<CarrodeVentas> {
                           if (formKey.currentState.validate()) {
                             formKey.currentState.save();
                             debugPrint(this.tipodeResiduo);
-                            debugPrint(this.estadodelResiduo);
                             print(peso);
+                            getItems();
                           }
 
                           showDialog(
@@ -268,7 +279,6 @@ class _CarrodeVentasState extends State<CarrodeVentas> {
 
 class CheckBoxModalCarro {
   String title;
-  String descripcion;
   bool value;
   CheckBoxModalCarro({@required this.title, this.value = false});
 }
