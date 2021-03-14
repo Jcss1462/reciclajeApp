@@ -17,7 +17,7 @@ class Routers {
       case carrodeVentas:
         return MaterialPageRoute(builder: (_) => CarrodeVentas());
       case envioCarrodeVentas:
-        return MaterialPageRoute(builder: (_) => EnvioCarrodeVentas());
+        return MaterialPageRoute(builder: (_) => EnvioCarrodeVentas(0, 0, ""));
       default:
         return MaterialPageRoute(
           builder: (_) => Scaffold(

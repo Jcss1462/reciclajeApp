@@ -63,7 +63,8 @@ class _CarrodeVentasState extends State<CarrodeVentas> {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => EnvioCarrodeVentas()));
+                        builder: (context) =>
+                            EnvioCarrodeVentas(peso, total, tipodeResiduo)));
               })
         ],
       ),
@@ -268,9 +269,26 @@ class _CarrodeVentasState extends State<CarrodeVentas> {
                                         context,
                                         MaterialPageRoute(
                                             builder: (context) =>
-                                                CarrodeVentas()));
+                                                EnvioCarrodeVentas(
+                                                    this.peso,
+                                                    this.total,
+                                                    this.tipodeResiduo)));
                                   },
                                 ),
+                                TextButton(
+                                    child: Text(
+                                      'Vender Mas',
+                                      style: TextStyle(
+                                        color: Color.fromRGBO(46, 99, 238, 1),
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 15,
+                                      ),
+                                    ),
+                                    onPressed: () {
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              CarrodeVentas());
+                                    }),
                               ],
                             ),
                           );
