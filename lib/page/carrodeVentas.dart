@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:reciclaje_app/page/envioCarrodeVentas.dart';
 import 'package:reciclaje_app/widgets/NavBar.dart';
 
 class CarrodeVentas extends StatefulWidget {
@@ -55,6 +56,16 @@ class _CarrodeVentasState extends State<CarrodeVentas> {
           style: TextStyle(
               color: Colors.white, fontWeight: FontWeight.bold, fontSize: 20),
         ),
+        actions: <Widget>[
+          IconButton(
+              icon: Icon(Icons.shopping_cart_outlined, color: Colors.white),
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => EnvioCarrodeVentas()));
+              })
+        ],
       ),
       body: new Stack(
         children: <Widget>[

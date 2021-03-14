@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:reciclaje_app/core/constants.dart';
+import 'package:reciclaje_app/page/carrodeVentas.dart';
+import 'package:reciclaje_app/page/envioCarrodeVentas.dart';
+import 'package:reciclaje_app/page/index.dart';
 
 import '../core/constants.dart';
 
@@ -41,7 +44,10 @@ class NavBar extends StatelessWidget {
                   fontWeight: FontWeight.normal,
                   fontSize: 18),
             ),
-            onTap: () => Navigator.pushNamed(context, carrodeVentas),
+            onTap: () {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => CarrodeVentas()));
+            },
           ),
           ListTile(
             leading: Icon(
@@ -111,7 +117,12 @@ class NavBar extends StatelessWidget {
                   fontWeight: FontWeight.normal,
                   fontSize: 18),
             ),
-            onTap: null,
+            onTap: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => EnvioCarrodeVentas()));
+            },
           ),
           ListTile(
             leading: Icon(
@@ -147,7 +158,7 @@ class NavBar extends StatelessWidget {
               color: Color.fromRGBO(46, 99, 238, 1),
             ),
             title: Text(
-              "ofertas",
+              "Ofertas",
               style: TextStyle(
                   color: Color.fromRGBO(46, 99, 238, 1),
                   fontWeight: FontWeight.normal,
@@ -167,7 +178,10 @@ class NavBar extends StatelessWidget {
                   fontWeight: FontWeight.normal,
                   fontSize: 18),
             ),
-            onTap: null,
+            onTap: () {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => InicioReciclador()));
+            },
           ),
         ],
       ),
