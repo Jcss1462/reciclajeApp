@@ -52,6 +52,27 @@ class ApiProvider {
     return responseJson;
   }
 
+  Future<dynamic> del(String url) async {
+    var responseJson;
+    String token;
+
+    print(baseUrl + url);
+
+    try {
+      await preferencias.obtenerToken().then((value) async {
+        token = value;
+      });
+      print(token);
+      Map<String, String> headers = {"Authorization": token};
+      final response =
+          await http.delete(Uri.https(baseUrl, url), headers: headers);
+      responseJson = _response(response);
+    } on SocketException {
+      throw FetchDataException('No Internet connection');
+    }
+    return responseJson;
+  }
+
 /*
   Future<dynamic> put(String url, String objToUpdate) async {
     var responseJson;
@@ -73,7 +94,12 @@ class ApiProvider {
   dynamic _response(http.Response response) {
     switch (response.statusCode) {
       case 200:
-        return json.decode(response.body.toString());
+        try {
+          return json.decode(response.body.toString());
+        } catch (e) {
+          return 1;
+        }
+        break;
       case 400:
         throw BadRequestException(response.body.toString());
       case 401:

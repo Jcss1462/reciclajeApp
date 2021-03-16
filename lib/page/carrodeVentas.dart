@@ -1,66 +1,32 @@
 import 'package:flutter/material.dart';
-import 'package:reciclaje_app/data/model/residuoModel.dart';
-import 'package:reciclaje_app/page/envioCarrodeVentas.dart';
-import 'package:reciclaje_app/widgets/NavBar.dart';
+import 'package:reciclaje_app/data/datasources/carroVenta_datasource.dart';
+import 'package:reciclaje_app/data/model/ventaList.dart';
+import 'package:reciclaje_app/widgets/navbar.dart';
 
-class CarrodeVentas extends StatefulWidget {
-  CarrodeVentas({Key key}) : super(key: key);
+class CarroDeVentas extends StatefulWidget {
+  //recibo el parametro
+  final String email;
+  CarroDeVentas(this.email);
 
   @override
-  _CarrodeVentasState createState() => _CarrodeVentasState();
+  _CarroDeVentasState createState() => _CarroDeVentasState();
 }
 
-class _CarrodeVentasState extends State<CarrodeVentas> {
-  final formKey = GlobalKey<FormState>();
-
-  String tipodeResiduo;
-  String estadodelResiduo;
-  int peso;
-  int quantity;
-  int total;
-  int precioPapel = 1000;
-  int precioCarton = 2000;
-  int precioVidirio = 2500;
-
-  var estados = [];
-  var residuo = new Residuo();
-
-  List<CheckBoxModalCarro> estadoList = [];
-
-  List<Residuo> residuoModel;
-  List<Residuo> listaCarro;
-
+class _CarroDeVentasState extends State<CarroDeVentas> {
+  //variables de conexion
+  String _email;
+  CarroVentasDataSourceImpl carroVentasDataSourceImpl =
+      new CarroVentasDataSourceImpl();
+  VentasList ventas = new VentasList();
   @override
   void initState() {
-    estadoList.add(CheckBoxModalCarro(title: 'Mojado', value: false));
-    estadoList.add(CheckBoxModalCarro(title: 'Molido', value: false));
-    estadoList.add(CheckBoxModalCarro(title: 'Contaminado', value: false));
-    estadoList.add(CheckBoxModalCarro(title: 'Hoja', value: false));
-    estadoList.add(CheckBoxModalCarro(title: 'Pliegos', value: false));
-
-    
     super.initState();
+    //obtengo el id del usuario
+    _email = this.widget.email;
   }
 
-  getItems() {
-    estadoList.forEach((element) {
-      if (element.value == true) {
-        estados.add(element.title);
-      }
-    });
-
-    print(estados);
-    estados.clear();
-  }
-
-  List<Residuo> listCarro() {
-    var items = [];
-    if (residuoModel.length <= 1) {
-      items.add(residuo.name);
-      items.add(residuo.peso);
-      items.add(residuoModel);
-    }
-    return items;
+  Future<VentasList> getListVentas() async {
+    return await this.carroVentasDataSourceImpl.misVentas(_email);
   }
 
   @override
@@ -70,24 +36,14 @@ class _CarrodeVentasState extends State<CarrodeVentas> {
       appBar: AppBar(
         backgroundColor: Color.fromRGBO(46, 99, 238, 1),
         title: Text(
-          "Reciclador Oficial",
+          "Carro de Ventas",
           style: TextStyle(
               color: Colors.white, fontWeight: FontWeight.bold, fontSize: 20),
         ),
-        actions: <Widget>[
-          IconButton(
-              icon: Icon(Icons.shopping_cart_outlined, color: Colors.white),
-              onPressed: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) =>
-                            EnvioCarrodeVentas(peso, total, tipodeResiduo)));
-              })
-        ],
       ),
       body: new Stack(
         children: <Widget>[
+          //imagen de fondo
           new Container(
             decoration: new BoxDecoration(
               image: new DecorationImage(
@@ -97,232 +53,194 @@ class _CarrodeVentasState extends State<CarrodeVentas> {
             ),
           ),
           new Center(
-            child: Container(
-              width: MediaQuery.of(context).size.width / 1.3,
-              height: MediaQuery.of(context).size.height / 1.4,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
-                color: Colors.white,
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.grey.withOpacity(0.25),
-                    spreadRadius: 5,
-                    blurRadius: 7,
-                    offset: Offset(0, 3),
-                  ),
-                ],
-              ),
-              child: Center(
-                //Formulario
-                child: SingleChildScrollView(
-                  padding: EdgeInsets.only(
-                      top: 30.0, bottom: 30.0, left: 40, right: 40),
-                  child: Column(
-                    children: [
-                      Text(
-                        "Carro de Ventas",
-                        style: TextStyle(
-                            color: Color.fromRGBO(46, 99, 238, 1),
-                            fontWeight: FontWeight.bold,
-                            fontSize: 28),
-                      ),
-                      SizedBox(height: 20),
-                      Form(
-                        key: formKey,
-                        child: Column(
-                          children: [
-                            //Campos
-                            Container(
-                              height: 50,
-                              //Tipo de residuo
-                              child: TextFormField(
-                                decoration: InputDecoration(
-                                  hintText: "Tipo de Residuo",
-                                  contentPadding: EdgeInsets.all(11),
-                                  enabledBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(30.0),
-                                    borderSide: BorderSide(
-                                      color: Color.fromRGBO(46, 99, 238, 1),
-                                      width: 0.5,
-                                    ),
-                                  ),
-                                ),
-                                //Validacion
-                                onSaved: (value) {
-                                  tipodeResiduo = value;
-                                },
-                                validator: (value) {
-                                  if (value.isEmpty) {
-                                    return "llenar el campo";
-                                  } else {
-                                    return null;
-                                  }
-                                },
-                              ),
-                            ),
-                            //Cantidad del residuo
-                            SizedBox(height: 15),
-                            Container(
-                              height: 50,
-                              child: TextFormField(
-                                  keyboardType: TextInputType.number,
-                                  decoration: InputDecoration(
-                                      hintText: "ingrese el peso",
-                                      contentPadding: EdgeInsets.all(11),
-                                      enabledBorder: OutlineInputBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(30.0),
-                                          borderSide: BorderSide(
-                                            color:
-                                                Color.fromRGBO(46, 99, 238, 1),
-                                            width: 0.5,
-                                          ))),
-
-                                  //Validacion
-                                  onSaved: (value) {
-                                    peso = int.parse(value);
-                                  },
-                                  validator: (value) {
-                                    if (value.isEmpty) {
-                                      return "LLenar el campo";
-                                    } else {
-                                      return null;
-                                    }
-                                  }),
-                            ),
-                            //Cantidad del residuo
-
-                            SizedBox(height: 15),
-                            new Column(
-                              children: [
-                                Text(
-                                  "Estado del Residuo",
-                                  style: TextStyle(
-                                      color: Color.fromRGBO(46, 99, 238, 1),
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 20),
-                                ),
-                                ...estadoList
-                                    .map(
-                                      (item) => CheckboxListTile(
-                                        title: Text(
-                                          item.title,
-                                          style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 15,
+            child: FutureBuilder(
+                future: getListVentas(),
+                builder: (BuildContext context, AsyncSnapshot snapshot) {
+                  switch (snapshot.connectionState) {
+                    //mientras espera
+                    case ConnectionState.waiting:
+                      return CircularProgressIndicator();
+                    default:
+                      if (snapshot.hasError) {
+                        return Text('Error: ${snapshot.error}');
+                      } else {
+                        this.ventas = snapshot.data;
+                        return Container(
+                            width: MediaQuery.of(context).size.width,
+                            height: MediaQuery.of(context).size.height,
+                            child: Center(
+                                child: SingleChildScrollView(
+                                    child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                  ListView.builder(
+                                      physics:
+                                          const NeverScrollableScrollPhysics(),
+                                      itemCount: this.ventas.ventas.length,
+                                      shrinkWrap: true,
+                                      itemBuilder: (context, index) {
+                                        return Column(children: [
+                                          Card(
+                                            elevation: 5,
+                                            child: Container(
+                                              width: MediaQuery.of(context)
+                                                      .size
+                                                      .width -
+                                                  50,
+                                              height: MediaQuery.of(context)
+                                                      .size
+                                                      .height /
+                                                  5,
+                                              padding: EdgeInsets.only(
+                                                  top: 30.0,
+                                                  bottom: 30.0,
+                                                  left: 40,
+                                                  right: 40),
+                                              decoration: BoxDecoration(
+                                                borderRadius:
+                                                    BorderRadius.circular(10),
+                                                color: Colors.white,
+                                                boxShadow: [
+                                                  BoxShadow(
+                                                    color: Colors.grey
+                                                        .withOpacity(0.25),
+                                                    spreadRadius: 5,
+                                                    offset: Offset(0, 3),
+                                                  ),
+                                                ],
+                                              ),
+                                              child: SingleChildScrollView(
+                                                child: Column(
+                                                  children: <Widget>[
+                                                    Text(
+                                                      "Tipo de Residuo",
+                                                      style: TextStyle(
+                                                        color: Color.fromRGBO(
+                                                            46, 99, 238, 1),
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                        fontSize: 18,
+                                                      ),
+                                                    ),
+                                                    Text(
+                                                      "Papel",
+                                                      style: TextStyle(
+                                                        color: Color.fromRGBO(
+                                                            46, 99, 238, 1),
+                                                        fontWeight:
+                                                            FontWeight.normal,
+                                                        fontSize: 15,
+                                                      ),
+                                                    ),
+                                                    SizedBox(height: 5),
+                                                    Text(
+                                                      "Peso en Kilogramos",
+                                                      style: TextStyle(
+                                                        color: Color.fromRGBO(
+                                                            46, 99, 238, 1),
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                        fontSize: 18,
+                                                      ),
+                                                    ),
+                                                    Text(
+                                                      ventas.ventas[index].peso
+                                                          .toString(),
+                                                      style: TextStyle(
+                                                        color: Color.fromRGBO(
+                                                            46, 99, 238, 1),
+                                                        fontWeight:
+                                                            FontWeight.normal,
+                                                        fontSize: 15,
+                                                      ),
+                                                    ),
+                                                    SizedBox(height: 5),
+                                                    Text(
+                                                      "Total del Residuo",
+                                                      style: TextStyle(
+                                                        color: Color.fromRGBO(
+                                                            46, 99, 238, 1),
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                        fontSize: 18,
+                                                      ),
+                                                    ),
+                                                    Text(
+                                                      ventas.ventas[index].total
+                                                          .toString(),
+                                                      style: TextStyle(
+                                                        color: Color.fromRGBO(
+                                                            46, 99, 238, 1),
+                                                        fontWeight:
+                                                            FontWeight.normal,
+                                                        fontSize: 15,
+                                                      ),
+                                                    ),
+                                                    SizedBox(height: 10),
+                                                    Row(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment.end,
+                                                      children: [
+                                                        IconButton(
+                                                            icon: Icon(
+                                                              Icons
+                                                                  .edit_outlined,
+                                                              color: Color
+                                                                  .fromRGBO(
+                                                                      46,
+                                                                      99,
+                                                                      238,
+                                                                      1),
+                                                            ),
+                                                            onPressed: null),
+                                                        Icon(
+                                                          Icons
+                                                              .check_box_outlined,
+                                                          color: Color.fromRGBO(
+                                                              46, 99, 238, 1),
+                                                        ),
+                                                        //boton eliminar
+                                                        IconButton(
+                                                            icon: Icon(
+                                                              Icons
+                                                                  .delete_outline,
+                                                              color: Color
+                                                                  .fromRGBO(
+                                                                      46,
+                                                                      99,
+                                                                      238,
+                                                                      1),
+                                                            ),
+                                                            onPressed: (){
+                                                              print(ventas
+                                                                  .ventas[index]
+                                                                  .idventa);
+                                                              this.carroVentasDataSourceImpl
+                                                                  .delVenta(ventas
+                                                                      .ventas[
+                                                                          index]
+                                                                      .idventa).then((value){
+                                                                          setState(() {});
+                                                                      });
+                                                            }),
+                                                      ],
+                                                    )
+                                                  ],
+                                                ),
+                                              ),
+                                            ),
                                           ),
-                                        ),
-                                        value: item.value,
-                                        onChanged: (val) {
-                                          setState(() {
-                                            item.value = val;
-                                          });
-                                        },
-                                      ),
-                                    )
-                                    .toList()
-                              ],
-                            ),
-                          ],
-                        ),
-                      ),
-                      SizedBox(height: 15),
-                      new Column(
-                        children: [
-                          Text(
-                            "Total de Venta del Residuo",
-                            style: TextStyle(
-                                color: Color.fromRGBO(46, 99, 238, 1),
-                                fontWeight: FontWeight.bold,
-                                fontSize: 18),
-                          ),
-                        ],
-                      ),
-                      SizedBox(height: 25),
-                      MaterialButton(
-                        height: 50,
-                        minWidth: 150,
-                        color: Color.fromRGBO(46, 99, 238, 1),
-                        textColor: Colors.white,
-                        child: new Text(
-                          "Añadir al Carro de Ventas",
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 16,
-                          ),
-                        ),
-                        onPressed: () async {
-                          if (formKey.currentState.validate()) {
-                            formKey.currentState.save();
-                            debugPrint(this.tipodeResiduo);
-                            print(peso);
-                            getItems();
-                          }
-                          showDialog(
-                            context: context,
-                            builder: (context) => AlertDialog(
-                              title: Text(
-                                "Residuo Agregado",
-                                style: TextStyle(
-                                  color: Color.fromRGBO(46, 99, 238, 1),
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 20,
-                                ),
-                              ),
-                              content:
-                                  Text("El Residuo se Agrego Exitosamente"),
-                              actions: <Widget>[
-                                TextButton(
-                                  child: Text(
-                                    'Ok',
-                                    style: TextStyle(
-                                      color: Color.fromRGBO(46, 99, 238, 1),
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 15,
-                                    ),
-                                  ),
-                                  onPressed: () {
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                EnvioCarrodeVentas(peso, total,
-                                                    tipodeResiduo)));
-                                  },
-                                ),
-                                TextButton(
-                                    child: Text(
-                                      'Vender Mas',
-                                      style: TextStyle(
-                                        color: Color.fromRGBO(46, 99, 238, 1),
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 15,
-                                      ),
-                                    ),
-                                    onPressed: () {
-                                      MaterialPageRoute(
-                                          builder: (context) =>
-                                              CarrodeVentas());
-                                    }),
-                              ],
-                            ),
-                          );
-                        },
-                      )
-                    ],
-                  ),
-                ),
-              ),
-            ),
+                                          SizedBox(height: 25),
+                                        ]);
+                                      })
+                                ]))));
+                      }
+                  }
+                }),
           ),
         ],
       ),
     );
   }
-}
-
-class CheckBoxModalCarro {
-  String title;
-  bool value;
-  CheckBoxModalCarro({@required this.title, this.value = false});
 }
