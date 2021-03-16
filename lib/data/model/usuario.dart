@@ -1,5 +1,4 @@
 class Usuario {
-
   String email;
   String direccion;
   String apellido;
@@ -8,18 +7,10 @@ class Usuario {
   String password;
   int idtipousuario;
 
+  Usuario(this.email, this.direccion, this.apellido, this.nombre, this.enable,
+      this.password, this.idtipousuario);
 
-  Usuario(
-    this.email,
-    this.direccion,
-    this.apellido,
-    this.nombre,
-    this.enable,
-    this.password,
-    this.idtipousuario
-  );
-
-  Usuario.fromJason(Map<dynamic, dynamic> json) {
+  Usuario.fromJson(Map<dynamic, dynamic> json) {
     this.email = json['email'];
     this.direccion = json['direccion'];
     this.apellido = json['apellido'];
@@ -40,5 +31,7 @@ class Usuario {
       'idtipousuario_Tipousuario': this.idtipousuario,
     };
   }
+
 }
+
 

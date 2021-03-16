@@ -15,7 +15,6 @@ class EnvioCarrodeVentas extends StatefulWidget {
 
 class _EnvioCarrodeVentasState extends State<EnvioCarrodeVentas> {
   final formKey = GlobalKey<FormState>();
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,7 +22,7 @@ class _EnvioCarrodeVentasState extends State<EnvioCarrodeVentas> {
       appBar: AppBar(
         backgroundColor: Color.fromRGBO(46, 99, 238, 1),
         title: Text(
-          "Reciclador Oficial",
+          "Carro de Ventas",
           style: TextStyle(
               color: Colors.white, fontWeight: FontWeight.bold, fontSize: 20),
         ),
@@ -40,21 +39,12 @@ class _EnvioCarrodeVentasState extends State<EnvioCarrodeVentas> {
             child: new Center(
               child: SingleChildScrollView(
                 child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text(
-                      "Carro de Ventas",
-                      style: TextStyle(
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 28),
-                    ),
-                    SizedBox(
-                      height: 20,
-                    ),
                     new Card(
                       elevation: 5,
                       child: Container(
-                        width: MediaQuery.of(context).size.width / 1.2,
+                        width: MediaQuery.of(context).size.width / 1.62,
                         height: MediaQuery.of(context).size.height / 3.5,
                         padding: EdgeInsets.only(
                             top: 30.0, bottom: 30.0, left: 40, right: 40),
@@ -71,78 +61,79 @@ class _EnvioCarrodeVentasState extends State<EnvioCarrodeVentas> {
                         ),
                         child: SingleChildScrollView(
                           child: Column(
-                            children: [
+                            children: <Widget>[
                               Text(
                                 "Tipo de Residuo",
                                 style: TextStyle(
-                                    color: Color.fromRGBO(46, 99, 238, 1),
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 20),
-                              ),
-                              SizedBox(
-                                height: 5,
+                                  color: Color.fromRGBO(46, 99, 238, 1),
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 18,
+                                ),
                               ),
                               Text(
                                 widget.tipodeResiduo,
                                 style: TextStyle(
-                                    color: Color.fromRGBO(46, 99, 238, 1),
-                                    fontWeight: FontWeight.normal,
-                                    fontSize: 20),
+                                  color: Color.fromRGBO(46, 99, 238, 1),
+                                  fontWeight: FontWeight.normal,
+                                  fontSize: 15,
+                                ),
                               ),
-                              SizedBox(
-                                height: 5,
-                              ),
+                              SizedBox(height: 5),
                               Text(
                                 "Peso en Kilogramos",
                                 style: TextStyle(
-                                    color: Color.fromRGBO(46, 99, 238, 1),
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 20),
-                              ),
-                              SizedBox(
-                                height: 5,
+                                  color: Color.fromRGBO(46, 99, 238, 1),
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 18,
+                                ),
                               ),
                               Text(
                                 widget.peso.toString(),
                                 style: TextStyle(
-                                    color: Color.fromRGBO(46, 99, 238, 1),
-                                    fontWeight: FontWeight.normal,
-                                    fontSize: 20),
+                                  color: Color.fromRGBO(46, 99, 238, 1),
+                                  fontWeight: FontWeight.normal,
+                                  fontSize: 15,
+                                ),
                               ),
-                              SizedBox(
-                                height: 5,
-                              ),
+                              SizedBox(height: 5),
                               Text(
                                 "Total del Residuo",
                                 style: TextStyle(
-                                    color: Color.fromRGBO(46, 99, 238, 1),
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 20),
-                              ),
-                              SizedBox(
-                                height: 5,
+                                  color: Color.fromRGBO(46, 99, 238, 1),
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 18,
+                                ),
                               ),
                               Text(
                                 widget.total.toString(),
                                 style: TextStyle(
-                                    color: Color.fromRGBO(46, 99, 238, 1),
-                                    fontWeight: FontWeight.normal,
-                                    fontSize: 20),
+                                  color: Color.fromRGBO(46, 99, 238, 1),
+                                  fontWeight: FontWeight.normal,
+                                  fontSize: 15,
+                                ),
                               ),
-                              IconButton(
-                                  icon: Icon(
-                                    Icons.edit,
+                              SizedBox(height: 10),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: [
+                                  IconButton(
+                                      icon: Icon(
+                                        Icons.edit_outlined,
+                                        color: Color.fromRGBO(46, 99, 238, 1),
+                                      ),
+                                      onPressed: null),
+                                  Icon(
+                                    Icons.check_box_outlined,
                                     color: Color.fromRGBO(46, 99, 238, 1),
-                                    size: 50,
                                   ),
-                                  onPressed: null),
-                              IconButton(
-                                  icon: Icon(
-                                    Icons.delete,
-                                    color: Color.fromRGBO(46, 99, 238, 1),
-                                    size: 50,
-                                  ),
-                                  onPressed: null),
+                                  IconButton(
+                                      icon: Icon(
+                                        Icons.delete_outline,
+                                        color: Color.fromRGBO(46, 99, 238, 1),
+                                      ),
+                                      onPressed: null),
+                                ],
+                              )
                             ],
                           ),
                         ),
@@ -162,13 +153,7 @@ class _EnvioCarrodeVentasState extends State<EnvioCarrodeVentas> {
                         ),
                       ),
                       onPressed: () async {
-                        if (formKey.currentState.validate()) {
-                          formKey.currentState.save();
-                          debugPrint(widget.tipodeResiduo);
-                          print(widget.peso.toString());
-                          print(widget.total.toString());
-                        }
-
+                        print(widget.tipodeResiduo);
                         showDialog(
                           context: context,
                           builder: (context) => AlertDialog(

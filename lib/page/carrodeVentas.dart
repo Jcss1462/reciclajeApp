@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:reciclaje_app/data/model/residuoModel.dart';
 import 'package:reciclaje_app/page/envioCarrodeVentas.dart';
 import 'package:reciclaje_app/widgets/NavBar.dart';
 
@@ -15,14 +16,19 @@ class _CarrodeVentasState extends State<CarrodeVentas> {
   String tipodeResiduo;
   String estadodelResiduo;
   int peso;
+  int quantity;
   int total;
   int precioPapel = 1000;
   int precioCarton = 2000;
   int precioVidirio = 2500;
 
   var estados = [];
+  var residuo = new Residuo();
 
   List<CheckBoxModalCarro> estadoList = [];
+
+  List<Residuo> residuoModel;
+  List<Residuo> listaCarro;
 
   @override
   void initState() {
@@ -31,6 +37,8 @@ class _CarrodeVentasState extends State<CarrodeVentas> {
     estadoList.add(CheckBoxModalCarro(title: 'Contaminado', value: false));
     estadoList.add(CheckBoxModalCarro(title: 'Hoja', value: false));
     estadoList.add(CheckBoxModalCarro(title: 'Pliegos', value: false));
+
+    
     super.initState();
   }
 
@@ -43,6 +51,16 @@ class _CarrodeVentasState extends State<CarrodeVentas> {
 
     print(estados);
     estados.clear();
+  }
+
+  List<Residuo> listCarro() {
+    var items = [];
+    if (residuoModel.length <= 1) {
+      items.add(residuo.name);
+      items.add(residuo.peso);
+      items.add(residuoModel);
+    }
+    return items;
   }
 
   @override
@@ -119,7 +137,7 @@ class _CarrodeVentasState extends State<CarrodeVentas> {
                               //Tipo de residuo
                               child: TextFormField(
                                 decoration: InputDecoration(
-                                  hintText: "Tipor de Residuo",
+                                  hintText: "Tipo de Residuo",
                                   contentPadding: EdgeInsets.all(11),
                                   enabledBorder: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(30.0),
@@ -147,30 +165,30 @@ class _CarrodeVentasState extends State<CarrodeVentas> {
                             Container(
                               height: 50,
                               child: TextFormField(
-                                keyboardType: TextInputType.number,
-                                decoration: InputDecoration(
-                                    hintText: "ingrese el peso",
-                                    contentPadding: EdgeInsets.all(11),
-                                    enabledBorder: OutlineInputBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(30.0),
-                                        borderSide: BorderSide(
-                                          color: Color.fromRGBO(46, 99, 238, 1),
-                                          width: 0.5,
-                                        ))),
+                                  keyboardType: TextInputType.number,
+                                  decoration: InputDecoration(
+                                      hintText: "ingrese el peso",
+                                      contentPadding: EdgeInsets.all(11),
+                                      enabledBorder: OutlineInputBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(30.0),
+                                          borderSide: BorderSide(
+                                            color:
+                                                Color.fromRGBO(46, 99, 238, 1),
+                                            width: 0.5,
+                                          ))),
 
-                                //Validacion
-                                onSaved: (value) {
-                                  peso = int.parse(value);
-                                },
-                                validator: (value) {
-                                  if (value.isEmpty) {
-                                    return "LLenar el campo";
-                                  } else {
-                                    return null;
-                                  }
-                                },
-                              ),
+                                  //Validacion
+                                  onSaved: (value) {
+                                    peso = int.parse(value);
+                                  },
+                                  validator: (value) {
+                                    if (value.isEmpty) {
+                                      return "LLenar el campo";
+                                    } else {
+                                      return null;
+                                    }
+                                  }),
                             ),
                             //Cantidad del residuo
 
@@ -240,7 +258,6 @@ class _CarrodeVentasState extends State<CarrodeVentas> {
                             print(peso);
                             getItems();
                           }
-
                           showDialog(
                             context: context,
                             builder: (context) => AlertDialog(
@@ -269,10 +286,8 @@ class _CarrodeVentasState extends State<CarrodeVentas> {
                                         context,
                                         MaterialPageRoute(
                                             builder: (context) =>
-                                                EnvioCarrodeVentas(
-                                                    this.peso,
-                                                    this.total,
-                                                    this.tipodeResiduo)));
+                                                EnvioCarrodeVentas(peso, total,
+                                                    tipodeResiduo)));
                                   },
                                 ),
                                 TextButton(

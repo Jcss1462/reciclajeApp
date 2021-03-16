@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:reciclaje_app/page/carrodeVentas.dart';
-import 'package:reciclaje_app/page/envioCarrodeVentas.dart';
 import 'package:reciclaje_app/page/index.dart';
 
 class NavBar extends StatelessWidget {
@@ -116,9 +115,7 @@ class NavBar extends StatelessWidget {
             ),
             onTap: () {
               Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => EnvioCarrodeVentas(0, 0, "")));
+                  context, MaterialPageRoute(builder: (context) => null));
             },
           ),
           ListTile(

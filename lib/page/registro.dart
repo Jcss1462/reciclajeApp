@@ -4,7 +4,8 @@ import 'package:reciclaje_app/data/datasources/usuario_datasource.dart';
 import 'package:reciclaje_app/data/model/usuario.dart';
 import 'package:reciclaje_app/service/authentication_service.dart';
 
-import 'package:reciclaje_app/page/index.dart';
+//import 'package:reciclaje_app/page/index.dart';
+import 'package:reciclaje_app/widgets/dialogBox.dart';
 
 class RegistroPage extends StatefulWidget {
   const RegistroPage({Key key}) : super(key: key);
@@ -15,6 +16,8 @@ class RegistroPage extends StatefulWidget {
 
 class _RegitroState extends State<RegistroPage> {
   final formKey = GlobalKey<FormState>();
+
+  bool isLoad = false;
 
   String nombre;
   String apellido;
@@ -306,6 +309,9 @@ class _RegitroState extends State<RegistroPage> {
 
                       onPressed: () async {
                         if (formKey.currentState.validate()) {
+                          setState(() {
+                            isLoad = true;
+                          });
                           formKey.currentState.save();
                           debugPrint(this.nombre);
                           debugPrint(this.apellido);
@@ -313,62 +319,84 @@ class _RegitroState extends State<RegistroPage> {
                           debugPrint(this.password);
                           debugPrint(this.direccion);
                           debugPrint(this.usuario);
-
                           //guardo en firebase
                           final model = context.read<AutenticationService>();
 
                           model
                               .singUp(
                                   email: this.email, password: this.password)
-                              .then((value) => model.sendEmailVerification());
+                              .then(
+                                  //si el registro en firebase no falla, envia email de confirmacion
+                                  (valRegfb) => model.sendEmailVerification()
+                                          //si el envio del correo sale bien
+                                          .then((valEmailVerf) {
+                                        ////////////////////////////////////////////////////////////////////////////
+                                        //operacion backend iniciada
 
-                          //guardo en el backend
-                          Usuario newUser = new Usuario(
-                              this.email,
-                              this.direccion,
-                              this.apellido,
-                              this.nombre,
-                              true,
-                              this.password,
-                              1);
-                          debugPrint(newUser.email);
-                          AsociadoDatasourceImpl dataSource =
-                              new AsociadoDatasourceImpl();
-                          await dataSource.createUserHk(newUser);
+                                        //obtengo el uid del usuario
+                                        debugPrint(valRegfb.user.uid);
+                                        //guardo en el backend
+                                        Usuario newUser = new Usuario(
+                                            this.email,
+                                            this.direccion,
+                                            this.apellido,
+                                            this.nombre,
+                                            true,
+                                            valRegfb.user.uid,
+                                            1);
+                                        debugPrint(newUser.email);
 
-                          showDialog(
-                            context: context,
-                            builder: (context) => AlertDialog(
-                              title: Text(
-                                "Usuario Registrado",
-                                style: TextStyle(
-                                  color: Color.fromRGBO(46, 99, 238, 1),
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 20,
-                                ),
-                              ),
-                              content: Text(
-                                  "El Usuario fue Registrado Correctamenta\n\nVerifica tu usuario en el correo"),
-                              actions: <Widget>[
-                                TextButton(
-                                  child: Text(
-                                    'Ok',
-                                    style: TextStyle(
-                                      color: Color.fromRGBO(46, 99, 238, 1),
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 15,
-                                    ),
-                                  ),
-                                  onPressed: () {
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) => Login()));
-                                  },
-                                ),
-                              ],
-                            ),
-                          );
+                                        UsuarioDatasourceImpl dataSource =
+                                            new UsuarioDatasourceImpl();
+                                        
+                                        dataSource
+                                            .createUserHk(newUser)
+                                            .then((value) {
+                                          setState(() {
+                                            isLoad = false;
+                                          });
+                                          showDialog(
+                                            context: context,
+                                            builder: (context) => DialogBox(
+                                                "Cuenta creada con exito",
+                                                "Te enviamos un email de verificacion"),
+                                          );
+                                        }).onError((error, stackTrace) {
+                                          
+                                          setState(() {
+                                            isLoad = false;
+                                          });
+                                          showDialog(
+                                            context: context,
+                                            builder: (context) => DialogBox(
+                                                "Errro al crear cuenta en el backend",
+                                                "Error:" + error.toString()),
+                                          );
+                                        });
+                                        //operacion backend terminada
+                                        ////////////////////////////////////////////////////////////////////////////
+                                      }).onError((error, stackTrace) {
+                                        setState(() {
+                                          isLoad = false;
+                                        });
+                                        showDialog(
+                                            context: context,
+                                            builder: (context) => DialogBox(
+                                                "Error al enviar el email",
+                                                "Tu cuenta fue creada pero hubo problemas con el email de verificacion\n\nError:" +
+                                                    error.error.toString()));
+                                      }))
+                              //si el registro en firebase falla
+                              .onError((error, stackTrace) {
+                            setState(() {
+                              isLoad = false;
+                            });
+                            showDialog(
+                                context: context,
+                                builder: (context) => DialogBox(
+                                    "Error al registrar en firebase",
+                                    "Error:" + error.toString()));
+                          });
                         }
                       },
                       shape: RoundedRectangleBorder(
@@ -378,6 +406,20 @@ class _RegitroState extends State<RegistroPage> {
                   ],
                 ),
               )),
+            ),
+          ),
+          // Loader
+          Visibility(
+            visible: isLoad,
+            child: Positioned(
+              child: Container(
+                  width: MediaQuery.of(context).size.width,
+                  height: MediaQuery.of(context).size.height,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    color: Color.fromARGB(200, 255, 255, 255),
+                  ),
+                  child: Center(child: CircularProgressIndicator())),
             ),
           ),
         ],

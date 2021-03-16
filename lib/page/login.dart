@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:reciclaje_app/core/constants.dart';
+import 'package:reciclaje_app/data/datasources/login_datasource.dart';
+import 'package:reciclaje_app/data/datasources/usuario_datasource.dart';
+import 'package:reciclaje_app/data/model/login_back.dart';
 import 'package:reciclaje_app/service/authentication_service.dart';
+import 'package:reciclaje_app/service/preferences.dart';
+import 'package:reciclaje_app/widgets/dialogBox.dart';
 
 class Login extends StatefulWidget {
   const Login({Key key}) : super(key: key);
@@ -163,72 +168,43 @@ class _LoginState extends State<Login> {
                                 debugPrint("Debe confirmar cuenta");
                                 showDialog(
                                   context: context,
-                                  builder: (context) => AlertDialog(
-                                    title: Text(
-                                      "Cuneta no verificada",
-                                      style: TextStyle(
-                                        color: Color.fromRGBO(46, 99, 238, 1),
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 20,
-                                      ),
-                                    ),
-                                    content: Text(
-                                        "Porfavor verifique su cuenta\ncon el enlace enviado a su correo"),
-                                    actions: <Widget>[
-                                      TextButton(
-                                        child: Text(
-                                          'Ok',
-                                          style: TextStyle(
-                                            color:
-                                                Color.fromRGBO(46, 99, 238, 1),
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 15,
-                                          ),
-                                        ),
-                                        onPressed: () {
-                                          Navigator.pop(context);
-                                        },
-                                      ),
-                                    ],
-                                  ),
+                                  builder: (context) => DialogBox(
+                                      "Cuenta no verificada",
+                                      "Porfavor verifique su cuenta\ncon el enlace enviado a su correo"),
                                 );
                               } else {
+                                //si el login es exitoso, accedo al back para obtener el token
+                                LoginDatasourceImpl loginDataSource =
+                                    new LoginDatasourceImpl();
+                                loginDataSource
+                                    .loginBack("jcss1462", "accion13")
+                                    .then((value) {
+                                  Token token = value;
+                                  //debugPrint(token.token);
+
+                                  //guardo el token en las preferencias
+                                  Preferences preference = new Preferences();
+                                  preference.setearToken(token.token);
+                                });
+
+                                UsuarioDatasourceImpl usuarioDatasource =
+                                    new UsuarioDatasourceImpl();
+                                usuarioDatasource.findAll().then((value) {
+                                  value.beneficios.forEach((element) {
+                                    debugPrint(element.email);
+                                  });
+                                });
                                 debugPrint("Secion iniciada");
                                 Navigator.pushNamed(context, inicioReciclador);
                               }
                             }).onError((error, stackTrace) {
                               debugPrint("Usuario no existe");
                               showDialog(
-                                  context: context,
-                                  builder: (context) => AlertDialog(
-                                    title: Text(
-                                      "Usuario no registrado",
-                                      style: TextStyle(
-                                        color: Color.fromRGBO(46, 99, 238, 1),
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 20,
-                                      ),
-                                    ),
-                                    content: Text(
-                                        "Usuario inexistente"),
-                                    actions: <Widget>[
-                                      TextButton(
-                                        child: Text(
-                                          'Ok',
-                                          style: TextStyle(
-                                            color:
-                                                Color.fromRGBO(46, 99, 238, 1),
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 15,
-                                          ),
-                                        ),
-                                        onPressed: () {
-                                          Navigator.pop(context);
-                                        },
-                                      ),
-                                    ],
-                                  ),
-                                );
+                                context: context,
+                                builder: (context) => DialogBox(
+                                    "Usuario no registrado",
+                                    "Usuario inexistente"),
+                              );
                             });
                           }
                         },
@@ -239,6 +215,7 @@ class _LoginState extends State<Login> {
                       SizedBox(height: 30),
                       Text("¿No estas resgistrado?"),
                       SizedBox(height: 5),
+                      //boton a registro
                       MaterialButton(
                         height: 40,
                         minWidth: 220,

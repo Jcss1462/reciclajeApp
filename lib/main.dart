@@ -33,11 +33,6 @@ class ReciclajeApp extends StatelessWidget {
         Provider<ApiProvider>(
           create: (_) => ApiProvider(),
         ),
-        StreamProvider(
-          create: (context) =>
-              context.read<AutenticationService>().authStateChanges,
-          initialData: null,
-        )
       ],
       child: MaterialApp(
         title: 'ReciclajeApp',

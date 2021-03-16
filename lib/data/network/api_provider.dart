@@ -4,19 +4,29 @@ import 'dart:io';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:reciclaje_app/data/network/custom_exception.dart';
 import 'package:http/http.dart' as http;
+import 'package:reciclaje_app/service/preferences.dart';
 
 class ApiProvider {
   var client = http.Client();
 
-  String baseUrl=env['URL'];
-  Uri toUri(String path) => toUri(path);
+  String baseUrl = env['URL'];
+
+  Preferences preferencias = new Preferences();
 
   Future<dynamic> get(String url) async {
     var responseJson;
-    
-    print(baseUrl+url);
+    String token;
+
+    print(baseUrl + url);
+
     try {
-      final response = await http.get(toUri(baseUrl + url));
+      await preferencias.obtenerToken().then((value) async {
+        token = value;
+      });
+      print(token);
+      Map<String, String> headers = {"Authorization": token};
+      final response =
+          await http.get(Uri.https(baseUrl, url), headers: headers);
       responseJson = _response(response);
     } on SocketException {
       throw FetchDataException('No Internet connection');
@@ -24,15 +34,14 @@ class ApiProvider {
     return responseJson;
   }
 
-
   Future<dynamic> post(String url, String objToCreate) async {
-    print(baseUrl+url);
+    print(baseUrl + url);
     var responseJson;
     try {
       Map<String, String> headers = {"Content-Type": "application/json"};
 
       final response = await http.post(
-        Uri.https(baseUrl,url),
+        Uri.https(baseUrl, url),
         headers: headers,
         body: objToCreate,
       );
@@ -42,6 +51,7 @@ class ApiProvider {
     }
     return responseJson;
   }
+
 /*
   Future<dynamic> put(String url, String objToUpdate) async {
     var responseJson;

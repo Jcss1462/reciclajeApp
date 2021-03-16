@@ -1,14 +1,16 @@
 import 'dart:convert';
 
 import 'package:reciclaje_app/data/model/usuario.dart';
+import 'package:reciclaje_app/data/model/usuarioList.dart';
 import 'package:reciclaje_app/data/network/api_provider.dart';
 
 
-abstract class AsociadoDatasource {
+abstract class UsuarioDatasource {
   Future<Usuario> createUserHk(Usuario usuario);
+  Future<UsuarioList> findAll();
 }
 
-class AsociadoDatasourceImpl implements AsociadoDatasource {
+class UsuarioDatasourceImpl implements UsuarioDatasource {
   ApiProvider _apiProvider = ApiProvider();
  
  @override
@@ -16,7 +18,15 @@ class AsociadoDatasourceImpl implements AsociadoDatasource {
     
     String body= jsonEncode(usuario.toJson());
     final response = await _apiProvider.post("/api/v1/usuario/save", body);
-    return Usuario.fromJason(response);
+    return Usuario.fromJson(response);
+  }
+
+  @override
+  Future<UsuarioList> findAll() async {
+  
+    final response = await _apiProvider.get("/api/v1/usuario/findAll");
+    return UsuarioList.fromJson(response);
+ 
   }
 
 }
