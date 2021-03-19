@@ -113,98 +113,140 @@ class _CarroDeVentasState extends State<CarroDeVentas> {
                                               child: SingleChildScrollView(
                                                 child: Column(
                                                   children: <Widget>[
-                                                    Text(
-                                                      "Tipo de Residuo",
-                                                      style: TextStyle(
-                                                        color: Color.fromRGBO(
-                                                            46, 99, 238, 1),
-                                                        fontWeight:
-                                                            FontWeight.bold,
-                                                        fontSize: 18,
-                                                      ),
-                                                    ),
-                                                    Text(
-                                                      "Papel",
-                                                      style: TextStyle(
-                                                        color: Color.fromRGBO(
-                                                            46, 99, 238, 1),
-                                                        fontWeight:
-                                                            FontWeight.normal,
-                                                        fontSize: 15,
-                                                      ),
-                                                    ),
-                                                    SizedBox(height: 5),
-                                                    Text(
-                                                      "Peso en Kilogramos",
-                                                      style: TextStyle(
-                                                        color: Color.fromRGBO(
-                                                            46, 99, 238, 1),
-                                                        fontWeight:
-                                                            FontWeight.bold,
-                                                        fontSize: 18,
-                                                      ),
-                                                    ),
-                                                    Text(
-                                                      ventas.ventas[index].peso
-                                                          .toString(),
-                                                      style: TextStyle(
-                                                        color: Color.fromRGBO(
-                                                            46, 99, 238, 1),
-                                                        fontWeight:
-                                                            FontWeight.normal,
-                                                        fontSize: 15,
-                                                      ),
-                                                    ),
-                                                    SizedBox(height: 5),
-                                                    Text(
-                                                      "Total del Residuo",
-                                                      style: TextStyle(
-                                                        color: Color.fromRGBO(
-                                                            46, 99, 238, 1),
-                                                        fontWeight:
-                                                            FontWeight.bold,
-                                                        fontSize: 18,
-                                                      ),
-                                                    ),
-                                                    Text(
-                                                      ventas.ventas[index].total
-                                                          .toString(),
-                                                      style: TextStyle(
-                                                        color: Color.fromRGBO(
-                                                            46, 99, 238, 1),
-                                                        fontWeight:
-                                                            FontWeight.normal,
-                                                        fontSize: 15,
-                                                      ),
-                                                    ),
-                                                    SizedBox(height: 10),
                                                     Row(
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment.end,
                                                       children: [
-                                                        IconButton(
-                                                            icon: Icon(
-                                                              Icons
-                                                                  .edit_outlined,
-                                                              color: Color
-                                                                  .fromRGBO(
-                                                                      46,
-                                                                      99,
-                                                                      238,
-                                                                      1),
-                                                            ),
-                                                            onPressed: null),
-                                                        Icon(
-                                                          Icons
-                                                              .check_box_outlined,
-                                                          color: Color.fromRGBO(
-                                                              46, 99, 238, 1),
+                                                        Text(
+                                                          "Tipo de Residuo: ",
+                                                          textAlign:
+                                                              TextAlign.left,
+                                                          overflow: TextOverflow
+                                                              .ellipsis,
+                                                          style: TextStyle(
+                                                            color:
+                                                                Color.fromRGBO(
+                                                                    46,
+                                                                    99,
+                                                                    238,
+                                                                    1),
+                                                            fontWeight:
+                                                                FontWeight.bold,
+                                                            fontSize: 18,
+                                                          ),
                                                         ),
-                                                        //boton eliminar
-                                                        IconButton(
-                                                            icon: Icon(
+                                                        Text(
+                                                          "Papel",
+                                                          textAlign:
+                                                              TextAlign.left,
+                                                          style: TextStyle(
+                                                            color:
+                                                                Color.fromRGBO(
+                                                                    46,
+                                                                    99,
+                                                                    238,
+                                                                    1),
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .normal,
+                                                            fontSize: 18,
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                    SizedBox(height: 5),
+                                                    Row(
+                                                      children: [
+                                                        Text(
+                                                          "Peso en Kilogramos: ",
+                                                          style: TextStyle(
+                                                            color:
+                                                                Color.fromRGBO(
+                                                                    46,
+                                                                    99,
+                                                                    238,
+                                                                    1),
+                                                            fontWeight:
+                                                                FontWeight.bold,
+                                                            fontSize: 18,
+                                                          ),
+                                                        ),
+                                                        Text(
+                                                          ventas.ventas[index]
+                                                              .peso
+                                                              .toString(),
+                                                          style: TextStyle(
+                                                            color:
+                                                                Color.fromRGBO(
+                                                                    46,
+                                                                    99,
+                                                                    238,
+                                                                    1),
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .normal,
+                                                            fontSize: 15,
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                    SizedBox(height: 5),
+                                                    Row(
+                                                      children: [
+                                                        Text(
+                                                          "Total del Residuo: ",
+                                                          style: TextStyle(
+                                                            color:
+                                                                Color.fromRGBO(
+                                                                    46,
+                                                                    99,
+                                                                    238,
+                                                                    1),
+                                                            fontWeight:
+                                                                FontWeight.bold,
+                                                            fontSize: 18,
+                                                          ),
+                                                        ),
+                                                        Text(
+                                                          ventas.ventas[index]
+                                                              .total
+                                                              .toString(),
+                                                          style: TextStyle(
+                                                            color:
+                                                                Color.fromRGBO(
+                                                                    46,
+                                                                    99,
+                                                                    238,
+                                                                    1),
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .normal,
+                                                            fontSize: 15,
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                    Column(
+                                                      children: <Widget>[
+                                                        Row(
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .end,
+                                                          children: [
+                                                            IconButton(
+                                                                icon: Icon(
+                                                                  Icons
+                                                                      .edit_outlined,
+                                                                  color: Color
+                                                                      .fromRGBO(
+                                                                          46,
+                                                                          99,
+                                                                          238,
+                                                                          1),
+                                                                ),
+                                                                onPressed:
+                                                                    null),
+                                                            Icon(
                                                               Icons
-                                                                  .delete_outline,
+                                                                  .check_box_outlined,
                                                               color: Color
                                                                   .fromRGBO(
                                                                       46,
@@ -212,20 +254,39 @@ class _CarroDeVentasState extends State<CarroDeVentas> {
                                                                       238,
                                                                       1),
                                                             ),
-                                                            onPressed: (){
-                                                              print(ventas
-                                                                  .ventas[index]
-                                                                  .idventa);
-                                                              this.carroVentasDataSourceImpl
-                                                                  .delVenta(ventas
+                                                            //boton eliminar
+                                                            IconButton(
+                                                                icon: Icon(
+                                                                  Icons
+                                                                      .delete_outline,
+                                                                  color: Color
+                                                                      .fromRGBO(
+                                                                          46,
+                                                                          99,
+                                                                          238,
+                                                                          1),
+                                                                ),
+                                                                onPressed: () {
+                                                                  print(ventas
                                                                       .ventas[
                                                                           index]
-                                                                      .idventa).then((value){
-                                                                          setState(() {});
-                                                                      });
-                                                            }),
+                                                                      .idventa);
+                                                                  this
+                                                                      .carroVentasDataSourceImpl
+                                                                      .delVenta(ventas
+                                                                          .ventas[
+                                                                              index]
+                                                                          .idventa)
+                                                                      .then(
+                                                                          (value) {
+                                                                    setState(
+                                                                        () {});
+                                                                  });
+                                                                }),
+                                                          ],
+                                                        )
                                                       ],
-                                                    )
+                                                    ),
                                                   ],
                                                 ),
                                               ),

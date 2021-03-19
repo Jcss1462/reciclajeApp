@@ -1,11 +1,3 @@
-class Residuo {
-  String name;
-  int peso;
-  int total;
-
-  Residuo({this.name, this.peso, this.total});
-}
-
 class Ventas {
   String fechaventa;
   int idventa;
@@ -14,8 +6,8 @@ class Ventas {
   int idestadoventaEstadoventa;
   String emailUsuario;
 
-  Ventas(this.fechaventa, this.idventa, this.peso, this.total, this.idestadoventaEstadoventa,
-      this.emailUsuario);
+  Ventas(this.fechaventa, this.idventa, this.peso, this.total,
+      this.idestadoventaEstadoventa, this.emailUsuario);
 
   Ventas.fromJson(Map<dynamic, dynamic> json) {
     this.fechaventa = json['fechaventa'];
@@ -36,5 +28,4 @@ class Ventas {
       'email_Usuario': this.emailUsuario
     };
   }
-
 }

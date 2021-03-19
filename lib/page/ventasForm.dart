@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:reciclaje_app/data/model/venta.dart';
 import 'package:reciclaje_app/page/carroDeVentas.dart';
 import 'package:reciclaje_app/widgets/NavBar.dart';
 
@@ -23,12 +22,8 @@ class _VentasFormState extends State<VentasForm> {
   int precioVidirio = 2500;
 
   var estados = [];
-  var residuo = new Residuo();
 
   List<CheckBoxModalCarro> estadoList = [];
-
-  List<Residuo> residuoModel;
-  List<Residuo> listaCarro;
 
   @override
   void initState() {
@@ -38,7 +33,6 @@ class _VentasFormState extends State<VentasForm> {
     estadoList.add(CheckBoxModalCarro(title: 'Hoja', value: false));
     estadoList.add(CheckBoxModalCarro(title: 'Pliegos', value: false));
 
-    
     super.initState();
   }
 
@@ -51,16 +45,6 @@ class _VentasFormState extends State<VentasForm> {
 
     print(estados);
     estados.clear();
-  }
-
-  List<Residuo> listCarro() {
-    var items = [];
-    if (residuoModel.length <= 1) {
-      items.add(residuo.name);
-      items.add(residuo.peso);
-      items.add(residuoModel);
-    }
-    return items;
   }
 
   @override
@@ -285,8 +269,8 @@ class _VentasFormState extends State<VentasForm> {
                                     Navigator.push(
                                         context,
                                         MaterialPageRoute(
-                                            builder: (context) =>
-                                                CarroDeVentas("jcss1462@gmail.com")));
+                                            builder: (context) => CarroDeVentas(
+                                                "jcss1462@gmail.com")));
                                   },
                                 ),
                                 TextButton(
@@ -300,8 +284,7 @@ class _VentasFormState extends State<VentasForm> {
                                     ),
                                     onPressed: () {
                                       MaterialPageRoute(
-                                          builder: (context) =>
-                                              VentasForm());
+                                          builder: (context) => VentasForm());
                                     }),
                               ],
                             ),
