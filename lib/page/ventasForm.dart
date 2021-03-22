@@ -171,6 +171,7 @@ class _VentasFormState extends State<VentasForm> {
                                                 dropListaresiduo[0].value;
                                             return DropdownButton<
                                                 TipoResiduoList>(
+                                              hint: Text("Tipo de Residuo"),
                                               value: selectResiduo,
                                               items: dropListaresiduo,
                                               onChanged: (value) {
@@ -278,7 +279,8 @@ class _VentasFormState extends State<VentasForm> {
                           if (formKey.currentState.validate()) {
                             formKey.currentState.save();
                             print(peso);
-                            print(listadeResiduos);
+                            print(selectResiduo.tipoResiduos);
+                            print(dropListaresiduo);
                             getItems();
                           }
                           showDialog(
