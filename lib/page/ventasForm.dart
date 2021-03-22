@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:reciclaje_app/data/datasources/carroVenta_datasource.dart';
+import 'package:reciclaje_app/data/model/tipoResiduo.dart';
+import 'package:reciclaje_app/data/model/tipoResiduoList.dart';
 import 'package:reciclaje_app/page/carroDeVentas.dart';
 import 'package:reciclaje_app/widgets/NavBar.dart';
 
@@ -12,7 +15,6 @@ class VentasForm extends StatefulWidget {
 class _VentasFormState extends State<VentasForm> {
   final formKey = GlobalKey<FormState>();
 
-  String tipodeResiduo;
   String estadodelResiduo;
   int peso;
   int quantity;
@@ -23,7 +25,36 @@ class _VentasFormState extends State<VentasForm> {
 
   var estados = [];
 
+  CarroVentasDataSourceImpl carroVentasDataSourceImpl =
+      new CarroVentasDataSourceImpl();
+
   List<CheckBoxModalCarro> estadoList = [];
+
+  List<DropdownMenuItem<TipoResiduoList>> dropListaresiduo;
+
+  TipoResiduoList selectResiduo;
+
+  List<DropdownMenuItem<TipoResiduoList>> getResiduo(List listaresiduos) {
+    List<DropdownMenuItem<TipoResiduoList>> items = [];
+    for (TipoResiduo listResiduo in listaresiduos) {
+      items.add(DropdownMenuItem(
+        child: Text(
+          listResiduo.tipo,
+          style: TextStyle(
+            fontWeight: FontWeight.normal,
+            fontSize: 15,
+          ),
+        ),
+      ));
+    }
+
+    return items;
+  }
+
+  TipoResiduoList listadeResiduos;
+  Future<TipoResiduoList> getListObtenerTipoResiduo() async {
+    return await this.carroVentasDataSourceImpl.obtenerTiposResiduos();
+  }
 
   @override
   void initState() {
@@ -82,11 +113,11 @@ class _VentasFormState extends State<VentasForm> {
           ),
           new Center(
             child: Container(
-              width: MediaQuery.of(context).size.width / 1.3,
-              height: MediaQuery.of(context).size.height / 1.4,
+              width: MediaQuery.of(context).size.width / 1.05,
+              height: MediaQuery.of(context).size.height / 1.15,
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
                 color: Colors.white,
+                borderRadius: BorderRadius.circular(10),
                 boxShadow: [
                   BoxShadow(
                     color: Colors.grey.withOpacity(0.25),
@@ -100,13 +131,13 @@ class _VentasFormState extends State<VentasForm> {
                 //Formulario
                 child: SingleChildScrollView(
                   padding: EdgeInsets.only(
-                      top: 30.0, bottom: 30.0, left: 40, right: 40),
+                      top: 5.0, bottom: 30.0, left: 40, right: 40),
                   child: Column(
                     children: [
                       Text(
                         "Carro de Ventas",
                         style: TextStyle(
-                            color: Color.fromRGBO(46, 99, 238, 1),
+                            color: Colors.black,
                             fontWeight: FontWeight.bold,
                             fontSize: 28),
                       ),
@@ -117,36 +148,44 @@ class _VentasFormState extends State<VentasForm> {
                           children: [
                             //Campos
                             Container(
-                              height: 50,
-                              //Tipo de residuo
-                              child: TextFormField(
-                                decoration: InputDecoration(
-                                  hintText: "Tipo de Residuo",
-                                  contentPadding: EdgeInsets.all(11),
-                                  enabledBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(30.0),
-                                    borderSide: BorderSide(
-                                      color: Color.fromRGBO(46, 99, 238, 1),
-                                      width: 0.5,
-                                    ),
-                                  ),
-                                ),
-                                //Validacion
-                                onSaved: (value) {
-                                  tipodeResiduo = value;
-                                },
-                                validator: (value) {
-                                  if (value.isEmpty) {
-                                    return "llenar el campo";
-                                  } else {
-                                    return null;
-                                  }
-                                },
-                              ),
-                            ),
+                                height: 50,
+                                //Tipo de residuo
+                                child: FutureBuilder(
+                                    future: getListObtenerTipoResiduo(),
+                                    builder: (BuildContext context,
+                                        AsyncSnapshot snapshot) {
+                                      switch (snapshot.connectionState) {
+                                        //mientras espera
+                                        case ConnectionState.waiting:
+                                          return CircularProgressIndicator();
+                                        default:
+                                          if (snapshot.hasError) {
+                                            return Text(
+                                                'Error: ${snapshot.error}');
+                                          } else {
+                                            this.listadeResiduos =
+                                                snapshot.data;
+                                            dropListaresiduo = getResiduo(
+                                                listadeResiduos.tipoResiduos);
+                                            selectResiduo =
+                                                dropListaresiduo[0].value;
+                                            return DropdownButton<
+                                                TipoResiduoList>(
+                                              value: selectResiduo,
+                                              items: dropListaresiduo,
+                                              onChanged: (value) {
+                                                setState(() {
+                                                  selectResiduo = value;
+                                                });
+                                              },
+                                            );
+                                          }
+                                      }
+                                    })),
+
                             //Cantidad del residuo
                             SizedBox(height: 15),
-                            Container(
+                            new Container(
                               height: 50,
                               child: TextFormField(
                                   keyboardType: TextInputType.number,
@@ -238,8 +277,8 @@ class _VentasFormState extends State<VentasForm> {
                         onPressed: () async {
                           if (formKey.currentState.validate()) {
                             formKey.currentState.save();
-                            debugPrint(this.tipodeResiduo);
                             print(peso);
+                            print(listadeResiduos);
                             getItems();
                           }
                           showDialog(

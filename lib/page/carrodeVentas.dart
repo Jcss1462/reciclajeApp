@@ -272,21 +272,54 @@ class _CarroDeVentasState extends State<CarroDeVentas> {
                                                                           1),
                                                                 ),
                                                                 onPressed: () {
-                                                                  print(ventas
-                                                                      .ventas[
-                                                                          index]
-                                                                      .idventa);
-                                                                  this
-                                                                      .carroVentasDataSourceImpl
-                                                                      .delVenta(ventas
-                                                                          .ventas[
-                                                                              index]
-                                                                          .idventa)
-                                                                      .then(
-                                                                          (value) {
-                                                                    setState(
-                                                                        () {});
-                                                                  });
+                                                                  showDialog(
+                                                                      context:
+                                                                          context,
+                                                                      builder:
+                                                                          (context) =>
+                                                                              AlertDialog(
+                                                                                title: Text(
+                                                                                  "Estas seguro que deseas eliminar este carrito?",
+                                                                                  style: TextStyle(
+                                                                                    color: Color.fromRGBO(46, 99, 238, 1),
+                                                                                    fontWeight: FontWeight.bold,
+                                                                                    fontSize: 20,
+                                                                                  ),
+                                                                                ),
+                                                                                actions: <Widget>[
+                                                                                  TextButton(
+                                                                                    child: Text(
+                                                                                      'Cancelar',
+                                                                                      style: TextStyle(
+                                                                                        color: Color.fromRGBO(46, 99, 238, 1),
+                                                                                        fontWeight: FontWeight.bold,
+                                                                                        fontSize: 15,
+                                                                                      ),
+                                                                                    ),
+                                                                                    onPressed: () {
+                                                                                      Navigator.pop(context);
+                                                                                    },
+                                                                                  ),
+                                                                                  TextButton(
+                                                                                    child: Text(
+                                                                                      'Continuar',
+                                                                                      style: TextStyle(
+                                                                                        color: Color.fromRGBO(46, 99, 238, 1),
+                                                                                        fontWeight: FontWeight.bold,
+                                                                                        fontSize: 15,
+                                                                                      ),
+                                                                                    ),
+                                                                                    onPressed: () {
+                                                                                      print(ventas.ventas[index].idventa);
+                                                                                      this.carroVentasDataSourceImpl.delVenta(ventas.ventas[index].idventa).then((value) {
+                                                                                        setState(() {});
+                                                                                      });
+                                                                                      //cierro la ventana
+                                                                                      Navigator.pop(context);
+                                                                                    },
+                                                                                  ),
+                                                                                ],
+                                                                              ));
                                                                 }),
                                                           ],
                                                         )
