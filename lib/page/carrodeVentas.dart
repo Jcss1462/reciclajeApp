@@ -94,6 +94,7 @@ class _CarroDeVentasState extends State<CarroDeVentas> {
                                                   5,
                                               //tamaño minimo de altura
                                               constraints: BoxConstraints(
+                                                minWidth: 185,
                                                 minHeight: 185,
                                               ),
                                               padding: EdgeInsets.only(
