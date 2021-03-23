@@ -37,8 +37,13 @@ class ApiProvider {
   Future<dynamic> post(String url, String objToCreate) async {
     print(baseUrl + url);
     var responseJson;
+    String token;
     try {
-      Map<String, String> headers = {"Content-Type": "application/json"};
+      await preferencias.obtenerToken().then((value) async {
+        token = value;
+      });
+      print(token);
+      Map<String, String> headers = {"Content-Type": "application/json","Authorization":token};
 
       final response = await http.post(
         Uri.https(baseUrl, url),

@@ -1,3 +1,6 @@
+import 'dart:convert';
+
+import 'package:reciclaje_app/data/model/nuevaVenta.dart';
 import 'package:reciclaje_app/data/model/tipoResiduoList.dart';
 import 'package:reciclaje_app/data/model/ventaList.dart';
 import 'package:reciclaje_app/data/network/api_provider.dart';
@@ -8,6 +11,8 @@ abstract class CarroVentasDataSource {
   Future<dynamic> delVenta(int idVenta);
 
   Future<TipoResiduoList> obtenerTiposResiduos();
+
+  Future<NuevaVenta> crearVenta(NuevaVenta nuevaVenta);
 }
 
 class CarroVentasDataSourceImpl implements CarroVentasDataSource {
@@ -33,5 +38,15 @@ class CarroVentasDataSourceImpl implements CarroVentasDataSource {
         await _apiProvider.get("/api/v1/carritoVentas/listTipoResiduo");
     print(response);
     return TipoResiduoList.fromJson(response);
+  }
+
+  @override
+  Future<NuevaVenta> crearVenta(NuevaVenta nuevaVenta) async {
+
+    String body= jsonEncode(nuevaVenta.toJson());
+    print(body);
+    final response = await _apiProvider.post("/api/v1/carritoVentas/nuevaVenta", body);
+    print(response);
+    return NuevaVenta.fromJson(response);
   }
 }

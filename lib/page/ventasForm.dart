@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:reciclaje_app/data/datasources/carroVenta_datasource.dart';
+import 'package:reciclaje_app/data/model/nuevaVenta.dart';
 import 'package:reciclaje_app/data/model/tipoResiduo.dart';
 import 'package:reciclaje_app/data/model/tipoResiduoList.dart';
 import 'package:reciclaje_app/page/carroDeVentas.dart';
 import 'package:reciclaje_app/widgets/NavBar.dart';
+import 'package:reciclaje_app/widgets/dialogBox.dart';
 
 class VentasForm extends StatefulWidget {
   VentasForm({Key key}) : super(key: key);
@@ -15,13 +17,8 @@ class VentasForm extends StatefulWidget {
 class _VentasFormState extends State<VentasForm> {
   final formKey = GlobalKey<FormState>();
 
-  String estadodelResiduo;
-  int peso;
-  int quantity;
+  double peso;
   double total;
-  int precioPapel = 1000;
-  int precioCarton = 2000;
-  int precioVidirio = 2500;
 
   var estados = [];
 
@@ -232,7 +229,8 @@ class _VentasFormState extends State<VentasForm> {
                                                     setState(() {
                                                       selectResiduo = value;
                                                       //actualizo el precio
-                                                      if (peso == 0 || peso==null) {
+                                                      if (peso == 0 ||
+                                                          peso == null) {
                                                         total = 0;
                                                       } else {
                                                         total = selectResiduo
@@ -267,21 +265,22 @@ class _VentasFormState extends State<VentasForm> {
 
                                   //Validacion
                                   onSaved: (value) {
-                                    peso = int.parse(value);
+                                    peso = double.parse(value);
                                     //actualizo el precio
                                     if (peso == 0) {
                                       total = 0;
-                                    }else if(selectResiduo==null){
+                                    } else if (selectResiduo == null) {
                                       total = 0;
                                     } else {
                                       total = selectResiduo.precio * peso;
                                     }
-                                  },onChanged: (value) {
-                                    peso = int.parse(value);
+                                  },
+                                  onChanged: (value) {
+                                    peso = double.parse(value);
                                     //actualizo el precio
                                     if (peso == 0) {
                                       total = 0;
-                                    }else if(selectResiduo==null){
+                                    } else if (selectResiduo == null) {
                                       total = 0;
                                     } else {
                                       total = selectResiduo.precio * peso;
@@ -343,7 +342,7 @@ class _VentasFormState extends State<VentasForm> {
                           ),
                           SizedBox(height: 25),
                           Text(
-                            total == null ? "\$0" : "\$"+total.toString(),
+                            total == null ? "\$0" : "\$" + total.toString(),
                             style: TextStyle(
                                 color: Color.fromRGBO(46, 99, 238, 1),
                                 fontWeight: FontWeight.bold,
@@ -370,41 +369,34 @@ class _VentasFormState extends State<VentasForm> {
                             print(peso);
                             print(selectResiduo.idtiporesiduo);
                             getItems();
-                            showDialog(
-                              context: context,
-                              builder: (context) => AlertDialog(
-                                title: Text(
-                                  "Residuo Agregado",
-                                  style: TextStyle(
-                                    color: Color.fromRGBO(46, 99, 238, 1),
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 20,
-                                  ),
-                                ),
-                                content:
-                                    Text("El Residuo se Agrego Exitosamente"),
-                                actions: <Widget>[
-                                  TextButton(
-                                    child: Text(
-                                      'Ok',
-                                      style: TextStyle(
-                                        color: Color.fromRGBO(46, 99, 238, 1),
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 15,
-                                      ),
+
+                            //gurado la venta
+                            NuevaVenta nuevaVenta = NuevaVenta(
+                                peso,
+                                total,
+                                "jcss1462@gmail.com",
+                                selectResiduo.idtiporesiduo);
+                            this
+                                .carroVentasDataSourceImpl
+                                .crearVenta(nuevaVenta)
+                                .then((value) {
+                              showDialog(
+                                context: context,
+                                builder: (context) => AlertDialog(
+                                  title: Text(
+                                    "Residuo Agregado",
+                                    style: TextStyle(
+                                      color: Color.fromRGBO(46, 99, 238, 1),
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 20,
                                     ),
-                                    onPressed: () {
-                                      /*
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) => CarroDeVentas(
-                                                "jcss1462@gmail.com")));*/
-                                    },
                                   ),
-                                  TextButton(
+                                  content:
+                                      Text("El Residuo se Agrego Exitosamente"),
+                                  actions: <Widget>[
+                                    TextButton(
                                       child: Text(
-                                        'Vender Mas',
+                                        'Ok',
                                         style: TextStyle(
                                           color: Color.fromRGBO(46, 99, 238, 1),
                                           fontWeight: FontWeight.bold,
@@ -412,12 +404,39 @@ class _VentasFormState extends State<VentasForm> {
                                         ),
                                       ),
                                       onPressed: () {
-                                        MaterialPageRoute(
-                                            builder: (context) => VentasForm());
-                                      }),
-                                ],
-                              ),
-                            );
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    CarroDeVentas(
+                                                        "jcss1462@gmail.com")));
+                                      },
+                                    ),
+                                    TextButton(
+                                        child: Text(
+                                          'Vender Mas',
+                                          style: TextStyle(
+                                            color:
+                                                Color.fromRGBO(46, 99, 238, 1),
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 15,
+                                          ),
+                                        ),
+                                        onPressed: () {
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  VentasForm());
+                                        }),
+                                  ],
+                                ),
+                              );
+                            }).onError((error, stackTrace) {
+                              showDialog(
+                                  context: context,
+                                  builder: (context) => DialogBox(
+                                      "Error al guardar venta",
+                                      error.toString()));
+                            });
                           }
                         },
                       )
