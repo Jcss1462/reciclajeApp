@@ -1,19 +1,19 @@
 class TipoResiduo {
-  int idtipoResiduo;
+  int idtiporesiduo;
   double precio;
   String tipo;
 
-  TipoResiduo(this.idtipoResiduo, this.precio, this.tipo);
+  TipoResiduo(this.idtiporesiduo, this.precio, this.tipo);
 
   TipoResiduo.fromJson(Map<dynamic, dynamic> json) {
-    this.idtipoResiduo = json['idtipoResiduo'];
+    this.idtiporesiduo = json['idtiporesiduo'];
     this.precio = json['precio'];
     this.tipo = json['tipo'];
   }
 
   Map<String, dynamic> toJson() {
     return {
-      'idtipoResiduo': this.idtipoResiduo,
+      'idtiporesiduo': this.idtiporesiduo,
       'precio': this.precio,
       'tipo': this.tipo
     };

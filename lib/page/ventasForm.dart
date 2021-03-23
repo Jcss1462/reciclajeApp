@@ -30,13 +30,13 @@ class _VentasFormState extends State<VentasForm> {
 
   List<CheckBoxModalCarro> estadoList = [];
 
-  List<DropdownMenuItem<TipoResiduoList>> dropListaresiduo;
+  List<DropdownMenuItem<TipoResiduo>> dropListaresiduo;
 
-  TipoResiduoList selectResiduo;
-
-  List<DropdownMenuItem<TipoResiduoList>> getResiduo(List listaresiduos) {
-    List<DropdownMenuItem<TipoResiduoList>> items = [];
-    for (TipoResiduo listResiduo in listaresiduos) {
+  TipoResiduo selectResiduo;
+  List<DropdownMenuItem<TipoResiduo>> getResiduo(
+      TipoResiduoList listaresiduos) {
+    List<DropdownMenuItem<TipoResiduo>> items = [];
+    for (TipoResiduo listResiduo in listaresiduos.tipoResiduos) {
       items.add(DropdownMenuItem(
         child: Text(
           listResiduo.tipo,
@@ -45,13 +45,14 @@ class _VentasFormState extends State<VentasForm> {
             fontSize: 15,
           ),
         ),
+        value: listResiduo,
       ));
     }
 
     return items;
   }
 
-  TipoResiduoList listadeResiduos;
+  Future<TipoResiduoList> listadeResiduos;
   Future<TipoResiduoList> getListObtenerTipoResiduo() async {
     return await this.carroVentasDataSourceImpl.obtenerTiposResiduos();
   }
@@ -63,7 +64,7 @@ class _VentasFormState extends State<VentasForm> {
     estadoList.add(CheckBoxModalCarro(title: 'Contaminado', value: false));
     estadoList.add(CheckBoxModalCarro(title: 'Hoja', value: false));
     estadoList.add(CheckBoxModalCarro(title: 'Pliegos', value: false));
-
+    listadeResiduos = getListObtenerTipoResiduo();
     super.initState();
   }
 
@@ -155,7 +156,7 @@ class _VentasFormState extends State<VentasForm> {
                                 height: 70,
                                 //Tipo de residuo
                                 child: FutureBuilder(
-                                    future: getListObtenerTipoResiduo(),
+                                    future: listadeResiduos,
                                     builder: (BuildContext context,
                                         AsyncSnapshot snapshot) {
                                       switch (snapshot.connectionState) {
@@ -167,12 +168,9 @@ class _VentasFormState extends State<VentasForm> {
                                             return Text(
                                                 'Error: ${snapshot.error}');
                                           } else {
-                                            this.listadeResiduos =
-                                                snapshot.data;
-                                            dropListaresiduo = getResiduo(
-                                                listadeResiduos.tipoResiduos);
-                                            selectResiduo =
-                                                dropListaresiduo[0].value;
+                                            //obtengo la lista de residuos
+                                            dropListaresiduo =
+                                                getResiduo(snapshot.data);
                                             return Card(
                                               child: Container(
                                                 width: MediaQuery.of(context)
@@ -205,8 +203,8 @@ class _VentasFormState extends State<VentasForm> {
                                                     ),
                                                   ],
                                                 ),
-                                                child: DropdownButton<
-                                                    TipoResiduoList>(
+                                                child:
+                                                    DropdownButton<TipoResiduo>(
                                                   hint: Text(
                                                     "Tipo de Residuo",
                                                     style: TextStyle(
@@ -336,44 +334,25 @@ class _VentasFormState extends State<VentasForm> {
                           if (formKey.currentState.validate()) {
                             formKey.currentState.save();
                             print(peso);
-                            print(selectResiduo.tipoResiduos);
-                            print(dropListaresiduo);
+                            print(selectResiduo.idtiporesiduo);
                             getItems();
-                          }
-                          showDialog(
-                            context: context,
-                            builder: (context) => AlertDialog(
-                              title: Text(
-                                "Residuo Agregado",
-                                style: TextStyle(
-                                  color: Color.fromRGBO(46, 99, 238, 1),
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 20,
-                                ),
-                              ),
-                              content:
-                                  Text("El Residuo se Agrego Exitosamente"),
-                              actions: <Widget>[
-                                TextButton(
-                                  child: Text(
-                                    'Ok',
-                                    style: TextStyle(
-                                      color: Color.fromRGBO(46, 99, 238, 1),
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 15,
-                                    ),
+                            showDialog(
+                              context: context,
+                              builder: (context) => AlertDialog(
+                                title: Text(
+                                  "Residuo Agregado",
+                                  style: TextStyle(
+                                    color: Color.fromRGBO(46, 99, 238, 1),
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 20,
                                   ),
-                                  onPressed: () {
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) => CarroDeVentas(
-                                                "jcss1462@gmail.com")));
-                                  },
                                 ),
-                                TextButton(
+                                content:
+                                    Text("El Residuo se Agrego Exitosamente"),
+                                actions: <Widget>[
+                                  TextButton(
                                     child: Text(
-                                      'Vender Mas',
+                                      'Ok',
                                       style: TextStyle(
                                         color: Color.fromRGBO(46, 99, 238, 1),
                                         fontWeight: FontWeight.bold,
@@ -381,12 +360,31 @@ class _VentasFormState extends State<VentasForm> {
                                       ),
                                     ),
                                     onPressed: () {
-                                      MaterialPageRoute(
-                                          builder: (context) => VentasForm());
-                                    }),
-                              ],
-                            ),
-                          );
+                                      /*
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) => CarroDeVentas(
+                                                "jcss1462@gmail.com")));*/
+                                    },
+                                  ),
+                                  TextButton(
+                                      child: Text(
+                                        'Vender Mas',
+                                        style: TextStyle(
+                                          color: Color.fromRGBO(46, 99, 238, 1),
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 15,
+                                        ),
+                                      ),
+                                      onPressed: () {
+                                        MaterialPageRoute(
+                                            builder: (context) => VentasForm());
+                                      }),
+                                ],
+                              ),
+                            );
+                          }
                         },
                       )
                     ],
