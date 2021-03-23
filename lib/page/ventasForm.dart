@@ -113,8 +113,12 @@ class _VentasFormState extends State<VentasForm> {
           ),
           new Center(
             child: Container(
-              width: MediaQuery.of(context).size.width / 1.05,
+              width: MediaQuery.of(context).size.width / 1.15,
               height: MediaQuery.of(context).size.height / 1.15,
+              constraints: BoxConstraints(
+                minWidth: 160,
+                minHeight: 160,
+              ),
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(10),
@@ -137,7 +141,7 @@ class _VentasFormState extends State<VentasForm> {
                       Text(
                         "Carro de Ventas",
                         style: TextStyle(
-                            color: Colors.black,
+                            color: Color.fromRGBO(46, 99, 238, 1),
                             fontWeight: FontWeight.bold,
                             fontSize: 28),
                       ),
@@ -148,7 +152,7 @@ class _VentasFormState extends State<VentasForm> {
                           children: [
                             //Campos
                             Container(
-                                height: 50,
+                                height: 70,
                                 //Tipo de residuo
                                 child: FutureBuilder(
                                     future: getListObtenerTipoResiduo(),
@@ -169,16 +173,70 @@ class _VentasFormState extends State<VentasForm> {
                                                 listadeResiduos.tipoResiduos);
                                             selectResiduo =
                                                 dropListaresiduo[0].value;
-                                            return DropdownButton<
-                                                TipoResiduoList>(
-                                              hint: Text("Tipo de Residuo"),
-                                              value: selectResiduo,
-                                              items: dropListaresiduo,
-                                              onChanged: (value) {
-                                                setState(() {
-                                                  selectResiduo = value;
-                                                });
-                                              },
+                                            return Card(
+                                              child: Container(
+                                                width: MediaQuery.of(context)
+                                                        .size
+                                                        .width -
+                                                    100,
+                                                height: MediaQuery.of(context)
+                                                        .size
+                                                        .height /
+                                                    50,
+                                                constraints: BoxConstraints(
+                                                  minWidth: 185,
+                                                  minHeight: 185,
+                                                ),
+                                                padding: EdgeInsets.only(
+                                                    top: 2.0,
+                                                    bottom: 2.0,
+                                                    left: 2,
+                                                    right: 2),
+                                                decoration: BoxDecoration(
+                                                  borderRadius:
+                                                      BorderRadius.circular(10),
+                                                  color: Colors.white,
+                                                  boxShadow: [
+                                                    BoxShadow(
+                                                      color: Colors.grey
+                                                          .withOpacity(0.25),
+                                                      spreadRadius: 2,
+                                                      offset: Offset(0, 3),
+                                                    ),
+                                                  ],
+                                                ),
+                                                child: DropdownButton<
+                                                    TipoResiduoList>(
+                                                  hint: Text(
+                                                    "Tipo de Residuo",
+                                                    style: TextStyle(
+                                                        color: Color.fromRGBO(
+                                                            46, 99, 238, 1),
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                        fontSize: 18),
+                                                  ),
+                                                  elevation: 5,
+                                                  style: const TextStyle(
+                                                      color: Color.fromRGBO(
+                                                          46, 99, 238, 1),
+                                                      fontWeight:
+                                                          FontWeight.normal,
+                                                      fontSize: 15),
+                                                  underline: Container(
+                                                    height: 2,
+                                                    color: Color.fromRGBO(
+                                                        46, 99, 238, 1),
+                                                  ),
+                                                  value: selectResiduo,
+                                                  items: dropListaresiduo,
+                                                  onChanged: (value) {
+                                                    setState(() {
+                                                      selectResiduo = value;
+                                                    });
+                                                  },
+                                                ),
+                                              ),
                                             );
                                           }
                                       }
@@ -187,7 +245,6 @@ class _VentasFormState extends State<VentasForm> {
                             //Cantidad del residuo
                             SizedBox(height: 15),
                             new Container(
-                              height: 50,
                               child: TextFormField(
                                   keyboardType: TextInputType.number,
                                   decoration: InputDecoration(
