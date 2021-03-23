@@ -18,7 +18,7 @@ class _VentasFormState extends State<VentasForm> {
   String estadodelResiduo;
   int peso;
   int quantity;
-  int total;
+  double total;
   int precioPapel = 1000;
   int precioCarton = 2000;
   int precioVidirio = 2500;
@@ -231,6 +231,14 @@ class _VentasFormState extends State<VentasForm> {
                                                   onChanged: (value) {
                                                     setState(() {
                                                       selectResiduo = value;
+                                                      //actualizo el precio
+                                                      if (peso == 0 || peso==null) {
+                                                        total = 0;
+                                                      } else {
+                                                        total = selectResiduo
+                                                                .precio *
+                                                            peso;
+                                                      }
                                                     });
                                                   },
                                                 ),
@@ -260,6 +268,24 @@ class _VentasFormState extends State<VentasForm> {
                                   //Validacion
                                   onSaved: (value) {
                                     peso = int.parse(value);
+                                    //actualizo el precio
+                                    if (peso == 0) {
+                                      total = 0;
+                                    }else if(selectResiduo==null){
+                                      total = 0;
+                                    } else {
+                                      total = selectResiduo.precio * peso;
+                                    }
+                                  },onChanged: (value) {
+                                    peso = int.parse(value);
+                                    //actualizo el precio
+                                    if (peso == 0) {
+                                      total = 0;
+                                    }else if(selectResiduo==null){
+                                      total = 0;
+                                    } else {
+                                      total = selectResiduo.precio * peso;
+                                    }
                                   },
                                   validator: (value) {
                                     if (value.isEmpty) {
@@ -310,6 +336,14 @@ class _VentasFormState extends State<VentasForm> {
                         children: [
                           Text(
                             "Total de Venta del Residuo",
+                            style: TextStyle(
+                                color: Color.fromRGBO(46, 99, 238, 1),
+                                fontWeight: FontWeight.bold,
+                                fontSize: 18),
+                          ),
+                          SizedBox(height: 25),
+                          Text(
+                            total == null ? "\$0" : "\$"+total.toString(),
                             style: TextStyle(
                                 color: Color.fromRGBO(46, 99, 238, 1),
                                 fontWeight: FontWeight.bold,
