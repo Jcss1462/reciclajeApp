@@ -177,25 +177,52 @@ class _LoginState extends State<Login> {
                                 LoginDatasourceImpl loginDataSource =
                                     new LoginDatasourceImpl();
                                 loginDataSource
-                                    .loginBack("jcss1462", "accion13")
+                                    .loginBack(this.email, value.user.uid)
                                     .then((value) {
+                                  //guardo el token y los datos importantes en las preferencias
                                   Token token = value;
                                   //debugPrint(token.token);
-
-                                  //guardo el token en las preferencias
                                   Preferences preference = new Preferences();
                                   preference.setearToken(token.token);
-                                });
+                                  //guardo el email y el tipo de usuario
+                                  UsuarioDatasourceImpl usuarioDatasource =
+                                      new UsuarioDatasourceImpl();
+                                  usuarioDatasource
+                                      .findById(this.email)
+                                      .then((value) {
+                                    preference.setearEmail(value.email);
+                                    preference.setearTipo(value.idtipousuario);
 
-                                UsuarioDatasourceImpl usuarioDatasource =
-                                    new UsuarioDatasourceImpl();
-                                usuarioDatasource.findAll().then((value) {
-                                  value.beneficios.forEach((element) {
-                                    debugPrint(element.email);
+                                    //redirijo segun el tipo de usuario
+                                    if (value.idtipousuario == 1) {
+                                      debugPrint("Secion iniciada");
+                                      //redirijo a la pantalla inicial
+                                      Navigator.pushNamed(
+                                          context, inicioReciclador);
+                                    } else {
+                                      showDialog(
+                                        context: context,
+                                        builder: (context) =>
+                                            DialogBox("No eres reciclador", ""),
+                                      );
+                                    }
+                                  }).onError((error, stackTrace) {
+                                    showDialog(
+                                      context: context,
+                                      builder: (context) => DialogBox(
+                                          "Problema guardando preferencias de usuarios",
+                                          error),
+                                    );
                                   });
+                                }).onError((error, stackTrace) {
+                                  debugPrint("Problema obteniendo el token");
+                                  showDialog(
+                                    context: context,
+                                    builder: (context) => DialogBox(
+                                        "Problema obteniendo el token",
+                                        this.email),
+                                  );
                                 });
-                                debugPrint("Secion iniciada");
-                                Navigator.pushNamed(context, inicioReciclador);
                               }
                             }).onError((error, stackTrace) {
                               debugPrint("Usuario no existe");

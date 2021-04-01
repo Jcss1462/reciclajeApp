@@ -7,6 +7,7 @@ import 'package:reciclaje_app/data/network/api_provider.dart';
 
 abstract class UsuarioDatasource {
   Future<Usuario> createUserHk(Usuario usuario);
+  Future<Usuario> findById(String email);
   Future<UsuarioList> findAll();
 }
 
@@ -26,6 +27,14 @@ class UsuarioDatasourceImpl implements UsuarioDatasource {
   
     final response = await _apiProvider.get("/api/v1/usuario/findAll");
     return UsuarioList.fromJson(response);
+ 
+  }
+
+  @override
+  Future<Usuario> findById(String email) async {
+  
+    final response = await _apiProvider.get("/api/v1/usuario/findById/"+email);
+    return Usuario.fromJson(response);
  
   }
 

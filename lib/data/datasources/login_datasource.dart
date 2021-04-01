@@ -14,6 +14,8 @@ class LoginDatasourceImpl implements LoginDatasource {
  @override
   Future<Token> loginBack(String username, String password) async {
 
+    print("password: "+password);
+
     LoginBack log=new LoginBack(username,password);
     String body= jsonEncode(log.toJson());
     final response = await _apiProvider.post("/login", body);
