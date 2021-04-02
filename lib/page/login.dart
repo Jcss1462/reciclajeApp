@@ -8,6 +8,8 @@ import 'package:reciclaje_app/service/authentication_service.dart';
 import 'package:reciclaje_app/service/preferences.dart';
 import 'package:reciclaje_app/widgets/dialogBox.dart';
 
+import '../core/constants.dart';
+
 class Login extends StatefulWidget {
   const Login({Key key}) : super(key: key);
 
@@ -206,10 +208,19 @@ class _LoginState extends State<Login> {
                                       setState(() {
                                         isLoad = false;
                                       });
-                                      debugPrint("Secion iniciada");
+                                      debugPrint(
+                                          "Inicio secion un Reciclador Oficial");
                                       //redirijo a la pantalla inicial
                                       Navigator.pushNamed(
                                           context, inicioReciclador);
+                                    } else if (value.idtipousuario == 2) {
+                                      setState(() {
+                                        isLoad = false;
+                                      });
+                                      debugPrint(
+                                          "Inicio secion un Ciudadano Civil");
+                                      Navigator.pushNamed(
+                                          context, inicioCiudadanoCivil);
                                     } else {
                                       setState(() {
                                         isLoad = false;
