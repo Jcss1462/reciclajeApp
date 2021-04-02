@@ -17,6 +17,7 @@ class Login extends StatefulWidget {
 
 class _LoginState extends State<Login> {
   final formKey = GlobalKey<FormState>();
+  bool isLoad = false;
   String email;
   String password;
 
@@ -154,6 +155,10 @@ class _LoginState extends State<Login> {
                         //logeo
                         onPressed: () async {
                           if (formKey.currentState.validate()) {
+                            //activo la pantalla de carga
+                            setState(() {
+                              isLoad = true;
+                            });
                             formKey.currentState.save();
                             debugPrint(this.email);
                             debugPrint(this.password);
@@ -165,6 +170,9 @@ class _LoginState extends State<Login> {
                                     email: this.email, password: this.password)
                                 .then((value) {
                               if (value.user.emailVerified == false) {
+                                setState(() {
+                                  isLoad = false;
+                                });
                                 debugPrint("Debe confirmar cuenta");
                                 showDialog(
                                   context: context,
@@ -195,11 +203,17 @@ class _LoginState extends State<Login> {
 
                                     //redirijo segun el tipo de usuario
                                     if (value.idtipousuario == 1) {
+                                      setState(() {
+                                        isLoad = false;
+                                      });
                                       debugPrint("Secion iniciada");
                                       //redirijo a la pantalla inicial
                                       Navigator.pushNamed(
                                           context, inicioReciclador);
                                     } else {
+                                      setState(() {
+                                        isLoad = false;
+                                      });
                                       showDialog(
                                         context: context,
                                         builder: (context) =>
@@ -207,6 +221,9 @@ class _LoginState extends State<Login> {
                                       );
                                     }
                                   }).onError((error, stackTrace) {
+                                    setState(() {
+                                      isLoad = false;
+                                    });
                                     showDialog(
                                       context: context,
                                       builder: (context) => DialogBox(
@@ -215,6 +232,9 @@ class _LoginState extends State<Login> {
                                     );
                                   });
                                 }).onError((error, stackTrace) {
+                                  setState(() {
+                                    isLoad = false;
+                                  });
                                   debugPrint("Problema obteniendo el token");
                                   showDialog(
                                     context: context,
@@ -225,12 +245,15 @@ class _LoginState extends State<Login> {
                                 });
                               }
                             }).onError((error, stackTrace) {
-                              debugPrint("Usuario no existe");
+                              setState(() {
+                                isLoad = false;
+                              });
+                              debugPrint("Error al iniciar seción");
                               showDialog(
                                 context: context,
                                 builder: (context) => DialogBox(
-                                    "Usuario no registrado",
-                                    "Usuario inexistente"),
+                                    "Error al iniciar seción",
+                                    error.toString()),
                               );
                             });
                           }
@@ -268,7 +291,21 @@ class _LoginState extends State<Login> {
               ),
             ),
           ),
-        )
+        ),
+        // Loader
+        Visibility(
+          visible: isLoad,
+          child: Positioned(
+            child: Container(
+                width: MediaQuery.of(context).size.width,
+                height: MediaQuery.of(context).size.height,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  color: Color.fromARGB(200, 255, 255, 255),
+                ),
+                child: Center(child: CircularProgressIndicator())),
+          ),
+        ),
       ],
     ));
   }

@@ -16,7 +16,7 @@ class Routers {
       case ventasForm:
         return MaterialPageRoute(builder: (_) => VentasForm());
       case carrodeVentas:
-        return MaterialPageRoute(builder: (_) => CarroDeVentas("jcss1462@gmail.com"));
+        return MaterialPageRoute(builder: (_) => CarroDeVentas());
       default:
         return MaterialPageRoute(
           builder: (_) => Scaffold(
