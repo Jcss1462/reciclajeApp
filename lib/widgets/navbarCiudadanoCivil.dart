@@ -45,6 +45,22 @@ class NavBarCiudadanoCivil extends StatelessWidget {
           ),
           ListTile(
             leading: Icon(
+              Icons.shop_outlined,
+              color: Color.fromRGBO(46, 99, 238, 1),
+            ),
+            title: Text(
+              "Donar Residuo",
+              style: TextStyle(
+                  color: Color.fromRGBO(46, 99, 238, 1),
+                  fontWeight: FontWeight.normal,
+                  fontSize: 18),
+            ),
+            onTap: () {
+              Navigator.pushNamed(context, donacionFormCivil);
+            },
+          ),
+          ListTile(
+            leading: Icon(
               Icons.shopping_cart_outlined,
               color: Color.fromRGBO(46, 99, 238, 1),
             ),
@@ -56,7 +72,7 @@ class NavBarCiudadanoCivil extends StatelessWidget {
                   fontSize: 18),
             ),
             onTap: () {
-              Navigator.pushNamed(context, donacionFormCivil);
+              Navigator.pushNamed(context, carrodeDonacionCivil);
             },
           ),
           ListTile(

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:reciclaje_app/page/carrodeDonacionCivil.dart';
 import 'package:reciclaje_app/widgets/navbarCiudadanoCivil.dart';
 
 import '../data/datasources/carroVenta_datasource.dart';
@@ -80,7 +81,9 @@ class _DonacionFormCivilState extends State<DonacionFormCivil> {
             icon: Icon(Icons.shopping_cart_outlined, color: Colors.white),
             onPressed: () {
               Navigator.push(
-                  context, MaterialPageRoute(builder: (context) => null));
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => CarrodeDonacionCivil()));
             },
           )
         ],

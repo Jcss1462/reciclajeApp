@@ -30,7 +30,7 @@ class NavBar extends StatelessWidget {
           ),
           ListTile(
             leading: Icon(
-              Icons.shop,
+              Icons.shop_outlined,
               color: Color.fromRGBO(46, 99, 238, 1),
             ),
             title: Text(

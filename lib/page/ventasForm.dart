@@ -111,7 +111,7 @@ class _VentasFormState extends State<VentasForm> {
                       return Center(
                         child: Container(
                           width: MediaQuery.of(context).size.width / 1.15,
-                          height: MediaQuery.of(context).size.height / 1.15,
+                          height: MediaQuery.of(context).size.height / 1.8,
                           constraints: BoxConstraints(
                             minWidth: 160,
                             minHeight: 160,
@@ -140,7 +140,7 @@ class _VentasFormState extends State<VentasForm> {
                                     style: TextStyle(
                                         color: Color.fromRGBO(46, 99, 238, 1),
                                         fontWeight: FontWeight.bold,
-                                        fontSize: 28),
+                                        fontSize: 27),
                                   ),
                                   SizedBox(height: 20),
                                   Form(

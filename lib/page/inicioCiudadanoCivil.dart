@@ -66,11 +66,11 @@ class _InicioCiudadanoCivilState extends State<InicioCiudadanoCivil> {
         Card(
           elevation: 5,
           child: Container(
-            width: MediaQuery.of(context).size.width - 50,
+            width: MediaQuery.of(context).size.width - 80,
             height: MediaQuery.of(context).size.height / 8,
-            constraints: BoxConstraints(minHeight: 100, maxHeight: 100),
+            constraints: BoxConstraints(minHeight: 80, maxHeight: 80),
             padding:
-                EdgeInsets.only(top: 30.0, bottom: 10.0, left: 10, right: 10),
+                EdgeInsets.only(top: 15.0, bottom: 10.0, left: 10, right: 10),
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10),
                 color: Colors.white,
@@ -91,7 +91,7 @@ class _InicioCiudadanoCivilState extends State<InicioCiudadanoCivil> {
                     style: TextStyle(
                       color: Color.fromRGBO(46, 99, 238, 1),
                       fontWeight: FontWeight.bold,
-                      fontSize: 40,
+                      fontSize: 35,
                     ),
                   ),
                   onPressed: () =>
