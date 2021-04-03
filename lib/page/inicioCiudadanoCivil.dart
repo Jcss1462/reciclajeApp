@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:reciclaje_app/widgets/navbarCiudadanoCivil.dart';
 
+import '../core/constants.dart';
+
 class InicioCiudadanoCivil extends StatefulWidget {
   InicioCiudadanoCivil({Key key}) : super(key: key);
 
@@ -92,7 +94,8 @@ class _InicioCiudadanoCivilState extends State<InicioCiudadanoCivil> {
                       fontSize: 40,
                     ),
                   ),
-                  onPressed: () => Navigator.pushNamed(context, null),
+                  onPressed: () =>
+                      Navigator.pushNamed(context, donacionFormCivil),
                 ),
               ],
             ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../core/constants.dart';
 
 class NavBarCiudadanoCivil extends StatelessWidget {
   @override
@@ -54,7 +55,9 @@ class NavBarCiudadanoCivil extends StatelessWidget {
                   fontWeight: FontWeight.normal,
                   fontSize: 18),
             ),
-            onTap: null,
+            onTap: () {
+              Navigator.pushNamed(context, donacionFormCivil);
+            },
           ),
           ListTile(
             leading: Icon(
@@ -68,7 +71,9 @@ class NavBarCiudadanoCivil extends StatelessWidget {
                   fontWeight: FontWeight.normal,
                   fontSize: 18),
             ),
-            onTap: null,
+            onTap: () {
+              Navigator.pushNamed(context, inicioCiudadanoCivil);
+            },
           ),
         ],
       ),

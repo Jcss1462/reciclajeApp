@@ -27,8 +27,6 @@ class _VentasFormState extends State<VentasForm> {
   CarroVentasDataSourceImpl carroVentasDataSourceImpl =
       new CarroVentasDataSourceImpl();
 
-  List<CheckBoxModalCarro> estadoList = [];
-
   List<DropdownMenuItem<TipoResiduo>> dropListaresiduo;
 
   TipoResiduo selectResiduo;
@@ -65,24 +63,8 @@ class _VentasFormState extends State<VentasForm> {
 
   @override
   void initState() {
-    estadoList.add(CheckBoxModalCarro(title: 'Mojado', value: false));
-    estadoList.add(CheckBoxModalCarro(title: 'Molido', value: false));
-    estadoList.add(CheckBoxModalCarro(title: 'Contaminado', value: false));
-    estadoList.add(CheckBoxModalCarro(title: 'Hoja', value: false));
-    estadoList.add(CheckBoxModalCarro(title: 'Pliegos', value: false));
     listadeResiduos = getListObtenerTipoResiduo();
     super.initState();
-  }
-
-  getItems() {
-    estadoList.forEach((element) {
-      if (element.value == true) {
-        estados.add(element.title);
-      }
-    });
-
-    print(estados);
-    estados.clear();
   }
 
   @override
@@ -154,7 +136,7 @@ class _VentasFormState extends State<VentasForm> {
                               child: Column(
                                 children: [
                                   Text(
-                                    "Carro de Ventas",
+                                    "Formulario de Ventas",
                                     style: TextStyle(
                                         color: Color.fromRGBO(46, 99, 238, 1),
                                         fontWeight: FontWeight.bold,
@@ -364,41 +346,6 @@ class _VentasFormState extends State<VentasForm> {
                                                 }
                                               }),
                                         ),
-                                        //Cantidad del residuo
-
-                                        SizedBox(height: 15),
-                                        new Column(
-                                          children: [
-                                            Text(
-                                              "Estado del Residuo",
-                                              style: TextStyle(
-                                                  color: Color.fromRGBO(
-                                                      46, 99, 238, 1),
-                                                  fontWeight: FontWeight.bold,
-                                                  fontSize: 20),
-                                            ),
-                                            ...estadoList
-                                                .map(
-                                                  (item) => CheckboxListTile(
-                                                    title: Text(
-                                                      item.title,
-                                                      style: TextStyle(
-                                                        fontWeight:
-                                                            FontWeight.bold,
-                                                        fontSize: 15,
-                                                      ),
-                                                    ),
-                                                    value: item.value,
-                                                    onChanged: (val) {
-                                                      setState(() {
-                                                        item.value = val;
-                                                      });
-                                                    },
-                                                  ),
-                                                )
-                                                .toList()
-                                          ],
-                                        ),
                                       ],
                                     ),
                                   ),
@@ -444,7 +391,6 @@ class _VentasFormState extends State<VentasForm> {
                                         formKey.currentState.save();
                                         print(peso);
                                         print(selectResiduo.idtiporesiduo);
-                                        getItems();
 
                                         //gurado la venta
                                         NuevaVenta nuevaVenta = NuevaVenta(
@@ -532,10 +478,4 @@ class _VentasFormState extends State<VentasForm> {
       ),
     );
   }
-}
-
-class CheckBoxModalCarro {
-  String title;
-  bool value;
-  CheckBoxModalCarro({@required this.title, this.value = false});
 }
