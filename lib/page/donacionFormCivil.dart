@@ -314,7 +314,7 @@ class _DonacionFormCivilState extends State<DonacionFormCivil> {
                                                     ),
                                                     TextButton(
                                                       child: Text(
-                                                        'Vender Mas',
+                                                        'Donar Mas',
                                                         style: TextStyle(
                                                           color: Color.fromRGBO(
                                                               46, 99, 238, 1),
@@ -328,7 +328,7 @@ class _DonacionFormCivilState extends State<DonacionFormCivil> {
                                                             builder: (context) =>
                                                                 DonacionFormCivil());
                                                       },
-                                                    )
+                                                    ),
                                                   ],
                                                 ),
                                               );
