@@ -87,6 +87,17 @@ class _CarrodeDonacionCivilState extends State<CarrodeDonacionCivil> {
                                           mainAxisAlignment:
                                               MainAxisAlignment.center,
                                           children: [
+                                            Text(
+                                              "Bienvenido a su Carro de Donación",
+                                              textAlign: TextAlign.center,
+                                              style: TextStyle(
+                                                  color: Colors.white,
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: 25),
+                                            ),
+                                            SizedBox(
+                                              height: 35,
+                                            ),
                                             ListView.builder(
                                               physics:
                                                   const NeverScrollableScrollPhysics(),

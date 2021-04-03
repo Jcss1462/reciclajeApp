@@ -94,6 +94,17 @@ class _CarroDeVentasState extends State<CarroDeVentas> {
                                                         MainAxisAlignment
                                                             .center,
                                                     children: [
+                                              Text(
+                                                "Bienvenido a su Carro de Ventas",
+                                                textAlign: TextAlign.center,
+                                                style: TextStyle(
+                                                    color: Colors.white,
+                                                    fontWeight: FontWeight.bold,
+                                                    fontSize: 25),
+                                              ),
+                                              SizedBox(
+                                                height: 35,
+                                              ),
                                               ListView.builder(
                                                   physics:
                                                       const NeverScrollableScrollPhysics(),
@@ -291,15 +302,6 @@ class _CarroDeVentasState extends State<CarroDeVentas> {
                                                                             ),
                                                                             onPressed:
                                                                                 null),
-                                                                        Icon(
-                                                                          Icons
-                                                                              .check_box_outlined,
-                                                                          color: Color.fromRGBO(
-                                                                              46,
-                                                                              99,
-                                                                              238,
-                                                                              1),
-                                                                        ),
                                                                         //boton eliminar
                                                                         IconButton(
                                                                             icon:
@@ -313,7 +315,7 @@ class _CarroDeVentasState extends State<CarroDeVentas> {
                                                                                   context: context,
                                                                                   builder: (context) => AlertDialog(
                                                                                         title: Text(
-                                                                                          "Estas seguro que deseas eliminar este carrito?",
+                                                                                          "Estas seguro que deseas eliminar este residuo?",
                                                                                           style: TextStyle(
                                                                                             color: Color.fromRGBO(46, 99, 238, 1),
                                                                                             fontWeight: FontWeight.bold,
