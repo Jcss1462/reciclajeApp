@@ -26,6 +26,7 @@ class _RegitroState extends State<RegistroPage> {
   String direccion;
 
   String usuario;
+  int idUsuario;
 
   List<CheckBoxModal> userList = [];
 
@@ -33,14 +34,17 @@ class _RegitroState extends State<RegistroPage> {
   void initState() {
     userList.add(CheckBoxModal(
         title: 'Civil',
+        id: 2,
         descripcion: 'Ciudadano qye recicle en su hogar',
         value: false));
     userList.add(CheckBoxModal(
         title: 'Reciclador',
+        id: 1,
         descripcion: 'Persona que trabaje por medio del reciclaje',
         value: false));
     userList.add(CheckBoxModal(
         title: 'Empresa',
+        id: 3,
         descripcion: 'Empresa legalmente conformada',
         value: false));
     super.initState();
@@ -281,6 +285,7 @@ class _RegitroState extends State<RegistroPage> {
                                           });
                                           item.value = true;
                                           usuario = item.title;
+                                          idUsuario = item.id;
                                         });
                                       },
                                     ),
@@ -319,6 +324,7 @@ class _RegitroState extends State<RegistroPage> {
                           debugPrint(this.password);
                           debugPrint(this.direccion);
                           debugPrint(this.usuario);
+                          print(this.idUsuario);
                           //guardo en firebase
                           final model = context.read<AutenticationService>();
 
@@ -348,7 +354,7 @@ class _RegitroState extends State<RegistroPage> {
 
                                         UsuarioDatasourceImpl dataSource =
                                             new UsuarioDatasourceImpl();
-                                        
+
                                         dataSource
                                             .createUserHk(newUser)
                                             .then((value) {
@@ -362,7 +368,6 @@ class _RegitroState extends State<RegistroPage> {
                                                 "Te enviamos un email de verificacion"),
                                           );
                                         }).onError((error, stackTrace) {
-                                          
                                           setState(() {
                                             isLoad = false;
                                           });
@@ -430,7 +435,12 @@ class _RegitroState extends State<RegistroPage> {
 
 class CheckBoxModal {
   String title;
+  int id;
   String descripcion;
   bool value;
-  CheckBoxModal({@required this.title, this.descripcion, this.value = false});
+  CheckBoxModal(
+      {@required this.title,
+      @required this.id,
+      this.descripcion,
+      this.value = false});
 }
