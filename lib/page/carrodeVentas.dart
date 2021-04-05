@@ -15,6 +15,7 @@ class _CarroDeVentasState extends State<CarroDeVentas> {
   //variables de conexion
   Preferences preferencias = new Preferences();
   String _email;
+  final formKey = GlobalKey<FormState>();
   CarroVentasDataSourceImpl carroVentasDataSourceImpl =
       new CarroVentasDataSourceImpl();
   VentasList ventas = new VentasList();
@@ -121,7 +122,7 @@ class _CarroDeVentasState extends State<CarroDeVentas> {
                                                                       context)
                                                                   .size
                                                                   .width -
-                                                              50,
+                                                              80,
                                                           height: MediaQuery.of(
                                                                       context)
                                                                   .size
@@ -130,12 +131,12 @@ class _CarroDeVentasState extends State<CarroDeVentas> {
                                                           //tamaño minimo de altura
                                                           constraints:
                                                               BoxConstraints(
-                                                            minWidth: 185,
-                                                            minHeight: 185,
+                                                            minWidth: 150,
+                                                            minHeight: 150,
                                                           ),
                                                           padding:
                                                               EdgeInsets.only(
-                                                                  top: 30.0,
+                                                                  top: 20.0,
                                                                   bottom: 30.0,
                                                                   left: 40,
                                                                   right: 40),
@@ -367,6 +368,76 @@ class _CarroDeVentasState extends State<CarroDeVentas> {
                                                         ),
                                                       ),
                                                       SizedBox(height: 25),
+                                                      MaterialButton(
+                                                          height: 50,
+                                                          minWidth: 250,
+                                                          color: Color.fromRGBO(
+                                                              46, 99, 238, 1),
+                                                          textColor:
+                                                              Colors.white,
+                                                          child: new Text(
+                                                            "Vender Residuo",
+                                                            style: TextStyle(
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold,
+                                                                fontSize: 25),
+                                                          ),
+                                                          onPressed: () {
+                                                            showDialog(
+                                                                context:
+                                                                    context,
+                                                                builder:
+                                                                    (context) =>
+                                                                        AlertDialog(
+                                                                          title:
+                                                                              Text(
+                                                                            "Vender Residuo",
+                                                                            style:
+                                                                                TextStyle(
+                                                                              color: Color.fromRGBO(46, 99, 238, 1),
+                                                                              fontWeight: FontWeight.bold,
+                                                                              fontSize: 20,
+                                                                            ),
+                                                                          ),
+                                                                          content:
+                                                                              Text(
+                                                                            "Venta de Residuo Exitosamente",
+                                                                          ),
+                                                                          actions: <
+                                                                              Widget>[
+                                                                            TextButton(
+                                                                              child: Text(
+                                                                                'Ok',
+                                                                                style: TextStyle(
+                                                                                  color: Color.fromRGBO(46, 99, 238, 1),
+                                                                                  fontWeight: FontWeight.bold,
+                                                                                  fontSize: 15,
+                                                                                ),
+                                                                              ),
+                                                                              onPressed: () {
+                                                                                print(ventas.ventas[index].idventa);
+                                                                                print(ventas.ventas[index].emailUsuario);
+                                                                                print(ventas.ventas[index].peso);
+                                                                                print(ventas.ventas[index].total);
+                                                                              },
+                                                                            ),
+                                                                            TextButton(
+                                                                              child: Text(
+                                                                                "Vender Más",
+                                                                                style: TextStyle(
+                                                                                  color: Color.fromRGBO(46, 99, 238, 1),
+                                                                                  fontWeight: FontWeight.bold,
+                                                                                  fontSize: 15,
+                                                                                ),
+                                                                              ),
+                                                                              onPressed: () {
+                                                                                MaterialPageRoute(builder: (context) => CarroDeVentas());
+                                                                              },
+                                                                            )
+                                                                          ],
+                                                                        ));
+                                                          })
                                                     ]);
                                                   })
                                             ]))));
