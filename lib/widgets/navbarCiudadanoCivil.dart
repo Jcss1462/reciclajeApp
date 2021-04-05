@@ -33,6 +33,22 @@ class NavBarCiudadanoCivil extends StatelessWidget {
               color: Color.fromRGBO(46, 99, 238, 1),
             ),
             title: Text(
+              "Agendar Visita",
+              style: TextStyle(
+                  color: Color.fromRGBO(46, 99, 238, 1),
+                  fontWeight: FontWeight.normal,
+                  fontSize: 18),
+            ),
+            onTap: () {
+              Navigator.pushNamed(context, formAgendaVisitaCivil);
+            },
+          ),
+          ListTile(
+            leading: Icon(
+              Icons.perm_contact_calendar_outlined,
+              color: Color.fromRGBO(46, 99, 238, 1),
+            ),
+            title: Text(
               "Visita Agendada",
               style: TextStyle(
                   color: Color.fromRGBO(46, 99, 238, 1),
