@@ -288,6 +288,7 @@ class _VentasFormState extends State<VentasForm> {
                                         SizedBox(height: 15),
                                         new Container(
                                           child: TextFormField(
+                                              initialValue: peso!=null?peso.toString():"",
                                               keyboardType:
                                                   TextInputType.number,
                                               decoration: InputDecoration(

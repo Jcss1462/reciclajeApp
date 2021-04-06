@@ -209,83 +209,89 @@ class _CarroDeVentasState extends State<CarroDeVentas> {
                                                                 ),
                                                                 SizedBox(
                                                                     height: 5),
-                                                                Row(
-                                                                  children: [
-                                                                    Text(
-                                                                      "Peso en Kilogramos: ",
-                                                                      style:
-                                                                          TextStyle(
-                                                                        color: Color.fromRGBO(
-                                                                            46,
-                                                                            99,
-                                                                            238,
-                                                                            1),
-                                                                        fontWeight:
-                                                                            FontWeight.bold,
-                                                                        fontSize:
-                                                                            18,
+                                                                SingleChildScrollView(
+                                                                  scrollDirection:
+                                                                      Axis.horizontal,
+                                                                  child: Row(
+                                                                    children: [
+                                                                      Text(
+                                                                        "Peso en Kilogramos: ",
+                                                                        style:
+                                                                            TextStyle(
+                                                                          color: Color.fromRGBO(
+                                                                              46,
+                                                                              99,
+                                                                              238,
+                                                                              1),
+                                                                          fontWeight:
+                                                                              FontWeight.bold,
+                                                                          fontSize:
+                                                                              18,
+                                                                        ),
                                                                       ),
-                                                                    ),
-                                                                    Text(
-                                                                      ventas
-                                                                          .ventas[
-                                                                              index]
-                                                                          .peso
-                                                                          .toString(),
-                                                                      style:
-                                                                          TextStyle(
-                                                                        color: Color.fromRGBO(
-                                                                            46,
-                                                                            99,
-                                                                            238,
-                                                                            1),
-                                                                        fontWeight:
-                                                                            FontWeight.normal,
-                                                                        fontSize:
-                                                                            15,
+                                                                      Text(
+                                                                        ventas
+                                                                            .ventas[index]
+                                                                            .peso
+                                                                            .toString(),
+                                                                        style:
+                                                                            TextStyle(
+                                                                          color: Color.fromRGBO(
+                                                                              46,
+                                                                              99,
+                                                                              238,
+                                                                              1),
+                                                                          fontWeight:
+                                                                              FontWeight.normal,
+                                                                          fontSize:
+                                                                              15,
+                                                                        ),
                                                                       ),
-                                                                    ),
-                                                                  ],
+                                                                    ],
+                                                                  ),
                                                                 ),
                                                                 SizedBox(
                                                                     height: 5),
-                                                                Row(
-                                                                  children: [
-                                                                    Text(
-                                                                      "Total del Residuo: ",
-                                                                      style:
-                                                                          TextStyle(
-                                                                        color: Color.fromRGBO(
-                                                                            46,
-                                                                            99,
-                                                                            238,
-                                                                            1),
-                                                                        fontWeight:
-                                                                            FontWeight.bold,
-                                                                        fontSize:
-                                                                            18,
+                                                                SingleChildScrollView(
+                                                                  scrollDirection:
+                                                                      Axis.horizontal,
+                                                                  child: Row(
+                                                                    children: [
+                                                                      Text(
+                                                                        "Total del Residuo: ",
+                                                                        style:
+                                                                            TextStyle(
+                                                                          color: Color.fromRGBO(
+                                                                              46,
+                                                                              99,
+                                                                              238,
+                                                                              1),
+                                                                          fontWeight:
+                                                                              FontWeight.bold,
+                                                                          fontSize:
+                                                                              18,
+                                                                        ),
                                                                       ),
-                                                                    ),
-                                                                    Text(
-                                                                      ventas
-                                                                          .ventas[
-                                                                              index]
-                                                                          .total
-                                                                          .toString(),
-                                                                      style:
-                                                                          TextStyle(
-                                                                        color: Color.fromRGBO(
-                                                                            46,
-                                                                            99,
-                                                                            238,
-                                                                            1),
-                                                                        fontWeight:
-                                                                            FontWeight.normal,
-                                                                        fontSize:
-                                                                            15,
+                                                                      Text(
+                                                                        ventas
+                                                                            .ventas[index]
+                                                                            .total
+                                                                            .toString(),
+                                                                        style:
+                                                                            TextStyle(
+                                                                          color: Color.fromRGBO(
+                                                                              46,
+                                                                              99,
+                                                                              238,
+                                                                              1),
+                                                                          fontWeight:
+                                                                              FontWeight.normal,
+                                                                          fontSize:
+                                                                              15,
+                                                                        ),
                                                                       ),
-                                                                    ),
-                                                                  ],
+                                                                    ],
+                                                                  ),
                                                                 ),
                                                                 Column(
                                                                   children: <
@@ -367,7 +373,7 @@ class _CarroDeVentasState extends State<CarroDeVentas> {
                                                           ),
                                                         ),
                                                       ),
-                                                      SizedBox(height: 25),
+                                                      SizedBox(height: 20),
                                                       MaterialButton(
                                                           height: 50,
                                                           minWidth: 250,
@@ -437,7 +443,8 @@ class _CarroDeVentasState extends State<CarroDeVentas> {
                                                                             )
                                                                           ],
                                                                         ));
-                                                          })
+                                                          }),
+                                                          SizedBox(height: 20)
                                                     ]);
                                                   })
                                             ]))));
