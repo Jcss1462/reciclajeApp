@@ -26,7 +26,7 @@ class _RegitroState extends State<RegistroPage> {
   String direccion;
 
   String usuario;
-  int idUsuario;
+  int idUsuario = 0;
 
   List<CheckBoxModal> userList = [];
 
@@ -317,91 +317,103 @@ class _RegitroState extends State<RegistroPage> {
                           setState(() {
                             isLoad = true;
                           });
-                          formKey.currentState.save();
-                          debugPrint(this.nombre);
-                          debugPrint(this.apellido);
-                          debugPrint(this.email);
-                          debugPrint(this.password);
-                          debugPrint(this.direccion);
-                          debugPrint(this.usuario);
-                          print(this.idUsuario);
-                          //guardo en firebase
-                          final model = context.read<AutenticationService>();
 
-                          model
-                              .singUp(
-                                  email: this.email, password: this.password)
-                              .then(
-                                  //si el registro en firebase no falla, envia email de confirmacion
-                                  (valRegfb) => model.sendEmailVerification()
-                                          //si el envio del correo sale bien
-                                          .then((valEmailVerf) {
-                                        ////////////////////////////////////////////////////////////////////////////
-                                        //operacion backend iniciada
+                          if (this.idUsuario != 0) {
+                            formKey.currentState.save();
+                            debugPrint(this.nombre);
+                            debugPrint(this.apellido);
+                            debugPrint(this.email);
+                            debugPrint(this.password);
+                            debugPrint(this.direccion);
+                            debugPrint(this.usuario);
+                            print(this.idUsuario);
+                            //guardo en firebase
+                            final model = context.read<AutenticationService>();
 
-                                        //obtengo el uid del usuario
-                                        debugPrint(valRegfb.user.uid);
-                                        //guardo en el backend
-                                        Usuario newUser = new Usuario(
-                                            this.email,
-                                            this.direccion,
-                                            this.apellido,
-                                            this.nombre,
-                                            true,
-                                            valRegfb.user.uid,
-                                            1);
-                                        debugPrint(newUser.email);
+                            model
+                                .singUp(
+                                    email: this.email, password: this.password)
+                                .then(
+                                    //si el registro en firebase no falla, envia email de confirmacion
+                                    (valRegfb) => model.sendEmailVerification()
+                                            //si el envio del correo sale bien
+                                            .then((valEmailVerf) {
+                                          ////////////////////////////////////////////////////////////////////////////
+                                          //operacion backend iniciada
 
-                                        UsuarioDatasourceImpl dataSource =
-                                            new UsuarioDatasourceImpl();
+                                          //obtengo el uid del usuario
+                                          debugPrint(valRegfb.user.uid);
+                                          //guardo en el backend
+                                          Usuario newUser = new Usuario(
+                                              this.email,
+                                              this.direccion,
+                                              this.apellido,
+                                              this.nombre,
+                                              true,
+                                              valRegfb.user.uid,
+                                              this.idUsuario);
+                                          debugPrint(newUser.email);
 
-                                        dataSource
-                                            .createUserHk(newUser)
-                                            .then((value) {
-                                          setState(() {
-                                            isLoad = false;
+                                          UsuarioDatasourceImpl dataSource =
+                                              new UsuarioDatasourceImpl();
+
+                                          dataSource
+                                              .createUserHk(newUser)
+                                              .then((value) {
+                                            setState(() {
+                                              isLoad = false;
+                                            });
+                                            showDialog(
+                                              context: context,
+                                              builder: (context) => DialogBox(
+                                                  "Cuenta creada con exito",
+                                                  "Te enviamos un email de verificacion"),
+                                            );
+                                          }).onError((error, stackTrace) {
+                                            setState(() {
+                                              isLoad = false;
+                                            });
+                                            showDialog(
+                                              context: context,
+                                              builder: (context) => DialogBox(
+                                                  "Errro al crear cuenta en el backend",
+                                                  "Error:" + error.toString()),
+                                            );
                                           });
-                                          showDialog(
-                                            context: context,
-                                            builder: (context) => DialogBox(
-                                                "Cuenta creada con exito",
-                                                "Te enviamos un email de verificacion"),
-                                          );
+                                          //operacion backend terminada
+                                          ////////////////////////////////////////////////////////////////////////////
                                         }).onError((error, stackTrace) {
                                           setState(() {
                                             isLoad = false;
                                           });
                                           showDialog(
-                                            context: context,
-                                            builder: (context) => DialogBox(
-                                                "Errro al crear cuenta en el backend",
-                                                "Error:" + error.toString()),
-                                          );
-                                        });
-                                        //operacion backend terminada
-                                        ////////////////////////////////////////////////////////////////////////////
-                                      }).onError((error, stackTrace) {
-                                        setState(() {
-                                          isLoad = false;
-                                        });
-                                        showDialog(
-                                            context: context,
-                                            builder: (context) => DialogBox(
-                                                "Error al enviar el email",
-                                                "Tu cuenta fue creada pero hubo problemas con el email de verificacion\n\nError:" +
-                                                    error.error.toString()));
-                                      }))
-                              //si el registro en firebase falla
-                              .onError((error, stackTrace) {
+                                              context: context,
+                                              builder: (context) => DialogBox(
+                                                  "Error al enviar el email",
+                                                  "Tu cuenta fue creada pero hubo problemas con el email de verificacion\n\nError:" +
+                                                      error.error.toString()));
+                                        }))
+                                //si el registro en firebase falla
+                                .onError((error, stackTrace) {
+                              setState(() {
+                                isLoad = false;
+                              });
+                              showDialog(
+                                  context: context,
+                                  builder: (context) => DialogBox(
+                                      "Error al registrar en firebase",
+                                      "Error:" + error.toString()));
+                            });
+                          } else {
                             setState(() {
                               isLoad = false;
                             });
                             showDialog(
                                 context: context,
                                 builder: (context) => DialogBox(
-                                    "Error al registrar en firebase",
-                                    "Error:" + error.toString()));
-                          });
+                                    "Tipo de usuario no seleccionado",
+                                    "Porfavor seleccionar un tipo de usuario"));
+                          }
                         }
                       },
                       shape: RoundedRectangleBorder(
