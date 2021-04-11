@@ -188,7 +188,10 @@ class _CarroDeVentasState extends State<CarroDeVentas> {
                                                                       ),
                                                                     ),
                                                                     Text(
-                                                                      "Papel",
+                                                                      ventas
+                                                                            .ventas[index]
+                                                                            .tipo
+                                                                            .toString(),
                                                                       textAlign:
                                                                           TextAlign
                                                                               .left,

@@ -5,6 +5,7 @@ class Ventas {
   double total;
   int idestadoventaEstadoventa;
   String emailUsuario;
+  String tipo;
 
   Ventas(this.fechaventa, this.idventa, this.peso, this.total,
       this.idestadoventaEstadoventa, this.emailUsuario);
@@ -16,6 +17,7 @@ class Ventas {
     this.total = json['total'];
     this.idestadoventaEstadoventa = json['idestadoventa_Estadoventa'];
     this.emailUsuario = json['email_Usuario'];
+    this.tipo=json['tipo'];
   }
 
   Map<String, dynamic> toJson() {
@@ -25,7 +27,8 @@ class Ventas {
       'peso': this.peso,
       'total': this.total,
       'idestadoventa_Estadoventa': this.idestadoventaEstadoventa,
-      'email_Usuario': this.emailUsuario
+      'email_Usuario': this.emailUsuario,
+      'tipo': this.tipo
     };
   }
 }
