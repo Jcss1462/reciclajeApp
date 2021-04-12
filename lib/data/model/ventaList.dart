@@ -1,5 +1,4 @@
-
-import 'package:reciclaje_app/data/model/venta.dart';
+import 'package:reciclaje_app/data/model/ventas.dart';
 
 class VentasList {
   final List<Ventas> ventas;

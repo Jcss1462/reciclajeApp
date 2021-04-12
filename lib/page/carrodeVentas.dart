@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:reciclaje_app/data/datasources/carroVenta_datasource.dart';
 import 'package:reciclaje_app/data/model/ventaList.dart';
+import 'package:reciclaje_app/page/pageEditar.dart';
 import 'package:reciclaje_app/service/preferences.dart';
 import 'package:reciclaje_app/widgets/navbar.dart';
 
@@ -189,9 +190,10 @@ class _CarroDeVentasState extends State<CarroDeVentas> {
                                                                     ),
                                                                     Text(
                                                                       ventas
-                                                                            .ventas[index]
-                                                                            .tipo
-                                                                            .toString(),
+                                                                          .ventas[
+                                                                              index]
+                                                                          .tipo
+                                                                          .toString(),
                                                                       textAlign:
                                                                           TextAlign
                                                                               .left,
@@ -311,7 +313,50 @@ class _CarroDeVentasState extends State<CarroDeVentas> {
                                                                               color: Color.fromRGBO(46, 99, 238, 1),
                                                                             ),
                                                                             onPressed:
-                                                                                null),
+                                                                                () {
+                                                                              showDialog(
+                                                                                context: context,
+                                                                                builder: (context) => AlertDialog(
+                                                                                  title: Text(
+                                                                                    "Estas seguro que desear editar la venta?",
+                                                                                    style: TextStyle(
+                                                                                      color: Color.fromRGBO(46, 99, 238, 1),
+                                                                                      fontWeight: FontWeight.bold,
+                                                                                      fontSize: 20,
+                                                                                    ),
+                                                                                  ),
+                                                                                  actions: <Widget>[
+                                                                                    TextButton(
+                                                                                      child: Text(
+                                                                                        'Cancelar',
+                                                                                        style: TextStyle(
+                                                                                          color: Color.fromRGBO(46, 99, 238, 1),
+                                                                                          fontWeight: FontWeight.bold,
+                                                                                          fontSize: 15,
+                                                                                        ),
+                                                                                      ),
+                                                                                      onPressed: () {
+                                                                                        Navigator.pop(context);
+                                                                                      },
+                                                                                    ),
+                                                                                    TextButton(
+                                                                                      child: Text(
+                                                                                        'Continuar',
+                                                                                        style: TextStyle(
+                                                                                          color: Color.fromRGBO(46, 99, 238, 1),
+                                                                                          fontWeight: FontWeight.bold,
+                                                                                          fontSize: 15,
+                                                                                        ),
+                                                                                      ),
+                                                                                      onPressed: () {
+                                                                                        print(ventas.ventas[index].idventa);
+                                                                                        Navigator.push(context, MaterialPageRoute(builder: (context) => PageEditar()));
+                                                                                      },
+                                                                                    ),
+                                                                                  ],
+                                                                                ),
+                                                                              );
+                                                                            }),
                                                                         //boton eliminar
                                                                         IconButton(
                                                                             icon:
@@ -447,7 +492,7 @@ class _CarroDeVentasState extends State<CarroDeVentas> {
                                                                           ],
                                                                         ));
                                                           }),
-                                                          SizedBox(height: 20)
+                                                      SizedBox(height: 20)
                                                     ]);
                                                   })
                                             ]))));

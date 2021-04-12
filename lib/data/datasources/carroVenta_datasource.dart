@@ -3,12 +3,15 @@ import 'dart:convert';
 import 'package:reciclaje_app/data/model/nuevaVenta.dart';
 import 'package:reciclaje_app/data/model/tipoResiduoList.dart';
 import 'package:reciclaje_app/data/model/ventaList.dart';
+import 'package:reciclaje_app/data/model/ventas.dart';
 import 'package:reciclaje_app/data/network/api_provider.dart';
 
 abstract class CarroVentasDataSource {
   Future<VentasList> misVentas(String email);
 
   Future<dynamic> delVenta(int idVenta);
+
+  Future<Ventas> findByIdVentas(int idVenta);
 
   Future<TipoResiduoList> obtenerTiposResiduos();
 
@@ -41,11 +44,17 @@ class CarroVentasDataSourceImpl implements CarroVentasDataSource {
   }
 
   @override
-  Future<NuevaVenta> crearVenta(NuevaVenta nuevaVenta) async {
+  Future<Ventas> findByIdVentas(int idVenta) async {
+    return await _apiProvider
+        .get("/api/v1/carritoVentas/ventaInfo/" + idVenta.toString());
+  }
 
-    String body= jsonEncode(nuevaVenta.toJson());
+  @override
+  Future<NuevaVenta> crearVenta(NuevaVenta nuevaVenta) async {
+    String body = jsonEncode(nuevaVenta.toJson());
     print(body);
-    final response = await _apiProvider.post("/api/v1/carritoVentas/nuevaVenta", body);
+    final response =
+        await _apiProvider.post("/api/v1/carritoVentas/nuevaVenta", body);
     print(response);
     return NuevaVenta.fromJson(response);
   }
