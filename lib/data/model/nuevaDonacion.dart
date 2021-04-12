@@ -1,18 +1,18 @@
 class NuevaDonacion {
-  String emailUsuario;
-  int idtiporesiduoTiporesiduo;
+  String emailPropietario;
+  int idtiporesiduo;
 
-  NuevaDonacion(this.emailUsuario, this.idtiporesiduoTiporesiduo);
+  NuevaDonacion(this.idtiporesiduo, this.emailPropietario);
 
   NuevaDonacion.fromJson(Map<dynamic, dynamic> json) {
-    this.emailUsuario = json['email_Usuario'];
-    this.idtiporesiduoTiporesiduo = json['idtiporesiduo_Tiporesiduo'];
+    this.emailPropietario = json['emailPropietario'];
+    this.idtiporesiduo = json['idtiporesiduo_Tiporesiduo'];
   }
 
   Map<String, dynamic> toJson() {
     return {
-      'email_Usuario': this.emailUsuario,
-      'idtiporesiduo_Tiporesiduo': this.idtiporesiduoTiporesiduo,
+      'emailPropietario': this.emailPropietario,
+      'idtiporesiduo_Tiporesiduo': this.idtiporesiduo
     };
   }
 }

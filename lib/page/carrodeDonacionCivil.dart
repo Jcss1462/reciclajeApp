@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:reciclaje_app/data/datasources/carroVenta_datasource.dart';
-import 'package:reciclaje_app/data/model/ventaList.dart';
+import 'package:reciclaje_app/data/datasources/carroDonacion_datasource.dart';
+import 'package:reciclaje_app/data/model/donacionesList.dart';
 import 'package:reciclaje_app/service/preferences.dart';
 import 'package:reciclaje_app/widgets/navbarCiudadanoCivil.dart';
 
@@ -13,9 +13,9 @@ class CarrodeDonacionCivil extends StatefulWidget {
 class _CarrodeDonacionCivilState extends State<CarrodeDonacionCivil> {
   Preferences preferencias = new Preferences();
   String _email;
-  CarroVentasDataSourceImpl carroVentasDataSourceImpl =
-      new CarroVentasDataSourceImpl();
-  VentasList ventas = new VentasList();
+  CarroDonacionesDataSourceImpl carroDonacionDataSourceImpl =
+      new CarroDonacionesDataSourceImpl();
+  DonacionesList donaciones = new DonacionesList();
 
   @override
   void initState() {
@@ -29,8 +29,8 @@ class _CarrodeDonacionCivilState extends State<CarrodeDonacionCivil> {
     });
   }
 
-  Future<VentasList> getListVentas() async {
-    return await this.carroVentasDataSourceImpl.misVentas(_email);
+  Future<DonacionesList> getListDonaciones() async {
+    return await this.carroDonacionDataSourceImpl.misDonaciones(_email);
   }
 
   @override
@@ -66,7 +66,7 @@ class _CarrodeDonacionCivilState extends State<CarrodeDonacionCivil> {
                       return Text('Error: ${snapshot.error}');
                     } else {
                       return FutureBuilder(
-                          future: getListVentas(),
+                          future: getListDonaciones(),
                           builder:
                               (BuildContext context, AsyncSnapshot snapshot) {
                             switch (snapshot.connectionState) {
@@ -77,7 +77,7 @@ class _CarrodeDonacionCivilState extends State<CarrodeDonacionCivil> {
                                 if (snapshot.hasError) {
                                   return Text('Error: ${snapshot.error}');
                                 } else {
-                                  this.ventas = snapshot.data;
+                                  this.donaciones = snapshot.data;
                                   return Container(
                                     width: MediaQuery.of(context).size.width,
                                     height: MediaQuery.of(context).size.height,
@@ -101,8 +101,10 @@ class _CarrodeDonacionCivilState extends State<CarrodeDonacionCivil> {
                                             ListView.builder(
                                               physics:
                                                   const NeverScrollableScrollPhysics(),
-                                              itemCount:
-                                                  this.ventas.ventas.length,
+                                              itemCount: this
+                                                  .donaciones
+                                                  .donaciones
+                                                  .length,
                                               shrinkWrap: true,
                                               itemBuilder: (context, index) {
                                                 return Column(
@@ -178,7 +180,11 @@ class _CarrodeDonacionCivilState extends State<CarrodeDonacionCivil> {
                                                                     ),
                                                                   ),
                                                                   Text(
-                                                                    "Papel",
+                                                                    donaciones
+                                                                        .donaciones[
+                                                                            index]
+                                                                        .tipo
+                                                                        .toString(),
                                                                     textAlign:
                                                                         TextAlign
                                                                             .left,
@@ -200,47 +206,6 @@ class _CarrodeDonacionCivilState extends State<CarrodeDonacionCivil> {
                                                                 ],
                                                               ),
                                                               SizedBox(
-                                                                height: 5,
-                                                              ),
-                                                              Row(
-                                                                children: [
-                                                                  Text(
-                                                                    "Estado de Donación: ",
-                                                                    style:
-                                                                        TextStyle(
-                                                                      color: Color
-                                                                          .fromRGBO(
-                                                                              46,
-                                                                              99,
-                                                                              238,
-                                                                              1),
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .bold,
-                                                                      fontSize:
-                                                                          18,
-                                                                    ),
-                                                                  ),
-                                                                  Text(
-                                                                    "Disponible",
-                                                                    style:
-                                                                        TextStyle(
-                                                                      color: Color
-                                                                          .fromRGBO(
-                                                                              46,
-                                                                              99,
-                                                                              238,
-                                                                              1),
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .normal,
-                                                                      fontSize:
-                                                                          15,
-                                                                    ),
-                                                                  )
-                                                                ],
-                                                              ),
-                                                              SizedBox(
                                                                 height: 7,
                                                               ),
                                                               Column(
@@ -251,27 +216,6 @@ class _CarrodeDonacionCivilState extends State<CarrodeDonacionCivil> {
                                                                         MainAxisAlignment
                                                                             .end,
                                                                     children: [
-                                                                      IconButton(
-                                                                          icon:
-                                                                              Icon(
-                                                                            Icons.edit_outlined,
-                                                                            color: Color.fromRGBO(
-                                                                                46,
-                                                                                99,
-                                                                                238,
-                                                                                1),
-                                                                          ),
-                                                                          onPressed:
-                                                                              null),
-                                                                      Icon(
-                                                                        Icons
-                                                                            .check_box_outlined,
-                                                                        color: Color.fromRGBO(
-                                                                            46,
-                                                                            99,
-                                                                            238,
-                                                                            1),
-                                                                      ),
                                                                       IconButton(
                                                                           icon:
                                                                               Icon(
@@ -319,8 +263,8 @@ class _CarrodeDonacionCivilState extends State<CarrodeDonacionCivil> {
                                                                                             ),
                                                                                           ),
                                                                                           onPressed: () {
-                                                                                            print(ventas.ventas[index].idventa);
-                                                                                            this.carroVentasDataSourceImpl.delVenta(ventas.ventas[index].idventa).then((value) {
+                                                                                            print(donaciones.donaciones[index].idDonacion);
+                                                                                            this.carroDonacionDataSourceImpl.delDonacion(donaciones.donaciones[index].idDonacion).then((value) {
                                                                                               setState(() {});
                                                                                             });
                                                                                             Navigator.pop(context);

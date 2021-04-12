@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:reciclaje_app/data/datasources/carroDonacion_datasource.dart';
+import 'package:reciclaje_app/data/model/nuevaDonacion.dart';
 import 'package:reciclaje_app/page/carrodeDonacionCivil.dart';
 import 'package:reciclaje_app/widgets/navbarCiudadanoCivil.dart';
 
 import '../data/datasources/carroVenta_datasource.dart';
-import '../data/model/nuevaVenta.dart';
 import '../data/model/tipoResiduo.dart';
 import '../data/model/tipoResiduoList.dart';
 import '../service/preferences.dart';
@@ -24,6 +25,9 @@ class _DonacionFormCivilState extends State<DonacionFormCivil> {
 
   CarroVentasDataSourceImpl carroVentasDataSourceImpl =
       new CarroVentasDataSourceImpl();
+
+  CarroDonacionesDataSourceImpl carroDonacionesDataSourceImpl =
+      new CarroDonacionesDataSourceImpl();
 
   List<DropdownMenuItem<TipoResiduo>> dropListaresiduo;
   TipoResiduo selectResiduo;
@@ -268,14 +272,15 @@ class _DonacionFormCivilState extends State<DonacionFormCivil> {
                                             formKey.currentState.save();
                                             print(selectResiduo.idtiporesiduo);
 
-                                            NuevaVenta nuevaVenta = NuevaVenta(
-                                                0,
-                                                0,
-                                                _email,
-                                                selectResiduo.idtiporesiduo);
+                                            NuevaDonacion nuevaDonacion =
+                                                NuevaDonacion(
+                                                    selectResiduo.idtiporesiduo
+                                                        .toInt(),
+                                                    _email);
+
                                             this
-                                                .carroVentasDataSourceImpl
-                                                .crearVenta(nuevaVenta)
+                                                .carroDonacionesDataSourceImpl
+                                                .crearDonacion(nuevaDonacion)
                                                 .then((value) {
                                               showDialog(
                                                 context: context,
