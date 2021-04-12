@@ -11,11 +11,11 @@ abstract class CarroVentasDataSource {
 
   Future<dynamic> delVenta(int idVenta);
 
-  Future<Ventas> findByIdVentas(int idVenta);
-
   Future<TipoResiduoList> obtenerTiposResiduos();
 
   Future<NuevaVenta> crearVenta(NuevaVenta nuevaVenta);
+
+  Future<Ventas> findByIdVentas(int idVenta);
 }
 
 class CarroVentasDataSourceImpl implements CarroVentasDataSource {
@@ -45,8 +45,9 @@ class CarroVentasDataSourceImpl implements CarroVentasDataSource {
 
   @override
   Future<Ventas> findByIdVentas(int idVenta) async {
-    return await _apiProvider
+    final response = await _apiProvider
         .get("/api/v1/carritoVentas/ventaInfo/" + idVenta.toString());
+    return Ventas.fromJson(response);
   }
 
   @override

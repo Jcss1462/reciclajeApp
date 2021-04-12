@@ -31,7 +31,9 @@ class Routers {
       case formAgendaVisitaCivil:
         return MaterialPageRoute(builder: (_) => FormAgendaVisitaCivil());
       case pageEditar:
-        return MaterialPageRoute(builder: (_) => PageEditar());
+        final int args = settings.arguments;
+
+        return MaterialPageRoute(builder: (_) => PageEditar(args));
       default:
         return MaterialPageRoute(
           builder: (_) => Scaffold(

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:reciclaje_app/core/constants.dart';
 import 'package:reciclaje_app/data/datasources/carroVenta_datasource.dart';
 import 'package:reciclaje_app/data/model/ventaList.dart';
-import 'package:reciclaje_app/page/pageEditar.dart';
 import 'package:reciclaje_app/service/preferences.dart';
 import 'package:reciclaje_app/widgets/navbar.dart';
 
@@ -350,7 +350,7 @@ class _CarroDeVentasState extends State<CarroDeVentas> {
                                                                                       ),
                                                                                       onPressed: () {
                                                                                         print(ventas.ventas[index].idventa);
-                                                                                        Navigator.push(context, MaterialPageRoute(builder: (context) => PageEditar()));
+                                                                                        Navigator.pushNamed(context, pageEditar, arguments: ventas.ventas[index].idventa);
                                                                                       },
                                                                                     ),
                                                                                   ],

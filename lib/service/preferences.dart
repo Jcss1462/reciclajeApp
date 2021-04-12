@@ -30,13 +30,9 @@ class Preferences {
     return preferences.setInt("idtipousuario", idTipoUsuario);
   }
 
-  Future obtenerIdTipoResiduo() async {
+  /*Future obtenerIdTipoResiduo() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     return preferences.get("idTipoResiduo") ?? null;
-  }
+  }*/
 
-  Future obtenerIdVenta() async {
-    SharedPreferences preferences = await SharedPreferences.getInstance();
-    return preferences.get("idVenta") ?? null;
-  }
 }
