@@ -90,6 +90,7 @@ class ApiProvider {
         token = value;
       });
       print(token);
+      print("venta: " + objToUpdate);
       Map<String, String> headers = {
         "Content-Type": "application/json",
         "Authorization": token
@@ -101,6 +102,7 @@ class ApiProvider {
         body: objToUpdate,
       );
       responseJson = _response(response);
+      print(responseJson);
     } on SocketException {
       throw FetchDataException('No Internet connection');
     }
@@ -125,7 +127,6 @@ class ApiProvider {
       case 404:
         return json.decode(response.body.toString());
       case 500:
-
       default:
         throw FetchDataException(
             'Error occured while Communication with Server with StatusCode : ${response.statusCode}');

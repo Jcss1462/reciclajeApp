@@ -193,11 +193,14 @@ class _PageEditarState extends State<PageEditar> {
                                                             width: 0.5,
                                                           ))),
                                               onSaved: (value) {
-                                                peso = double.parse(value);
-                                                if (peso == 0) {
+                                                ventas.peso =
+                                                    double.parse(value);
+                                                if (ventas.peso == 0) {
                                                   total = 0;
                                                 } else {
-                                                  total = ventas.idventa * peso;
+                                                  ventas.total =
+                                                      ventas.precioPorKiloTipo *
+                                                          ventas.peso;
                                                 }
                                               },
                                               validator: (value) {
@@ -263,7 +266,7 @@ class _PageEditarState extends State<PageEditar> {
                                           context: context,
                                           builder: (context) => AlertDialog(
                                             title: Text(
-                                              "Residuo Editado",
+                                              "Editar Residuo",
                                               style: TextStyle(
                                                 color: Color.fromRGBO(
                                                     46, 99, 238, 1),
@@ -295,14 +298,36 @@ class _PageEditarState extends State<PageEditar> {
                                                       builder: (context) =>
                                                           AlertDialog(
                                                         title: Text(
-                                                            "Venta edita Exitosamente"),
+                                                            "Venta editada Exitosamente"),
+                                                        actions: <Widget>[
+                                                          TextButton(
+                                                            child: Text(
+                                                              'Ok',
+                                                              style: TextStyle(
+                                                                color: Color
+                                                                    .fromRGBO(
+                                                                        46,
+                                                                        99,
+                                                                        238,
+                                                                        1),
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold,
+                                                                fontSize: 15,
+                                                              ),
+                                                            ),
+                                                            onPressed: () {
+                                                              Navigator.push(
+                                                                  context,
+                                                                  MaterialPageRoute(
+                                                                      builder:
+                                                                          (context) =>
+                                                                              CarroDeVentas()));
+                                                            },
+                                                          )
+                                                        ],
                                                       ),
                                                     );
-                                                    Navigator.push(
-                                                        context,
-                                                        MaterialPageRoute(
-                                                            builder: (context) =>
-                                                                CarroDeVentas()));
                                                   }).onError(
                                                           (error, stackTrace) {
                                                     showDialog(

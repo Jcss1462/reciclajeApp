@@ -4,12 +4,20 @@ class Ventas {
   double peso;
   double total;
   int idestadoventaEstadoventa;
+  int idtiporesiduo;
   String emailUsuario;
   String tipo;
   double precioPorKiloTipo;
 
-  Ventas(this.fechaventa, this.idventa, this.peso, this.total,
-      this.idestadoventaEstadoventa, this.emailUsuario, this.precioPorKiloTipo);
+  Ventas(
+      this.fechaventa,
+      this.idventa,
+      this.peso,
+      this.total,
+      this.idestadoventaEstadoventa,
+      this.idtiporesiduo,
+      this.emailUsuario,
+      this.precioPorKiloTipo);
 
   Ventas.fromJson(Map<dynamic, dynamic> json) {
     this.fechaventa = json['fechaventa'];
@@ -17,6 +25,7 @@ class Ventas {
     this.peso = json['peso'];
     this.total = json['total'];
     this.idestadoventaEstadoventa = json['idestadoventa_Estadoventa'];
+    this.idtiporesiduo = json['idtiporesiduo_Tiporesiduo'];
     this.emailUsuario = json['email_Usuario'];
     this.tipo = json['tipo'];
     this.precioPorKiloTipo = json['precioPorKiloTipo'];
@@ -29,6 +38,7 @@ class Ventas {
       'peso': this.peso,
       'total': this.total,
       'idestadoventa_Estadoventa': this.idestadoventaEstadoventa,
+      'idtiporesiduo_Tiporesiduo': this.idtiporesiduo,
       'email_Usuario': this.emailUsuario,
       'tipo': this.tipo,
       'precioPorKiloTipo': this.precioPorKiloTipo
