@@ -4,6 +4,7 @@ import 'package:reciclaje_app/data/model/tipoResiduo.dart';
 import 'package:reciclaje_app/data/model/ventas.dart';
 import 'package:reciclaje_app/page/index.dart';
 import 'package:reciclaje_app/service/preferences.dart';
+import 'package:reciclaje_app/widgets/dialogBox.dart';
 import 'package:reciclaje_app/widgets/navbar.dart';
 
 class PageEditar extends StatefulWidget {
@@ -166,8 +167,8 @@ class _PageEditarState extends State<PageEditar> {
                                           ),
                                           new Container(
                                             child: TextFormField(
-                                              initialValue: peso != null
-                                                  ? peso.toString()
+                                              initialValue: ventas.peso != null
+                                                  ? ventas.peso.toString()
                                                   : "",
                                               keyboardType:
                                                   TextInputType.number,
@@ -226,9 +227,9 @@ class _PageEditarState extends State<PageEditar> {
                                         ),
                                         SizedBox(height: 25),
                                         Text(
-                                          total == null
+                                          ventas.total == null
                                               ? "\$0"
-                                              : "\$" + total.toString(),
+                                              : "\$" + ventas.total.toString(),
                                           style: TextStyle(
                                               color: Color.fromRGBO(
                                                   46, 99, 238, 1),
@@ -271,7 +272,7 @@ class _PageEditarState extends State<PageEditar> {
                                               ),
                                             ),
                                             content: Text(
-                                                "El Residuo se Editado Exitosamente"),
+                                                "Esta seguro que desea editar la venta?"),
                                             actions: <Widget>[
                                               TextButton(
                                                 child: Text(
@@ -284,11 +285,34 @@ class _PageEditarState extends State<PageEditar> {
                                                   ),
                                                 ),
                                                 onPressed: () {
-                                                  Navigator.push(
-                                                      context,
-                                                      MaterialPageRoute(
-                                                          builder: (context) =>
-                                                              CarroDeVentas()));
+                                                  ventas.total = ventas.peso *
+                                                      ventas.precioPorKiloTipo;
+                                                  carroVentasDataSourceImpl
+                                                      .editVenta(ventas)
+                                                      .then((value) {
+                                                    showDialog(
+                                                      context: context,
+                                                      builder: (context) =>
+                                                          AlertDialog(
+                                                        title: Text(
+                                                            "Venta edita Exitosamente"),
+                                                      ),
+                                                    );
+                                                    Navigator.push(
+                                                        context,
+                                                        MaterialPageRoute(
+                                                            builder: (context) =>
+                                                                CarroDeVentas()));
+                                                  }).onError(
+                                                          (error, stackTrace) {
+                                                    showDialog(
+                                                      context: context,
+                                                      builder: (context) => DialogBox(
+                                                          "Error editando venta",
+                                                          "Error:" +
+                                                              error.toString()),
+                                                    );
+                                                  });
                                                 },
                                               ),
                                               TextButton(

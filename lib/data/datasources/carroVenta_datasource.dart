@@ -17,7 +17,7 @@ abstract class CarroVentasDataSource {
 
   Future<Ventas> findByIdVentas(int idVenta);
 
-  //Future<dynamic> editVenta(int idVenta);
+  Future<dynamic> editVenta(Ventas venta);
 }
 
 class CarroVentasDataSourceImpl implements CarroVentasDataSource {
@@ -62,12 +62,13 @@ class CarroVentasDataSourceImpl implements CarroVentasDataSource {
     return NuevaVenta.fromJson(response);
   }
 
-  /*   @override
-  Future<dynamic> editVenta(int idVenta) async {
+  @override
+  Future<NuevaVenta> editVenta(Ventas venta) async {
+    String body = jsonEncode(venta.toJson());
+    print(body);
     final response =
-        await _apiProvider.put("/api/v1/carritoVentas/uodateVenta" + idVenta.toString());
+        await _apiProvider.put("/api/v1/carritoVentas/updateVenta", body);
     print(response);
     return NuevaVenta.fromJson(response);
-  }*/
-
+  }
 }

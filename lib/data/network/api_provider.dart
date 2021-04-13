@@ -43,7 +43,10 @@ class ApiProvider {
         token = value;
       });
       print(token);
-      Map<String, String> headers = {"Content-Type": "application/json","Authorization":token};
+      Map<String, String> headers = {
+        "Content-Type": "application/json",
+        "Authorization": token
+      };
 
       final response = await http.post(
         Uri.https(baseUrl, url),
@@ -78,14 +81,22 @@ class ApiProvider {
     return responseJson;
   }
 
-/*
   Future<dynamic> put(String url, String objToUpdate) async {
+    print(baseUrl + url);
     var responseJson;
+    String token;
     try {
-      Map<String, String> headers = {"Content-Type": "application/json"};
+      await preferencias.obtenerToken().then((value) async {
+        token = value;
+      });
+      print(token);
+      Map<String, String> headers = {
+        "Content-Type": "application/json",
+        "Authorization": token
+      };
 
       final response = await http.put(
-        baseUrl + url,
+        Uri.https(baseUrl, url),
         headers: headers,
         body: objToUpdate,
       );
@@ -95,7 +106,7 @@ class ApiProvider {
     }
     return responseJson;
   }
-*/
+
   dynamic _response(http.Response response) {
     switch (response.statusCode) {
       case 200:
