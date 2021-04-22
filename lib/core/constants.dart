@@ -8,3 +8,4 @@ const String donacionFormCivil = '/donacionFormCivl';
 const String carrodeDonacionCivil = '/carrodeDonacionCivil';
 const String formAgendaVisitaCivil = '/formAgendaVisitaCivil';
 const String pageEditar = '/pageEditar';
+const String visitaCiviles = '/visitaCiviles';

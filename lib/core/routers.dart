@@ -7,6 +7,7 @@ import 'package:reciclaje_app/page/ventasForm.dart';
 import 'package:reciclaje_app/page/index.dart';
 import 'package:flutter/material.dart'
     show Center, MaterialPageRoute, Route, RouteSettings, Scaffold, Text;
+import 'package:reciclaje_app/page/visitaCiviles.dart';
 import 'constants.dart';
 
 class Routers {
@@ -32,8 +33,9 @@ class Routers {
         return MaterialPageRoute(builder: (_) => FormAgendaVisitaCivil());
       case pageEditar:
         final int args = settings.arguments;
-
         return MaterialPageRoute(builder: (_) => PageEditar(args));
+         case visitaCiviles:
+        return MaterialPageRoute(builder: (_) => VisitaCiviles());
       default:
         return MaterialPageRoute(
           builder: (_) => Scaffold(

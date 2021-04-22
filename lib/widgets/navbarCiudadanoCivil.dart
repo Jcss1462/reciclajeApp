@@ -107,27 +107,20 @@ class NavBarCiudadanoCivil extends StatelessWidget {
               Navigator.pushNamed(context, inicioCiudadanoCivil);
             },
           ),
-          
-          SizedBox(
-            height: 250,
-          ),
-          Container(
-            width: double.infinity,
-            padding:
-                EdgeInsets.only(top: 20.0, bottom: 30.0, left: 20, right: 20),
-            color: Color.fromRGBO(46, 99, 238, 1),
-            child: Column(
-              children: <Widget>[
-                TextButton(
-                    child: Text(
-                      "Log Out",
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 23),
-                    ),
-                    onPressed: () {
-                      showDialog(
+          ListTile(
+            leading: Icon(
+              Icons.logout,
+              color: Color.fromRGBO(46, 99, 238, 1),
+            ),
+            title: Text(
+              "Log Out",
+              style: TextStyle(
+                  color: Color.fromRGBO(46, 99, 238, 1),
+                  fontWeight: FontWeight.normal,
+                  fontSize: 18),
+            ),
+            onTap: () {
+              showDialog(
                           context: context,
                           builder: (context) => AlertDialog(
                                   title: Text(
@@ -166,10 +159,9 @@ class NavBarCiudadanoCivil extends StatelessWidget {
                                         Navigator.pop(context);
                                       },
                                     )
-                                  ]));
-                    }),
-              ],
-            ),
+                                  ])
+              );
+            },
           ),
         ],
       ),

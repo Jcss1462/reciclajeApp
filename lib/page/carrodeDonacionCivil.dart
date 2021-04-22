@@ -43,13 +43,14 @@ class _CarrodeDonacionCivilState extends State<CarrodeDonacionCivil> {
             "Carro de Donaciones",
             style: TextStyle(
                 color: Colors.white, fontWeight: FontWeight.bold, fontSize: 20),
-          )),
+          ),
+          ),
       body: new Stack(
         children: <Widget>[
           new Container(
             decoration: BoxDecoration(
               image: new DecorationImage(
-                image: new AssetImage("assets/images/background.png"),
+                image: new AssetImage("assets/images/fondo.png"),
                 fit: BoxFit.cover,
               ),
             ),
@@ -87,17 +88,6 @@ class _CarrodeDonacionCivilState extends State<CarrodeDonacionCivil> {
                                           mainAxisAlignment:
                                               MainAxisAlignment.center,
                                           children: [
-                                            Text(
-                                              "Bienvenido a su Carro de Donación",
-                                              textAlign: TextAlign.center,
-                                              style: TextStyle(
-                                                  color: Colors.white,
-                                                  fontWeight: FontWeight.bold,
-                                                  fontSize: 25),
-                                            ),
-                                            SizedBox(
-                                              height: 35,
-                                            ),
                                             ListView.builder(
                                               physics:
                                                   const NeverScrollableScrollPhysics(),
