@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:reciclaje_app/core/constants.dart';
 import 'package:reciclaje_app/page/index.dart';
@@ -9,14 +11,15 @@ class NavBar extends StatelessWidget {
       child: Column(
         children: <Widget>[
           Container(
+            alignment: Alignment.topCenter,
             width: double.infinity,
             padding: EdgeInsets.all(20),
             color: Color.fromRGBO(46, 99, 238, 1),
             child: Column(
               children: <Widget>[
                 Container(
-                  width: 100,
-                  height: 100,
+                  width: 50,
+                  height: 50,
                 ),
                 Text(
                   "Menú Principal",
@@ -174,6 +177,69 @@ class NavBar extends StatelessWidget {
               Navigator.push(context,
                   MaterialPageRoute(builder: (context) => InicioReciclador()));
             },
+          ),
+          SizedBox(
+            height: 20,
+          ),
+          Container(
+            width: double.infinity,
+            padding:
+                EdgeInsets.only(top: 20.0, bottom: 30.0, left: 20, right: 20),
+            color: Color.fromRGBO(46, 99, 238, 1),
+            child: Column(
+              children: <Widget>[
+                TextButton(
+                    child: Text(
+                      "Log Out",
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 18),
+                    ),
+                    onPressed: () {
+                      showDialog(
+                          context: context,
+                          builder: (context) => AlertDialog(
+                                  title: Text(
+                                    "Cerrar Sesión",
+                                    style: TextStyle(
+                                      color: Color.fromRGBO(46, 99, 238, 1),
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 20,
+                                    ),
+                                  ),
+                                  content: Text(
+                                    "Esta seguro que desea cerrar la sesión",
+                                  ),
+                                  actions: <Widget>[
+                                    TextButton(
+                                      child: Text(
+                                        'Ok',
+                                        style: TextStyle(
+                                          color: Color.fromRGBO(46, 99, 238, 1),
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 15,
+                                        ),
+                                      ),
+                                      onPressed: null,
+                                    ),
+                                    TextButton(
+                                      child: Text(
+                                        "Cancelar",
+                                        style: TextStyle(
+                                          color: Color.fromRGBO(46, 99, 238, 1),
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 15,
+                                        ),
+                                      ),
+                                      onPressed: () {
+                                        Navigator.pop(context);
+                                      },
+                                    )
+                                  ]));
+                    }),
+              ],
+            ),
           ),
         ],
       ),

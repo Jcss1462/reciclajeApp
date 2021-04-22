@@ -43,7 +43,7 @@ class _CarroDeVentasState extends State<CarroDeVentas> {
       appBar: AppBar(
         backgroundColor: Color.fromRGBO(46, 99, 238, 1),
         title: Text(
-          "Carro de Ventas",
+          "Bienvenido al Carro de Ventas",
           style: TextStyle(
               color: Colors.white, fontWeight: FontWeight.bold, fontSize: 20),
         ),
@@ -54,7 +54,7 @@ class _CarroDeVentasState extends State<CarroDeVentas> {
           new Container(
             decoration: new BoxDecoration(
               image: new DecorationImage(
-                image: new AssetImage("assets/images/background.png"),
+                image: new AssetImage("assets/images/fondo.png"),
                 fit: BoxFit.cover,
               ),
             ),
@@ -91,22 +91,12 @@ class _CarroDeVentasState extends State<CarroDeVentas> {
                                             MediaQuery.of(context).size.height,
                                         child: Center(
                                             child: SingleChildScrollView(
+                                              child: Container(
                                                 child: Column(
                                                     mainAxisAlignment:
                                                         MainAxisAlignment
                                                             .center,
                                                     children: [
-                                              Text(
-                                                "Bienvenido a su Carro de Ventas",
-                                                textAlign: TextAlign.center,
-                                                style: TextStyle(
-                                                    color: Colors.white,
-                                                    fontWeight: FontWeight.bold,
-                                                    fontSize: 25),
-                                              ),
-                                              SizedBox(
-                                                height: 35,
-                                              ),
                                               ListView.builder(
                                                   physics:
                                                       const NeverScrollableScrollPhysics(),
@@ -133,14 +123,14 @@ class _CarroDeVentasState extends State<CarroDeVentas> {
                                                           constraints:
                                                               BoxConstraints(
                                                             minWidth: 150,
-                                                            minHeight: 150,
+                                                            minHeight: 240,
                                                           ),
                                                           padding:
                                                               EdgeInsets.only(
                                                                   top: 20.0,
                                                                   bottom: 30.0,
-                                                                  left: 40,
-                                                                  right: 40),
+                                                                  left: 20,
+                                                                  right: 20),
                                                           decoration:
                                                               BoxDecoration(
                                                             borderRadius:
@@ -214,13 +204,11 @@ class _CarroDeVentasState extends State<CarroDeVentas> {
                                                                 ),
                                                                 SizedBox(
                                                                     height: 5),
-                                                                SingleChildScrollView(
-                                                                  scrollDirection:
-                                                                      Axis.horizontal,
-                                                                  child: Row(
+                                                                    Row(
                                                                     children: [
                                                                       Text(
                                                                         "Peso en Kilogramos: ",
+                                                                        textAlign: TextAlign.left,
                                                                         style:
                                                                             TextStyle(
                                                                           color: Color.fromRGBO(
@@ -239,6 +227,7 @@ class _CarroDeVentasState extends State<CarroDeVentas> {
                                                                             .ventas[index]
                                                                             .peso
                                                                             .toString(),
+                                                                        textAlign: TextAlign.left,
                                                                         style:
                                                                             TextStyle(
                                                                           color: Color.fromRGBO(
@@ -254,16 +243,13 @@ class _CarroDeVentasState extends State<CarroDeVentas> {
                                                                       ),
                                                                     ],
                                                                   ),
-                                                                ),
                                                                 SizedBox(
                                                                     height: 5),
-                                                                SingleChildScrollView(
-                                                                  scrollDirection:
-                                                                      Axis.horizontal,
-                                                                  child: Row(
+                                                                    Row(
                                                                     children: [
                                                                       Text(
                                                                         "Total del Residuo: ",
+                                                                        textAlign: TextAlign.left,
                                                                         style:
                                                                             TextStyle(
                                                                           color: Color.fromRGBO(
@@ -282,6 +268,7 @@ class _CarroDeVentasState extends State<CarroDeVentas> {
                                                                             .ventas[index]
                                                                             .total
                                                                             .toString(),
+                                                                        textAlign: TextAlign.left,
                                                                         style:
                                                                             TextStyle(
                                                                           color: Color.fromRGBO(
@@ -297,7 +284,6 @@ class _CarroDeVentasState extends State<CarroDeVentas> {
                                                                       ),
                                                                     ],
                                                                   ),
-                                                                ),
                                                                 Column(
                                                                   children: <
                                                                       Widget>[
@@ -311,6 +297,7 @@ class _CarroDeVentasState extends State<CarroDeVentas> {
                                                                                 Icon(
                                                                               Icons.edit_outlined,
                                                                               color: Color.fromRGBO(46, 99, 238, 1),
+                                                                              size: 30,
                                                                             ),
                                                                             onPressed:
                                                                                 () {
@@ -363,6 +350,7 @@ class _CarroDeVentasState extends State<CarroDeVentas> {
                                                                                 Icon(
                                                                               Icons.delete_outline,
                                                                               color: Color.fromRGBO(46, 99, 238, 1),
+                                                                              size: 30,
                                                                             ),
                                                                             onPressed:
                                                                                 () {
@@ -413,15 +401,10 @@ class _CarroDeVentasState extends State<CarroDeVentas> {
                                                                                       ));
                                                                             }),
                                                                       ],
-                                                                    )
+                                                                    ),
                                                                   ],
                                                                 ),
-                                                              ],
-                                                            ),
-                                                          ),
-                                                        ),
-                                                      ),
-                                                      SizedBox(height: 20),
+                                                                SizedBox(height: 15),
                                                       MaterialButton(
                                                           height: 50,
                                                           minWidth: 250,
@@ -492,10 +475,20 @@ class _CarroDeVentasState extends State<CarroDeVentas> {
                                                                           ],
                                                                         ));
                                                           }),
-                                                      SizedBox(height: 20)
+                                                              ],
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                      
                                                     ]);
                                                   })
-                                            ]))));
+                                            ],
+                                            ),
+                                            ),
+                                            ),
+                                            ),
+                                            );
                                   }
                               }
                             });

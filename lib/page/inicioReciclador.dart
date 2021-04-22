@@ -28,7 +28,7 @@ class _InicioRecicladorState extends State<InicioReciclador> {
           new Container(
             decoration: new BoxDecoration(
               image: new DecorationImage(
-                image: new AssetImage("assets/images/background.png"),
+                image: new AssetImage("assets/images/fondo.png"),
                 fit: BoxFit.cover,
               ),
             ),

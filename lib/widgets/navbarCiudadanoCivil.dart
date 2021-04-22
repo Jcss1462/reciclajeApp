@@ -107,6 +107,70 @@ class NavBarCiudadanoCivil extends StatelessWidget {
               Navigator.pushNamed(context, inicioCiudadanoCivil);
             },
           ),
+          
+          SizedBox(
+            height: 250,
+          ),
+          Container(
+            width: double.infinity,
+            padding:
+                EdgeInsets.only(top: 20.0, bottom: 30.0, left: 20, right: 20),
+            color: Color.fromRGBO(46, 99, 238, 1),
+            child: Column(
+              children: <Widget>[
+                TextButton(
+                    child: Text(
+                      "Log Out",
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 23),
+                    ),
+                    onPressed: () {
+                      showDialog(
+                          context: context,
+                          builder: (context) => AlertDialog(
+                                  title: Text(
+                                    "Cerrar Sesión",
+                                    style: TextStyle(
+                                      color: Color.fromRGBO(46, 99, 238, 1),
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 20,
+                                    ),
+                                  ),
+                                  content: Text(
+                                    "Esta seguro que desea cerrar la sesión",
+                                  ),
+                                  actions: <Widget>[
+                                    TextButton(
+                                      child: Text(
+                                        'Ok',
+                                        style: TextStyle(
+                                          color: Color.fromRGBO(46, 99, 238, 1),
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 15,
+                                        ),
+                                      ),
+                                      onPressed: null,
+                                    ),
+                                    TextButton(
+                                      child: Text(
+                                        "Cancelar",
+                                        style: TextStyle(
+                                          color: Color.fromRGBO(46, 99, 238, 1),
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 15,
+                                        ),
+                                      ),
+                                      onPressed: () {
+                                        Navigator.pop(context);
+                                      },
+                                    )
+                                  ]));
+                    }),
+              ],
+            ),
+          ),
         ],
       ),
     );

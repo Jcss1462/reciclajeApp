@@ -58,7 +58,7 @@ class _RegitroState extends State<RegistroPage> {
           new Container(
             decoration: new BoxDecoration(
               image: new DecorationImage(
-                image: new AssetImage("assets/images/background.png"),
+                image: new AssetImage("assets/images/fondo.png"),
                 fit: BoxFit.cover,
               ),
             ),
