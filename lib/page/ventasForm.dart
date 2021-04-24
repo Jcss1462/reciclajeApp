@@ -439,7 +439,7 @@ class _VentasFormState extends State<VentasForm> {
                                                 ),
                                                 TextButton(
                                                     child: Text(
-                                                      'Vender Mas',
+                                                      'Vender Más',
                                                       style: TextStyle(
                                                         color: Color.fromRGBO(
                                                             46, 99, 238, 1),

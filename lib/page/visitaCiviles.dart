@@ -109,7 +109,7 @@ class _VisitaCivilesState extends State<VisitaCiviles> {
                                                             5,
                                                     constraints: BoxConstraints(
                                                       minWidth: 150,
-                                                      minHeight: 280,
+                                                      minHeight: 350,
                                                     ),
                                                     padding: EdgeInsets.only(
                                                         top: 20.0,
@@ -350,60 +350,63 @@ class _VisitaCivilesState extends State<VisitaCiviles> {
                                                                     MainAxisAlignment
                                                                         .end,
                                                                 children: [
-                                                                      Icon(
-                                                                        Icons.check_box_outlined,
-                                                                        color: Color.fromRGBO(
+                                                                  Icon(
+                                                                    Icons
+                                                                        .check_box_outlined,
+                                                                    color: Color
+                                                                        .fromRGBO(
                                                                             46,
                                                                             99,
                                                                             238,
                                                                             1),
-                                                                        size:
-                                                                            30,
-                                                                      ),
+                                                                    size: 30,
+                                                                  ),
                                                                   IconButton(
-                                                                      icon:
-                                                                          Icon(
-                                                                        Icons
-                                                                            .delete_outlined,
-                                                                        color: Color.fromRGBO(
-                                                                            46,
-                                                                            99,
-                                                                            238,
-                                                                            1),
-                                                                        size:
-                                                                            30,
-                                                                      ),
-                                                                      onPressed:
-                                                                          () {
-                                                                        showDialog(
-                                                                          context:
-                                                                              context,
-                                                                          builder: (context) =>
-                                                                              AlertDialog(
-                                                                            title:
-                                                                                Text(
-                                                                              "Estas seguro que deseas eliminar esta visita?",
-                                                                              style: TextStyle(
-                                                                                color: Color.fromRGBO(46, 99, 238, 1),
-                                                                                fontWeight: FontWeight.bold,
-                                                                                fontSize: 20,
-                                                                              ),
+                                                                    icon: Icon(
+                                                                      Icons
+                                                                          .delete_outlined,
+                                                                      color: Color
+                                                                          .fromRGBO(
+                                                                              46,
+                                                                              99,
+                                                                              238,
+                                                                              1),
+                                                                      size: 30,
+                                                                    ),
+                                                                    onPressed:
+                                                                        () {
+                                                                      showDialog(
+                                                                        context:
+                                                                            context,
+                                                                        builder:
+                                                                            (context) =>
+                                                                                AlertDialog(
+                                                                          title:
+                                                                              Text(
+                                                                            "Estas seguro que deseas eliminar esta visita?",
+                                                                            style:
+                                                                                TextStyle(
+                                                                              color: Color.fromRGBO(46, 99, 238, 1),
+                                                                              fontWeight: FontWeight.bold,
+                                                                              fontSize: 20,
                                                                             ),
-                                                                            actions: <Widget>[
-                                                                              TextButton(
-                                                                                child: Text(
-                                                                                  'Cancelar',
-                                                                                  style: TextStyle(
-                                                                                    color: Color.fromRGBO(46, 99, 238, 1),
-                                                                                    fontWeight: FontWeight.bold,
-                                                                                    fontSize: 15,
-                                                                                  ),
+                                                                          ),
+                                                                          actions: <
+                                                                              Widget>[
+                                                                            TextButton(
+                                                                              child: Text(
+                                                                                'Cancelar',
+                                                                                style: TextStyle(
+                                                                                  color: Color.fromRGBO(46, 99, 238, 1),
+                                                                                  fontWeight: FontWeight.bold,
+                                                                                  fontSize: 15,
                                                                                 ),
-                                                                                onPressed: () {
-                                                                                  Navigator.pop(context);
-                                                                                },
                                                                               ),
-                                                                              TextButton(
+                                                                              onPressed: () {
+                                                                                Navigator.pop(context);
+                                                                              },
+                                                                            ),
+                                                                            TextButton(
                                                                                 child: Text(
                                                                                   'Continuar',
                                                                                   style: TextStyle(
@@ -412,16 +415,84 @@ class _VisitaCivilesState extends State<VisitaCiviles> {
                                                                                     fontSize: 15,
                                                                                   ),
                                                                                 ),
-                                                                                onPressed: null
-                                                                              ),
-                                                                            ],
-                                                                          ),
-                                                                        );
-                                                                      },
-                                                                      ),
+                                                                                onPressed: null),
+                                                                          ],
+                                                                        ),
+                                                                      );
+                                                                    },
+                                                                  ),
                                                                 ],
                                                               )
                                                             ],
+                                                          ),
+                                                          SizedBox(height: 15),
+                                                          MaterialButton(
+                                                            height: 50,
+                                                            minWidth: 250,
+                                                            color:
+                                                                Color.fromRGBO(
+                                                                    46,
+                                                                    99,
+                                                                    238,
+                                                                    1),
+                                                            textColor:
+                                                                Colors.white,
+                                                            child: new Text(
+                                                              "Agendar Visita",
+                                                              style: TextStyle(
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .bold,
+                                                                  fontSize: 25),
+                                                            ),
+                                                            onPressed: () {
+                                                              showDialog(
+                                                                  context:
+                                                                      context,
+                                                                  builder:
+                                                                      (context) =>
+                                                                          AlertDialog(
+                                                                            title:
+                                                                                Text(
+                                                                              "Visita Agendada",
+                                                                              style: TextStyle(
+                                                                                color: Color.fromRGBO(46, 99, 238, 1),
+                                                                                fontWeight: FontWeight.bold,
+                                                                                fontSize: 20,
+                                                                              ),
+                                                                            ),
+                                                                            content:
+                                                                                Text(
+                                                                              "La visita se agendo exitosamente",
+                                                                            ),
+                                                                            actions: <Widget>[
+                                                                              TextButton(
+                                                                                child: Text(
+                                                                                  'Ok',
+                                                                                  style: TextStyle(
+                                                                                    color: Color.fromRGBO(46, 99, 238, 1),
+                                                                                    fontWeight: FontWeight.bold,
+                                                                                    fontSize: 15,
+                                                                                  ),
+                                                                                ),
+                                                                                onPressed: null,
+                                                                              ),
+                                                                              TextButton(
+                                                                                  child: Text(
+                                                                                "Agendar Más",
+                                                                                style: TextStyle(
+                                                                                  color: Color.fromRGBO(46, 99, 238, 1),
+                                                                                  fontWeight: FontWeight.bold,
+                                                                                  fontSize: 15,
+                                                                                ),
+                                                                              ),
+                                                                              onPressed: () {
+                                                                                Navigator.pop(context);
+                                                                              },
+                                                                              )
+                                                                            ],
+                                                                          ));
+                                                            },
                                                           )
                                                         ],
                                                       ),
