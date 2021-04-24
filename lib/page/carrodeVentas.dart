@@ -143,7 +143,7 @@ class _CarroDeVentasState extends State<CarroDeVentas> {
                                                                 color: Colors
                                                                     .grey
                                                                     .withOpacity(
-                                                                        0.25),
+                                                                        0.15),
                                                                 spreadRadius: 5,
                                                                 offset: Offset(
                                                                     0, 3),
