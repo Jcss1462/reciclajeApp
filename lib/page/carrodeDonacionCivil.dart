@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:reciclaje_app/core/constants.dart';
 import 'package:reciclaje_app/data/datasources/carroDonacion_datasource.dart';
 import 'package:reciclaje_app/data/model/donacionesList.dart';
 import 'package:reciclaje_app/service/preferences.dart';
@@ -38,13 +39,13 @@ class _CarrodeDonacionCivilState extends State<CarrodeDonacionCivil> {
     return Scaffold(
       drawer: NavBarCiudadanoCivil(),
       appBar: AppBar(
-          backgroundColor: Color.fromRGBO(46, 99, 238, 1),
-          title: Text(
-            "Carro de Donaciones",
-            style: TextStyle(
-                color: Colors.white, fontWeight: FontWeight.bold, fontSize: 20),
-          ),
-          ),
+        backgroundColor: Color.fromRGBO(46, 99, 238, 1),
+        title: Text(
+          "Carro de Donaciones",
+          style: TextStyle(
+              color: Colors.white, fontWeight: FontWeight.bold, fontSize: 20),
+        ),
+      ),
       body: new Stack(
         children: <Widget>[
           new Container(
@@ -106,12 +107,12 @@ class _CarrodeDonacionCivilState extends State<CarrodeDonacionCivil> {
                                                                     context)
                                                                 .size
                                                                 .width -
-                                                            50,
+                                                            90,
                                                         height: MediaQuery.of(
                                                                     context)
                                                                 .size
                                                                 .height /
-                                                            5,
+                                                            7,
                                                         constraints:
                                                             BoxConstraints(
                                                           minWidth: 100,
@@ -119,10 +120,10 @@ class _CarrodeDonacionCivilState extends State<CarrodeDonacionCivil> {
                                                         ),
                                                         padding:
                                                             EdgeInsets.only(
-                                                                top: 30.0,
-                                                                bottom: 30.0,
-                                                                left: 40,
-                                                                right: 40),
+                                                                top: 20.0,
+                                                                bottom: 20.0,
+                                                                left: 20,
+                                                                right: 20),
                                                         decoration: BoxDecoration(
                                                             borderRadius:
                                                                 BorderRadius
@@ -195,9 +196,6 @@ class _CarrodeDonacionCivilState extends State<CarrodeDonacionCivil> {
                                                                   )
                                                                 ],
                                                               ),
-                                                              SizedBox(
-                                                                height: 7,
-                                                              ),
                                                               Column(
                                                                 children: <
                                                                     Widget>[
@@ -266,12 +264,85 @@ class _CarrodeDonacionCivilState extends State<CarrodeDonacionCivil> {
                                                                     ],
                                                                   )
                                                                 ],
-                                                              )
+                                                              ),
                                                             ],
                                                           ),
                                                         ),
                                                       ),
-                                                    )
+                                                    ),
+                                                    SizedBox(
+                                                      height: 15,
+                                                    ),
+                                                    MaterialButton(
+                                                        height: 50,
+                                                        minWidth: 250,
+                                                        color: Color.fromRGBO(
+                                                            46, 99, 238, 1),
+                                                        textColor: Colors.white,
+                                                        child: new Text(
+                                                          "Solicitar Reciclador",
+                                                          style: TextStyle(
+                                                            fontWeight:
+                                                                FontWeight.bold,
+                                                            fontSize: 23,
+                                                          ),
+                                                        ),
+                                                        onPressed: () {
+                                                          showDialog(
+                                                              context: context,
+                                                              builder:
+                                                                  (context) =>
+                                                                      AlertDialog(
+                                                                        title:
+                                                                            Text(
+                                                                          "Solicitando reciclador",
+                                                                          style:
+                                                                              TextStyle(
+                                                                            color: Color.fromRGBO(
+                                                                                46,
+                                                                                99,
+                                                                                238,
+                                                                                1),
+                                                                            fontWeight:
+                                                                                FontWeight.bold,
+                                                                            fontSize:
+                                                                                20,
+                                                                          ),
+                                                                        ),
+                                                                        actions: <
+                                                                            Widget>[
+                                                                          TextButton(
+                                                                            child:
+                                                                                Text(
+                                                                              'Cancelar',
+                                                                              style: TextStyle(
+                                                                                color: Color.fromRGBO(46, 99, 238, 1),
+                                                                                fontWeight: FontWeight.bold,
+                                                                                fontSize: 15,
+                                                                              ),
+                                                                            ),
+                                                                            onPressed:
+                                                                                () {
+                                                                              Navigator.pop(context);
+                                                                            },
+                                                                          ),
+                                                                          TextButton(
+                                                                              child: Text(
+                                                                            'Contiunar',
+                                                                            style:
+                                                                                TextStyle(
+                                                                              color: Color.fromRGBO(46, 99, 238, 1),
+                                                                              fontWeight: FontWeight.bold,
+                                                                              fontSize: 15,
+                                                                            ),
+                                                                          ),
+                                                                          onPressed: (){
+                                                                            Navigator.popAndPushNamed(context, listaRecicladores);
+                                                                          },
+                                                                          )
+                                                                        ],
+                                                                      ));
+                                                        })
                                                   ],
                                                 );
                                               },

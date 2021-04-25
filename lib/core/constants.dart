@@ -10,3 +10,4 @@ const String formAgendaVisitaCivil = '/formAgendaVisitaCivil';
 const String pageEditar = '/pageEditar';
 const String visitaCiviles = '/visitaCiviles';
 const String visitaAgendada = '/visitaAgendada';
+const String listaRecicladores = '/listaRecicladores';

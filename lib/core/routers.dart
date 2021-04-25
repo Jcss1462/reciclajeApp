@@ -2,6 +2,7 @@ import 'package:reciclaje_app/page/formAgendaVisitaCivil.dart';
 import 'package:reciclaje_app/page/carrodeDonacionCivil.dart';
 import 'package:reciclaje_app/page/donacionFormCivil.dart';
 import 'package:reciclaje_app/page/inicioCiudadanoCivil.dart';
+import 'package:reciclaje_app/page/listaRecicladores.dart';
 import 'package:reciclaje_app/page/pageEditar.dart';
 import 'package:reciclaje_app/page/ventasForm.dart';
 import 'package:reciclaje_app/page/index.dart';
@@ -39,6 +40,8 @@ class Routers {
         return MaterialPageRoute(builder: (_) => VisitaCiviles());
       case visitaAgendada:
         return MaterialPageRoute(builder: (_) => VisitaAgendada());
+      case listaRecicladores:
+        return MaterialPageRoute(builder: (_) => ListaRecicladores());
       default:
         return MaterialPageRoute(
           builder: (_) => Scaffold(
