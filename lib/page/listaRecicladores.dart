@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:reciclaje_app/data/datasources/recoleccionDonacion_datasource.dart';
+import 'package:reciclaje_app/data/model/aceptarSolicitud.dart';
 import 'package:reciclaje_app/data/model/solicituddeRecoleccionList.dart';
 import 'package:reciclaje_app/service/preferences.dart';
+import 'package:reciclaje_app/widgets/dialogBox.dart';
 import 'package:reciclaje_app/widgets/navbarCiudadanoCivil.dart';
 
 class ListaRecicladores extends StatefulWidget {
@@ -110,7 +112,7 @@ class _ListaRecicladoresState extends State<ListaRecicladores> {
                                                           MediaQuery.of(context)
                                                                   .size
                                                                   .height /
-                                                              5,
+                                                              7,
                                                       constraints:
                                                           BoxConstraints(
                                                         minWidth: 150,
@@ -265,7 +267,20 @@ class _ListaRecicladoresState extends State<ListaRecicladores> {
                                                                                           fontSize: 15,
                                                                                         ),
                                                                                       ),
-                                                                                      onPressed: null,
+                                                                                      onPressed: () {
+                                                                                        AceptarSolicitud aceptarSolicitud = new AceptarSolicitud(solicitudes.solicituddeRecoleccion[index].idcarroDonacion, solicitudes.solicituddeRecoleccion[index].emailReciclador);
+                                                                                        this.recoleccionDonacionDataSourceImpl.aceptarSolicitud(aceptarSolicitud).then((value) {
+                                                                                          showDialog(
+                                                                                            context: context,
+                                                                                            builder: (context) => DialogBox("Solicitud aceptada", "Esperar la visita de tu reciclador"),
+                                                                                          );
+                                                                                        }).onError((error, stackTrace) {
+                                                                                          showDialog(
+                                                                                            context: context,
+                                                                                            builder: (context) => DialogBox("Error al aceptar solicitud", error.toString()),
+                                                                                          );
+                                                                                        });
+                                                                                      },
                                                                                     ),
                                                                                   ],
                                                                                 ));
