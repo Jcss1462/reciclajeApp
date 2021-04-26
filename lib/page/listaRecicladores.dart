@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:reciclaje_app/data/datasources/carroDonacion_datasource.dart';
-import 'package:reciclaje_app/data/model/donacionesList.dart';
+import 'package:reciclaje_app/data/datasources/recoleccionDonacion_datasource.dart';
+import 'package:reciclaje_app/data/model/solicituddeRecoleccionList.dart';
 import 'package:reciclaje_app/service/preferences.dart';
 import 'package:reciclaje_app/widgets/navbarCiudadanoCivil.dart';
 
@@ -13,9 +13,9 @@ class ListaRecicladores extends StatefulWidget {
 class _ListaRecicladoresState extends State<ListaRecicladores> {
   Preferences preferencias = new Preferences();
   String _email;
-  CarroDonacionesDataSourceImpl carroDonacionDataSourceImpl =
-      new CarroDonacionesDataSourceImpl();
-  DonacionesList donaciones = new DonacionesList();
+  RecoleccionDonacionDataSourceImpl recoleccionDonacionDataSourceImpl =
+      new RecoleccionDonacionDataSourceImpl();
+  SolicituddeRecoleccionList solicitudes = new SolicituddeRecoleccionList();
 
   @override
   void initState() {
@@ -29,8 +29,8 @@ class _ListaRecicladoresState extends State<ListaRecicladores> {
     });
   }
 
-  Future<DonacionesList> getListDonaciones() async {
-    return await this.carroDonacionDataSourceImpl.misDonaciones(_email);
+  Future<SolicituddeRecoleccionList> getListSolicitudes() async {
+    return await this.recoleccionDonacionDataSourceImpl.misSolicitudes(_email);
   }
 
   @override
@@ -67,7 +67,7 @@ class _ListaRecicladoresState extends State<ListaRecicladores> {
                       return Text('Error: ${snapshot.error}');
                     } else {
                       return FutureBuilder(
-                        future: getListDonaciones(),
+                        future: getListSolicitudes(),
                         builder:
                             (BuildContext context, AsyncSnapshot snapshot) {
                           switch (snapshot.connectionState) {
@@ -77,7 +77,7 @@ class _ListaRecicladoresState extends State<ListaRecicladores> {
                               if (snapshot.hasError) {
                                 return Text('Error: ${snapshot.error}');
                               } else {
-                                this.donaciones = snapshot.data;
+                                this.solicitudes = snapshot.data;
                                 return Container(
                                   width: MediaQuery.of(context).size.width,
                                   height: MediaQuery.of(context).size.height,
@@ -91,8 +91,8 @@ class _ListaRecicladoresState extends State<ListaRecicladores> {
                                             physics:
                                                 const NeverScrollableScrollPhysics(),
                                             itemCount: this
-                                                .donaciones
-                                                .donaciones
+                                                .solicitudes
+                                                .solicituddeRecoleccion
                                                 .length,
                                             shrinkWrap: true,
                                             itemBuilder: (context, index) {
@@ -166,7 +166,10 @@ class _ListaRecicladoresState extends State<ListaRecicladores> {
                                                                   ),
                                                                 ),
                                                                 Text(
-                                                                  "Alejandro Cosme",
+                                                                  solicitudes
+                                                                      .solicituddeRecoleccion[
+                                                                          index]
+                                                                      .emailReciclador,
                                                                   textAlign:
                                                                       TextAlign
                                                                           .left,
@@ -190,51 +193,9 @@ class _ListaRecicladoresState extends State<ListaRecicladores> {
                                                             SizedBox(
                                                               height: 5,
                                                             ),
-                                                            Row(
-                                                              children: [
-                                                                Text(
-                                                                  "Tiempo Apoximado ",
-                                                                  textAlign:
-                                                                      TextAlign
-                                                                          .left,
-                                                                  style:
-                                                                      TextStyle(
-                                                                    color: Color
-                                                                        .fromRGBO(
-                                                                            46,
-                                                                            99,
-                                                                            238,
-                                                                            1),
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .bold,
-                                                                    fontSize:
-                                                                        18,
-                                                                  ),
-                                                                ),
-                                                                Text(
-                                                                  "10 min",
-                                                                  textAlign:
-                                                                      TextAlign
-                                                                          .left,
-                                                                  style:
-                                                                      TextStyle(
-                                                                    color: Color
-                                                                        .fromRGBO(
-                                                                            46,
-                                                                            99,
-                                                                            238,
-                                                                            1),
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .normal,
-                                                                    fontSize:
-                                                                        18,
-                                                                  ),
-                                                                ),
-                                                              ],
+                                                            SizedBox(
+                                                              height: 15,
                                                             ),
-                                                            SizedBox(height: 15,),
                                                             Column(
                                                               children: <
                                                                   Widget>[
@@ -296,27 +257,30 @@ class _ListaRecicladoresState extends State<ListaRecicladores> {
                                                                                       onPressed: null,
                                                                                     ),
                                                                                     TextButton(
-                                                                                        child: Text(
-                                                                                      'Continuar',
-                                                                                      style: TextStyle(
-                                                                                        color: Color.fromRGBO(46, 99, 238, 1),
-                                                                                        fontWeight: FontWeight.bold,
-                                                                                        fontSize: 15,
+                                                                                      child: Text(
+                                                                                        'Continuar',
+                                                                                        style: TextStyle(
+                                                                                          color: Color.fromRGBO(46, 99, 238, 1),
+                                                                                          fontWeight: FontWeight.bold,
+                                                                                          fontSize: 15,
+                                                                                        ),
                                                                                       ),
-                                                                                    ),
-                                                                                    onPressed: null,
+                                                                                      onPressed: null,
                                                                                     ),
                                                                                   ],
                                                                                 ));
                                                                       },
                                                                     ),
-                                                                    SizedBox(width: 45,),
+                                                                    SizedBox(
+                                                                      width: 45,
+                                                                    ),
                                                                     MaterialButton(
                                                                       height:
                                                                           40,
                                                                       minWidth:
                                                                           50,
-                                                                      color: Colors.red,
+                                                                      color: Colors
+                                                                          .red,
                                                                       textColor:
                                                                           Colors
                                                                               .white,
@@ -359,15 +323,15 @@ class _ListaRecicladoresState extends State<ListaRecicladores> {
                                                                                       onPressed: null,
                                                                                     ),
                                                                                     TextButton(
-                                                                                        child: Text(
-                                                                                      'Continuar',
-                                                                                      style: TextStyle(
-                                                                                        color: Color.fromRGBO(46, 99, 238, 1),
-                                                                                        fontWeight: FontWeight.bold,
-                                                                                        fontSize: 15,
+                                                                                      child: Text(
+                                                                                        'Continuar',
+                                                                                        style: TextStyle(
+                                                                                          color: Color.fromRGBO(46, 99, 238, 1),
+                                                                                          fontWeight: FontWeight.bold,
+                                                                                          fontSize: 15,
+                                                                                        ),
                                                                                       ),
-                                                                                    ),
-                                                                                    onPressed: null,
+                                                                                      onPressed: null,
                                                                                     ),
                                                                                   ],
                                                                                 ));
