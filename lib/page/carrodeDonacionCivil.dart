@@ -270,83 +270,97 @@ class _CarrodeDonacionCivilState extends State<CarrodeDonacionCivil> {
                                                         ),
                                                       ),
                                                     ),
-                                                    SizedBox(
-                                                      height: 15,
-                                                    ),
-                                                    MaterialButton(
-                                                        height: 50,
-                                                        minWidth: 250,
-                                                        color: Color.fromRGBO(
-                                                            46, 99, 238, 1),
-                                                        textColor: Colors.white,
-                                                        child: new Text(
-                                                          "Solicitar Reciclador",
-                                                          style: TextStyle(
-                                                            fontWeight:
-                                                                FontWeight.bold,
-                                                            fontSize: 23,
-                                                          ),
-                                                        ),
-                                                        onPressed: () {
-                                                          showDialog(
-                                                              context: context,
-                                                              builder:
-                                                                  (context) =>
-                                                                      AlertDialog(
-                                                                        title:
-                                                                            Text(
-                                                                          "Solicitando reciclador",
-                                                                          style:
-                                                                              TextStyle(
-                                                                            color: Color.fromRGBO(
-                                                                                46,
-                                                                                99,
-                                                                                238,
-                                                                                1),
-                                                                            fontWeight:
-                                                                                FontWeight.bold,
-                                                                            fontSize:
-                                                                                20,
-                                                                          ),
-                                                                        ),
-                                                                        actions: <
-                                                                            Widget>[
-                                                                          TextButton(
-                                                                            child:
-                                                                                Text(
-                                                                              'Cancelar',
-                                                                              style: TextStyle(
-                                                                                color: Color.fromRGBO(46, 99, 238, 1),
-                                                                                fontWeight: FontWeight.bold,
-                                                                                fontSize: 15,
-                                                                              ),
-                                                                            ),
-                                                                            onPressed:
-                                                                                () {
-                                                                              Navigator.pop(context);
-                                                                            },
-                                                                          ),
-                                                                          TextButton(
-                                                                              child: Text(
-                                                                            'Contiunar',
-                                                                            style:
-                                                                                TextStyle(
-                                                                              color: Color.fromRGBO(46, 99, 238, 1),
-                                                                              fontWeight: FontWeight.bold,
-                                                                              fontSize: 15,
-                                                                            ),
-                                                                          ),
-                                                                          onPressed: (){
-                                                                            Navigator.popAndPushNamed(context, listaRecicladores);
-                                                                          },
-                                                                          )
-                                                                        ],
-                                                                      ));
-                                                        })
                                                   ],
                                                 );
                                               },
-                                            )
+                                            ),
+                                            SizedBox(
+                                              height: 15,
+                                            ),
+                                            MaterialButton(
+                                                height: 50,
+                                                minWidth: 250,
+                                                color: Color.fromRGBO(
+                                                    46, 99, 238, 1),
+                                                textColor: Colors.white,
+                                                child: new Text(
+                                                  "Solicitar Reciclador",
+                                                  style: TextStyle(
+                                                    fontWeight: FontWeight.bold,
+                                                    fontSize: 23,
+                                                  ),
+                                                ),
+                                                onPressed: () {
+                                                  showDialog(
+                                                      context: context,
+                                                      builder: (context) =>
+                                                          AlertDialog(
+                                                            title: Text(
+                                                              "Solicitando reciclador",
+                                                              style: TextStyle(
+                                                                color: Color
+                                                                    .fromRGBO(
+                                                                        46,
+                                                                        99,
+                                                                        238,
+                                                                        1),
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold,
+                                                                fontSize: 20,
+                                                              ),
+                                                            ),
+                                                            actions: <Widget>[
+                                                              TextButton(
+                                                                child: Text(
+                                                                  'Cancelar',
+                                                                  style:
+                                                                      TextStyle(
+                                                                    color: Color
+                                                                        .fromRGBO(
+                                                                            46,
+                                                                            99,
+                                                                            238,
+                                                                            1),
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .bold,
+                                                                    fontSize:
+                                                                        15,
+                                                                  ),
+                                                                ),
+                                                                onPressed: () {
+                                                                  Navigator.pop(
+                                                                      context);
+                                                                },
+                                                              ),
+                                                              TextButton(
+                                                                child: Text(
+                                                                  'Contiunar',
+                                                                  style:
+                                                                      TextStyle(
+                                                                    color: Color
+                                                                        .fromRGBO(
+                                                                            46,
+                                                                            99,
+                                                                            238,
+                                                                            1),
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .bold,
+                                                                    fontSize:
+                                                                        15,
+                                                                  ),
+                                                                ),
+                                                                onPressed: () {
+                                                                  Navigator.popAndPushNamed(
+                                                                      context,
+                                                                      listaRecicladores);
+                                                                },
+                                                              )
+                                                            ],
+                                                          ));
+                                                })
                                           ],
                                         ),
                                       ),

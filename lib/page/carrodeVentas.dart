@@ -4,6 +4,7 @@ import 'package:reciclaje_app/data/datasources/carroVenta_datasource.dart';
 import 'package:reciclaje_app/data/model/ventaList.dart';
 import 'package:reciclaje_app/service/preferences.dart';
 import 'package:reciclaje_app/widgets/navbar.dart';
+import 'package:intl/intl.dart';
 
 class CarroDeVentas extends StatefulWidget {
   const CarroDeVentas({Key key}) : super(key: key);
@@ -17,6 +18,7 @@ class _CarroDeVentasState extends State<CarroDeVentas> {
   Preferences preferencias = new Preferences();
   String _email;
   final formKey = GlobalKey<FormState>();
+  final oCcy = new NumberFormat("#,##0.00", "en_US");
   CarroVentasDataSourceImpl carroVentasDataSourceImpl =
       new CarroVentasDataSourceImpl();
   VentasList ventas = new VentasList();
@@ -225,10 +227,8 @@ class _CarroDeVentasState extends State<CarroDeVentas> {
                                                                         ),
                                                                       ),
                                                                       Text(
-                                                                        ventas
-                                                                            .ventas[index]
-                                                                            .peso
-                                                                            .toString(),
+                                                                        ventas.ventas[index].peso.toString() +
+                                                                            " \Kg ",
                                                                         textAlign:
                                                                             TextAlign.left,
                                                                         style:
@@ -269,10 +269,8 @@ class _CarroDeVentasState extends State<CarroDeVentas> {
                                                                         ),
                                                                       ),
                                                                       Text(
-                                                                        ventas
-                                                                            .ventas[index]
-                                                                            .total
-                                                                            .toString(),
+                                                                        "\$" +
+                                                                            oCcy.format(ventas.ventas[index].total),
                                                                         textAlign:
                                                                             TextAlign.left,
                                                                         style:

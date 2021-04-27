@@ -7,6 +7,7 @@ import 'package:reciclaje_app/page/carroDeVentas.dart';
 import 'package:reciclaje_app/service/preferences.dart';
 import 'package:reciclaje_app/widgets/NavBar.dart';
 import 'package:reciclaje_app/widgets/dialogBox.dart';
+import 'package:intl/intl.dart';
 
 class VentasForm extends StatefulWidget {
   VentasForm({Key key}) : super(key: key);
@@ -23,6 +24,7 @@ class _VentasFormState extends State<VentasForm> {
   double peso;
   double total;
   var estados = [];
+  final oCcy = new NumberFormat("#,##0.00", "en_US");
 
   CarroVentasDataSourceImpl carroVentasDataSourceImpl =
       new CarroVentasDataSourceImpl();
@@ -288,11 +290,14 @@ class _VentasFormState extends State<VentasForm> {
                                         SizedBox(height: 15),
                                         new Container(
                                           child: TextFormField(
-                                              initialValue: peso!=null?peso.toString():"",
+                                              initialValue: peso != null
+                                                  ? peso.toString()
+                                                  : "",
                                               keyboardType:
                                                   TextInputType.number,
                                               decoration: InputDecoration(
-                                                  hintText: "ingrese el peso",
+                                                  hintText:
+                                                      "ingrese el peso en Kg",
                                                   contentPadding:
                                                       EdgeInsets.all(11),
                                                   enabledBorder:
@@ -365,7 +370,7 @@ class _VentasFormState extends State<VentasForm> {
                                       Text(
                                         total == null
                                             ? "\$0"
-                                            : "\$" + total.toString(),
+                                            : "\$" + oCcy.format(total),
                                         style: TextStyle(
                                             color:
                                                 Color.fromRGBO(46, 99, 238, 1),
