@@ -142,55 +142,59 @@ class _ListaRecicladoresState extends State<ListaRecicladores> {
                                                           SingleChildScrollView(
                                                         child: Column(
                                                           children: <Widget>[
-                                                            Row(
-                                                              children: [
-                                                                Text(
-                                                                  "Reciclador: ",
-                                                                  textAlign:
-                                                                      TextAlign
-                                                                          .left,
-                                                                  overflow:
-                                                                      TextOverflow
-                                                                          .ellipsis,
-                                                                  style:
-                                                                      TextStyle(
-                                                                    color: Color
-                                                                        .fromRGBO(
-                                                                            46,
-                                                                            99,
-                                                                            238,
-                                                                            1),
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .bold,
-                                                                    fontSize:
-                                                                        18,
+                                                            SingleChildScrollView(
+                                                              scrollDirection:
+                                                                  Axis.horizontal,
+                                                              child: Row(
+                                                                children: [
+                                                                  Text(
+                                                                    "Reciclador: ",
+                                                                    textAlign:
+                                                                        TextAlign
+                                                                            .left,
+                                                                    overflow:
+                                                                        TextOverflow
+                                                                            .ellipsis,
+                                                                    style:
+                                                                        TextStyle(
+                                                                      color: Color
+                                                                          .fromRGBO(
+                                                                              46,
+                                                                              99,
+                                                                              238,
+                                                                              1),
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .bold,
+                                                                      fontSize:
+                                                                          18,
+                                                                    ),
                                                                   ),
-                                                                ),
-                                                                Text(
-                                                                  solicitudes
-                                                                      .solicituddeRecoleccion[
-                                                                          index]
-                                                                      .emailReciclador,
-                                                                  textAlign:
-                                                                      TextAlign
-                                                                          .left,
-                                                                  style:
-                                                                      TextStyle(
-                                                                    color: Color
-                                                                        .fromRGBO(
-                                                                            46,
-                                                                            99,
-                                                                            238,
-                                                                            1),
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .normal,
-                                                                    fontSize:
-                                                                        18,
-                                                                  ),
-                                                                )
-                                                              ],
+                                                                  Text(
+                                                                    solicitudes
+                                                                        .solicituddeRecoleccion[
+                                                                            index]
+                                                                        .emailReciclador,
+                                                                    textAlign:
+                                                                        TextAlign
+                                                                            .left,
+                                                                    style:
+                                                                        TextStyle(
+                                                                      color: Color
+                                                                          .fromRGBO(
+                                                                              46,
+                                                                              99,
+                                                                              238,
+                                                                              1),
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .normal,
+                                                                      fontSize:
+                                                                          18,
+                                                                    ),
+                                                                  )
+                                                                ],
+                                                              ),
                                                             ),
                                                             SizedBox(
                                                               height: 5,
