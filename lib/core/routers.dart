@@ -4,6 +4,7 @@ import 'package:reciclaje_app/page/donacionFormCivil.dart';
 import 'package:reciclaje_app/page/inicioCiudadanoCivil.dart';
 import 'package:reciclaje_app/page/listaRecicladores.dart';
 import 'package:reciclaje_app/page/pageEditar.dart';
+import 'package:reciclaje_app/page/rutadelDia.dart';
 import 'package:reciclaje_app/page/ventasForm.dart';
 import 'package:reciclaje_app/page/index.dart';
 import 'package:flutter/material.dart'
@@ -45,6 +46,8 @@ class Routers {
         return MaterialPageRoute(builder: (_) => ListaRecicladores());
       case visitaClientesMap:
         return MaterialPageRoute(builder: (_) => VisitaClientesMap());
+      case rutadelDia:
+        return MaterialPageRoute(builder: (_) => RutadelDia());
       default:
         return MaterialPageRoute(
           builder: (_) => Scaffold(

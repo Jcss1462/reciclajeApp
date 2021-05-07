@@ -4,13 +4,13 @@ import 'package:reciclaje_app/data/model/ventaList.dart';
 import 'package:reciclaje_app/service/preferences.dart';
 import 'package:reciclaje_app/widgets/navbar.dart';
 
-class VisitaClientesMap extends StatefulWidget {
-  const VisitaClientesMap({Key key}) : super(key: key);
+class RutadelDia extends StatefulWidget {
+  const RutadelDia({Key key}) : super(key: key);
   @override
-  _VisitaClientesMapState createState() => _VisitaClientesMapState();
+  _RutadelDiaState createState() => _RutadelDiaState();
 }
 
-class _VisitaClientesMapState extends State<VisitaClientesMap> {
+class _RutadelDiaState extends State<RutadelDia> {
   Preferences preferencias = new Preferences();
   String _email;
   final formKey = GlobalKey<FormState>();
@@ -41,7 +41,7 @@ class _VisitaClientesMapState extends State<VisitaClientesMap> {
       appBar: AppBar(
         backgroundColor: Color.fromRGBO(46, 99, 238, 1),
         title: Text(
-          "Visita A Clientes",
+          "Ruta del Dia",
           style: TextStyle(
               color: Colors.white, fontWeight: FontWeight.bold, fontSize: 20),
         ),

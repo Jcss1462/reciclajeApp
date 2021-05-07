@@ -12,3 +12,4 @@ const String visitaDisponibles = '/visitaDisponibles';
 const String visitaAgendada = '/visitaAgendada';
 const String listaRecicladores = '/listaRecicladores';
 const String visitaClientesMap = '/visitaClientesMap';
+const String rutadelDia = '/rutadelDia';
