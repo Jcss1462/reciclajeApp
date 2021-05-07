@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:reciclaje_app/data/datasources/carroVenta_datasource.dart';
 import 'package:reciclaje_app/data/model/ventaList.dart';
-import 'package:reciclaje_app/page/visitaCiviles.dart';
+import 'package:reciclaje_app/page/visitaDisponibles.dart';
 import 'package:reciclaje_app/service/preferences.dart';
 import 'package:reciclaje_app/widgets/navbar.dart';
 
@@ -260,33 +260,31 @@ class _VisitaAgendadaState extends State<VisitaAgendada> {
                                                         ),
                                                       ),
                                                     ),
-                                                    SizedBox(
-                                                      height: 25,
-                                                    ),
-                                                    MaterialButton(
-                                                      height: 50,
-                                                      minWidth: 250,
-                                                      color: Color.fromRGBO(
-                                                          46, 99, 238, 1),
-                                                      textColor: Colors.white,
-                                                      child: new Text(
-                                                        "Visitas Diponibles",
-                                                        style: TextStyle(
-                                                            fontWeight:
-                                                                FontWeight.bold,
-                                                            fontSize: 25),
-                                                      ),
-                                                      onPressed: () {
-                                                        Navigator.push(
-                                                            context,
-                                                            MaterialPageRoute(
-                                                                builder:
-                                                                    (context) =>
-                                                                        VisitaCiviles()));
-                                                      },
-                                                    )
                                                   ],
                                                 );
+                                              },
+                                            ),
+                                            SizedBox(
+                                              height: 25,
+                                            ),
+                                            MaterialButton(
+                                              height: 50,
+                                              minWidth: 250,
+                                              color: Color.fromRGBO(
+                                                  46, 99, 238, 1),
+                                              textColor: Colors.white,
+                                              child: new Text(
+                                                "Visitas Diponibles",
+                                                style: TextStyle(
+                                                    fontWeight: FontWeight.bold,
+                                                    fontSize: 25),
+                                              ),
+                                              onPressed: () {
+                                                Navigator.push(
+                                                    context,
+                                                    MaterialPageRoute(
+                                                        builder: (context) =>
+                                                            VisitaCivilesDisponibles()));
                                               },
                                             )
                                           ],

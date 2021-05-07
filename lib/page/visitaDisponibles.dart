@@ -6,13 +6,14 @@ import 'package:reciclaje_app/service/preferences.dart';
 import 'package:reciclaje_app/widgets/dialogBox.dart';
 import 'package:reciclaje_app/widgets/navbar.dart';
 
-class VisitaCiviles extends StatefulWidget {
-  VisitaCiviles({Key key}) : super(key: key);
+class VisitaCivilesDisponibles extends StatefulWidget {
+  VisitaCivilesDisponibles({Key key}) : super(key: key);
   @override
-  _VisitaCivilesState createState() => _VisitaCivilesState();
+  _VisitaCivilesDisponiblesState createState() =>
+      _VisitaCivilesDisponiblesState();
 }
 
-class _VisitaCivilesState extends State<VisitaCiviles> {
+class _VisitaCivilesDisponiblesState extends State<VisitaCivilesDisponibles> {
   Preferences preferencias = new Preferences();
   String _email;
   RecoleccionDonacionDataSourceImpl recoleccionDonacionDataSourceImpl =
@@ -271,42 +272,51 @@ class _VisitaCivilesState extends State<VisitaCiviles> {
                                                             ),
                                                             onPressed:
                                                                 () async {
-                                                                print("email solicitante: "+_email);
-                                                                print("carrito de donacion: "+ solicitudes.solicitudes[index].idcarrodonacion.toString());
+                                                              print(
+                                                                  "email solicitante: " +
+                                                                      _email);
+                                                              print("carrito de donacion: " +
+                                                                  solicitudes
+                                                                      .solicitudes[
+                                                                          index]
+                                                                      .idcarrodonacion
+                                                                      .toString());
 
-                                                                AplicacionRecoleccion
-                                                                    aplicacionRecoleccion =
-                                                                    new AplicacionRecoleccion(
-                                                                        solicitudes
-                                                                            .solicitudes[index]
-                                                                            .idcarrodonacion
-                                                                            .toInt(),
-                                                                        _email);
-                                                                this
-                                                                    .recoleccionDonacionDataSourceImpl
-                                                                    .aplicacionaRecolectar(
-                                                                        aplicacionRecoleccion)
-                                                                    .then(
-                                                                        (value) {
-                                                                  showDialog(
-                                                                    context:
-                                                                        context,
-                                                                    builder: (context) =>
-                                                                        DialogBox(
-                                                                            "Aplicación exitosa",
-                                                                            "Esperar la aceptación del usuario civil"),
-                                                                  );
-                                                                }
-                                                                ).onError((error, stackTrace) {
-                                                                  showDialog(
-                                                                    context:
-                                                                        context,
-                                                                    builder: (context) =>
-                                                                        DialogBox(
-                                                                            "Error al Aplicar",
-                                                                            error.toString()),
-                                                                  );
-                                                                });
+                                                              AplicacionRecoleccion
+                                                                  aplicacionRecoleccion =
+                                                                  new AplicacionRecoleccion(
+                                                                      solicitudes
+                                                                          .solicitudes[
+                                                                              index]
+                                                                          .idcarrodonacion
+                                                                          .toInt(),
+                                                                      _email);
+                                                              this
+                                                                  .recoleccionDonacionDataSourceImpl
+                                                                  .aplicacionaRecolectar(
+                                                                      aplicacionRecoleccion)
+                                                                  .then(
+                                                                      (value) {
+                                                                showDialog(
+                                                                  context:
+                                                                      context,
+                                                                  builder: (context) =>
+                                                                      DialogBox(
+                                                                          "Aplicación exitosa",
+                                                                          "Esperar la aceptación del usuario civil"),
+                                                                );
+                                                              }).onError((error,
+                                                                      stackTrace) {
+                                                                showDialog(
+                                                                  context:
+                                                                      context,
+                                                                  builder: (context) =>
+                                                                      DialogBox(
+                                                                          "Error al Aplicar",
+                                                                          error
+                                                                              .toString()),
+                                                                );
+                                                              });
                                                             },
                                                           )
                                                         ],

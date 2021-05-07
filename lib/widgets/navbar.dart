@@ -69,14 +69,30 @@ class NavBar extends StatelessWidget {
               color: Color.fromRGBO(46, 99, 238, 1),
             ),
             title: Text(
-              "Visitas a Civiles",
+              "Visitas a Clientes",
               style: TextStyle(
                   color: Color.fromRGBO(46, 99, 238, 1),
                   fontWeight: FontWeight.normal,
                   fontSize: 18),
             ),
             onTap: () {
-              Navigator.pushNamed(context, visitaCiviles);
+              Navigator.pushNamed(context, visitaClientesMap);
+            },
+          ),
+          ListTile(
+            leading: Icon(
+              Icons.view_list_outlined,
+              color: Color.fromRGBO(46, 99, 238, 1),
+            ),
+            title: Text(
+              "Visitas Disponibles",
+              style: TextStyle(
+                  color: Color.fromRGBO(46, 99, 238, 1),
+                  fontWeight: FontWeight.normal,
+                  fontSize: 18),
+            ),
+            onTap: () {
+              Navigator.pushNamed(context, visitaDisponibles);
             },
           ),
           ListTile(
@@ -139,7 +155,7 @@ class NavBar extends StatelessWidget {
           ),
           ListTile(
             leading: Icon(
-              Icons.dialer_sip_outlined,
+              Icons.view_agenda_outlined,
               color: Color.fromRGBO(46, 99, 238, 1),
             ),
             title: Text(
