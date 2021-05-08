@@ -30,6 +30,9 @@ dependencies:
   flutter_dotenv: ^3.1.0
   shared_preferences: ^2.0.4
   google_maps_flutter: ^2.0.3
+  location: ^4.1.1
+  
+   
 
 
   # The following adds the Cupertino Icons font to your application.
