@@ -367,15 +367,49 @@ class _VentasFormState extends State<VentasForm> {
                                             fontSize: 18),
                                       ),
                                       SizedBox(height: 25),
-                                      Text(
-                                        total == null
-                                            ? "\$0"
-                                            : "\$" + oCcy.format(total),
-                                        style: TextStyle(
-                                            color:
-                                                Color.fromRGBO(46, 99, 238, 1),
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 18),
+                                      //contiene el lable del total y el boton de refrescar
+                                      Container(
+                                        decoration: new BoxDecoration(
+                                          borderRadius:
+                                              new BorderRadius.circular(16.0),
+                                          //color: Colors.green,
+                                        ),
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.center,
+                                          children: [
+                                            Container(
+                                              width: 200,
+                                              height: 20,
+                                              child: SingleChildScrollView(
+                                                scrollDirection:
+                                                    Axis.horizontal,
+                                                child: Text(
+                                                  total == null
+                                                      ? "\$0"
+                                                      : "\$" +
+                                                          oCcy.format(total),
+                                                  style: TextStyle(
+                                                      color: Color.fromRGBO(
+                                                          46, 99, 238, 1),
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      fontSize: 18),
+                                                ),
+                                              ),
+                                            ),
+                                            //boton que actualiza el total segun los kilos
+                                            IconButton(
+                                              icon: const Icon(Icons.refresh),
+                                              color: Colors.blue,
+                                              onPressed: () {
+                                                setState(() {});
+                                              },
+                                            )
+                                          ],
+                                        ),
                                       ),
                                     ],
                                   ),
@@ -396,55 +430,42 @@ class _VentasFormState extends State<VentasForm> {
                                       if (formKey.currentState.validate()) {
                                         formKey.currentState.save();
                                         print(peso);
-                                        print(selectResiduo.idtiporesiduo);
-
-                                        //gurado la venta
-                                        NuevaVenta nuevaVenta = NuevaVenta(
-                                            peso,
-                                            total,
-                                            _email,
-                                            selectResiduo.idtiporesiduo);
-                                        this
-                                            .carroVentasDataSourceImpl
-                                            .crearVenta(nuevaVenta)
-                                            .then((value) {
+                                        //valido que se seleccionara el tipo
+                                        if (selectResiduo == null) {
                                           showDialog(
-                                            context: context,
-                                            builder: (context) => AlertDialog(
-                                              title: Text(
-                                                "Residuo Agregado",
-                                                style: TextStyle(
-                                                  color: Color.fromRGBO(
-                                                      46, 99, 238, 1),
-                                                  fontWeight: FontWeight.bold,
-                                                  fontSize: 20,
-                                                ),
-                                              ),
-                                              content: Text(
-                                                  "El Residuo se Agrego Exitosamente"),
-                                              actions: <Widget>[
-                                                TextButton(
-                                                  child: Text(
-                                                    'Ok',
-                                                    style: TextStyle(
-                                                      color: Color.fromRGBO(
-                                                          46, 99, 238, 1),
-                                                      fontWeight:
-                                                          FontWeight.bold,
-                                                      fontSize: 15,
-                                                    ),
+                                              context: context,
+                                              builder: (context) => DialogBox(
+                                                  "Error",
+                                                  "Debes de seleccionar el tipo de residuo"));
+                                        } else {
+                                          //gurado la venta
+                                          NuevaVenta nuevaVenta = NuevaVenta(
+                                              peso,
+                                              total,
+                                              _email,
+                                              selectResiduo.idtiporesiduo);
+                                          this
+                                              .carroVentasDataSourceImpl
+                                              .crearVenta(nuevaVenta)
+                                              .then((value) {
+                                            showDialog(
+                                              context: context,
+                                              builder: (context) => AlertDialog(
+                                                title: Text(
+                                                  "Residuo Agregado",
+                                                  style: TextStyle(
+                                                    color: Color.fromRGBO(
+                                                        46, 99, 238, 1),
+                                                    fontWeight: FontWeight.bold,
+                                                    fontSize: 20,
                                                   ),
-                                                  onPressed: () {
-                                                    Navigator.push(
-                                                        context,
-                                                        MaterialPageRoute(
-                                                            builder: (context) =>
-                                                                CarroDeVentas()));
-                                                  },
                                                 ),
-                                                TextButton(
+                                                content: Text(
+                                                    "El Residuo se Agrego Exitosamente"),
+                                                actions: <Widget>[
+                                                  TextButton(
                                                     child: Text(
-                                                      'Vender Más',
+                                                      'Ok',
                                                       style: TextStyle(
                                                         color: Color.fromRGBO(
                                                             46, 99, 238, 1),
@@ -454,20 +475,40 @@ class _VentasFormState extends State<VentasForm> {
                                                       ),
                                                     ),
                                                     onPressed: () {
-                                                      MaterialPageRoute(
-                                                          builder: (context) =>
-                                                              VentasForm());
-                                                    }),
-                                              ],
-                                            ),
-                                          );
-                                        }).onError((error, stackTrace) {
-                                          showDialog(
-                                              context: context,
-                                              builder: (context) => DialogBox(
-                                                  "Error al guardar venta",
-                                                  error.toString()));
-                                        });
+                                                      Navigator.push(
+                                                          context,
+                                                          MaterialPageRoute(
+                                                              builder: (context) =>
+                                                                  CarroDeVentas()));
+                                                    },
+                                                  ),
+                                                  TextButton(
+                                                      child: Text(
+                                                        'Vender Más',
+                                                        style: TextStyle(
+                                                          color: Color.fromRGBO(
+                                                              46, 99, 238, 1),
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                          fontSize: 15,
+                                                        ),
+                                                      ),
+                                                      onPressed: () {
+                                                        MaterialPageRoute(
+                                                            builder: (context) =>
+                                                                VentasForm());
+                                                      }),
+                                                ],
+                                              ),
+                                            );
+                                          }).onError((error, stackTrace) {
+                                            showDialog(
+                                                context: context,
+                                                builder: (context) => DialogBox(
+                                                    "Error al guardar venta",
+                                                    error.toString()));
+                                          });
+                                        }
                                       }
                                     },
                                   )

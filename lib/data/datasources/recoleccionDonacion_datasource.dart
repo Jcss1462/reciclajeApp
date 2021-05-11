@@ -13,6 +13,7 @@ abstract class RecoleccionDonacionDataSource {
       AplicacionRecoleccion appRecolecion);
   Future<SolicituddeRecoleccionList> misSolicitudes(String email);
   Future<CarrodeDonacion> aceptarSolicitud(AceptarSolicitud aceptarSolicitud);
+  Future<CarrodeDonacionList> carrosDisponiblesNoAplicados();
 }
 
 class RecoleccionDonacionDataSourceImpl
@@ -55,5 +56,13 @@ class RecoleccionDonacionDataSourceImpl
         await _apiProvider.put("/api/v1/recoleccion/aceptarSolicitud", body);
     print(response);
     return CarrodeDonacion.fromJson(response);
+  }
+
+  @override
+  Future<CarrodeDonacionList> carrosDisponiblesNoAplicados() async {
+    final response =
+        await _apiProvider.get("/api/v1/recoleccion/findAllByByEnableNoAplicados/jcss1462@gmail.com");
+    print(response);
+    return CarrodeDonacionList.fromJson(response);
   }
 }

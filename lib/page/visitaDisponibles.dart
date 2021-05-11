@@ -32,7 +32,9 @@ class _VisitaCivilesDisponiblesState extends State<VisitaCivilesDisponibles> {
   }
 
   Future<CarrodeDonacionList> getListSolicitudes() async {
-    return await this.recoleccionDonacionDataSourceImpl.donacionesDisponibles();
+    return await this
+        .recoleccionDonacionDataSourceImpl
+        .carrosDisponiblesNoAplicados();
   }
 
   @override
@@ -230,7 +232,10 @@ class _VisitaCivilesDisponiblesState extends State<VisitaCivilesDisponibles> {
                                                           Row(
                                                             children: [
                                                               Text(
-                                                                "Carrera 22a oeste # 7-50",
+                                                                solicitudes
+                                                                    .solicitudes[
+                                                                        index]
+                                                                    .direccionRecoleccion,
                                                                 textAlign:
                                                                     TextAlign
                                                                         .left,
@@ -304,7 +309,11 @@ class _VisitaCivilesDisponiblesState extends State<VisitaCivilesDisponibles> {
                                                                       DialogBox(
                                                                           "Aplicación exitosa",
                                                                           "Esperar la aceptación del usuario civil"),
-                                                                );
+                                                                ).then((value){
+                                                                  setState(() {
+                                                                    
+                                                                  });
+                                                                });
                                                               }).onError((error,
                                                                       stackTrace) {
                                                                 showDialog(

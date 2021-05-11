@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:reciclaje_app/data/model/error.dart';
 import 'package:reciclaje_app/data/network/custom_exception.dart';
 import 'package:http/http.dart' as http;
 import 'package:reciclaje_app/service/preferences.dart';
@@ -127,6 +128,12 @@ class ApiProvider {
       case 404:
         return json.decode(response.body.toString());
       case 500:
+      String respuesta=response.body.toString();
+      print("aqui");
+      print(respuesta);
+      print(Error.fromJson(json.decode(respuesta)));
+       throw FetchDataException(Error.fromJson(json.decode(respuesta)).error.toString()+
+       "\n\nStatus code: "+Error.fromJson(json.decode(respuesta)).status.toString());
       default:
         throw FetchDataException(
             'Error occured while Communication with Server with StatusCode : ${response.statusCode}');

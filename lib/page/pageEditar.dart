@@ -6,6 +6,7 @@ import 'package:reciclaje_app/page/index.dart';
 import 'package:reciclaje_app/service/preferences.dart';
 import 'package:reciclaje_app/widgets/dialogBox.dart';
 import 'package:reciclaje_app/widgets/navbar.dart';
+import 'package:intl/intl.dart';
 
 class PageEditar extends StatefulWidget {
   //recibo el parametro
@@ -20,6 +21,7 @@ class _PageEditarState extends State<PageEditar> {
   Preferences preferencias = new Preferences();
   int _idventa;
   TipoResiduo tipoResiduo;
+  final oCcy = new NumberFormat("#,##0.00", "en_US");
 
   final formKey = GlobalKey<FormState>();
   CarroVentasDataSourceImpl carroVentasDataSourceImpl =
@@ -232,7 +234,7 @@ class _PageEditarState extends State<PageEditar> {
                                         Text(
                                           ventas.total == null
                                               ? "\$0"
-                                              : "\$" + ventas.total.toString(),
+                                              : "\$" + oCcy.format(ventas.total),
                                           style: TextStyle(
                                               color: Color.fromRGBO(
                                                   46, 99, 238, 1),
