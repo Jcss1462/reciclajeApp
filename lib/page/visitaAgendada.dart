@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:reciclaje_app/data/datasources/recoleccionDonacion_datasource.dart';
 import 'package:reciclaje_app/data/model/carrodeDonacionList.dart';
-import 'package:reciclaje_app/data/model/ventaList.dart';
 import 'package:reciclaje_app/page/visitaDisponibles.dart';
 import 'package:reciclaje_app/service/preferences.dart';
 import 'package:reciclaje_app/widgets/navbar.dart';
