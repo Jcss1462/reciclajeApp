@@ -2,8 +2,8 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
-import 'package:reciclaje_app/data/datasources/carroVenta_datasource.dart';
-import 'package:reciclaje_app/data/model/ventaList.dart';
+import 'package:reciclaje_app/data/datasources/recoleccionDonacion_datasource.dart';
+import 'package:reciclaje_app/data/model/carrodeDonacionList.dart';
 import 'package:reciclaje_app/service/preferences.dart';
 import 'package:reciclaje_app/widgets/navbar.dart';
 
@@ -21,10 +21,11 @@ class _VisitaClientesMapState extends State<VisitaClientesMap> {
   Marker maker;
   Circle circle;
   bool isvisible = true;
+
   final formKey = GlobalKey<FormState>();
-  CarroVentasDataSourceImpl carroVentasDataSourceImpl =
-      new CarroVentasDataSourceImpl();
-  VentasList ventas = new VentasList();
+  RecoleccionDonacionDataSourceImpl recoleccionDonacionDataSourceImpl =
+      new RecoleccionDonacionDataSourceImpl();
+  CarrodeDonacionList solicitudes = new CarrodeDonacionList();
 
   static final CameraPosition posicionInicial = CameraPosition(
     target: LatLng(3.4372200, -76.5225000),
@@ -43,8 +44,10 @@ class _VisitaClientesMapState extends State<VisitaClientesMap> {
     });
   }
 
-  Future<VentasList> getListVentas() async {
-    return await this.carroVentasDataSourceImpl.misVentas(_email);
+  Future<CarrodeDonacionList> getListSolicitudes() async {
+    return await this
+        .recoleccionDonacionDataSourceImpl
+        .carrosDisponiblesNoAplicados();
   }
 
   void onMapCreate(GoogleMapController controller) {
@@ -95,7 +98,7 @@ class _VisitaClientesMapState extends State<VisitaClientesMap> {
                       return Text('Error: ${snapshot.error}');
                     } else {
                       return FutureBuilder(
-                        future: getListVentas(),
+                        future: getListSolicitudes(),
                         builder:
                             (BuildContext context, AsyncSnapshot snapshot) {
                           switch (snapshot.connectionState) {
@@ -105,7 +108,7 @@ class _VisitaClientesMapState extends State<VisitaClientesMap> {
                               if (snapshot.hasError) {
                                 return Text('Error: ${snapshot.error}');
                               } else {
-                                this.ventas = snapshot.data;
+                                this.solicitudes = snapshot.data;
                                 return Container(
                                   width: MediaQuery.of(context).size.width,
                                   height: MediaQuery.of(context).size.height,
