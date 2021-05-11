@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:reciclaje_app/data/datasources/carroVenta_datasource.dart';
+import 'package:reciclaje_app/data/datasources/recoleccionDonacion_datasource.dart';
+import 'package:reciclaje_app/data/model/carrodeDonacionList.dart';
 import 'package:reciclaje_app/data/model/ventaList.dart';
 import 'package:reciclaje_app/page/visitaDisponibles.dart';
 import 'package:reciclaje_app/service/preferences.dart';
@@ -15,9 +16,9 @@ class _VisitaAgendadaState extends State<VisitaAgendada> {
   Preferences preferencias = new Preferences();
   String _email;
   final formKey = GlobalKey<FormState>();
-  CarroVentasDataSourceImpl carroVentasDataSourceImpl =
-      new CarroVentasDataSourceImpl();
-  VentasList ventas = new VentasList();
+  RecoleccionDonacionDataSourceImpl recoleccionDonacionDataSourceImpl =
+      new RecoleccionDonacionDataSourceImpl();
+  CarrodeDonacionList solicitudes = new CarrodeDonacionList();
 
   @override
   void initState() {
@@ -31,8 +32,10 @@ class _VisitaAgendadaState extends State<VisitaAgendada> {
     });
   }
 
-  Future<VentasList> getListVentas() async {
-    return await this.carroVentasDataSourceImpl.misVentas(_email);
+  Future<CarrodeDonacionList> getListSolicitudesAgendadas() async {
+    return await this
+        .recoleccionDonacionDataSourceImpl
+        .recicladorCarrosAsignados(_email);
   }
 
   @override
@@ -69,7 +72,7 @@ class _VisitaAgendadaState extends State<VisitaAgendada> {
                       return Text('Error: ${snapshot.error}');
                     } else {
                       return FutureBuilder(
-                        future: getListVentas(),
+                        future: getListSolicitudesAgendadas(),
                         builder:
                             (BuildContext context, AsyncSnapshot snapshot) {
                           switch (snapshot.connectionState) {
@@ -79,7 +82,7 @@ class _VisitaAgendadaState extends State<VisitaAgendada> {
                               if (snapshot.hasError) {
                                 return Text('Error: ${snapshot.error}');
                               } else {
-                                this.ventas = snapshot.data;
+                                this.solicitudes = snapshot.data;
                                 return Container(
                                   width: MediaQuery.of(context).size.width,
                                   height: MediaQuery.of(context).size.height,
@@ -93,8 +96,10 @@ class _VisitaAgendadaState extends State<VisitaAgendada> {
                                             ListView.builder(
                                               physics:
                                                   const NeverScrollableScrollPhysics(),
-                                              itemCount:
-                                                  this.ventas.ventas.length,
+                                              itemCount: this
+                                                  .solicitudes
+                                                  .solicitudes
+                                                  .length,
                                               shrinkWrap: true,
                                               itemBuilder: (context, index) {
                                                 return Column(
@@ -177,7 +182,10 @@ class _VisitaAgendadaState extends State<VisitaAgendada> {
                                                               Row(
                                                                 children: [
                                                                   Text(
-                                                                    "Luz Mary Cabal",
+                                                                    solicitudes
+                                                                        .solicitudes[
+                                                                            index]
+                                                                        .emailCivil,
                                                                     textAlign:
                                                                         TextAlign
                                                                             .left,
@@ -234,7 +242,10 @@ class _VisitaAgendadaState extends State<VisitaAgendada> {
                                                               Row(
                                                                 children: [
                                                                   Text(
-                                                                    "Carrera 22a oeste # 7-65",
+                                                                    solicitudes
+                                                                        .solicitudes[
+                                                                            index]
+                                                                        .direccionRecoleccion,
                                                                     textAlign:
                                                                         TextAlign
                                                                             .left,
@@ -274,7 +285,7 @@ class _VisitaAgendadaState extends State<VisitaAgendada> {
                                                   46, 99, 238, 1),
                                               textColor: Colors.white,
                                               child: new Text(
-                                                "Visitas Diponibles",
+                                                "Visitas a Clientes",
                                                 style: TextStyle(
                                                     fontWeight: FontWeight.bold,
                                                     fontSize: 25),

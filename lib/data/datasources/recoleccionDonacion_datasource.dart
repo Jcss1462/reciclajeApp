@@ -14,6 +14,7 @@ abstract class RecoleccionDonacionDataSource {
   Future<SolicituddeRecoleccionList> misSolicitudes(String email);
   Future<CarrodeDonacion> aceptarSolicitud(AceptarSolicitud aceptarSolicitud);
   Future<CarrodeDonacionList> carrosDisponiblesNoAplicados();
+  Future<CarrodeDonacionList> recicladorCarrosAsignados(String email);
 }
 
 class RecoleccionDonacionDataSourceImpl
@@ -42,7 +43,7 @@ class RecoleccionDonacionDataSourceImpl
   @override
   Future<SolicituddeRecoleccionList> misSolicitudes(String email) async {
     final response =
-        await _apiProvider.get("api/v1/recoleccion/misSolicitudes/" + email);
+        await _apiProvider.get("/api/v1/recoleccion/misSolicitudes/" + email);
     print(response);
     return SolicituddeRecoleccionList.fromJson(response);
   }
@@ -60,8 +61,16 @@ class RecoleccionDonacionDataSourceImpl
 
   @override
   Future<CarrodeDonacionList> carrosDisponiblesNoAplicados() async {
-    final response =
-        await _apiProvider.get("/api/v1/recoleccion/findAllByByEnableNoAplicados/jcss1462@gmail.com");
+    final response = await _apiProvider.get(
+        "/api/v1/recoleccion/findAllByByEnableNoAplicados/jcss1462@gmail.com");
+    print(response);
+    return CarrodeDonacionList.fromJson(response);
+  }
+
+  @override
+  Future<CarrodeDonacionList> recicladorCarrosAsignados(String email) async {
+    final response = await _apiProvider
+        .get("/api/v1/recoleccion/findAllMyCarsAsign/" + email);
     print(response);
     return CarrodeDonacionList.fromJson(response);
   }

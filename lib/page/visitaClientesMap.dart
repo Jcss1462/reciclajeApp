@@ -79,7 +79,6 @@ class _VisitaClientesMapState extends State<VisitaClientesMap> {
   }
 
   poblarDirecciones() {
-    direcciones = [];
     if (solicitudes.solicitudes.isNotEmpty) {
       setState(() {
         sitiosToggle = true;
