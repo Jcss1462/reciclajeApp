@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:location/location.dart';
 import 'package:reciclaje_app/data/datasources/carroVenta_datasource.dart';
 import 'package:reciclaje_app/data/model/ventaList.dart';
 import 'package:reciclaje_app/service/preferences.dart';
@@ -13,10 +15,20 @@ class RutadelDia extends StatefulWidget {
 class _RutadelDiaState extends State<RutadelDia> {
   Preferences preferencias = new Preferences();
   String _email;
+  Location location = Location();
+  GoogleMapController googleMapController;
+  Marker maker;
+  Circle circle;
+  bool isvisible = true;
   final formKey = GlobalKey<FormState>();
   CarroVentasDataSourceImpl carroVentasDataSourceImpl =
       new CarroVentasDataSourceImpl();
   VentasList ventas = new VentasList();
+
+  static final CameraPosition posicionInicial = CameraPosition(
+    target: LatLng(3.4372200, -76.5225000),
+    zoom: 14.4746,
+  );
 
   @override
   void initState() {
@@ -32,6 +44,20 @@ class _RutadelDiaState extends State<RutadelDia> {
 
   Future<VentasList> getListVentas() async {
     return await this.carroVentasDataSourceImpl.misVentas(_email);
+  }
+
+  void onMapCreate(GoogleMapController controller) {
+    googleMapController = controller;
+    location.onLocationChanged.listen((l) {
+      googleMapController.animateCamera(
+        CameraUpdate.newCameraPosition(
+          CameraPosition(
+            target: LatLng(l.latitude, l.longitude),
+            zoom: 20,
+          ),
+        ),
+      );
+    });
   }
 
   @override
@@ -79,7 +105,18 @@ class _RutadelDiaState extends State<RutadelDia> {
                                 return Text('Error: ${snapshot.error}');
                               } else {
                                 this.ventas = snapshot.data;
-                                return Container();
+                                return Container(
+                                  width: MediaQuery.of(context).size.width,
+                                  height: MediaQuery.of(context).size.height,
+                                  child: Center(
+                                    child: GoogleMap(
+                                      zoomGesturesEnabled: true,
+                                      initialCameraPosition: posicionInicial,
+                                      onMapCreated: onMapCreate,
+                                      myLocationEnabled: true,
+                                    ),
+                                  ),
+                                );
                               }
                           }
                         },

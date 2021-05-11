@@ -16,11 +16,21 @@ class VisitaClientesMap extends StatefulWidget {
 class _VisitaClientesMapState extends State<VisitaClientesMap> {
   Preferences preferencias = new Preferences();
   String _email;
+
   Location location = Location();
   GoogleMapController googleMapController;
   Marker maker;
   Circle circle;
   bool isvisible = true;
+  bool mapToggle = false;
+  bool sitiosToggle = false;
+  bool resetToggle = false;
+
+  var currentLocation;
+
+  var direcciones = [];
+
+  var currentBearning;
 
   final formKey = GlobalKey<FormState>();
   RecoleccionDonacionDataSourceImpl recoleccionDonacionDataSourceImpl =
@@ -34,6 +44,10 @@ class _VisitaClientesMapState extends State<VisitaClientesMap> {
 
   @override
   void initState() {
+    setState(() {
+      mapToggle = true;
+      //poblarDirecciones();
+    });
     super.initState();
   }
 
@@ -62,6 +76,27 @@ class _VisitaClientesMapState extends State<VisitaClientesMap> {
         ),
       );
     });
+  }
+
+  poblarDirecciones() {
+    direcciones = [];
+    if (solicitudes.solicitudes.isNotEmpty) {
+      setState(() {
+        sitiosToggle = true;
+      });
+      for (int i = 0; i <= solicitudes.solicitudes.length; ++i) {
+        direcciones.add(solicitudes.solicitudes[i].direccionRecoleccion);
+        initMarker(solicitudes.solicitudes[i].direccionRecoleccion);
+        print(direcciones);
+      }
+    }
+  }
+
+  Set<Marker> initMarker(direccion) {
+    var tmp = Set<Marker>();
+
+    tmp.add(Marker(markerId: MarkerId(direccion['direccionRecoleccion'])));
+    return tmp;
   }
 
   @override
@@ -118,6 +153,7 @@ class _VisitaClientesMapState extends State<VisitaClientesMap> {
                                       initialCameraPosition: posicionInicial,
                                       onMapCreated: onMapCreate,
                                       myLocationEnabled: true,
+                                      //markers: initMarker(direcciones),
                                     ),
                                   ),
                                 );
