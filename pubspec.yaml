@@ -26,10 +26,11 @@ dependencies:
   firebase_core: ^1.0.0
   firebase_auth: ^1.0.0
   provider: ^5.0.0
+  geolocator: ^7.0.3
   http: ^0.13.0
+  google_maps_flutter: ^2.0.3
   flutter_dotenv: ^3.1.0
   shared_preferences: ^2.0.4
-  google_maps_flutter: ^2.0.3
   location: ^4.1.1
   
    
