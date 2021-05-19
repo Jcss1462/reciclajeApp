@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 import 'package:reciclaje_app/blocs/application_bloc.dart';
 import 'package:reciclaje_app/data/datasources/recoleccionDonacion_datasource.dart';
 import 'package:reciclaje_app/data/model/carrodeDonacionList.dart';
+import 'package:reciclaje_app/data/model/place.dart';
 import 'package:reciclaje_app/service/preferences.dart';
 import 'package:reciclaje_app/widgets/navbar.dart';
 
@@ -16,6 +17,7 @@ class VisitaClientesMap extends StatefulWidget {
 }
 
 class _VisitaClientesMapState extends State<VisitaClientesMap> {
+  Completer<GoogleMapController> _mapController = Completer();
   Preferences preferencias = new Preferences();
   String _email;
 
@@ -27,6 +29,9 @@ class _VisitaClientesMapState extends State<VisitaClientesMap> {
   bool mapToggle = false;
   bool sitiosToggle = false;
   bool resetToggle = false;
+
+  StreamSubscription locationSubscription;
+  StreamSubscription boundsSubscription;
 
   var currentLocation;
 
@@ -41,11 +46,8 @@ class _VisitaClientesMapState extends State<VisitaClientesMap> {
 
   @override
   void initState() {
-    setState(() {
-      //mapToggle = true;
-      //poblarDirecciones();
-    });
-    super.initState();
+    final applicationBloc =
+        Provider.of<ApplicationBloc>(context, listen: false);
   }
 
   Future<String> getEmail() async {
@@ -59,19 +61,6 @@ class _VisitaClientesMapState extends State<VisitaClientesMap> {
     return await this
         .recoleccionDonacionDataSourceImpl
         .carrosDisponiblesNoAplicados();
-  }
-
-  poblarDirecciones() {
-    if (solicitudes.solicitudes.isNotEmpty) {
-      setState(() {
-        sitiosToggle = true;
-      });
-      for (int i = 0; i <= solicitudes.solicitudes.length; ++i) {
-        direcciones.add(solicitudes.solicitudes[i].direccionRecoleccion);
-        initMarker(solicitudes.solicitudes[i].direccionRecoleccion);
-        print(direcciones);
-      }
-    }
   }
 
   Set<Marker> initMarker(direccion) {
@@ -165,5 +154,13 @@ class _VisitaClientesMapState extends State<VisitaClientesMap> {
               ],
             ),
     );
+  }
+
+  Future<void> gotoPlace(Place place) async {
+    final GoogleMapController controller = await _mapController.future;
+    controller.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(
+        target:
+            LatLng(place.geometry.location.lat, place.geometry.location.lng),
+        zoom: 14)));
   }
 }
