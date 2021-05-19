@@ -1,13 +1,13 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:reciclaje_app/blocs/application_bloc.dart';
 import 'package:reciclaje_app/core/routers.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:reciclaje_app/data/network/api_provider.dart';
 import 'package:reciclaje_app/service/authentication_service.dart';
 import 'package:reciclaje_app/page/index.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart' as DotEnv;
-
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -33,6 +33,7 @@ class ReciclajeApp extends StatelessWidget {
         Provider<ApiProvider>(
           create: (_) => ApiProvider(),
         ),
+        ChangeNotifierProvider(create: (context) => ApplicationBloc()),
       ],
       child: MaterialApp(
         title: 'ReciclajeApp',

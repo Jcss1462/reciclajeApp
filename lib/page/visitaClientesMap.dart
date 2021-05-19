@@ -2,6 +2,8 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
+import 'package:provider/provider.dart';
+import 'package:reciclaje_app/blocs/application_bloc.dart';
 import 'package:reciclaje_app/data/datasources/recoleccionDonacion_datasource.dart';
 import 'package:reciclaje_app/data/model/carrodeDonacionList.dart';
 import 'package:reciclaje_app/service/preferences.dart';
@@ -37,15 +39,10 @@ class _VisitaClientesMapState extends State<VisitaClientesMap> {
       new RecoleccionDonacionDataSourceImpl();
   CarrodeDonacionList solicitudes = new CarrodeDonacionList();
 
-  static final CameraPosition posicionInicial = CameraPosition(
-    target: LatLng(3.4372200, -76.5225000),
-    zoom: 14.4746,
-  );
-
   @override
   void initState() {
     setState(() {
-      mapToggle = true;
+      //mapToggle = true;
       //poblarDirecciones();
     });
     super.initState();
@@ -62,20 +59,6 @@ class _VisitaClientesMapState extends State<VisitaClientesMap> {
     return await this
         .recoleccionDonacionDataSourceImpl
         .carrosDisponiblesNoAplicados();
-  }
-
-  void onMapCreate(GoogleMapController controller) {
-    googleMapController = controller;
-    location.onLocationChanged.listen((l) {
-      googleMapController.animateCamera(
-        CameraUpdate.newCameraPosition(
-          CameraPosition(
-            target: LatLng(l.latitude, l.longitude),
-            zoom: 20,
-          ),
-        ),
-      );
-    });
   }
 
   poblarDirecciones() {
@@ -100,6 +83,7 @@ class _VisitaClientesMapState extends State<VisitaClientesMap> {
 
   @override
   Widget build(BuildContext context) {
+    final applicationBolc = Provider.of<ApplicationBloc>(context);
     return Scaffold(
       drawer: NavBar(),
       appBar: AppBar(
@@ -110,63 +94,76 @@ class _VisitaClientesMapState extends State<VisitaClientesMap> {
               color: Colors.white, fontWeight: FontWeight.bold, fontSize: 20),
         ),
       ),
-      body: new Stack(
-        children: <Widget>[
-          new Container(
-            decoration: new BoxDecoration(
-              image: new DecorationImage(
-                image: new AssetImage("assets/images/fondo.png"),
-                fit: BoxFit.cover,
-              ),
-            ),
-          ),
-          new Center(
-            child: FutureBuilder(
-              future: getEmail(),
-              builder: (BuildContext context, AsyncSnapshot snapshot) {
-                switch (snapshot.connectionState) {
-                  case ConnectionState.waiting:
-                    return CircularProgressIndicator();
-                  default:
-                    if (snapshot.hasError) {
-                      return Text('Error: ${snapshot.error}');
-                    } else {
-                      return FutureBuilder(
-                        future: getListSolicitudes(),
-                        builder:
-                            (BuildContext context, AsyncSnapshot snapshot) {
-                          switch (snapshot.connectionState) {
-                            case ConnectionState.waiting:
-                              return CircularProgressIndicator();
-                            default:
-                              if (snapshot.hasError) {
-                                return Text('Error: ${snapshot.error}');
-                              } else {
-                                this.solicitudes = snapshot.data;
-                                return Container(
-                                  width: MediaQuery.of(context).size.width,
-                                  height: MediaQuery.of(context).size.height,
-                                  child: Center(
-                                    child: GoogleMap(
-                                      zoomGesturesEnabled: true,
-                                      initialCameraPosition: posicionInicial,
-                                      onMapCreated: onMapCreate,
-                                      myLocationEnabled: true,
-                                      //markers: initMarker(direcciones),
-                                    ),
-                                  ),
-                                );
-                              }
+      body: (applicationBolc.currentLocation == null)
+          ? Center(
+              child: CircularProgressIndicator(),
+            )
+          : new Stack(
+              children: <Widget>[
+                new Container(
+                  decoration: new BoxDecoration(
+                    image: new DecorationImage(
+                      image: new AssetImage("assets/images/fondo.png"),
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                ),
+                new Center(
+                  child: FutureBuilder(
+                    future: getEmail(),
+                    builder: (BuildContext context, AsyncSnapshot snapshot) {
+                      switch (snapshot.connectionState) {
+                        case ConnectionState.waiting:
+                          return CircularProgressIndicator();
+                        default:
+                          if (snapshot.hasError) {
+                            return Text('Error: ${snapshot.error}');
+                          } else {
+                            return FutureBuilder(
+                              future: getListSolicitudes(),
+                              builder: (BuildContext context,
+                                  AsyncSnapshot snapshot) {
+                                switch (snapshot.connectionState) {
+                                  case ConnectionState.waiting:
+                                    return CircularProgressIndicator();
+                                  default:
+                                    if (snapshot.hasError) {
+                                      return Text('Error: ${snapshot.error}');
+                                    } else {
+                                      this.solicitudes = snapshot.data;
+                                      return Container(
+                                        width:
+                                            MediaQuery.of(context).size.width,
+                                        height:
+                                            MediaQuery.of(context).size.height,
+                                        child: Center(
+                                          child: GoogleMap(
+                                            mapType: MapType.normal,
+                                            myLocationEnabled: true,
+                                            initialCameraPosition:
+                                                CameraPosition(
+                                                    target: LatLng(
+                                                        applicationBolc
+                                                            .currentLocation
+                                                            .latitude,
+                                                        applicationBolc
+                                                            .currentLocation
+                                                            .longitude),
+                                                    zoom: 20),
+                                          ),
+                                        ),
+                                      );
+                                    }
+                                }
+                              },
+                            );
                           }
-                        },
-                      );
-                    }
-                }
-              },
+                      }
+                    },
+                  ),
+                )
+              ],
             ),
-          )
-        ],
-      ),
     );
   }
 }

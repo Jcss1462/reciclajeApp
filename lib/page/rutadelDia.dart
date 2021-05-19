@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
-import 'package:reciclaje_app/data/datasources/carroVenta_datasource.dart';
-import 'package:reciclaje_app/data/model/ventaList.dart';
+import 'package:provider/provider.dart';
+import 'package:reciclaje_app/blocs/application_bloc.dart';
+import 'package:reciclaje_app/data/datasources/recoleccionDonacion_datasource.dart';
+import 'package:reciclaje_app/data/model/carrodeDonacionList.dart';
 import 'package:reciclaje_app/service/preferences.dart';
 import 'package:reciclaje_app/widgets/navbar.dart';
 
@@ -21,14 +23,9 @@ class _RutadelDiaState extends State<RutadelDia> {
   Circle circle;
   bool isvisible = true;
   final formKey = GlobalKey<FormState>();
-  CarroVentasDataSourceImpl carroVentasDataSourceImpl =
-      new CarroVentasDataSourceImpl();
-  VentasList ventas = new VentasList();
-
-  static final CameraPosition posicionInicial = CameraPosition(
-    target: LatLng(3.4372200, -76.5225000),
-    zoom: 14.4746,
-  );
+  RecoleccionDonacionDataSourceImpl recoleccionDonacionDataSourceImpl =
+      new RecoleccionDonacionDataSourceImpl();
+  CarrodeDonacionList solicitudes = new CarrodeDonacionList();
 
   @override
   void initState() {
@@ -42,26 +39,15 @@ class _RutadelDiaState extends State<RutadelDia> {
     });
   }
 
-  Future<VentasList> getListVentas() async {
-    return await this.carroVentasDataSourceImpl.misVentas(_email);
-  }
-
-  void onMapCreate(GoogleMapController controller) {
-    googleMapController = controller;
-    location.onLocationChanged.listen((l) {
-      googleMapController.animateCamera(
-        CameraUpdate.newCameraPosition(
-          CameraPosition(
-            target: LatLng(l.latitude, l.longitude),
-            zoom: 20,
-          ),
-        ),
-      );
-    });
+  Future<CarrodeDonacionList> getListSolicitudesAgendadas() async {
+    return await this
+        .recoleccionDonacionDataSourceImpl
+        .recicladorCarrosAsignados(_email);
   }
 
   @override
   Widget build(BuildContext context) {
+    final applicationBolc = Provider.of<ApplicationBloc>(context);
     return Scaffold(
       drawer: NavBar(),
       appBar: AppBar(
@@ -72,62 +58,76 @@ class _RutadelDiaState extends State<RutadelDia> {
               color: Colors.white, fontWeight: FontWeight.bold, fontSize: 20),
         ),
       ),
-      body: new Stack(
-        children: <Widget>[
-          new Container(
-            decoration: new BoxDecoration(
-              image: new DecorationImage(
-                image: new AssetImage("assets/images/fondo.png"),
-                fit: BoxFit.cover,
-              ),
-            ),
-          ),
-          new Center(
-            child: FutureBuilder(
-              future: getEmail(),
-              builder: (BuildContext context, AsyncSnapshot snapshot) {
-                switch (snapshot.connectionState) {
-                  case ConnectionState.waiting:
-                    return CircularProgressIndicator();
-                  default:
-                    if (snapshot.hasError) {
-                      return Text('Error: ${snapshot.error}');
-                    } else {
-                      return FutureBuilder(
-                        future: getListVentas(),
-                        builder:
-                            (BuildContext context, AsyncSnapshot snapshot) {
-                          switch (snapshot.connectionState) {
-                            case ConnectionState.waiting:
-                              return CircularProgressIndicator();
-                            default:
-                              if (snapshot.hasError) {
-                                return Text('Error: ${snapshot.error}');
-                              } else {
-                                this.ventas = snapshot.data;
-                                return Container(
-                                  width: MediaQuery.of(context).size.width,
-                                  height: MediaQuery.of(context).size.height,
-                                  child: Center(
-                                    child: GoogleMap(
-                                      zoomGesturesEnabled: true,
-                                      initialCameraPosition: posicionInicial,
-                                      onMapCreated: onMapCreate,
-                                      myLocationEnabled: true,
-                                    ),
-                                  ),
-                                );
-                              }
+      body: (applicationBolc.currentLocation == null)
+          ? Center(
+              child: CircularProgressIndicator(),
+            )
+          : new Stack(
+              children: <Widget>[
+                new Container(
+                  decoration: new BoxDecoration(
+                    image: new DecorationImage(
+                      image: new AssetImage("assets/images/fondo.png"),
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                ),
+                new Center(
+                  child: FutureBuilder(
+                    future: getEmail(),
+                    builder: (BuildContext context, AsyncSnapshot snapshot) {
+                      switch (snapshot.connectionState) {
+                        case ConnectionState.waiting:
+                          return CircularProgressIndicator();
+                        default:
+                          if (snapshot.hasError) {
+                            return Text('Error: ${snapshot.error}');
+                          } else {
+                            return FutureBuilder(
+                              future: getListSolicitudesAgendadas(),
+                              builder: (BuildContext context,
+                                  AsyncSnapshot snapshot) {
+                                switch (snapshot.connectionState) {
+                                  case ConnectionState.waiting:
+                                    return CircularProgressIndicator();
+                                  default:
+                                    if (snapshot.hasError) {
+                                      return Text('Error: ${snapshot.error}');
+                                    } else {
+                                      this.solicitudes = snapshot.data;
+                                      return Container(
+                                        width:
+                                            MediaQuery.of(context).size.width,
+                                        height:
+                                            MediaQuery.of(context).size.height,
+                                        child: Center(
+                                          child: GoogleMap(
+                                            mapType: MapType.normal,
+                                            myLocationEnabled: true,
+                                            initialCameraPosition:
+                                                CameraPosition(
+                                                    target: LatLng(
+                                                        applicationBolc
+                                                            .currentLocation
+                                                            .latitude,
+                                                        applicationBolc
+                                                            .currentLocation
+                                                            .longitude),
+                                                    zoom: 20),
+                                          ),
+                                        ),
+                                      );
+                                    }
+                                }
+                              },
+                            );
                           }
-                        },
-                      );
-                    }
-                }
-              },
+                      }
+                    },
+                  ),
+                )
+              ],
             ),
-          )
-        ],
-      ),
     );
   }
 }
