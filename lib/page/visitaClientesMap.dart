@@ -59,6 +59,16 @@ class _VisitaClientesMapState extends State<VisitaClientesMap> {
         .carrosDisponiblesNoAplicados();
   }
 
+  getMakerData() async {
+    recoleccionDonacionDataSourceImpl
+        .carrosDisponiblesNoAplicados()
+        .then((value) {
+      if (value.solicitudes.isEmpty) {
+        for (int i = 0; i < value.solicitudes.length; i++) {}
+      }
+    });
+  }
+
   Set<Marker> initMarker(direccion) {
     var tmp = Set<Marker>();
 
@@ -69,6 +79,18 @@ class _VisitaClientesMapState extends State<VisitaClientesMap> {
   @override
   Widget build(BuildContext context) {
     final applicationBolc = Provider.of<ApplicationBloc>(context);
+
+    Set<Marker> getMarker() {
+      return <Marker>[
+        Marker(
+            markerId: MarkerId('Casa'),
+            position: LatLng(applicationBolc.currentLocation.latitude,
+                applicationBolc.currentLocation.longitude),
+            icon: BitmapDescriptor.defaultMarker,
+            infoWindow: InfoWindow(title: 'Casa')),
+      ].toSet();
+    }
+
     return Scaffold(
       drawer: NavBar(),
       appBar: AppBar(
@@ -85,14 +107,6 @@ class _VisitaClientesMapState extends State<VisitaClientesMap> {
             )
           : new Stack(
               children: <Widget>[
-                new Container(
-                  decoration: new BoxDecoration(
-                    image: new DecorationImage(
-                      image: new AssetImage("assets/images/fondo.png"),
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                ),
                 new Center(
                   child: FutureBuilder(
                     future: getEmail(),
@@ -116,87 +130,24 @@ class _VisitaClientesMapState extends State<VisitaClientesMap> {
                                       return Text('Error: ${snapshot.error}');
                                     } else {
                                       this.solicitudes = snapshot.data;
-                                      return ListView(
-                                        children: [
-                                          Padding(
-                                            padding: const EdgeInsets.all(8.0),
-                                            child: TextField(
-                                              decoration: InputDecoration(
-                                                hintText: "Buscar Lugar",
-                                                suffixIcon:
-                                                    Icon(Icons.search_outlined),
-                                              ),
-                                              onChanged: (value) =>
+                                      return Container(
+                                        width:
+                                            MediaQuery.of(context).size.width,
+                                        height:
+                                            MediaQuery.of(context).size.height,
+                                        child: GoogleMap(
+                                          mapType: MapType.normal,
+                                          myLocationEnabled: true,
+                                          markers: getMarker(),
+                                          initialCameraPosition: CameraPosition(
+                                              target: LatLng(
                                                   applicationBolc
-                                                      .searchPlaces(value),
-                                            ),
-                                          ),
-                                          Stack(
-                                            children: [
-                                              Container(
-                                                width: MediaQuery.of(context)
-                                                    .size
-                                                    .width,
-                                                height: MediaQuery.of(context)
-                                                    .size
-                                                    .height,
-                                                child: GoogleMap(
-                                                  mapType: MapType.normal,
-                                                  myLocationEnabled: true,
-                                                  initialCameraPosition:
-                                                      CameraPosition(
-                                                          target: LatLng(
-                                                              applicationBolc
-                                                                  .currentLocation
-                                                                  .latitude,
-                                                              applicationBolc
-                                                                  .currentLocation
-                                                                  .longitude),
-                                                          zoom: 20),
-                                                ),
-                                              ),
-                                              if (applicationBolc
-                                                          .searchResults !=
-                                                      null &&
-                                                  applicationBolc.searchResults
-                                                          .length !=
-                                                      0)
-                                                Container(
-                                                  height: 300.0,
-                                                  width: double.infinity,
-                                                  decoration: BoxDecoration(
-                                                    color: Colors.black
-                                                        .withOpacity(0.6),
-                                                    backgroundBlendMode:
-                                                        BlendMode.darken,
-                                                  ),
-                                                ),
-                                              Container(
-                                                height: 300.0,
-                                                child: ListView.builder(
-                                                  itemCount: applicationBolc
-                                                      .searchResults.length,
-                                                  itemBuilder:
-                                                      (context, index) {
-                                                    return ListTile(
-                                                      title: Text(
-                                                        applicationBolc
-                                                            .searchResults[
-                                                                index]
-                                                            .description,
-                                                        style: TextStyle(
-                                                            color: Colors.white,
-                                                            fontWeight:
-                                                                FontWeight
-                                                                    .normal),
-                                                      ),
-                                                    );
-                                                  },
-                                                ),
-                                              )
-                                            ],
-                                          ),
-                                        ],
+                                                      .currentLocation.latitude,
+                                                  applicationBolc
+                                                      .currentLocation
+                                                      .longitude),
+                                              zoom: 20),
+                                        ),
                                       );
                                     }
                                 }
