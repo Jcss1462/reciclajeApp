@@ -1,7 +1,8 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:geocoder/geocoder.dart';
+import 'package:geocoding/geocoding.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:location/location.dart';
 import 'package:provider/provider.dart';
 import 'package:reciclaje_app/blocs/application_bloc.dart';
 import 'package:reciclaje_app/data/datasources/recoleccionDonacion_datasource.dart';
@@ -20,21 +21,10 @@ class _VisitaClientesMapState extends State<VisitaClientesMap> {
   Completer<GoogleMapController> _mapController = Completer();
   Preferences preferencias = new Preferences();
   String _email;
-
-  Location location = Location();
+  var direccionConvert;
   GoogleMapController googleMapController;
-  Marker maker;
-  Circle circle;
-  bool isvisible = true;
-  bool mapToggle = false;
-  bool sitiosToggle = false;
-  bool resetToggle = false;
-
-  var currentLocation;
-
-  var direcciones = [];
-
-  var currentBearning;
+  List<Marker> allmarker = [];
+  List<Location> locations = [];
 
   final formKey = GlobalKey<FormState>();
   RecoleccionDonacionDataSourceImpl recoleccionDonacionDataSourceImpl =
@@ -59,37 +49,16 @@ class _VisitaClientesMapState extends State<VisitaClientesMap> {
         .carrosDisponiblesNoAplicados();
   }
 
-  getMakerData() async {
-    recoleccionDonacionDataSourceImpl
-        .carrosDisponiblesNoAplicados()
-        .then((value) {
-      if (value.solicitudes.isEmpty) {
-        for (int i = 0; i < value.solicitudes.length; i++) {}
-      }
-    });
-  }
-
-  Set<Marker> initMarker(direccion) {
-    var tmp = Set<Marker>();
-
-    tmp.add(Marker(markerId: MarkerId(direccion['direccionRecoleccion'])));
-    return tmp;
+  getCoordenadas(String address) async {
+    var coordenadas = await Geocoder.local.findAddressesFromQuery(address);
+    var first = coordenadas.first;
+    print("${first.coordinates}");
+    return first;
   }
 
   @override
   Widget build(BuildContext context) {
     final applicationBolc = Provider.of<ApplicationBloc>(context);
-
-    Set<Marker> getMarker() {
-      return <Marker>[
-        Marker(
-            markerId: MarkerId('Casa'),
-            position: LatLng(applicationBolc.currentLocation.latitude,
-                applicationBolc.currentLocation.longitude),
-            icon: BitmapDescriptor.defaultMarker,
-            infoWindow: InfoWindow(title: 'Casa')),
-      ].toSet();
-    }
 
     return Scaffold(
       drawer: NavBar(),
@@ -130,24 +99,70 @@ class _VisitaClientesMapState extends State<VisitaClientesMap> {
                                       return Text('Error: ${snapshot.error}');
                                     } else {
                                       this.solicitudes = snapshot.data;
-                                      return Container(
-                                        width:
-                                            MediaQuery.of(context).size.width,
-                                        height:
-                                            MediaQuery.of(context).size.height,
-                                        child: GoogleMap(
-                                          mapType: MapType.normal,
-                                          myLocationEnabled: true,
-                                          markers: getMarker(),
-                                          initialCameraPosition: CameraPosition(
-                                              target: LatLng(
-                                                  applicationBolc
-                                                      .currentLocation.latitude,
-                                                  applicationBolc
-                                                      .currentLocation
-                                                      .longitude),
-                                              zoom: 20),
-                                        ),
+                                      return Stack(
+                                        children: [
+                                          Container(
+                                            width: MediaQuery.of(context)
+                                                .size
+                                                .width,
+                                            height: MediaQuery.of(context)
+                                                    .size
+                                                    .height /
+                                                3,
+                                            child: GoogleMap(
+                                              mapType: MapType.normal,
+                                              myLocationEnabled: true,
+                                              initialCameraPosition:
+                                                  CameraPosition(
+                                                      target: LatLng(
+                                                          applicationBolc
+                                                              .currentLocation
+                                                              .latitude,
+                                                          applicationBolc
+                                                              .currentLocation
+                                                              .longitude),
+                                                      zoom: 20),
+                                              onMapCreated: (GoogleMapController
+                                                  controller) {
+                                                controller = controller;
+                                              },
+                                            ),
+                                          ),
+                                          Padding(
+                                            padding: const EdgeInsets.all(8.0),
+                                            child: SingleChildScrollView(
+                                                child: Column(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              children: [
+                                                ListView.builder(
+                                                    physics:
+                                                        const NeverScrollableScrollPhysics(),
+                                                    itemCount: solicitudes
+                                                        .solicitudes.length,
+                                                    shrinkWrap: true,
+                                                    itemBuilder:
+                                                        (context, index) {
+                                                      return Wrap(
+                                                        spacing: 8.0,
+                                                        children: [
+                                                          FilterChip(
+                                                              label: Text(solicitudes
+                                                                  .solicitudes[
+                                                                      index]
+                                                                  .emailCivil),
+                                                              onSelected: (val) =>
+                                                                  getCoordenadas(solicitudes
+                                                                      .solicitudes[
+                                                                          index]
+                                                                      .direccionRecoleccion))
+                                                        ],
+                                                      );
+                                                    })
+                                              ],
+                                            )),
+                                          )
+                                        ],
                                       );
                                     }
                                 }

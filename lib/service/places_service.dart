@@ -26,7 +26,7 @@ class PlacesService {
 
   Future<List<Place>> getPlaces(String direccion) async {
     var url = Uri.parse(
-        'https://maps.googleapis.com/maps/api/place/textsearch/json?query=$direccion&type=routes&key=$key');
+        'https://maps.googleapis.com/maps/api/geocode/json?address=$direccion&key=$key');
     var response = await http.get(url);
     var json = convert.jsonDecode(response.body);
     var jsonResults = json['results'] as List;
