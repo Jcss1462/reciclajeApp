@@ -147,13 +147,15 @@ class NavBar extends StatelessWidget {
               color: Color.fromRGBO(46, 99, 238, 1),
             ),
             title: Text(
-              "Solicitudes Agendadas",
+              "Solicitudes Aceptadas",
               style: TextStyle(
                   color: Color.fromRGBO(46, 99, 238, 1),
                   fontWeight: FontWeight.normal,
                   fontSize: 20),
             ),
-            onTap: null,
+            onTap: () {
+              Navigator.pushNamed(context, solicitudesAceptadas);
+            },
           ),
           ListTile(
             leading: Icon(

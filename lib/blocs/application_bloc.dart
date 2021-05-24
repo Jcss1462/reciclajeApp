@@ -1,5 +1,9 @@
 import 'package:flutter/cupertino.dart';
+import 'package:geocoder/geocoder.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:reciclaje_app/data/datasources/recoleccionDonacion_datasource.dart';
+import 'package:reciclaje_app/data/model/carrodeDonacionList.dart';
 import 'package:reciclaje_app/data/model/placeSearch.dart';
 import 'package:reciclaje_app/service/geolocator.dart';
 import 'package:reciclaje_app/service/places_service.dart';
@@ -10,6 +14,12 @@ class ApplicationBloc with ChangeNotifier {
 
   Position currentLocation;
   List<PlaceSearch> searchResults;
+  List<Marker> markers = [];
+  List<Coordinates> coordinates = [];
+
+  RecoleccionDonacionDataSourceImpl recoleccionDonacionDataSourceImpl =
+      new RecoleccionDonacionDataSourceImpl();
+  CarrodeDonacionList solicitudes = new CarrodeDonacionList();
 
   ApplicationBloc() {
     setCurrentLocation();

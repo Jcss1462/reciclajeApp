@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:geocoder/geocoder.dart';
-import 'package:geocoding/geocoding.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:reciclaje_app/blocs/application_bloc.dart';
@@ -21,10 +20,9 @@ class _VisitaClientesMapState extends State<VisitaClientesMap> {
   Completer<GoogleMapController> _mapController = Completer();
   Preferences preferencias = new Preferences();
   String _email;
-  var direccionConvert;
   GoogleMapController googleMapController;
-  List<Marker> allmarker = [];
-  List<Location> locations = [];
+  List<Coordinates> coordinates = [];
+  Map<MarkerId, Marker> markers = {};
 
   final formKey = GlobalKey<FormState>();
   RecoleccionDonacionDataSourceImpl recoleccionDonacionDataSourceImpl =
@@ -49,11 +47,23 @@ class _VisitaClientesMapState extends State<VisitaClientesMap> {
         .carrosDisponiblesNoAplicados();
   }
 
-  getCoordenadas(String address) async {
+  getCoordenadas(String address, String id) async {
     var coordenadas = await Geocoder.local.findAddressesFromQuery(address);
     var first = coordenadas.first;
-    print("${first.coordinates}");
-    return first;
+    coordinates.add(first.coordinates);
+    var marrkerVal = id;
+    final MarkerId markerId = MarkerId(marrkerVal);
+    final Marker marker = Marker(
+        markerId: markerId,
+        position:
+            LatLng(first.coordinates.latitude, first.coordinates.longitude),
+        icon: BitmapDescriptor.defaultMarker);
+    setState(() {
+      markers[markerId] = marker;
+    });
+    print(first.coordinates);
+    print(coordinates);
+    return marker;
   }
 
   @override
@@ -101,66 +111,73 @@ class _VisitaClientesMapState extends State<VisitaClientesMap> {
                                       this.solicitudes = snapshot.data;
                                       return Stack(
                                         children: [
-                                          Container(
-                                            width: MediaQuery.of(context)
-                                                .size
-                                                .width,
-                                            height: MediaQuery.of(context)
-                                                    .size
-                                                    .height /
-                                                3,
-                                            child: GoogleMap(
-                                              mapType: MapType.normal,
-                                              myLocationEnabled: true,
-                                              initialCameraPosition:
-                                                  CameraPosition(
-                                                      target: LatLng(
-                                                          applicationBolc
-                                                              .currentLocation
-                                                              .latitude,
-                                                          applicationBolc
-                                                              .currentLocation
-                                                              .longitude),
-                                                      zoom: 20),
-                                              onMapCreated: (GoogleMapController
-                                                  controller) {
-                                                controller = controller;
-                                              },
-                                            ),
-                                          ),
-                                          Padding(
-                                            padding: const EdgeInsets.all(8.0),
-                                            child: SingleChildScrollView(
-                                                child: Column(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.center,
-                                              children: [
-                                                ListView.builder(
-                                                    physics:
-                                                        const NeverScrollableScrollPhysics(),
-                                                    itemCount: solicitudes
-                                                        .solicitudes.length,
-                                                    shrinkWrap: true,
-                                                    itemBuilder:
-                                                        (context, index) {
-                                                      return Wrap(
-                                                        spacing: 8.0,
-                                                        children: [
-                                                          FilterChip(
-                                                              label: Text(solicitudes
-                                                                  .solicitudes[
-                                                                      index]
-                                                                  .emailCivil),
-                                                              onSelected: (val) =>
-                                                                  getCoordenadas(solicitudes
+                                          Column(
+                                            children: [
+                                              Card(
+                                                child: Container(
+                                                  height: MediaQuery.of(context)
+                                                          .size
+                                                          .height /
+                                                      2.5,
+                                                  constraints: BoxConstraints(
+                                                    minWidth: 150,
+                                                    minHeight: 100,
+                                                  ),
+                                                  child: GoogleMap(
+                                                    mapType: MapType.normal,
+                                                    myLocationEnabled: true,
+                                                    initialCameraPosition:
+                                                        CameraPosition(
+                                                            target: LatLng(
+                                                                applicationBolc
+                                                                    .currentLocation
+                                                                    .latitude,
+                                                                applicationBolc
+                                                                    .currentLocation
+                                                                    .longitude),
+                                                            zoom: 10),
+                                                    onMapCreated:
+                                                        (GoogleMapController
+                                                            controller) {
+                                                      _mapController
+                                                          .complete(controller);
+                                                    },
+                                                    //markers: Set<Marker>.of(applicationBolc.markers),
+                                                  ),
+                                                ),
+                                              ),
+                                              SizedBox(
+                                                height: 20.0,
+                                              ),
+                                              Expanded(
+                                                  child: ListView.builder(
+                                                      itemCount: solicitudes
+                                                          .solicitudes.length,
+                                                      itemBuilder:
+                                                          (context, index) {
+                                                        return Card(
+                                                          child: ListTile(
+                                                              title: TextButton(
+                                                            child: Text(
+                                                                solicitudes
+                                                                    .solicitudes[
+                                                                        index]
+                                                                    .emailCivil),
+                                                            onPressed: () {
+                                                              getCoordenadas(
+                                                                  solicitudes
                                                                       .solicitudes[
                                                                           index]
-                                                                      .direccionRecoleccion))
-                                                        ],
-                                                      );
-                                                    })
-                                              ],
-                                            )),
+                                                                      .direccionRecoleccion,
+                                                                  solicitudes
+                                                                      .solicitudes[
+                                                                          index]
+                                                                      .emailCivil);
+                                                            },
+                                                          )),
+                                                        );
+                                                      }))
+                                            ],
                                           )
                                         ],
                                       );
