@@ -31,7 +31,6 @@ class _VisitaClientesMapState extends State<VisitaClientesMap> {
 
   @override
   void initState() {
-    getMakerData();
     super.initState();
   }
 
@@ -40,12 +39,6 @@ class _VisitaClientesMapState extends State<VisitaClientesMap> {
       _email = value;
       return _email;
     });
-  }
-
-  Future<CarrodeDonacionList> getListSolicitudes() async {
-    return await this
-        .recoleccionDonacionDataSourceImpl
-        .carrosDisponiblesNoAplicados();
   }
 
   getCoordenadas(String address) async {
@@ -72,15 +65,15 @@ class _VisitaClientesMapState extends State<VisitaClientesMap> {
 
   getMakerData() async {
     var direccionConvert;
-    recoleccionDonacionDataSourceImpl
+    return await recoleccionDonacionDataSourceImpl
         .carrosDisponiblesNoAplicados()
         .then((value) {
-      if (value.solicitudes.isEmpty) {
+      if (value.solicitudes.length!=0) {
         for (int i = 0; i < value.solicitudes.length; i++) {
           direccionConvert =
-              getCoordenadas(solicitudes.solicitudes[i].direccionRecoleccion);
+              getCoordenadas(value.solicitudes[i].direccionRecoleccion);
           coordinates.add(direccionConvert);
-          initMarker(direccionConvert, solicitudes.solicitudes[i].emailCivil);
+          print("pedro");
         }
       }
     });
@@ -118,7 +111,7 @@ class _VisitaClientesMapState extends State<VisitaClientesMap> {
                             return Text('Error: ${snapshot.error}');
                           } else {
                             return FutureBuilder(
-                              future: getListSolicitudes(),
+                              future: getMakerData(),
                               builder: (BuildContext context,
                                   AsyncSnapshot snapshot) {
                                 switch (snapshot.connectionState) {
@@ -130,37 +123,7 @@ class _VisitaClientesMapState extends State<VisitaClientesMap> {
                                     } else {
                                       this.solicitudes = snapshot.data;
                                       return Stack(
-                                        children: [
-                                          Container(
-                                            height: MediaQuery.of(context)
-                                                .size
-                                                .height,
-                                            width: MediaQuery.of(context)
-                                                .size
-                                                .width,
-                                            child: GoogleMap(
-                                              markers: Set.of(markers.values),
-                                              mapType: MapType.normal,
-                                              myLocationEnabled: true,
-                                              initialCameraPosition:
-                                                  CameraPosition(
-                                                      target: LatLng(
-                                                          applicationBolc
-                                                              .currentLocation
-                                                              .latitude,
-                                                          applicationBolc
-                                                              .currentLocation
-                                                              .longitude),
-                                                      zoom: 10),
-                                              onMapCreated: (GoogleMapController
-                                                  controller) {
-                                                _mapController
-                                                    .complete(controller);
-                                              },
-                                              //markers: Set<Marker>.of(applicationBolc.markers),
-                                            ),
-                                          ),
-                                        ],
+                                        
                                       );
                                     }
                                 }
