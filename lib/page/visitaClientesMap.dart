@@ -22,7 +22,7 @@ class _VisitaClientesMapState extends State<VisitaClientesMap> {
   String _email;
   GoogleMapController googleMapController;
   List<Coordinates> coordinates = [];
-  Map<MarkerId, Marker> markers;
+  Map<MarkerId, Marker> markers = {};
 
   final formKey = GlobalKey<FormState>();
   RecoleccionDonacionDataSourceImpl recoleccionDonacionDataSourceImpl =
@@ -71,12 +71,13 @@ class _VisitaClientesMapState extends State<VisitaClientesMap> {
   }
 
   getMakerData() async {
+    var direccionConvert;
     recoleccionDonacionDataSourceImpl
         .carrosDisponiblesNoAplicados()
         .then((value) {
       if (value.solicitudes.isEmpty) {
         for (int i = 0; i < value.solicitudes.length; i++) {
-          var direccionConvert =
+          direccionConvert =
               getCoordenadas(solicitudes.solicitudes[i].direccionRecoleccion);
           coordinates.add(direccionConvert);
           initMarker(direccionConvert, solicitudes.solicitudes[i].emailCivil);
