@@ -131,32 +131,35 @@ class _VisitaClientesMapState extends State<VisitaClientesMap> {
                                       this.solicitudes = snapshot.data;
                                       return Stack(
                                         children: [
-                                          Column(
-                                            children: [
-                                              GoogleMap(
-                                                markers: Set.of(markers.values),
-                                                mapType: MapType.normal,
-                                                myLocationEnabled: true,
-                                                initialCameraPosition:
-                                                    CameraPosition(
-                                                        target: LatLng(
-                                                            applicationBolc
-                                                                .currentLocation
-                                                                .latitude,
-                                                            applicationBolc
-                                                                .currentLocation
-                                                                .longitude),
-                                                        zoom: 10),
-                                                onMapCreated:
-                                                    (GoogleMapController
-                                                        controller) {
-                                                  _mapController
-                                                      .complete(controller);
-                                                },
-                                                //markers: Set<Marker>.of(applicationBolc.markers),
-                                              ),
-                                            ],
-                                          )
+                                          Container(
+                                            height: MediaQuery.of(context)
+                                                .size
+                                                .height,
+                                            width: MediaQuery.of(context)
+                                                .size
+                                                .width,
+                                            child: GoogleMap(
+                                              markers: Set.of(markers.values),
+                                              mapType: MapType.normal,
+                                              myLocationEnabled: true,
+                                              initialCameraPosition:
+                                                  CameraPosition(
+                                                      target: LatLng(
+                                                          applicationBolc
+                                                              .currentLocation
+                                                              .latitude,
+                                                          applicationBolc
+                                                              .currentLocation
+                                                              .longitude),
+                                                      zoom: 10),
+                                              onMapCreated: (GoogleMapController
+                                                  controller) {
+                                                _mapController
+                                                    .complete(controller);
+                                              },
+                                              //markers: Set<Marker>.of(applicationBolc.markers),
+                                            ),
+                                          ),
                                         ],
                                       );
                                     }
