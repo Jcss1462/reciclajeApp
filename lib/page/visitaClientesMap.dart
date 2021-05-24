@@ -22,7 +22,7 @@ class _VisitaClientesMapState extends State<VisitaClientesMap> {
   String _email;
   GoogleMapController googleMapController;
   List<Coordinates> coordinates = [];
-  Map<MarkerId, Marker> markers = {};
+  Map<MarkerId, Marker> markers;
 
   final formKey = GlobalKey<FormState>();
   RecoleccionDonacionDataSourceImpl recoleccionDonacionDataSourceImpl =
@@ -31,6 +31,7 @@ class _VisitaClientesMapState extends State<VisitaClientesMap> {
 
   @override
   void initState() {
+    getMakerData();
     super.initState();
   }
 
@@ -47,23 +48,41 @@ class _VisitaClientesMapState extends State<VisitaClientesMap> {
         .carrosDisponiblesNoAplicados();
   }
 
-  getCoordenadas(String address, String id) async {
+  getCoordenadas(String address) async {
     var coordenadas = await Geocoder.local.findAddressesFromQuery(address);
     var first = coordenadas.first;
     coordinates.add(first.coordinates);
-    var marrkerVal = id;
-    final MarkerId markerId = MarkerId(marrkerVal);
-    final Marker marker = Marker(
-        markerId: markerId,
-        position:
-            LatLng(first.coordinates.latitude, first.coordinates.longitude),
-        icon: BitmapDescriptor.defaultMarker);
-    setState(() {
-      markers[markerId] = marker;
-    });
     print(first.coordinates);
     print(coordinates);
-    return marker;
+    return first.coordinates;
+  }
+
+  void initMarker(specify, specifyId) async {
+    for (int i = 0; i < coordinates.length; i++) {
+      var makerIdVal = specifyId;
+      final MarkerId markerId = MarkerId(makerIdVal);
+      final Marker marker = Marker(
+          markerId: markerId,
+          position: LatLng(coordinates[i].latitude, coordinates[i].longitude));
+      setState(() {
+        markers[markerId] = marker;
+      });
+    }
+  }
+
+  getMakerData() async {
+    recoleccionDonacionDataSourceImpl
+        .carrosDisponiblesNoAplicados()
+        .then((value) {
+      if (value.solicitudes.isEmpty) {
+        for (int i = 0; i < value.solicitudes.length; i++) {
+          var direccionConvert =
+              getCoordenadas(solicitudes.solicitudes[i].direccionRecoleccion);
+          coordinates.add(direccionConvert);
+          initMarker(direccionConvert, solicitudes.solicitudes[i].emailCivil);
+        }
+      }
+    });
   }
 
   @override
@@ -113,70 +132,28 @@ class _VisitaClientesMapState extends State<VisitaClientesMap> {
                                         children: [
                                           Column(
                                             children: [
-                                              Card(
-                                                child: Container(
-                                                  height: MediaQuery.of(context)
-                                                          .size
-                                                          .height /
-                                                      2.5,
-                                                  constraints: BoxConstraints(
-                                                    minWidth: 150,
-                                                    minHeight: 100,
-                                                  ),
-                                                  child: GoogleMap(
-                                                    mapType: MapType.normal,
-                                                    myLocationEnabled: true,
-                                                    initialCameraPosition:
-                                                        CameraPosition(
-                                                            target: LatLng(
-                                                                applicationBolc
-                                                                    .currentLocation
-                                                                    .latitude,
-                                                                applicationBolc
-                                                                    .currentLocation
-                                                                    .longitude),
-                                                            zoom: 10),
-                                                    onMapCreated:
-                                                        (GoogleMapController
-                                                            controller) {
-                                                      _mapController
-                                                          .complete(controller);
-                                                    },
-                                                    //markers: Set<Marker>.of(applicationBolc.markers),
-                                                  ),
-                                                ),
+                                              GoogleMap(
+                                                markers: Set.of(markers.values),
+                                                mapType: MapType.normal,
+                                                myLocationEnabled: true,
+                                                initialCameraPosition:
+                                                    CameraPosition(
+                                                        target: LatLng(
+                                                            applicationBolc
+                                                                .currentLocation
+                                                                .latitude,
+                                                            applicationBolc
+                                                                .currentLocation
+                                                                .longitude),
+                                                        zoom: 10),
+                                                onMapCreated:
+                                                    (GoogleMapController
+                                                        controller) {
+                                                  _mapController
+                                                      .complete(controller);
+                                                },
+                                                //markers: Set<Marker>.of(applicationBolc.markers),
                                               ),
-                                              SizedBox(
-                                                height: 20.0,
-                                              ),
-                                              Expanded(
-                                                  child: ListView.builder(
-                                                      itemCount: solicitudes
-                                                          .solicitudes.length,
-                                                      itemBuilder:
-                                                          (context, index) {
-                                                        return Card(
-                                                          child: ListTile(
-                                                              title: TextButton(
-                                                            child: Text(
-                                                                solicitudes
-                                                                    .solicitudes[
-                                                                        index]
-                                                                    .emailCivil),
-                                                            onPressed: () {
-                                                              getCoordenadas(
-                                                                  solicitudes
-                                                                      .solicitudes[
-                                                                          index]
-                                                                      .direccionRecoleccion,
-                                                                  solicitudes
-                                                                      .solicitudes[
-                                                                          index]
-                                                                      .emailCivil);
-                                                            },
-                                                          )),
-                                                        );
-                                                      }))
                                             ],
                                           )
                                         ],

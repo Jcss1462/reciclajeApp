@@ -5,13 +5,13 @@ import 'package:reciclaje_app/page/visitaDisponibles.dart';
 import 'package:reciclaje_app/service/preferences.dart';
 import 'package:reciclaje_app/widgets/navbar.dart';
 
-class SolicitudesAceptadas extends StatefulWidget {
-  const SolicitudesAceptadas({Key key}) : super(key: key);
+class DonacionesenEspera extends StatefulWidget {
+  const DonacionesenEspera({Key key}) : super(key: key);
   @override
-  _SolicitudesAceptadasState createState() => _SolicitudesAceptadasState();
+  _DonacionesenEsperaState createState() => _DonacionesenEsperaState();
 }
 
-class _SolicitudesAceptadasState extends State<SolicitudesAceptadas> {
+class _DonacionesenEsperaState extends State<DonacionesenEspera> {
   Preferences preferencias = new Preferences();
   String _email;
 
@@ -27,10 +27,10 @@ class _SolicitudesAceptadasState extends State<SolicitudesAceptadas> {
     });
   }
 
-  Future<CarrodeDonacionList> getListSolicitudesAgendadas() async {
+  Future<CarrodeDonacionList> getSolicitudesenEspera() async {
     return await this
         .recoleccionDonacionDataSourceImpl
-        .recicladorCarrosAsignados(_email);
+        .findMyAplicationsReciclador(_email);
   }
 
   @override
@@ -40,7 +40,7 @@ class _SolicitudesAceptadasState extends State<SolicitudesAceptadas> {
       appBar: AppBar(
         backgroundColor: Color.fromRGBO(46, 99, 238, 1),
         title: Text(
-          "Solicitudes Agendadas",
+          "Solicitudes en Espera",
           style: TextStyle(
               color: Colors.white, fontWeight: FontWeight.bold, fontSize: 20),
         ),
@@ -67,7 +67,7 @@ class _SolicitudesAceptadasState extends State<SolicitudesAceptadas> {
                       return Text('Error: ${snapshot.error}');
                     } else {
                       return FutureBuilder(
-                        future: getListSolicitudesAgendadas(),
+                        future: getSolicitudesenEspera(),
                         builder:
                             (BuildContext context, AsyncSnapshot snapshot) {
                           switch (snapshot.connectionState) {

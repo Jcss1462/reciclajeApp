@@ -44,7 +44,7 @@ class _VisitaAgendadaState extends State<VisitaAgendada> {
       appBar: AppBar(
         backgroundColor: Color.fromRGBO(46, 99, 238, 1),
         title: Text(
-          "Solicitudes Agendadas",
+          "Visita Agendadas",
           style: TextStyle(
               color: Colors.white, fontWeight: FontWeight.bold, fontSize: 20),
         ),

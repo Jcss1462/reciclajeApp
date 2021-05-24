@@ -147,14 +147,14 @@ class NavBar extends StatelessWidget {
               color: Color.fromRGBO(46, 99, 238, 1),
             ),
             title: Text(
-              "Solicitudes Aceptadas",
+              "Donaciones En Espera",
               style: TextStyle(
                   color: Color.fromRGBO(46, 99, 238, 1),
                   fontWeight: FontWeight.normal,
                   fontSize: 20),
             ),
             onTap: () {
-              Navigator.pushNamed(context, solicitudesAceptadas);
+              Navigator.pushNamed(context, donacionesenEspera);
             },
           ),
           ListTile(

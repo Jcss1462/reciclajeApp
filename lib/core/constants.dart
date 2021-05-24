@@ -13,4 +13,4 @@ const String visitaAgendada = '/visitaAgendada';
 const String listaRecicladores = '/listaRecicladores';
 const String visitaClientesMap = '/visitaClientesMap';
 const String rutadelDia = '/rutadelDia';
-const String solicitudesAceptadas = '/solicitudesAceptadas';
+const String donacionesenEspera = '/donacionesenEspera';
