@@ -63,6 +63,7 @@ class _VisitaClientesMapState extends State<VisitaClientesMap> {
       );
       markers[markerId] = marker;
     }
+    //Control para evitar el ciclo infinito
     if (reload == false) {
       setState(() {
         reload = true;
@@ -72,16 +73,14 @@ class _VisitaClientesMapState extends State<VisitaClientesMap> {
 
   getMakerData() async {
     coordinates.clear();
-    var direccionConvert;
     return await recoleccionDonacionDataSourceImpl
         .carrosDisponiblesNoAplicados()
         .then((value) {
       if (value.solicitudes.length != 0) {
         for (int i = 0; i < value.solicitudes.length; i++) {
-          direccionConvert =
-              getCoordenadas(value.solicitudes[i].direccionRecoleccion);
-          initMarker();
+          getCoordenadas(value.solicitudes[i].direccionRecoleccion);
         }
+        initMarker();
       }
     });
   }
