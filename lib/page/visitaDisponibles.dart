@@ -229,31 +229,36 @@ class _VisitaCivilesDisponiblesState extends State<VisitaCivilesDisponibles> {
                                                           SizedBox(
                                                             height: 2,
                                                           ),
-                                                          Row(
-                                                            children: [
-                                                              Text(
-                                                                solicitudes
-                                                                    .solicitudes[
-                                                                        index]
-                                                                    .direccionRecoleccion,
-                                                                textAlign:
-                                                                    TextAlign
-                                                                        .left,
-                                                                style:
-                                                                    TextStyle(
-                                                                  color: Color
-                                                                      .fromRGBO(
-                                                                          46,
-                                                                          99,
-                                                                          238,
-                                                                          1),
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .normal,
-                                                                  fontSize: 18,
-                                                                ),
-                                                              )
-                                                            ],
+                                                          SingleChildScrollView(
+                                                            scrollDirection:
+                                                                Axis.horizontal,
+                                                            child: Row(
+                                                              children: [
+                                                                Text(
+                                                                  solicitudes
+                                                                      .solicitudes[
+                                                                          index]
+                                                                      .direccionRecoleccion,
+                                                                  textAlign:
+                                                                      TextAlign
+                                                                          .left,
+                                                                  style:
+                                                                      TextStyle(
+                                                                    color: Color
+                                                                        .fromRGBO(
+                                                                            46,
+                                                                            99,
+                                                                            238,
+                                                                            1),
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .normal,
+                                                                    fontSize:
+                                                                        18,
+                                                                  ),
+                                                                )
+                                                              ],
+                                                            ),
                                                           ),
                                                           SizedBox(height: 25),
                                                           MaterialButton(
@@ -309,10 +314,9 @@ class _VisitaCivilesDisponiblesState extends State<VisitaCivilesDisponibles> {
                                                                       DialogBox(
                                                                           "Aplicación exitosa",
                                                                           "Esperar la aceptación del usuario civil"),
-                                                                ).then((value){
-                                                                  setState(() {
-                                                                    
-                                                                  });
+                                                                ).then((value) {
+                                                                  setState(
+                                                                      () {});
                                                                 });
                                                               }).onError((error,
                                                                       stackTrace) {
