@@ -47,7 +47,7 @@ class _VisitaClientesMapState extends State<VisitaClientesMap> {
     coordinates.add(first.coordinates);
     print(first.coordinates);
     print(coordinates);
-    return first.coordinates;
+    return coordinates;
   }
 
   void initMarker(specify, specifyId) async {
@@ -64,15 +64,15 @@ class _VisitaClientesMapState extends State<VisitaClientesMap> {
   }
 
   getMakerData() async {
+    coordinates.clear();
     var direccionConvert;
     return await recoleccionDonacionDataSourceImpl
         .carrosDisponiblesNoAplicados()
         .then((value) {
-      if (value.solicitudes.length!=0) {
+      if (value.solicitudes.length != 0) {
         for (int i = 0; i < value.solicitudes.length; i++) {
           direccionConvert =
               getCoordenadas(value.solicitudes[i].direccionRecoleccion);
-          coordinates.add(direccionConvert);
           print("pedro");
         }
       }
@@ -122,9 +122,7 @@ class _VisitaClientesMapState extends State<VisitaClientesMap> {
                                       return Text('Error: ${snapshot.error}');
                                     } else {
                                       this.solicitudes = snapshot.data;
-                                      return Stack(
-                                        
-                                      );
+                                      return Stack();
                                     }
                                 }
                               },
