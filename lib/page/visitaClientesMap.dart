@@ -43,22 +43,29 @@ class _VisitaClientesMapState extends State<VisitaClientesMap> {
 
   getCoordenadas(String address) async {
     var coordenadas = await Geocoder.local.findAddressesFromQuery(address);
-    var first = coordenadas.first;
-    coordinates.add(first.coordinates);
-    print(first.coordinates);
+    var direcion = coordenadas.first;
+    coordinates.add(direcion.coordinates);
+    print(direcion.coordinates);
     print(coordinates);
     return coordinates;
   }
 
-  void initMarker(specify, specifyId) async {
-    for (int i = 0; i < coordinates.length; i++) {
-      var makerIdVal = specifyId;
-      final MarkerId markerId = MarkerId(makerIdVal);
+  bool reload = false;
+  void initMarker() async {
+    for (var i = 0; i < coordinates.length; i++) {
+      final MarkerId markerId = MarkerId(markers.length.toString());
+      LatLng markerPos =
+          LatLng(coordinates[i].latitude, coordinates[i].longitude);
       final Marker marker = Marker(
-          markerId: markerId,
-          position: LatLng(coordinates[i].latitude, coordinates[i].longitude));
+        icon: BitmapDescriptor.defaultMarker,
+        markerId: markerId,
+        position: markerPos,
+      );
+      markers[markerId] = marker;
+    }
+    if (reload == false) {
       setState(() {
-        markers[markerId] = marker;
+        reload = true;
       });
     }
   }
@@ -73,7 +80,7 @@ class _VisitaClientesMapState extends State<VisitaClientesMap> {
         for (int i = 0; i < value.solicitudes.length; i++) {
           direccionConvert =
               getCoordenadas(value.solicitudes[i].direccionRecoleccion);
-          print("pedro");
+          initMarker();
         }
       }
     });
@@ -122,7 +129,38 @@ class _VisitaClientesMapState extends State<VisitaClientesMap> {
                                       return Text('Error: ${snapshot.error}');
                                     } else {
                                       this.solicitudes = snapshot.data;
-                                      return Stack();
+                                      return Stack(
+                                        children: [
+                                          Container(
+                                            height: MediaQuery.of(context)
+                                                .size
+                                                .height,
+                                            width: MediaQuery.of(context)
+                                                .size
+                                                .width,
+                                            child: GoogleMap(
+                                              markers: Set<Marker>.of(
+                                                  markers.values),
+                                              mapType: MapType.normal,
+                                              myLocationEnabled: true,
+                                              initialCameraPosition:
+                                                  CameraPosition(
+                                                      target: LatLng(
+                                                          applicationBolc
+                                                              .currentLocation
+                                                              .latitude,
+                                                          applicationBolc
+                                                              .currentLocation
+                                                              .longitude),
+                                                      zoom: 10),
+                                              onMapCreated: (GoogleMapController
+                                                  controller) {
+                                                controller = controller;
+                                              },
+                                            ),
+                                          )
+                                        ],
+                                      );
                                     }
                                 }
                               },
