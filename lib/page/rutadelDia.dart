@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:geocoder/geocoder.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:provider/provider.dart';
@@ -20,11 +21,16 @@ class _RutadelDiaState extends State<RutadelDia> {
   String _email;
   GoogleMapController googleMapController;
   Map<MarkerId, Marker> markers = {};
+  List<Coordinates> coordinates = [];
+  GoogleMap googleMap;
+
+  final Set<Polyline> _polylines = Set<Polyline>();
+  List<LatLng> polylineCoordinates = [];
+  PolylinePoints polylinePoints;
 
   final formKey = GlobalKey<FormState>();
   RecoleccionDonacionDataSourceImpl recoleccionDonacionDataSourceImpl =
       new RecoleccionDonacionDataSourceImpl();
-
 
   @override
   void initState() {
@@ -38,17 +44,15 @@ class _RutadelDiaState extends State<RutadelDia> {
     });
   }
 
-   Future<List<Coordinates>> getCoordenadas(
+  Future<List<Coordinates>> getCoordenadas(
       CarrodeDonacionList solicitudes) async {
-    List<Coordinates> coordinates = [];
-
     for (int i = 0; i < solicitudes.solicitudes.length; i++) {
       var coordenadas = await Geocoder.local.findAddressesFromQuery(
           solicitudes.solicitudes[i].direccionRecoleccion);
       var direcion = coordenadas.first;
       coordinates.add(direcion.coordinates);
       //print(direcion.coordinates);
-      //print(coordinates);
+      print(coordinates);
     }
     return coordinates;
   }
@@ -63,29 +67,31 @@ class _RutadelDiaState extends State<RutadelDia> {
         icon: BitmapDescriptor.defaultMarker,
         markerId: markerId,
         position: markerPos,
+        infoWindow: InfoWindow(onTap: () {
+          print("hola");
+        }),
       );
       markers[markerId] = marker;
     }
     print("Creacion de markers terminada");
   }
 
-  Future<dynamic>getMakerData() async {
+  Future<dynamic> getMakerData() async {
     print("acceddiendo al back");
     return await recoleccionDonacionDataSourceImpl
         .recicladorCarrosAsignados(_email)
         .then((listaCarros) async {
-          print("Datos del back obtenidos");
+      print("Datos del back obtenidos");
       if (listaCarros.solicitudes.length != 0) {
         print("Iniciando conversiona coordenadas");
         await getCoordenadas(listaCarros).then((listaCoordenadas) async {
           print("Conversion terminada");
           await initMarker(listaCoordenadas);
-        
         }).onError((error, stackTrace) {
           showDialog(
             context: context,
-            builder: (context) => DialogBox("ERROR",
-                "Problemas convirtiendo las coordenadas"),
+            builder: (context) =>
+                DialogBox("ERROR", "Problemas convirtiendo las coordenadas"),
           );
         });
       }
@@ -96,6 +102,15 @@ class _RutadelDiaState extends State<RutadelDia> {
             "Problema obteniendo la lista del carros deisponibles del back"),
       );
     });
+  }
+
+  Future<void> setPolylines() async {
+    for (int i = 0; i < coordinates.length; i++) {
+      PolylineResult result = await polylinePoints.getRouteBetweenCoordinates(
+          "AIzaSyDqL1H7-oNTY-rtKEYa8IcyLf6_XBKLV3o",
+          null,
+          PointLatLng(coordinates[i].latitude, coordinates[i].longitude));
+    }
   }
 
   @override
@@ -147,7 +162,6 @@ class _RutadelDiaState extends State<RutadelDia> {
                                     if (snapshot.hasError) {
                                       return Text('Error: ${snapshot.error}');
                                     } else {
-                                    
                                       return Stack(
                                         children: [
                                           Container(

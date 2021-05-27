@@ -5,6 +5,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:reciclaje_app/blocs/application_bloc.dart';
 import 'package:reciclaje_app/data/datasources/recoleccionDonacion_datasource.dart';
+import 'package:reciclaje_app/data/model/aplicacionRecoleccion.dart';
 import 'package:reciclaje_app/data/model/carrodeDonacionList.dart';
 import 'package:reciclaje_app/data/model/place.dart';
 import 'package:reciclaje_app/service/preferences.dart';
@@ -27,6 +28,7 @@ class _VisitaClientesMapState extends State<VisitaClientesMap> {
   final formKey = GlobalKey<FormState>();
   RecoleccionDonacionDataSourceImpl recoleccionDonacionDataSourceImpl =
       new RecoleccionDonacionDataSourceImpl();
+  CarrodeDonacionList solicitudes = new CarrodeDonacionList();
 
   @override
   void initState() {
@@ -55,39 +57,41 @@ class _VisitaClientesMapState extends State<VisitaClientesMap> {
     return coordinates;
   }
 
-  Future<void> initMarker(List<Coordinates> listCoodinates) async {
+  Future<void> initMarker(
+      List<Coordinates> listCoodinates, CarrodeDonacionList listaCarros) async {
     print("Iniciando creacion de markers");
     for (var i = 0; i < listCoodinates.length; i++) {
       final MarkerId markerId = MarkerId(markers.length.toString());
       LatLng markerPos =
           LatLng(listCoodinates[i].latitude, listCoodinates[i].longitude);
       final Marker marker = Marker(
-        icon: BitmapDescriptor.defaultMarker,
-        markerId: markerId,
-        position: markerPos,
-      );
+          icon: BitmapDescriptor.defaultMarker,
+          markerId: markerId,
+          position: markerPos,
+          onTap: () {
+            onCardInfo(listaCarros);
+          });
       markers[markerId] = marker;
     }
     print("Creacion de markers terminada");
   }
 
-  Future<dynamic>getMakerData() async {
+  Future<dynamic> getMakerData() async {
     print("acceddiendo al back");
     return await recoleccionDonacionDataSourceImpl
         .carrosDisponiblesNoAplicados()
         .then((listaCarros) async {
-          print("Datos del back obtenidos");
+      print("Datos del back obtenidos");
       if (listaCarros.solicitudes.length != 0) {
         print("Iniciando conversiona coordenadas");
         await getCoordenadas(listaCarros).then((listaCoordenadas) async {
           print("Conversion terminada");
-          await initMarker(listaCoordenadas);
-        
+          await initMarker(listaCoordenadas, listaCarros);
         }).onError((error, stackTrace) {
           showDialog(
             context: context,
-            builder: (context) => DialogBox("ERROR",
-                "Problemas convirtiendo las coordenadas"),
+            builder: (context) =>
+                DialogBox("ERROR", "Problemas convirtiendo las coordenadas"),
           );
         });
       }
@@ -100,6 +104,135 @@ class _VisitaClientesMapState extends State<VisitaClientesMap> {
     });
   }
 
+  Future<void> onCardInfo(CarrodeDonacionList listacarros) async {
+    for (int i = 0; i < listacarros.solicitudes.length; i++) {
+      showModalBottomSheet(
+          context: context,
+          builder: (context) {
+            return Column(
+              children: <Widget>[
+                SingleChildScrollView(
+                  child: Column(
+                    children: <Widget>[
+                      Row(
+                        children: [
+                          Text(
+                            "Usuario:",
+                            textAlign: TextAlign.left,
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(
+                              color: Color.fromRGBO(46, 99, 238, 1),
+                              fontWeight: FontWeight.bold,
+                              fontSize: 18,
+                            ),
+                          )
+                        ],
+                      ),
+                      SizedBox(
+                        height: 2,
+                      ),
+                      Row(children: [
+                        Text(
+                          listacarros.solicitudes[i].emailCivil,
+                          textAlign: TextAlign.left,
+                          style: TextStyle(
+                            color: Color.fromRGBO(46, 99, 238, 1),
+                            fontWeight: FontWeight.normal,
+                            fontSize: 18,
+                          ),
+                        )
+                      ]),
+                      SizedBox(
+                        height: 6,
+                      ),
+                      SizedBox(
+                        height: 5,
+                      ),
+                      Row(
+                        children: [
+                          Text(
+                            "Dirección: ",
+                            textAlign: TextAlign.left,
+                            style: TextStyle(
+                              color: Color.fromRGBO(46, 99, 238, 1),
+                              fontWeight: FontWeight.bold,
+                              fontSize: 18,
+                            ),
+                          )
+                        ],
+                      ),
+                      SizedBox(
+                        height: 2,
+                      ),
+                      SingleChildScrollView(
+                        scrollDirection: Axis.horizontal,
+                        child: Row(
+                          children: [
+                            Text(
+                              listacarros.solicitudes[i].direccionRecoleccion,
+                              textAlign: TextAlign.left,
+                              style: TextStyle(
+                                color: Color.fromRGBO(46, 99, 238, 1),
+                                fontWeight: FontWeight.normal,
+                                fontSize: 18,
+                              ),
+                            )
+                          ],
+                        ),
+                      ),
+                      SizedBox(height: 25),
+                      MaterialButton(
+                        height: 50,
+                        minWidth: 250,
+                        color: Color.fromRGBO(46, 99, 238, 1),
+                        textColor: Colors.white,
+                        child: new Text(
+                          "Agendar Visita",
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold, fontSize: 25),
+                        ),
+                        onPressed: () async {
+                          print("email solicitante: " + _email);
+                          print("carrito de donacion: " +
+                              listacarros.solicitudes[i].idcarrodonacion
+                                  .toString());
+
+                          AplicacionRecoleccion aplicacionRecoleccion =
+                              new AplicacionRecoleccion(
+                                  listacarros.solicitudes[i].idcarrodonacion
+                                      .toInt(),
+                                  _email);
+                          this
+                              .recoleccionDonacionDataSourceImpl
+                              .aplicacionaRecolectar(aplicacionRecoleccion)
+                              .then((value) {
+                            showDialog(
+                              context: context,
+                              builder: (context) => DialogBox(
+                                  "Aplicación exitosa",
+                                  "Esperar la aceptación del usuario civil"),
+                            ).then((value) {
+                              setState(() {});
+                            });
+                          }).onError((error, stackTrace) {
+                            showDialog(
+                              context: context,
+                              builder: (context) => DialogBox(
+                                  "Error al Aplicar", error.toString()),
+                            );
+                          });
+                        },
+                      )
+                    ],
+                  ),
+                )
+              ],
+            );
+          });
+    }
+  }
+
+  final scaffoldState = GlobalKey<ScaffoldState>();
   @override
   Widget build(BuildContext context) {
     final applicationBolc = Provider.of<ApplicationBloc>(context);
