@@ -6,6 +6,7 @@ import 'package:reciclaje_app/blocs/application_bloc.dart';
 import 'package:reciclaje_app/data/datasources/recoleccionDonacion_datasource.dart';
 import 'package:reciclaje_app/data/model/carrodeDonacionList.dart';
 import 'package:reciclaje_app/service/preferences.dart';
+import 'package:reciclaje_app/widgets/dialogBox.dart';
 import 'package:reciclaje_app/widgets/navbar.dart';
 
 class RutadelDia extends StatefulWidget {
@@ -18,13 +19,12 @@ class _RutadelDiaState extends State<RutadelDia> {
   Preferences preferencias = new Preferences();
   String _email;
   GoogleMapController googleMapController;
-  List<Coordinates> coordinates = [];
   Map<MarkerId, Marker> markers = {};
 
   final formKey = GlobalKey<FormState>();
   RecoleccionDonacionDataSourceImpl recoleccionDonacionDataSourceImpl =
       new RecoleccionDonacionDataSourceImpl();
-  CarrodeDonacionList solicitudes = new CarrodeDonacionList();
+
 
   @override
   void initState() {
@@ -38,21 +38,27 @@ class _RutadelDiaState extends State<RutadelDia> {
     });
   }
 
-  getCoordenadas(String address) async {
-    var coordenadas = await Geocoder.local.findAddressesFromQuery(address);
-    var direcion = coordenadas.first;
-    coordinates.add(direcion.coordinates);
-    print(direcion.coordinates);
-    print(coordinates);
+   Future<List<Coordinates>> getCoordenadas(
+      CarrodeDonacionList solicitudes) async {
+    List<Coordinates> coordinates = [];
+
+    for (int i = 0; i < solicitudes.solicitudes.length; i++) {
+      var coordenadas = await Geocoder.local.findAddressesFromQuery(
+          solicitudes.solicitudes[i].direccionRecoleccion);
+      var direcion = coordenadas.first;
+      coordinates.add(direcion.coordinates);
+      //print(direcion.coordinates);
+      //print(coordinates);
+    }
     return coordinates;
   }
 
-  bool reload = false;
-  void initMarker() async {
-    for (var i = 0; i < coordinates.length; i++) {
+  Future<void> initMarker(List<Coordinates> listCoodinates) async {
+    print("Iniciando creacion de markers");
+    for (var i = 0; i < listCoodinates.length; i++) {
       final MarkerId markerId = MarkerId(markers.length.toString());
       LatLng markerPos =
-          LatLng(coordinates[i].latitude, coordinates[i].longitude);
+          LatLng(listCoodinates[i].latitude, listCoodinates[i].longitude);
       final Marker marker = Marker(
         icon: BitmapDescriptor.defaultMarker,
         markerId: markerId,
@@ -60,25 +66,35 @@ class _RutadelDiaState extends State<RutadelDia> {
       );
       markers[markerId] = marker;
     }
-    //Control para evitar el ciclo infinito
-    if (reload == false) {
-      setState(() {
-        reload = true;
-      });
-    }
+    print("Creacion de markers terminada");
   }
 
-  getMakerData() async {
-    coordinates.clear();
+  Future<dynamic>getMakerData() async {
+    print("acceddiendo al back");
     return await recoleccionDonacionDataSourceImpl
         .recicladorCarrosAsignados(_email)
-        .then((value) {
-      if (value.solicitudes.length != 0) {
-        for (int i = 0; i < value.solicitudes.length; i++) {
-          getCoordenadas(value.solicitudes[i].direccionRecoleccion);
-        }
-        initMarker();
+        .then((listaCarros) async {
+          print("Datos del back obtenidos");
+      if (listaCarros.solicitudes.length != 0) {
+        print("Iniciando conversiona coordenadas");
+        await getCoordenadas(listaCarros).then((listaCoordenadas) async {
+          print("Conversion terminada");
+          await initMarker(listaCoordenadas);
+        
+        }).onError((error, stackTrace) {
+          showDialog(
+            context: context,
+            builder: (context) => DialogBox("ERROR",
+                "Problemas convirtiendo las coordenadas"),
+          );
+        });
       }
+    }).onError((error, stackTrace) {
+      showDialog(
+        context: context,
+        builder: (context) => DialogBox("ERROR",
+            "Problema obteniendo la lista del carros deisponibles del back"),
+      );
     });
   }
 
@@ -131,7 +147,7 @@ class _RutadelDiaState extends State<RutadelDia> {
                                     if (snapshot.hasError) {
                                       return Text('Error: ${snapshot.error}');
                                     } else {
-                                      this.solicitudes = snapshot.data;
+                                    
                                       return Stack(
                                         children: [
                                           Container(
