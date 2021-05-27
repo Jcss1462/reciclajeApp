@@ -107,7 +107,7 @@ class _RutadelDiaState extends State<RutadelDia> {
   Future<void> setPolylines() async {
     for (int i = 0; i < coordinates.length; i++) {
       PolylineResult result = await polylinePoints.getRouteBetweenCoordinates(
-          "AIzaSyDqL1H7-oNTY-rtKEYa8IcyLf6_XBKLV3o",
+          "",
           null,
           PointLatLng(coordinates[i].latitude, coordinates[i].longitude));
     }
