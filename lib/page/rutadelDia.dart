@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:geocoder/geocoder.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:reciclaje_app/blocs/application_bloc.dart';
 import 'package:reciclaje_app/data/datasources/recoleccionDonacion_datasource.dart';
 import 'package:reciclaje_app/data/model/aplicacionRecoleccion.dart';
 import 'package:reciclaje_app/data/model/carrodeDonacionList.dart';
+import 'package:reciclaje_app/service/geolocator.dart';
 import 'package:reciclaje_app/service/preferences.dart';
 import 'package:reciclaje_app/widgets/dialogBox.dart';
 import 'package:reciclaje_app/widgets/navbar.dart';
@@ -26,6 +28,9 @@ class _RutadelDiaState extends State<RutadelDia> {
   GoogleMap googleMap;
   ApplicationBloc applicationBloc;
 
+  final geoLocatorService = GeolacatorService();
+  Position currentLocation;
+
   final Set<Polyline> _polylines = Set<Polyline>();
   List<LatLng> polylineCoordinates = [];
   PolylinePoints polylinePoints;
@@ -37,7 +42,12 @@ class _RutadelDiaState extends State<RutadelDia> {
   @override
   void initState() {
     polylinePoints = PolylinePoints();
+    setCurrentLocation();
     super.initState();
+  }
+
+  setCurrentLocation() async {
+    currentLocation = await geoLocatorService.getCurrentLocation();
   }
 
   Future<String> getEmail() async {
@@ -259,19 +269,17 @@ class _RutadelDiaState extends State<RutadelDia> {
     for (int i = 0; i < cordenadas.length; i++) {
       PolylineResult result = await polylinePoints.getRouteBetweenCoordinates(
           "",
-          PointLatLng(applicationBloc.currentLocation.latitude,
-              applicationBloc.currentLocation.longitude),
+          PointLatLng(currentLocation.latitude, currentLocation.longitude),
           PointLatLng(cordenadas[i].latitude, cordenadas[i].longitude));
-
       if (result.status == 'Ok') {
         result.points.forEach((PointLatLng point) {
           polylineCoordinates.add(LatLng(point.latitude, point.longitude));
         });
         setState(() {
           _polylines.add(Polyline(
-              width: 10,
+              width: 50,
               polylineId: PolylineId('Isd'),
-              color: Colors.blue,
+              color: Colors.red,
               points: polylineCoordinates));
         });
       }
@@ -337,7 +345,7 @@ class _RutadelDiaState extends State<RutadelDia> {
                                                 .size
                                                 .width,
                                             child: GoogleMap(
-                                              polylines: _polylines,
+                                              polylines: _polylines.toSet(),
                                               markers: Set<Marker>.of(
                                                   markers.values),
                                               mapType: MapType.normal,
