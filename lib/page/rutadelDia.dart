@@ -31,7 +31,7 @@ class _RutadelDiaState extends State<RutadelDia> {
   final geoLocatorService = GeolacatorService();
   Position currentLocation;
 
-  final Set<Polyline> _polylines = Set<Polyline>();
+  Map<PolylineId, Polyline> polylines = {};
   List<LatLng> polylineCoordinates = [];
   PolylinePoints polylinePoints;
 
@@ -66,7 +66,7 @@ class _RutadelDiaState extends State<RutadelDia> {
       coordinates.add(direcion.coordinates);
       //print(direcion.coordinates);
       print(coordinates);
-      setPolylines(coordinates);
+      //setPolylines(coordinates);
     }
     return coordinates;
   }
@@ -101,6 +101,7 @@ class _RutadelDiaState extends State<RutadelDia> {
         await getCoordenadas(listaCarros).then((listaCoordenadas) async {
           print("Conversion terminada");
           await initMarker(listaCoordenadas, listaCarros);
+          await setPolylines(listaCoordenadas);
         }).onError((error, stackTrace) {
           showDialog(
             context: context,
@@ -266,23 +267,34 @@ class _RutadelDiaState extends State<RutadelDia> {
   }
 
   Future<void> setPolylines(List<Coordinates> cordenadas) async {
+    polylinePoints = PolylinePoints();
     for (int i = 0; i < cordenadas.length; i++) {
       PolylineResult result = await polylinePoints.getRouteBetweenCoordinates(
+        "",
+        PointLatLng(currentLocation.latitude, currentLocation.longitude),
+        PointLatLng(cordenadas[i].latitude, cordenadas[i].longitude),
+      );
+      PolylineResult result2 = await polylinePoints.getRouteBetweenCoordinates(
           "",
-          PointLatLng(currentLocation.latitude, currentLocation.longitude),
-          PointLatLng(cordenadas[i].latitude, cordenadas[i].longitude));
-      if (result.status == 'Ok') {
+          PointLatLng(cordenadas[i].latitude, cordenadas[i].longitude),
+          PointLatLng(cordenadas[i + 1].latitude, cordenadas[i + 1].longitude));
+      if (result.points.isNotEmpty && result2.points.isNotEmpty) {
         result.points.forEach((PointLatLng point) {
           polylineCoordinates.add(LatLng(point.latitude, point.longitude));
         });
-        setState(() {
-          _polylines.add(Polyline(
-              width: 50,
-              polylineId: PolylineId('Isd'),
-              color: Colors.red,
-              points: polylineCoordinates));
+        result2.points.forEach((PointLatLng point1) {
+          polylineCoordinates.add(LatLng(point1.latitude, point1.longitude));
         });
       }
+      PolylineId id = PolylineId('Id');
+      Polyline polyline = Polyline(
+        polylineId: id,
+        color: Colors.red,
+        points: polylineCoordinates,
+        width: 3,
+      );
+
+      polylines[id] = polyline;
     }
   }
 
@@ -345,7 +357,8 @@ class _RutadelDiaState extends State<RutadelDia> {
                                                 .size
                                                 .width,
                                             child: GoogleMap(
-                                              polylines: _polylines.toSet(),
+                                              polylines: Set<Polyline>.of(
+                                                  polylines.values),
                                               markers: Set<Marker>.of(
                                                   markers.values),
                                               mapType: MapType.normal,
