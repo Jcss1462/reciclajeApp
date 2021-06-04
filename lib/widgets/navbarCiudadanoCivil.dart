@@ -58,7 +58,7 @@ class NavBarCiudadanoCivil extends StatelessWidget {
                   fontSize: 18),
             ),
             onTap: () {
-              Navigator.pushNamed(context, null);
+              Navigator.pushNamed(context, listaVisitasAgendadas);
             },
           ),
           ListTile(

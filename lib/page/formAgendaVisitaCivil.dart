@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:reciclaje_app/page/listaVisitasAgendadas.dart';
 import 'package:reciclaje_app/service/preferences.dart';
 import 'package:reciclaje_app/widgets/navbarCiudadanoCivil.dart';
 
@@ -209,7 +210,7 @@ class _FormAgendaVisitaCivilState extends State<FormAgendaVisitaCivil> {
                                                     context,
                                                     MaterialPageRoute(
                                                         builder: (context) =>
-                                                            null));
+                                                            ListaVistasAgendadas()));
                                               },
                                             ),
                                             TextButton(

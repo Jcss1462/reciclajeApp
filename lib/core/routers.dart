@@ -3,6 +3,7 @@ import 'package:reciclaje_app/page/carrodeDonacionCivil.dart';
 import 'package:reciclaje_app/page/donacionFormCivil.dart';
 import 'package:reciclaje_app/page/inicioCiudadanoCivil.dart';
 import 'package:reciclaje_app/page/listaRecicladores.dart';
+import 'package:reciclaje_app/page/listaVisitasAgendadas.dart';
 import 'package:reciclaje_app/page/pageEditar.dart';
 import 'package:reciclaje_app/page/rutadelDia.dart';
 import 'package:reciclaje_app/page/donacienenEspera.dart';
@@ -51,6 +52,8 @@ class Routers {
         return MaterialPageRoute(builder: (_) => RutadelDia());
       case donacionesenEspera:
         return MaterialPageRoute(builder: (_) => DonacionesenEspera());
+        case listaVisitasAgendadas:
+        return MaterialPageRoute(builder: (_) => ListaVistasAgendadas());
       default:
         return MaterialPageRoute(
           builder: (_) => Scaffold(
