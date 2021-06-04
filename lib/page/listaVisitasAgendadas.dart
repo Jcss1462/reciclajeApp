@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:reciclaje_app/data/datasources/recoleccionDonacion_datasource.dart';
-import 'package:reciclaje_app/data/model/aceptarSolicitud.dart';
 import 'package:reciclaje_app/data/model/solicituddeRecoleccionList.dart';
 import 'package:reciclaje_app/service/preferences.dart';
-import 'package:reciclaje_app/widgets/dialogBox.dart';
 import 'package:reciclaje_app/widgets/navbarCiudadanoCivil.dart';
 class ListaVistasAgendadas extends StatefulWidget {
   const ListaVistasAgendadas({ Key key }) : super(key: key);
@@ -42,7 +40,7 @@ class _ListaVistasAgendadasState extends State<ListaVistasAgendadas> {
       appBar: AppBar(
         backgroundColor: Color.fromRGBO(46, 99, 238, 1),
         title: Text(
-          "Lista de Recicladores",
+          "Lista de Visitas Agendadas",
           style: TextStyle(
               color: Colors.white, fontWeight: FontWeight.bold, fontSize: 20),
         ),
@@ -115,8 +113,8 @@ class _ListaVistasAgendadasState extends State<ListaVistasAgendadas> {
                                                               7,
                                                       constraints:
                                                           BoxConstraints(
-                                                        minWidth: 150,
-                                                        minHeight: 150,
+                                                        minWidth: 200,
+                                                        minHeight: 200,
                                                       ),
                                                       padding: EdgeInsets.only(
                                                           top: 20.0,
@@ -199,167 +197,300 @@ class _ListaVistasAgendadasState extends State<ListaVistasAgendadas> {
                                                             SizedBox(
                                                               height: 5,
                                                             ),
-                                                            SizedBox(
-                                                              height: 15,
-                                                            ),
-                                                            Column(
-                                                              children: <
-                                                                  Widget>[
-                                                                Row(
-                                                                  mainAxisAlignment:
-                                                                      MainAxisAlignment
-                                                                          .end,
-                                                                  children: [
-                                                                    MaterialButton(
-                                                                      height:
-                                                                          40,
-                                                                      minWidth:
-                                                                          50,
+                                                            Row(
+                                                            children: [
+                                                              Text(
+                                                                "Fecha: ",
+                                                                textAlign:
+                                                                    TextAlign
+                                                                        .left,
+                                                                style:
+                                                                    TextStyle(
+                                                                  color: Color
+                                                                      .fromRGBO(
+                                                                          46,
+                                                                          99,
+                                                                          238,
+                                                                          1),
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .bold,
+                                                                  fontSize: 18,
+                                                                ),
+                                                              ),
+                                                              Text(
+                                                                    "13-12-2021",
+                                                                    textAlign:
+                                                                        TextAlign
+                                                                            .left,
+                                                                    style:
+                                                                        TextStyle(
                                                                       color: Color
                                                                           .fromRGBO(
                                                                               46,
                                                                               99,
                                                                               238,
                                                                               1),
-                                                                      textColor:
-                                                                          Colors
-                                                                              .white,
-                                                                      child:
-                                                                          new Text(
-                                                                        "Aceptar",
-                                                                        style:
-                                                                            TextStyle(
-                                                                          fontWeight:
-                                                                              FontWeight.bold,
-                                                                          fontSize:
-                                                                              18,
-                                                                        ),
-                                                                      ),
-                                                                      onPressed:
-                                                                          () {
-                                                                        showDialog(
-                                                                            context:
-                                                                                context,
-                                                                            builder: (context) =>
-                                                                                AlertDialog(
-                                                                                  title: Text(
-                                                                                    "Aceptando Visita",
-                                                                                    style: TextStyle(
-                                                                                      color: Color.fromRGBO(46, 99, 238, 1),
-                                                                                      fontWeight: FontWeight.bold,
-                                                                                      fontSize: 20,
-                                                                                    ),
-                                                                                  ),
-                                                                                  actions: <Widget>[
-                                                                                    TextButton(
-                                                                                      child: Text(
-                                                                                        'Cancelar',
-                                                                                        style: TextStyle(
-                                                                                          color: Color.fromRGBO(46, 99, 238, 1),
-                                                                                          fontWeight: FontWeight.bold,
-                                                                                          fontSize: 15,
-                                                                                        ),
-                                                                                      ),
-                                                                                      onPressed: null,
-                                                                                    ),
-                                                                                    TextButton(
-                                                                                      child: Text(
-                                                                                        'Continuar',
-                                                                                        style: TextStyle(
-                                                                                          color: Color.fromRGBO(46, 99, 238, 1),
-                                                                                          fontWeight: FontWeight.bold,
-                                                                                          fontSize: 15,
-                                                                                        ),
-                                                                                      ),
-                                                                                      onPressed: () {
-                                                                                        AceptarSolicitud aceptarSolicitud = new AceptarSolicitud(solicitudes.solicituddeRecoleccion[index].idcarroDonacion, solicitudes.solicituddeRecoleccion[index].emailReciclador);
-                                                                                        this.recoleccionDonacionDataSourceImpl.aceptarSolicitud(aceptarSolicitud).then((value) {
-                                                                                          showDialog(
-                                                                                            context: context,
-                                                                                            builder: (context) => DialogBox("Solicitud aceptada", "Esperar la visita de tu reciclador"),
-                                                                                          );
-                                                                                        }).onError((error, stackTrace) {
-                                                                                          showDialog(
-                                                                                            context: context,
-                                                                                            builder: (context) => DialogBox("Error al aceptar solicitud", error.toString()),
-                                                                                          );
-                                                                                        });
-                                                                                      },
-                                                                                    ),
-                                                                                  ],
-                                                                                ));
-                                                                      },
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .normal,
+                                                                      fontSize:
+                                                                          18,
                                                                     ),
-                                                                    SizedBox(
-                                                                      width: 45,
+                                                                  ),
+                                                            ],
+                                                          ),
+                                                          SizedBox(
+                                                              height: 5,
+                                                            ),
+                                                            Row(
+                                                            children: [
+                                                              Text(
+                                                                "Hora: ",
+                                                                textAlign:
+                                                                    TextAlign
+                                                                        .left,
+                                                                style:
+                                                                    TextStyle(
+                                                                  color: Color
+                                                                      .fromRGBO(
+                                                                          46,
+                                                                          99,
+                                                                          238,
+                                                                          1),
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .bold,
+                                                                  fontSize: 18,
+                                                                ),
+                                                              ),
+                                                              Text(
+                                                                    "13:00",
+                                                                    textAlign:
+                                                                        TextAlign
+                                                                            .left,
+                                                                    style:
+                                                                        TextStyle(
+                                                                      color: Color
+                                                                          .fromRGBO(
+                                                                              46,
+                                                                              99,
+                                                                              238,
+                                                                              1),
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .normal,
+                                                                      fontSize:
+                                                                          18,
                                                                     ),
-                                                                    MaterialButton(
-                                                                      height:
-                                                                          40,
-                                                                      minWidth:
-                                                                          50,
-                                                                      color: Colors
-                                                                          .red,
-                                                                      textColor:
-                                                                          Colors
-                                                                              .white,
-                                                                      child:
-                                                                          new Text(
-                                                                        "Cancelar",
-                                                                        style:
-                                                                            TextStyle(
-                                                                          fontWeight:
-                                                                              FontWeight.bold,
-                                                                          fontSize:
-                                                                              18,
-                                                                        ),
-                                                                      ),
-                                                                      onPressed:
-                                                                          () {
-                                                                        showDialog(
-                                                                            context:
-                                                                                context,
-                                                                            builder: (context) =>
-                                                                                AlertDialog(
-                                                                                  title: Text(
-                                                                                    "Cancelando Visita",
-                                                                                    style: TextStyle(
-                                                                                      color: Color.fromRGBO(46, 99, 238, 1),
-                                                                                      fontWeight: FontWeight.bold,
-                                                                                      fontSize: 20,
-                                                                                    ),
-                                                                                  ),
-                                                                                  actions: <Widget>[
-                                                                                    TextButton(
-                                                                                      child: Text(
-                                                                                        'Cancelar',
-                                                                                        style: TextStyle(
-                                                                                          color: Color.fromRGBO(46, 99, 238, 1),
-                                                                                          fontWeight: FontWeight.bold,
-                                                                                          fontSize: 15,
+                                                                  ),
+                                                            ],
+                                                          ),
+                                                          SizedBox(
+                                                              height: 5,
+                                                            ),
+                                                            Row(
+                                                            children: [
+                                                              Text(
+                                                                "Estado: ",
+                                                                textAlign:
+                                                                    TextAlign
+                                                                        .left,
+                                                                style:
+                                                                    TextStyle(
+                                                                  color: Color
+                                                                      .fromRGBO(
+                                                                          46,
+                                                                          99,
+                                                                          238,
+                                                                          1),
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .bold,
+                                                                  fontSize: 18,
+                                                                ),
+                                                              ),
+                                                              Text(
+                                                                    "Agendado",
+                                                                    textAlign:
+                                                                        TextAlign
+                                                                            .left,
+                                                                    style:
+                                                                        TextStyle(
+                                                                      color: Color
+                                                                          .fromRGBO(
+                                                                              46,
+                                                                              99,
+                                                                              238,
+                                                                              1),
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .normal,
+                                                                      fontSize:
+                                                                          18,
+                                                                    ),
+                                                                  ),
+                                                            ],
+                                                          ),
+                                                            SizedBox(
+                                                              height: 10,
+                                                            ),
+                                                                Column(
+                                                                  children: <
+                                                                      Widget>[
+                                                                    Row(
+                                                                      mainAxisAlignment:
+                                                                          MainAxisAlignment
+                                                                              .end,
+                                                                      children: [
+                                                                        IconButton(
+                                                                            icon:
+                                                                                Icon(
+                                                                              Icons.check_circle_outline,
+                                                                              color: Color.fromRGBO(46, 99, 238, 1),
+                                                                              size: 30,
+                                                                            ),
+                                                                            onPressed:
+                                                                                () {
+                                                                              showDialog(
+                                                                                  context: context,
+                                                                                  builder: (context) => AlertDialog(
+                                                                                        title: Text(
+                                                                                          "Esta seguro que desas eliminar este residuo?",
+                                                                                          style: TextStyle(
+                                                                                            color: Color.fromRGBO(46, 99, 238, 1),
+                                                                                            fontWeight: FontWeight.bold,
+                                                                                            fontSize: 20,
+                                                                                          ),
                                                                                         ),
-                                                                                      ),
-                                                                                      onPressed: null,
-                                                                                    ),
-                                                                                    TextButton(
-                                                                                      child: Text(
-                                                                                        'Continuar',
-                                                                                        style: TextStyle(
-                                                                                          color: Color.fromRGBO(46, 99, 238, 1),
-                                                                                          fontWeight: FontWeight.bold,
-                                                                                          fontSize: 15,
+                                                                                        actions: <Widget>[
+                                                                                          TextButton(
+                                                                                            child: Text(
+                                                                                              'Cancelar',
+                                                                                              style: TextStyle(
+                                                                                                color: Color.fromRGBO(46, 99, 238, 1),
+                                                                                                fontWeight: FontWeight.bold,
+                                                                                                fontSize: 15,
+                                                                                              ),
+                                                                                            ),
+                                                                                            onPressed: () {
+                                                                                              Navigator.pop(context);
+                                                                                            },
+                                                                                          ),
+                                                                                          TextButton(
+                                                                                            child: Text(
+                                                                                              'Continuar',
+                                                                                              style: TextStyle(
+                                                                                                color: Color.fromRGBO(46, 99, 238, 1),
+                                                                                                fontWeight: FontWeight.bold,
+                                                                                                fontSize: 15,
+                                                                                              ),
+                                                                                            ),
+                                                                                            onPressed: null,
+                                                                                          ),
+                                                                                        ],
+                                                                                      ));
+                                                                            }),
+                                                                            IconButton(
+                                                                            icon:
+                                                                                Icon(
+                                                                              Icons.person_add_alt_1_outlined,
+                                                                              color: Color.fromRGBO(46, 99, 238, 1),
+                                                                              size: 30,
+                                                                            ),
+                                                                            onPressed:
+                                                                                () {
+                                                                              showDialog(
+                                                                                  context: context,
+                                                                                  builder: (context) => AlertDialog(
+                                                                                        title: Text(
+                                                                                          "Esta seguro que desas eliminar este residuo?",
+                                                                                          style: TextStyle(
+                                                                                            color: Color.fromRGBO(46, 99, 238, 1),
+                                                                                            fontWeight: FontWeight.bold,
+                                                                                            fontSize: 20,
+                                                                                          ),
                                                                                         ),
-                                                                                      ),
-                                                                                      onPressed: null,
-                                                                                    ),
-                                                                                  ],
-                                                                                ));
-                                                                      },
+                                                                                        actions: <Widget>[
+                                                                                          TextButton(
+                                                                                            child: Text(
+                                                                                              'Cancelar',
+                                                                                              style: TextStyle(
+                                                                                                color: Color.fromRGBO(46, 99, 238, 1),
+                                                                                                fontWeight: FontWeight.bold,
+                                                                                                fontSize: 15,
+                                                                                              ),
+                                                                                            ),
+                                                                                            onPressed: () {
+                                                                                              Navigator.pop(context);
+                                                                                            },
+                                                                                          ),
+                                                                                          TextButton(
+                                                                                            child: Text(
+                                                                                              'Continuar',
+                                                                                              style: TextStyle(
+                                                                                                color: Color.fromRGBO(46, 99, 238, 1),
+                                                                                                fontWeight: FontWeight.bold,
+                                                                                                fontSize: 15,
+                                                                                              ),
+                                                                                            ),
+                                                                                            onPressed: null,
+                                                                                          ),
+                                                                                        ],
+                                                                                      ));
+                                                                            }),
+                                                                            IconButton(
+                                                                            icon:
+                                                                                Icon(
+                                                                              Icons.delete_outline,
+                                                                              color: Color.fromRGBO(46, 99, 238, 1),
+                                                                              size: 30,
+                                                                            ),
+                                                                            onPressed:
+                                                                                () {
+                                                                              showDialog(
+                                                                                  context: context,
+                                                                                  builder: (context) => AlertDialog(
+                                                                                        title: Text(
+                                                                                          "Esta seguro que desas eliminar este residuo?",
+                                                                                          style: TextStyle(
+                                                                                            color: Color.fromRGBO(46, 99, 238, 1),
+                                                                                            fontWeight: FontWeight.bold,
+                                                                                            fontSize: 20,
+                                                                                          ),
+                                                                                        ),
+                                                                                        actions: <Widget>[
+                                                                                          TextButton(
+                                                                                            child: Text(
+                                                                                              'Cancelar',
+                                                                                              style: TextStyle(
+                                                                                                color: Color.fromRGBO(46, 99, 238, 1),
+                                                                                                fontWeight: FontWeight.bold,
+                                                                                                fontSize: 15,
+                                                                                              ),
+                                                                                            ),
+                                                                                            onPressed: () {
+                                                                                              Navigator.pop(context);
+                                                                                            },
+                                                                                          ),
+                                                                                          TextButton(
+                                                                                            child: Text(
+                                                                                              'Continuar',
+                                                                                              style: TextStyle(
+                                                                                                color: Color.fromRGBO(46, 99, 238, 1),
+                                                                                                fontWeight: FontWeight.bold,
+                                                                                                fontSize: 15,
+                                                                                              ),
+                                                                                            ),
+                                                                                            onPressed: null,
+                                                                                          ),
+                                                                                        ],
+                                                                                      ));
+                                                                            })
+                                                                      ],
                                                                     )
                                                                   ],
-                                                                )
-                                                              ],
-                                                            )
+                                                                ),
                                                           ],
                                                         ),
                                                       ),
