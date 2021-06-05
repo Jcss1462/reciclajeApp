@@ -4,6 +4,7 @@ import 'package:reciclaje_app/data/model/aceptarSolicitud.dart';
 import 'package:reciclaje_app/data/model/aplicacionRecoleccion.dart';
 import 'package:reciclaje_app/data/model/carrodeDonacion.dart';
 import 'package:reciclaje_app/data/model/carrodeDonacionList.dart';
+import 'package:reciclaje_app/data/model/idCarrdodeDonacion.dart';
 import 'package:reciclaje_app/data/model/solicituddeRecoleccionList.dart';
 import 'package:reciclaje_app/data/network/api_provider.dart';
 
@@ -16,6 +17,7 @@ abstract class RecoleccionDonacionDataSource {
   Future<CarrodeDonacionList> carrosDisponiblesNoAplicados();
   Future<CarrodeDonacionList> recicladorCarrosAsignados(String email);
   Future<CarrodeDonacionList> findMyAplicationsReciclador(String email);
+  Future<CarrodeDonacion> removerDeLaRuta(IdCarrodeDonacion idCarrodeDonacion);
 }
 
 class RecoleccionDonacionDataSourceImpl
@@ -82,5 +84,16 @@ class RecoleccionDonacionDataSourceImpl
         .get("/api/v1/recoleccion/findMyAplicationsReciclador/" + email);
     print(response);
     return CarrodeDonacionList.fromJson(response);
+  }
+
+  @override
+  Future<CarrodeDonacion> removerDeLaRuta(
+      IdCarrodeDonacion idCarrodeDonacion) async {
+    String body = jsonEncode(idCarrodeDonacion.toJson());
+    print(body);
+    final response =
+        await _apiProvider.put("/api/v1/recoleccion/removerDeLaRuta", body);
+    print(response);
+    return CarrodeDonacion.fromJson(response);
   }
 }

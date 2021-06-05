@@ -415,10 +415,7 @@ class _PageEditarState extends State<PageEditar> {
                                                     ),
                                                   ),
                                                   onPressed: () {
-                                                    MaterialPageRoute(
-                                                        builder: (context) =>
-                                                            PageEditar(ventas
-                                                                .idventa));
+                                                    Navigator.pop(context);
                                                   }),
                                             ],
                                           ),

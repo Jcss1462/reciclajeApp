@@ -553,9 +553,10 @@ class _VentasFormState extends State<VentasForm> {
                                                         ),
                                                       ),
                                                       onPressed: () {
-                                                        MaterialPageRoute(
-                                                            builder: (context) =>
-                                                                VentasForm());
+                                                        setState(() {
+                                                          Navigator.pop(
+                                                              context);
+                                                        });
                                                       }),
                                                 ],
                                               ),

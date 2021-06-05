@@ -477,6 +477,8 @@ class _VisitaProgramadasState extends State<VisitaProgramadas> {
                                                                                                             ),
                                                                                                           ],
                                                                                                         ));
+                                                                                              }).onError((error, stackTrace) {
+                                                                                                showDialog(context: context, builder: (context) => DialogBox("Error al eliminar la visita", error.toString()));
                                                                                               });
                                                                                             },
                                                                                           ),

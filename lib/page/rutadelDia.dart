@@ -6,9 +6,9 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:reciclaje_app/blocs/application_bloc.dart';
 import 'package:reciclaje_app/data/datasources/recoleccionDonacion_datasource.dart';
-import 'package:reciclaje_app/data/model/aplicacionRecoleccion.dart';
 import 'package:reciclaje_app/data/model/carrodeDonacion.dart';
 import 'package:reciclaje_app/data/model/carrodeDonacionList.dart';
+import 'package:reciclaje_app/data/model/idCarrdodeDonacion.dart';
 import 'package:reciclaje_app/service/geolocator.dart';
 import 'package:reciclaje_app/service/preferences.dart';
 import 'package:reciclaje_app/widgets/dialogBox.dart';
@@ -225,31 +225,93 @@ class _RutadelDiaState extends State<RutadelDia> {
                           TextStyle(fontWeight: FontWeight.bold, fontSize: 25),
                     ),
                     onPressed: () async {
-                      print("email solicitante: " + _email);
-                      print("carrito de donacion: " +
-                          carrodeDonacion.idcarrodonacion.toString());
-
-                      AplicacionRecoleccion aplicacionRecoleccion =
-                          new AplicacionRecoleccion(
-                              carrodeDonacion.idcarrodonacion.toInt(), _email);
-                      this
-                          .recoleccionDonacionDataSourceImpl
-                          .aplicacionaRecolectar(aplicacionRecoleccion)
-                          .then((value) {
-                        showDialog(
+                      showDialog(
                           context: context,
-                          builder: (context) => DialogBox("Aplicación exitosa",
-                              "Esperar la aceptación del usuario civil"),
-                        ).then((value) {
-                          setState(() {});
-                        });
-                      }).onError((error, stackTrace) {
-                        showDialog(
-                          context: context,
-                          builder: (context) =>
-                              DialogBox("Error al Aplicar", error.toString()),
-                        );
-                      });
+                          builder: (context) => AlertDialog(
+                                title: Text(
+                                  "Esta seguro que desas eliminar este carro de tu ruta?",
+                                  style: TextStyle(
+                                    color: Color.fromRGBO(46, 99, 238, 1),
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 20,
+                                  ),
+                                ),
+                                actions: <Widget>[
+                                  TextButton(
+                                    child: Text(
+                                      'Cancelar',
+                                      style: TextStyle(
+                                        color: Color.fromRGBO(46, 99, 238, 1),
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 15,
+                                      ),
+                                    ),
+                                    onPressed: () {
+                                      Navigator.pop(context);
+                                    },
+                                  ),
+                                  TextButton(
+                                    child: Text(
+                                      'Continuar',
+                                      style: TextStyle(
+                                        color: Color.fromRGBO(46, 99, 238, 1),
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 15,
+                                      ),
+                                    ),
+                                    onPressed: () {
+                                      IdCarrodeDonacion idCarrodeDonacion =
+                                          new IdCarrodeDonacion(
+                                              carrodeDonacion.idcarrodonacion);
+                                      recoleccionDonacionDataSourceImpl
+                                          .removerDeLaRuta(idCarrodeDonacion)
+                                          .then((value) {
+                                        showDialog(
+                                            context: context,
+                                            builder: (context) => AlertDialog(
+                                                  title: Text(
+                                                    "Vista Removida",
+                                                    style: TextStyle(
+                                                      color: Color.fromRGBO(
+                                                          46, 99, 238, 1),
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      fontSize: 20,
+                                                    ),
+                                                  ),
+                                                  actions: <Widget>[
+                                                    TextButton(
+                                                      child: Text(
+                                                        'Ok',
+                                                        style: TextStyle(
+                                                          color: Color.fromRGBO(
+                                                              46, 99, 238, 1),
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                          fontSize: 15,
+                                                        ),
+                                                      ),
+                                                      onPressed: () {
+                                                        Navigator.pop(context);
+                                                        Navigator.pop(context);
+                                                        setState(() {
+                                                          markers.clear();
+                                                        });
+                                                      },
+                                                    ),
+                                                  ],
+                                                ));
+                                      }).onError((error, stackTrace) {
+                                        showDialog(
+                                            context: context,
+                                            builder: (context) => DialogBox(
+                                                "Error al eliminar la visita",
+                                                error.toString()));
+                                      });
+                                    },
+                                  ),
+                                ],
+                              ));
                     },
                   )
                 ],
@@ -263,14 +325,15 @@ class _RutadelDiaState extends State<RutadelDia> {
     polylinePoints = PolylinePoints();
     for (int i = 0; i < cordenadas.length; i++) {
       PolylineResult result = await polylinePoints.getRouteBetweenCoordinates(
-        "",
-        PointLatLng(currentLocation.latitude, currentLocation.longitude),
-        PointLatLng(cordenadas[i].latitude, cordenadas[i].longitude),
-      );
+          "",
+          PointLatLng(currentLocation.latitude, currentLocation.longitude),
+          PointLatLng(cordenadas[i].latitude, cordenadas[i].longitude),
+          travelMode: TravelMode.transit);
       PolylineResult result2 = await polylinePoints.getRouteBetweenCoordinates(
           "",
           PointLatLng(cordenadas[i].latitude, cordenadas[i].longitude),
-          PointLatLng(cordenadas[i + 1].latitude, cordenadas[i + 1].longitude));
+          PointLatLng(cordenadas[i + 1].latitude, cordenadas[i + 1].longitude),
+          travelMode: TravelMode.transit);
       if (result.points.isNotEmpty && result2.points.isNotEmpty) {
         result.points.forEach((PointLatLng point) {
           polylineCoordinates.add(LatLng(point.latitude, point.longitude));
@@ -286,7 +349,6 @@ class _RutadelDiaState extends State<RutadelDia> {
         points: polylineCoordinates,
         width: 3,
       );
-
       polylines[id] = polyline;
     }
   }
