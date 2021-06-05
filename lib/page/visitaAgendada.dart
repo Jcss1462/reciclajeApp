@@ -300,32 +300,34 @@ class _VisitaAgendadaState extends State<VisitaAgendada> {
                                                               SizedBox(
                                                                 height: 2,
                                                               ),
-                                                              Row(
-                                                                children: [
-                                                                  Text(
-                                                                    solicitudes
-                                                                        .solicitudes[
-                                                                            index]
-                                                                        .direccionRecoleccion,
-                                                                    textAlign:
-                                                                        TextAlign
-                                                                            .left,
-                                                                    style:
-                                                                        TextStyle(
-                                                                      color: Color
-                                                                          .fromRGBO(
-                                                                              46,
-                                                                              99,
-                                                                              238,
-                                                                              1),
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .normal,
-                                                                      fontSize:
-                                                                          15,
+                                                              SingleChildScrollView(
+                                                                scrollDirection:
+                                                                    Axis.horizontal,
+                                                                child: Row(
+                                                                  children: [
+                                                                    Text(
+                                                                      solicitudes
+                                                                          .solicitudes[
+                                                                              index]
+                                                                          .direccionRecoleccion,
+                                                                      textAlign:
+                                                                          TextAlign
+                                                                              .left,
+                                                                      style:
+                                                                          TextStyle(
+                                                                        color: Color.fromRGBO(
+                                                                            46,
+                                                                            99,
+                                                                            238,
+                                                                            1),
+                                                                        fontWeight:
+                                                                            FontWeight.normal,
+                                                                        fontSize:
+                                                                            15,
+                                                                      ),
                                                                     ),
-                                                                  )
-                                                                ],
+                                                                  ],
+                                                                ),
                                                               ),
                                                             ],
                                                           ),
