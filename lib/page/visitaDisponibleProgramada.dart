@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:reciclaje_app/data/datasources/visitas_datasource.dart';
+import 'package:reciclaje_app/data/model/agendar.dart';
 import 'package:reciclaje_app/data/model/vistasCivilList.dart';
+import 'package:reciclaje_app/page/visitaProgramadas.dart';
 import 'package:reciclaje_app/service/preferences.dart';
 import 'package:reciclaje_app/widgets/dialogBox.dart';
 import 'package:reciclaje_app/widgets/navbar.dart';
@@ -399,7 +401,7 @@ class _VisitaDisponibleProgramadaState
                                                                             .white,
                                                                     child:
                                                                         new Text(
-                                                                      "Aceptar",
+                                                                      "Agendar",
                                                                       style:
                                                                           TextStyle(
                                                                         fontWeight:
@@ -416,7 +418,7 @@ class _VisitaDisponibleProgramadaState
                                                                           builder: (context) =>
                                                                               AlertDialog(
                                                                                 title: Text(
-                                                                                  "Aceptando Visita",
+                                                                                  "Agendado Visita",
                                                                                   style: TextStyle(
                                                                                     color: Color.fromRGBO(46, 99, 238, 1),
                                                                                     fontWeight: FontWeight.bold,
@@ -433,7 +435,9 @@ class _VisitaDisponibleProgramadaState
                                                                                         fontSize: 15,
                                                                                       ),
                                                                                     ),
-                                                                                    onPressed: null,
+                                                                                    onPressed: () {
+                                                                                      Navigator.pop(context);
+                                                                                    },
                                                                                   ),
                                                                                   TextButton(
                                                                                     child: Text(
@@ -444,7 +448,46 @@ class _VisitaDisponibleProgramadaState
                                                                                         fontSize: 15,
                                                                                       ),
                                                                                     ),
-                                                                                    onPressed: null,
+                                                                                    onPressed: () {
+                                                                                      Agendar agenda = new Agendar(solicitudes.visitas[index].idVisita, _email);
+                                                                                      visitasDatasourceImpl.agendar(agenda).then((value) {
+                                                                                        showDialog(
+                                                                                          context: context,
+                                                                                          builder: (context) => AlertDialog(
+                                                                                              title: Text(
+                                                                                                "Asignacion exitosa",
+                                                                                                style: TextStyle(
+                                                                                                  color: Color.fromRGBO(46, 99, 238, 1),
+                                                                                                  fontWeight: FontWeight.bold,
+                                                                                                  fontSize: 20,
+                                                                                                ),
+                                                                                              ),
+                                                                                              actions: <Widget>[
+                                                                                                TextButton(
+                                                                                                  child: Text(
+                                                                                                    'Ok',
+                                                                                                    style: TextStyle(
+                                                                                                      color: Color.fromRGBO(46, 99, 238, 1),
+                                                                                                      fontWeight: FontWeight.bold,
+                                                                                                      fontSize: 15,
+                                                                                                    ),
+                                                                                                  ),
+                                                                                                  onPressed: () {
+                                                                                                    Navigator.pop(context);
+                                                                                                    Navigator.pop(context);
+                                                                                                  },
+                                                                                                ),
+                                                                                              ]),
+                                                                                        ).then((value) {
+                                                                                          setState(() {});
+                                                                                        });
+                                                                                      }).onError((error, stackTrace) {
+                                                                                        showDialog(
+                                                                                          context: context,
+                                                                                          builder: (context) => DialogBox("Error al Asignar", error.toString()),
+                                                                                        );
+                                                                                      });
+                                                                                    },
                                                                                   ),
                                                                                 ],
                                                                               ));
