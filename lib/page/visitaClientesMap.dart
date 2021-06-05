@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 import 'package:reciclaje_app/blocs/application_bloc.dart';
 import 'package:reciclaje_app/data/datasources/recoleccionDonacion_datasource.dart';
 import 'package:reciclaje_app/data/model/aplicacionRecoleccion.dart';
+import 'package:reciclaje_app/data/model/carrodeDonacion.dart';
 import 'package:reciclaje_app/data/model/carrodeDonacionList.dart';
 import 'package:reciclaje_app/data/model/place.dart';
 import 'package:reciclaje_app/service/preferences.dart';
@@ -69,7 +70,7 @@ class _VisitaClientesMapState extends State<VisitaClientesMap> {
           markerId: markerId,
           position: markerPos,
           onTap: () {
-            onCardInfo(listaCarros);
+            onCardInfo(listaCarros.solicitudes[i]);
           });
       markers[markerId] = marker;
     }
@@ -104,148 +105,142 @@ class _VisitaClientesMapState extends State<VisitaClientesMap> {
     });
   }
 
-  Future<void> onCardInfo(CarrodeDonacionList listacarros) async {
-    for (int i = 0; i < listacarros.solicitudes.length; i++) {
-      showModalBottomSheet(
-          context: context,
-          builder: (context) {
-            return Container(
-              padding:
-                  EdgeInsets.only(top: 20.0, bottom: 20.0, left: 20, right: 20),
-              height: MediaQuery.of(context).size.height / 3,
-              constraints: BoxConstraints(
-                minWidth: 150,
-                minHeight: 230,
-              ),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(30),
-                color: Theme.of(context).canvasColor,
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.grey.withOpacity(0.15),
-                    spreadRadius: 5,
-                    offset: Offset(0, 3),
-                  )
-                ],
-              ),
-              child: SingleChildScrollView(
-                child: Column(
-                  children: <Widget>[
-                    Row(
-                      children: [
-                        Text(
-                          "Usuario:",
-                          textAlign: TextAlign.left,
-                          overflow: TextOverflow.ellipsis,
-                          style: TextStyle(
-                            color: Color.fromRGBO(46, 99, 238, 1),
-                            fontWeight: FontWeight.bold,
-                            fontSize: 18,
-                          ),
-                        )
-                      ],
-                    ),
-                    SizedBox(
-                      height: 2,
-                    ),
-                    Row(children: [
+  Future<void> onCardInfo(CarrodeDonacion carrodeDonacion) async {
+    showModalBottomSheet(
+        context: context,
+        builder: (context) {
+          return Container(
+            padding:
+                EdgeInsets.only(top: 20.0, bottom: 20.0, left: 20, right: 20),
+            height: MediaQuery.of(context).size.height / 3,
+            constraints: BoxConstraints(
+              minWidth: 150,
+              minHeight: 230,
+            ),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(30),
+              color: Theme.of(context).canvasColor,
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.grey.withOpacity(0.15),
+                  spreadRadius: 5,
+                  offset: Offset(0, 3),
+                )
+              ],
+            ),
+            child: SingleChildScrollView(
+              child: Column(
+                children: <Widget>[
+                  Row(
+                    children: [
                       Text(
-                        listacarros.solicitudes[i].emailCivil,
+                        "Usuario:",
                         textAlign: TextAlign.left,
+                        overflow: TextOverflow.ellipsis,
                         style: TextStyle(
                           color: Color.fromRGBO(46, 99, 238, 1),
-                          fontWeight: FontWeight.normal,
+                          fontWeight: FontWeight.bold,
                           fontSize: 18,
                         ),
                       )
-                    ]),
-                    SizedBox(
-                      height: 6,
-                    ),
-                    SizedBox(
-                      height: 5,
-                    ),
-                    Row(
+                    ],
+                  ),
+                  SizedBox(
+                    height: 2,
+                  ),
+                  Row(children: [
+                    Text(
+                      carrodeDonacion.emailCivil,
+                      textAlign: TextAlign.left,
+                      style: TextStyle(
+                        color: Color.fromRGBO(46, 99, 238, 1),
+                        fontWeight: FontWeight.normal,
+                        fontSize: 18,
+                      ),
+                    )
+                  ]),
+                  SizedBox(
+                    height: 6,
+                  ),
+                  SizedBox(
+                    height: 5,
+                  ),
+                  Row(
+                    children: [
+                      Text(
+                        "Dirección: ",
+                        textAlign: TextAlign.left,
+                        style: TextStyle(
+                          color: Color.fromRGBO(46, 99, 238, 1),
+                          fontWeight: FontWeight.bold,
+                          fontSize: 18,
+                        ),
+                      )
+                    ],
+                  ),
+                  SizedBox(
+                    height: 2,
+                  ),
+                  SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Row(
                       children: [
                         Text(
-                          "Dirección: ",
+                          carrodeDonacion.direccionRecoleccion,
                           textAlign: TextAlign.left,
                           style: TextStyle(
                             color: Color.fromRGBO(46, 99, 238, 1),
-                            fontWeight: FontWeight.bold,
+                            fontWeight: FontWeight.normal,
                             fontSize: 18,
                           ),
                         )
                       ],
                     ),
-                    SizedBox(
-                      height: 2,
+                  ),
+                  SizedBox(height: 25),
+                  MaterialButton(
+                    height: 50,
+                    minWidth: 250,
+                    color: Color.fromRGBO(46, 99, 238, 1),
+                    textColor: Colors.white,
+                    child: new Text(
+                      "Eliminar Visita",
+                      style:
+                          TextStyle(fontWeight: FontWeight.bold, fontSize: 25),
                     ),
-                    SingleChildScrollView(
-                      scrollDirection: Axis.horizontal,
-                      child: Row(
-                        children: [
-                          Text(
-                            listacarros.solicitudes[i].direccionRecoleccion,
-                            textAlign: TextAlign.left,
-                            style: TextStyle(
-                              color: Color.fromRGBO(46, 99, 238, 1),
-                              fontWeight: FontWeight.normal,
-                              fontSize: 18,
-                            ),
-                          )
-                        ],
-                      ),
-                    ),
-                    SizedBox(height: 25),
-                    MaterialButton(
-                      height: 50,
-                      minWidth: 250,
-                      color: Color.fromRGBO(46, 99, 238, 1),
-                      textColor: Colors.white,
-                      child: new Text(
-                        "Agendar Visita",
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 25),
-                      ),
-                      onPressed: () async {
-                        print("email solicitante: " + _email);
-                        print("carrito de donacion: " +
-                            listacarros.solicitudes[i].idcarrodonacion
-                                .toString());
+                    onPressed: () async {
+                      print("email solicitante: " + _email);
+                      print("carrito de donacion: " +
+                          carrodeDonacion.idcarrodonacion.toString());
 
-                        AplicacionRecoleccion aplicacionRecoleccion =
-                            new AplicacionRecoleccion(
-                                listacarros.solicitudes[i].idcarrodonacion
-                                    .toInt(),
-                                _email);
-                        this
-                            .recoleccionDonacionDataSourceImpl
-                            .aplicacionaRecolectar(aplicacionRecoleccion)
-                            .then((value) {
-                          showDialog(
-                            context: context,
-                            builder: (context) => DialogBox(
-                                "Aplicación exitosa",
-                                "Esperar la aceptación del usuario civil"),
-                          ).then((value) {
-                            setState(() {});
-                          });
-                        }).onError((error, stackTrace) {
-                          showDialog(
-                            context: context,
-                            builder: (context) =>
-                                DialogBox("Error al Aplicar", error.toString()),
-                          );
+                      AplicacionRecoleccion aplicacionRecoleccion =
+                          new AplicacionRecoleccion(
+                              carrodeDonacion.idcarrodonacion.toInt(), _email);
+                      this
+                          .recoleccionDonacionDataSourceImpl
+                          .aplicacionaRecolectar(aplicacionRecoleccion)
+                          .then((value) {
+                        showDialog(
+                          context: context,
+                          builder: (context) => DialogBox("Aplicación exitosa",
+                              "Esperar la aceptación del usuario civil"),
+                        ).then((value) {
+                          setState(() {});
                         });
-                      },
-                    )
-                  ],
-                ),
+                      }).onError((error, stackTrace) {
+                        showDialog(
+                          context: context,
+                          builder: (context) =>
+                              DialogBox("Error al Aplicar", error.toString()),
+                        );
+                      });
+                    },
+                  )
+                ],
               ),
-            );
-          });
-    }
+            ),
+          );
+        });
   }
 
   final scaffoldState = GlobalKey<ScaffoldState>();
