@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:reciclaje_app/data/datasources/visitas_datasource.dart';
+import 'package:reciclaje_app/data/model/visitaCivil.dart';
+import 'package:reciclaje_app/data/model/vistasCivilList.dart';
 import 'package:reciclaje_app/page/listaVisitasAgendadas.dart';
 import 'package:reciclaje_app/service/preferences.dart';
+import 'package:reciclaje_app/widgets/dialogBox.dart';
 import 'package:reciclaje_app/widgets/navbarCiudadanoCivil.dart';
 
 class FormAgendaVisitaCivil extends StatefulWidget {
@@ -15,8 +20,12 @@ class _FormAgendaVisitaCivilState extends State<FormAgendaVisitaCivil> {
   DateTime dateTime;
   DateTime hora;
   TimeOfDay timeOfDay;
+  final f = new DateFormat('yyyy-MM-dd');
   String fecha;
   final fromKey = GlobalKey<FormState>();
+
+  VisitasDatasourceImpl visitasDatasourceImpl = new VisitasDatasourceImpl();
+  VisitaCivilList solicitudes = new VisitaCivilList();
 
   Future<String> getEmail() async {
     return await preferencias.obtenerEmail().then((value) async {
@@ -211,11 +220,190 @@ class _FormAgendaVisitaCivilState extends State<FormAgendaVisitaCivil> {
                                     ),
                                   ),
                                   onPressed: () async {
-                                    fecha =
-                                        "${dateTime.year}-${dateTime.day}-${dateTime.month}T${timeOfDay.hour}:${timeOfDay.minute}";
-                                    print(fecha);
-                                    print(dateTime);
-                                    print(timeOfDay);
+                                    showDialog(
+                                        context: context,
+                                        builder: (context) => AlertDialog(
+                                              title: Text(
+                                                "Agendado Visita",
+                                                style: TextStyle(
+                                                  color: Color.fromRGBO(
+                                                      46, 99, 238, 1),
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: 20,
+                                                ),
+                                              ),
+                                              actions: <Widget>[
+                                                TextButton(
+                                                  child: Text(
+                                                    'Cancelar',
+                                                    style: TextStyle(
+                                                      color: Color.fromRGBO(
+                                                          46, 99, 238, 1),
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      fontSize: 15,
+                                                    ),
+                                                  ),
+                                                  onPressed: () {
+                                                    Navigator.pop(context);
+                                                  },
+                                                ),
+                                                TextButton(
+                                                    child: Text(
+                                                      'Continuar',
+                                                      style: TextStyle(
+                                                        color: Color.fromRGBO(
+                                                            46, 99, 238, 1),
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                        fontSize: 15,
+                                                      ),
+                                                    ),
+                                                    onPressed: () {
+                                                      String mes;
+                                                      String dia;
+                                                      String hora;
+                                                      String minuto;
+                                                      if (dateTime.month >= 1 ||
+                                                          dateTime.month <= 9) {
+                                                        mes =
+                                                            "0${dateTime.month}";
+                                                      }
+                                                      if (dateTime.month >=
+                                                              10 ||
+                                                          dateTime.month <=
+                                                              24) {
+                                                        mes =
+                                                            "${dateTime.month}";
+                                                      }
+                                                      if (dateTime.day >= 1 ||
+                                                          dateTime.day <= 9) {
+                                                        dia =
+                                                            "0${dateTime.day}";
+                                                      }
+                                                      if (dateTime.day >= 10 ||
+                                                          dateTime.day <= 31) {
+                                                        dia = "${dateTime.day}";
+                                                      }
+                                                      if (timeOfDay.hour >= 1 ||
+                                                          timeOfDay.hour <= 9) {
+                                                        hora =
+                                                            "0${timeOfDay.hour}";
+                                                      }
+                                                      if (timeOfDay.hour >=
+                                                              10 ||
+                                                          timeOfDay.minute <=
+                                                              24) {
+                                                        hora =
+                                                            "${timeOfDay.hour}";
+                                                      }
+                                                      if (timeOfDay.minute >=
+                                                              1 ||
+                                                          timeOfDay.minute <=
+                                                              9) {
+                                                        minuto =
+                                                            "0${timeOfDay.minute}";
+                                                      }
+                                                      if (timeOfDay.minute >=
+                                                              10 ||
+                                                          timeOfDay.minute <=
+                                                              24) {
+                                                        minuto =
+                                                            "${timeOfDay.minute}";
+                                                      }
+
+                                                      fecha =
+                                                          "${dateTime.year}-" +
+                                                              mes +
+                                                              "-" +
+                                                              dia +
+                                                              "T" +
+                                                              hora +
+                                                              ":" +
+                                                              minuto;
+                                                      print(fecha);
+                                                      print(timeOfDay.minute
+                                                          .toString());
+                                                      VisitaCivil visitaCivil =
+                                                          new VisitaCivil(
+                                                              fecha,
+                                                              null,
+                                                              null,
+                                                              _email,
+                                                              null,
+                                                              null,
+                                                              null);
+                                                      visitasDatasourceImpl
+                                                          .nuevaVisita(
+                                                              visitaCivil)
+                                                          .then((value) {
+                                                        showDialog(
+                                                          context: context,
+                                                          builder: (context) =>
+                                                              AlertDialog(
+                                                                  title: Text(
+                                                                    "Asignacion exitosa",
+                                                                    style:
+                                                                        TextStyle(
+                                                                      color: Color
+                                                                          .fromRGBO(
+                                                                              46,
+                                                                              99,
+                                                                              238,
+                                                                              1),
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .bold,
+                                                                      fontSize:
+                                                                          20,
+                                                                    ),
+                                                                  ),
+                                                                  actions: <
+                                                                      Widget>[
+                                                                TextButton(
+                                                                  child: Text(
+                                                                    'Ok',
+                                                                    style:
+                                                                        TextStyle(
+                                                                      color: Color
+                                                                          .fromRGBO(
+                                                                              46,
+                                                                              99,
+                                                                              238,
+                                                                              1),
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .bold,
+                                                                      fontSize:
+                                                                          15,
+                                                                    ),
+                                                                  ),
+                                                                  onPressed:
+                                                                      () {
+                                                                    Navigator.pop(
+                                                                        context);
+                                                                    Navigator.pop(
+                                                                        context);
+                                                                  },
+                                                                ),
+                                                              ]),
+                                                        ).then((value) {
+                                                          setState(() {});
+                                                        });
+                                                      }).onError((error,
+                                                              stackTrace) {
+                                                        showDialog(
+                                                          context: context,
+                                                          builder: (context) =>
+                                                              DialogBox(
+                                                                  "Error al Asignar",
+                                                                  error
+                                                                      .toString()),
+                                                        );
+                                                      });
+                                                    })
+                                              ],
+                                            ));
                                   },
                                 ),
                               ],
@@ -236,7 +424,7 @@ class _FormAgendaVisitaCivilState extends State<FormAgendaVisitaCivil> {
   _pickDate() async {
     DateTime date = await showDatePicker(
         context: context,
-        firstDate: DateTime(DateTime.now().year - 10),
+        firstDate: DateTime(DateTime.now().day),
         lastDate: DateTime(DateTime.now().year + 10),
         initialDate: dateTime);
     if (date != null) {
