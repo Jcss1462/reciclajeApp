@@ -14,6 +14,7 @@ import 'package:flutter/material.dart'
 import 'package:reciclaje_app/page/visitaAgendada.dart';
 import 'package:reciclaje_app/page/visitaClientesMap.dart';
 import 'package:reciclaje_app/page/visitaDisponibles.dart';
+import 'package:reciclaje_app/page/visitaProgramadas.dart';
 import 'constants.dart';
 
 class Routers {
@@ -52,8 +53,10 @@ class Routers {
         return MaterialPageRoute(builder: (_) => RutadelDia());
       case donacionesenEspera:
         return MaterialPageRoute(builder: (_) => DonacionesenEspera());
-        case listaVisitasAgendadas:
+      case listaVisitasAgendadas:
         return MaterialPageRoute(builder: (_) => ListaVistasAgendadas());
+      case visitaProgramadas:
+        return MaterialPageRoute(builder: (_) => VisitaProgramadas());
       default:
         return MaterialPageRoute(
           builder: (_) => Scaffold(

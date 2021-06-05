@@ -173,6 +173,22 @@ class NavBar extends StatelessWidget {
           ),
           ListTile(
             leading: Icon(
+              Icons.calendar_today_outlined,
+              color: Color.fromRGBO(46, 99, 238, 1),
+            ),
+            title: Text(
+              "Visitas Programadas",
+              style: TextStyle(
+                  color: Color.fromRGBO(46, 99, 238, 1),
+                  fontWeight: FontWeight.normal,
+                  fontSize: 18),
+            ),
+            onTap: () {
+              Navigator.pushNamed(context, visitaProgramadas);
+            },
+          ),
+          ListTile(
+            leading: Icon(
               Icons.money_off,
               color: Color.fromRGBO(46, 99, 238, 1),
             ),
