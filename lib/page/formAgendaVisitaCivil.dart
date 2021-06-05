@@ -48,7 +48,9 @@ class _FormAgendaVisitaCivilState extends State<FormAgendaVisitaCivil> {
                 Icon(Icons.perm_contact_calendar_outlined, color: Colors.white),
             onPressed: () {
               Navigator.push(
-                  context, MaterialPageRoute(builder: (context) => null));
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => ListaVistasAgendadas()));
             },
           ),
         ],

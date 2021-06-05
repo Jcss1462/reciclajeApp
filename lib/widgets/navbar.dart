@@ -3,8 +3,6 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:reciclaje_app/core/constants.dart';
 import 'package:reciclaje_app/page/index.dart';
-import 'package:reciclaje_app/service/preferences.dart';
-import 'package:reciclaje_app/widgets/dialogBox.dart';
 
 class NavBar extends StatelessWidget {
   @override
@@ -202,76 +200,6 @@ class NavBar extends StatelessWidget {
             onTap: () {
               Navigator.push(context,
                   MaterialPageRoute(builder: (context) => InicioReciclador()));
-            },
-          ),
-          ListTile(
-            leading: Icon(
-              Icons.logout,
-              color: Color.fromRGBO(46, 99, 238, 1),
-            ),
-            title: Text(
-              "Log Out",
-              style: TextStyle(
-                  color: Color.fromRGBO(46, 99, 238, 1),
-                  fontWeight: FontWeight.normal,
-                  fontSize: 18),
-            ),
-            onTap: () {
-              showDialog(
-                  context: context,
-                  builder: (context) => AlertDialog(
-                          title: Text(
-                            "Cerrar Sesión",
-                            style: TextStyle(
-                              color: Color.fromRGBO(46, 99, 238, 1),
-                              fontWeight: FontWeight.bold,
-                              fontSize: 20,
-                            ),
-                          ),
-                          content: Text(
-                            "Esta seguro que desea cerrar la sesión",
-                          ),
-                          actions: <Widget>[
-                            TextButton(
-                                child: Text(
-                                  'Ok',
-                                  style: TextStyle(
-                                    color: Color.fromRGBO(46, 99, 238, 1),
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 15,
-                                  ),
-                                ),
-                                onPressed: () {
-                                  //eliminamos todas las preferencias y re dirigimos a Login
-                                  Preferences preferences = new Preferences();
-                                  preferences
-                                      .eliminarPreferencias()
-                                      .then((value) {
-                                    Navigator.of(context)
-                                        .popUntil((route) => route.isFirst);
-                                  }).onError((error, stackTrace) {
-                                    showDialog(
-                                      context: context,
-                                      builder: (context) => DialogBox(
-                                          "Error al cerrar sesión",
-                                          error.toString()),
-                                    );
-                                  });
-                                }),
-                            TextButton(
-                              child: Text(
-                                "Cancelar",
-                                style: TextStyle(
-                                  color: Color.fromRGBO(46, 99, 238, 1),
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 15,
-                                ),
-                              ),
-                              onPressed: () {
-                                Navigator.pop(context);
-                              },
-                            )
-                          ]));
             },
           ),
         ],

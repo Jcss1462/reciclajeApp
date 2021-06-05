@@ -63,6 +63,66 @@ class _PageEditarState extends State<PageEditar> {
                 onPressed: () {
                   Navigator.push(context,
                       MaterialPageRoute(builder: (context) => CarroDeVentas()));
+                }),
+            IconButton(
+                icon: Icon(Icons.logout_outlined, color: Colors.white),
+                onPressed: () {
+                  showDialog(
+                      context: context,
+                      builder: (context) => AlertDialog(
+                              title: Text(
+                                "Cerrar Sesión",
+                                style: TextStyle(
+                                  color: Color.fromRGBO(46, 99, 238, 1),
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 20,
+                                ),
+                              ),
+                              content: Text(
+                                "Esta seguro que desea cerrar la sesión",
+                              ),
+                              actions: <Widget>[
+                                TextButton(
+                                    child: Text(
+                                      'Ok',
+                                      style: TextStyle(
+                                        color: Color.fromRGBO(46, 99, 238, 1),
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 15,
+                                      ),
+                                    ),
+                                    onPressed: () {
+                                      //eliminamos todas las preferencias y re dirigimos a Login
+                                      Preferences preferences =
+                                          new Preferences();
+                                      preferences
+                                          .eliminarPreferencias()
+                                          .then((value) {
+                                        Navigator.of(context)
+                                            .popUntil((route) => route.isFirst);
+                                      }).onError((error, stackTrace) {
+                                        showDialog(
+                                          context: context,
+                                          builder: (context) => DialogBox(
+                                              "Error al cerrar sesión",
+                                              error.toString()),
+                                        );
+                                      });
+                                    }),
+                                TextButton(
+                                  child: Text(
+                                    "Cancelar",
+                                    style: TextStyle(
+                                      color: Color.fromRGBO(46, 99, 238, 1),
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 15,
+                                    ),
+                                  ),
+                                  onPressed: () {
+                                    Navigator.pop(context);
+                                  },
+                                )
+                              ]));
                 })
           ],
         ),
@@ -234,7 +294,8 @@ class _PageEditarState extends State<PageEditar> {
                                         Text(
                                           ventas.total == null
                                               ? "\$0"
-                                              : "\$" + oCcy.format(ventas.total),
+                                              : "\$" +
+                                                  oCcy.format(ventas.total),
                                           style: TextStyle(
                                               color: Color.fromRGBO(
                                                   46, 99, 238, 1),

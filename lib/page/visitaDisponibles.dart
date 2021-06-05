@@ -48,6 +48,67 @@ class _VisitaCivilesDisponiblesState extends State<VisitaCivilesDisponibles> {
           style: TextStyle(
               color: Colors.white, fontWeight: FontWeight.bold, fontSize: 20),
         ),
+        actions: <Widget>[
+          IconButton(
+              icon: Icon(Icons.logout_outlined, color: Colors.white),
+              onPressed: () {
+                showDialog(
+                    context: context,
+                    builder: (context) => AlertDialog(
+                            title: Text(
+                              "Cerrar Sesión",
+                              style: TextStyle(
+                                color: Color.fromRGBO(46, 99, 238, 1),
+                                fontWeight: FontWeight.bold,
+                                fontSize: 20,
+                              ),
+                            ),
+                            content: Text(
+                              "Esta seguro que desea cerrar la sesión",
+                            ),
+                            actions: <Widget>[
+                              TextButton(
+                                  child: Text(
+                                    'Ok',
+                                    style: TextStyle(
+                                      color: Color.fromRGBO(46, 99, 238, 1),
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 15,
+                                    ),
+                                  ),
+                                  onPressed: () {
+                                    //eliminamos todas las preferencias y re dirigimos a Login
+                                    Preferences preferences = new Preferences();
+                                    preferences
+                                        .eliminarPreferencias()
+                                        .then((value) {
+                                      Navigator.of(context)
+                                          .popUntil((route) => route.isFirst);
+                                    }).onError((error, stackTrace) {
+                                      showDialog(
+                                        context: context,
+                                        builder: (context) => DialogBox(
+                                            "Error al cerrar sesión",
+                                            error.toString()),
+                                      );
+                                    });
+                                  }),
+                              TextButton(
+                                child: Text(
+                                  "Cancelar",
+                                  style: TextStyle(
+                                    color: Color.fromRGBO(46, 99, 238, 1),
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 15,
+                                  ),
+                                ),
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                },
+                              )
+                            ]));
+              })
+        ],
       ),
       body: new Stack(children: <Widget>[
         new Container(
@@ -116,7 +177,7 @@ class _VisitaCivilesDisponiblesState extends State<VisitaCivilesDisponibles> {
                                                             5,
                                                     constraints: BoxConstraints(
                                                       minWidth: 150,
-                                                      minHeight: 230,
+                                                      minHeight: 220,
                                                     ),
                                                     padding: EdgeInsets.only(
                                                         top: 20.0,
@@ -260,9 +321,8 @@ class _VisitaCivilesDisponiblesState extends State<VisitaCivilesDisponibles> {
                                                               ],
                                                             ),
                                                           ),
-                                                          SizedBox(height: 25),
                                                           MaterialButton(
-                                                            height: 50,
+                                                            height: 40,
                                                             minWidth: 250,
                                                             color:
                                                                 Color.fromRGBO(
