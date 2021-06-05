@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:reciclaje_app/data/datasources/recoleccionDonacion_datasource.dart';
-import 'package:reciclaje_app/data/model/aceptarSolicitud.dart';
-import 'package:reciclaje_app/data/model/carrodeDonacionList.dart';
+import 'package:reciclaje_app/data/datasources/visitas_datasource.dart';
+import 'package:reciclaje_app/data/model/vistasCivilList.dart';
 import 'package:reciclaje_app/service/preferences.dart';
 import 'package:reciclaje_app/widgets/dialogBox.dart';
 import 'package:reciclaje_app/widgets/navbar.dart';
@@ -18,9 +17,8 @@ class _VisitaDisponibleProgramadaState
     extends State<VisitaDisponibleProgramada> {
   Preferences preferencias = new Preferences();
   String _email;
-  RecoleccionDonacionDataSourceImpl recoleccionDonacionDataSourceImpl =
-      new RecoleccionDonacionDataSourceImpl();
-  CarrodeDonacionList solicitudes = new CarrodeDonacionList();
+  VisitasDatasourceImpl visitasDatasourceImpl = new VisitasDatasourceImpl();
+  VisitaCivilList solicitudes = new VisitaCivilList();
   @override
   void initState() {
     super.initState();
@@ -33,10 +31,8 @@ class _VisitaDisponibleProgramadaState
     });
   }
 
-  Future<CarrodeDonacionList> getListSolicitudes() async {
-    return await this
-        .recoleccionDonacionDataSourceImpl
-        .carrosDisponiblesNoAplicados();
+  Future<VisitaCivilList> getVisitasDisponiblesProgrmadas() async {
+    return await this.visitasDatasourceImpl.visitasDisponibles();
   }
 
   @override
@@ -133,7 +129,7 @@ class _VisitaDisponibleProgramadaState
                     return Text('Error: ${snapshot.error}');
                   } else {
                     return FutureBuilder(
-                      future: getListSolicitudes(),
+                      future: getVisitasDisponiblesProgrmadas(),
                       builder: (BuildContext context, AsyncSnapshot snapshot) {
                         switch (snapshot.connectionState) {
                           case ConnectionState.waiting:
@@ -156,10 +152,8 @@ class _VisitaDisponibleProgramadaState
                                         ListView.builder(
                                           physics:
                                               const NeverScrollableScrollPhysics(),
-                                          itemCount: this
-                                              .solicitudes
-                                              .solicitudes
-                                              .length,
+                                          itemCount:
+                                              this.solicitudes.visitas.length,
                                           shrinkWrap: true,
                                           itemBuilder: (context, index) {
                                             return Column(children: [
@@ -178,11 +172,10 @@ class _VisitaDisponibleProgramadaState
                                                             5,
                                                     constraints: BoxConstraints(
                                                       minWidth: 150,
-                                                      minHeight: 220,
+                                                      minHeight: 250,
                                                     ),
                                                     padding: EdgeInsets.only(
                                                         top: 20.0,
-                                                        bottom: 20.0,
                                                         left: 20,
                                                         right: 20),
                                                     decoration: BoxDecoration(
@@ -236,9 +229,9 @@ class _VisitaDisponibleProgramadaState
                                                           children: [
                                                             Text(
                                                               solicitudes
-                                                                  .solicitudes[
+                                                                  .visitas[
                                                                       index]
-                                                                  .emailCivil,
+                                                                  .emailPropietario,
                                                               textAlign:
                                                                   TextAlign
                                                                       .left,
@@ -260,8 +253,74 @@ class _VisitaDisponibleProgramadaState
                                                         SizedBox(
                                                           height: 6,
                                                         ),
+                                                        Row(
+                                                          children: [
+                                                            Text(
+                                                              "Fecha y Hora: ",
+                                                              textAlign:
+                                                                  TextAlign
+                                                                      .left,
+                                                              style: TextStyle(
+                                                                color: Color
+                                                                    .fromRGBO(
+                                                                        46,
+                                                                        99,
+                                                                        238,
+                                                                        1),
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold,
+                                                                fontSize: 18,
+                                                              ),
+                                                            )
+                                                          ],
+                                                        ),
                                                         SizedBox(
-                                                          height: 5,
+                                                          height: 2,
+                                                        ),
+                                                        SingleChildScrollView(
+                                                          scrollDirection:
+                                                              Axis.horizontal,
+                                                          child: Row(
+                                                            children: [
+                                                              Text(
+                                                                solicitudes
+                                                                        .visitas[
+                                                                            index]
+                                                                        .fechaHora
+                                                                        .substring(
+                                                                            0,
+                                                                            10) +
+                                                                    "     " +
+                                                                    solicitudes
+                                                                        .visitas[
+                                                                            index]
+                                                                        .fechaHora
+                                                                        .substring(
+                                                                            11,
+                                                                            16),
+                                                                textAlign:
+                                                                    TextAlign
+                                                                        .right,
+                                                                style:
+                                                                    TextStyle(
+                                                                  color: Color
+                                                                      .fromRGBO(
+                                                                          46,
+                                                                          99,
+                                                                          238,
+                                                                          1),
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .normal,
+                                                                  fontSize: 18,
+                                                                ),
+                                                              )
+                                                            ],
+                                                          ),
+                                                        ),
+                                                        SizedBox(
+                                                          height: 6,
                                                         ),
                                                         Row(
                                                           children: [
@@ -295,9 +354,9 @@ class _VisitaDisponibleProgramadaState
                                                             children: [
                                                               Text(
                                                                 solicitudes
-                                                                    .solicitudes[
+                                                                    .visitas[
                                                                         index]
-                                                                    .direccionRecoleccion,
+                                                                    .direccion,
                                                                 textAlign:
                                                                     TextAlign
                                                                         .left,
@@ -318,45 +377,43 @@ class _VisitaDisponibleProgramadaState
                                                             ],
                                                           ),
                                                         ),
-                                                        SizedBox(
-                                                          height: 15,
-                                                        ),
-                                                        Column(children: <
-                                                            Widget>[
-                                                          Row(
-                                                            mainAxisAlignment:
-                                                                MainAxisAlignment
-                                                                    .end,
-                                                            children: [
-                                                              MaterialButton(
-                                                                height: 40,
-                                                                minWidth: 50,
-                                                                color: Color
-                                                                    .fromRGBO(
-                                                                        46,
-                                                                        99,
-                                                                        238,
-                                                                        1),
-                                                                textColor:
-                                                                    Colors
-                                                                        .white,
-                                                                child: new Text(
-                                                                  "Aceptar",
-                                                                  style:
-                                                                      TextStyle(
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .bold,
-                                                                    fontSize:
-                                                                        18,
-                                                                  ),
-                                                                ),
-                                                                onPressed: () {
-                                                                  showDialog(
-                                                                      context:
-                                                                          context,
-                                                                      builder:
-                                                                          (context) =>
+                                                        Column(
+                                                            children: <Widget>[
+                                                              Row(
+                                                                mainAxisAlignment:
+                                                                    MainAxisAlignment
+                                                                        .center,
+                                                                children: [
+                                                                  MaterialButton(
+                                                                    height: 40,
+                                                                    minWidth:
+                                                                        50,
+                                                                    color: Color
+                                                                        .fromRGBO(
+                                                                            46,
+                                                                            99,
+                                                                            238,
+                                                                            1),
+                                                                    textColor:
+                                                                        Colors
+                                                                            .white,
+                                                                    child:
+                                                                        new Text(
+                                                                      "Aceptar",
+                                                                      style:
+                                                                          TextStyle(
+                                                                        fontWeight:
+                                                                            FontWeight.bold,
+                                                                        fontSize:
+                                                                            18,
+                                                                      ),
+                                                                    ),
+                                                                    onPressed:
+                                                                        () {
+                                                                      showDialog(
+                                                                          context:
+                                                                              context,
+                                                                          builder: (context) =>
                                                                               AlertDialog(
                                                                                 title: Text(
                                                                                   "Aceptando Visita",
@@ -387,92 +444,15 @@ class _VisitaDisponibleProgramadaState
                                                                                         fontSize: 15,
                                                                                       ),
                                                                                     ),
-                                                                                    onPressed: () {
-                                                                                      AceptarSolicitud aceptarSolicitud = new AceptarSolicitud(solicitudes.solicitudes[index].idcarrodonacion, solicitudes.solicitudes[index].emailRecolector);
-                                                                                      this.recoleccionDonacionDataSourceImpl.aceptarSolicitud(aceptarSolicitud).then((value) {
-                                                                                        showDialog(
-                                                                                          context: context,
-                                                                                          builder: (context) => DialogBox("Solicitud aceptada", "Esperar la visita de tu reciclador"),
-                                                                                        );
-                                                                                      }).onError((error, stackTrace) {
-                                                                                        showDialog(
-                                                                                          context: context,
-                                                                                          builder: (context) => DialogBox("Error al aceptar solicitud", error.toString()),
-                                                                                        );
-                                                                                      });
-                                                                                    },
+                                                                                    onPressed: null,
                                                                                   ),
                                                                                 ],
                                                                               ));
-                                                                },
-                                                              ),
-                                                              SizedBox(
-                                                                width: 45,
-                                                              ),
-                                                              MaterialButton(
-                                                                height: 40,
-                                                                minWidth: 50,
-                                                                color:
-                                                                    Colors.red,
-                                                                textColor:
-                                                                    Colors
-                                                                        .white,
-                                                                child: new Text(
-                                                                  "Cancelar",
-                                                                  style:
-                                                                      TextStyle(
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .bold,
-                                                                    fontSize:
-                                                                        18,
+                                                                    },
                                                                   ),
-                                                                ),
-                                                                onPressed: () {
-                                                                  showDialog(
-                                                                      context:
-                                                                          context,
-                                                                      builder:
-                                                                          (context) =>
-                                                                              AlertDialog(
-                                                                                title: Text(
-                                                                                  "Cancelando Visita",
-                                                                                  style: TextStyle(
-                                                                                    color: Color.fromRGBO(46, 99, 238, 1),
-                                                                                    fontWeight: FontWeight.bold,
-                                                                                    fontSize: 20,
-                                                                                  ),
-                                                                                ),
-                                                                                actions: <Widget>[
-                                                                                  TextButton(
-                                                                                    child: Text(
-                                                                                      'Cancelar',
-                                                                                      style: TextStyle(
-                                                                                        color: Color.fromRGBO(46, 99, 238, 1),
-                                                                                        fontWeight: FontWeight.bold,
-                                                                                        fontSize: 15,
-                                                                                      ),
-                                                                                    ),
-                                                                                    onPressed: null,
-                                                                                  ),
-                                                                                  TextButton(
-                                                                                    child: Text(
-                                                                                      'Continuar',
-                                                                                      style: TextStyle(
-                                                                                        color: Color.fromRGBO(46, 99, 238, 1),
-                                                                                        fontWeight: FontWeight.bold,
-                                                                                        fontSize: 15,
-                                                                                      ),
-                                                                                    ),
-                                                                                    onPressed: null,
-                                                                                  ),
-                                                                                ],
-                                                                              ));
-                                                                },
-                                                              )
-                                                            ],
-                                                          ),
-                                                        ]),
+                                                                ],
+                                                              ),
+                                                            ]),
                                                       ]),
                                                     )),
                                               )

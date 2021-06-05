@@ -105,8 +105,8 @@ class _RutadelDiaState extends State<RutadelDia> {
         }).onError((error, stackTrace) {
           showDialog(
             context: context,
-            builder: (context) =>
-                DialogBox("ERROR", "Problemas convirtiendo las coordenadas"),
+            builder: (context) => DialogBox("ERROR",
+                "Problemas convirtiendo las coordenadas \n" + error.toString()),
           );
         });
       }
