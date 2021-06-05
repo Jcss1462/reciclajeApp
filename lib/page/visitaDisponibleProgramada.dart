@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:reciclaje_app/data/datasources/visitas_datasource.dart';
 import 'package:reciclaje_app/data/model/agendar.dart';
 import 'package:reciclaje_app/data/model/vistasCivilList.dart';
-import 'package:reciclaje_app/page/visitaProgramadas.dart';
 import 'package:reciclaje_app/service/preferences.dart';
 import 'package:reciclaje_app/widgets/dialogBox.dart';
 import 'package:reciclaje_app/widgets/navbar.dart';

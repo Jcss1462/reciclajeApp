@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:reciclaje_app/data/datasources/recoleccionDonacion_datasource.dart';
-import 'package:reciclaje_app/data/model/carrodeDonacionList.dart';
+import 'package:reciclaje_app/data/datasources/visitas_datasource.dart';
+import 'package:reciclaje_app/data/model/vistasCivilList.dart';
 import 'package:reciclaje_app/page/visitaDisponibleProgramada.dart';
 import 'package:reciclaje_app/service/preferences.dart';
 import 'package:reciclaje_app/widgets/dialogBox.dart';
@@ -17,9 +17,8 @@ class _VisitaProgramadasState extends State<VisitaProgramadas> {
   Preferences preferencias = new Preferences();
   String _email;
   final formKey = GlobalKey<FormState>();
-  RecoleccionDonacionDataSourceImpl recoleccionDonacionDataSourceImpl =
-      new RecoleccionDonacionDataSourceImpl();
-  CarrodeDonacionList solicitudes = new CarrodeDonacionList();
+  VisitasDatasourceImpl visitasDatasourceImpl = new VisitasDatasourceImpl();
+  VisitaCivilList solicitudes = new VisitaCivilList();
 
   @override
   void initState() {
@@ -33,10 +32,10 @@ class _VisitaProgramadasState extends State<VisitaProgramadas> {
     });
   }
 
-  Future<CarrodeDonacionList> getListSolicitudesAgendadas() async {
+  Future<VisitaCivilList> getListMisVisitas() async {
     return await this
-        .recoleccionDonacionDataSourceImpl
-        .recicladorCarrosAsignados(_email);
+        .visitasDatasourceImpl
+        .misVisitasAgendadasReciclador(_email);
   }
 
   @override
@@ -134,7 +133,7 @@ class _VisitaProgramadasState extends State<VisitaProgramadas> {
                       return Text('Error: ${snapshot.error}');
                     } else {
                       return FutureBuilder(
-                        future: getListSolicitudesAgendadas(),
+                        future: getListMisVisitas(),
                         builder:
                             (BuildContext context, AsyncSnapshot snapshot) {
                           switch (snapshot.connectionState) {
@@ -160,15 +159,14 @@ class _VisitaProgramadasState extends State<VisitaProgramadas> {
                                                   const NeverScrollableScrollPhysics(),
                                               itemCount: this
                                                   .solicitudes
-                                                  .solicitudes
+                                                  .visitas
                                                   .length,
                                               shrinkWrap: true,
                                               itemBuilder: (context, index) {
-                                                return Column(
-                                                  children: [
-                                                    Card(
-                                                      elevation: 5,
-                                                      child: Container(
+                                                return Column(children: [
+                                                  Card(
+                                                    elevation: 5,
+                                                    child: Container(
                                                         width: MediaQuery.of(
                                                                     context)
                                                                 .size
@@ -182,12 +180,11 @@ class _VisitaProgramadasState extends State<VisitaProgramadas> {
                                                         constraints:
                                                             BoxConstraints(
                                                           minWidth: 150,
-                                                          minHeight: 100,
+                                                          minHeight: 230,
                                                         ),
                                                         padding:
                                                             EdgeInsets.only(
                                                                 top: 20.0,
-                                                                bottom: 30.0,
                                                                 left: 20,
                                                                 right: 20),
                                                         decoration: BoxDecoration(
@@ -245,9 +242,9 @@ class _VisitaProgramadasState extends State<VisitaProgramadas> {
                                                                 children: [
                                                                   Text(
                                                                     solicitudes
-                                                                        .solicitudes[
+                                                                        .visitas[
                                                                             index]
-                                                                        .emailCivil,
+                                                                        .emailPropietario,
                                                                     textAlign:
                                                                         TextAlign
                                                                             .left,
@@ -274,7 +271,73 @@ class _VisitaProgramadasState extends State<VisitaProgramadas> {
                                                               Row(
                                                                 children: [
                                                                   Text(
-                                                                    "Dirección: ",
+                                                                    "Fecha y Hora: ",
+                                                                    textAlign:
+                                                                        TextAlign
+                                                                            .left,
+                                                                    overflow:
+                                                                        TextOverflow
+                                                                            .ellipsis,
+                                                                    style:
+                                                                        TextStyle(
+                                                                      color: Color
+                                                                          .fromRGBO(
+                                                                              46,
+                                                                              99,
+                                                                              238,
+                                                                              1),
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .bold,
+                                                                      fontSize:
+                                                                          18,
+                                                                    ),
+                                                                  )
+                                                                ],
+                                                              ),
+                                                              SizedBox(
+                                                                height: 2,
+                                                              ),
+                                                              SingleChildScrollView(
+                                                                scrollDirection:
+                                                                    Axis.horizontal,
+                                                                child: Row(
+                                                                  children: [
+                                                                    Text(
+                                                                      solicitudes.visitas[index].fechaHora.substring(
+                                                                              0,
+                                                                              10) +
+                                                                          "     " +
+                                                                          solicitudes
+                                                                              .visitas[index]
+                                                                              .fechaHora
+                                                                              .substring(11, 16),
+                                                                      textAlign:
+                                                                          TextAlign
+                                                                              .left,
+                                                                      style:
+                                                                          TextStyle(
+                                                                        color: Color.fromRGBO(
+                                                                            46,
+                                                                            99,
+                                                                            238,
+                                                                            1),
+                                                                        fontWeight:
+                                                                            FontWeight.normal,
+                                                                        fontSize:
+                                                                            15,
+                                                                      ),
+                                                                    ),
+                                                                  ],
+                                                                ),
+                                                              ),
+                                                              SizedBox(
+                                                                height: 5,
+                                                              ),
+                                                              Row(
+                                                                children: [
+                                                                  Text(
+                                                                    "Direccion: ",
                                                                     textAlign:
                                                                         TextAlign
                                                                             .left,
@@ -308,9 +371,9 @@ class _VisitaProgramadasState extends State<VisitaProgramadas> {
                                                                   children: [
                                                                     Text(
                                                                       solicitudes
-                                                                          .solicitudes[
+                                                                          .visitas[
                                                                               index]
-                                                                          .direccionRecoleccion,
+                                                                          .direccion,
                                                                       textAlign:
                                                                           TextAlign
                                                                               .left,
@@ -329,14 +392,71 @@ class _VisitaProgramadasState extends State<VisitaProgramadas> {
                                                                     ),
                                                                   ],
                                                                 ),
-                                                              )
+                                                              ),
+                                                              Column(
+                                                                  children: <
+                                                                      Widget>[
+                                                                    Row(
+                                                                      mainAxisAlignment:
+                                                                          MainAxisAlignment
+                                                                              .end,
+                                                                      children: [
+                                                                        IconButton(
+                                                                            icon:
+                                                                                Icon(
+                                                                              Icons.delete_outline,
+                                                                              color: Color.fromRGBO(46, 99, 238, 1),
+                                                                              size: 30,
+                                                                            ),
+                                                                            onPressed:
+                                                                                () {
+                                                                              showDialog(
+                                                                                  context: context,
+                                                                                  builder: (context) => AlertDialog(
+                                                                                        title: Text(
+                                                                                          "Esta seguro que desas eliminar este residuo?",
+                                                                                          style: TextStyle(
+                                                                                            color: Color.fromRGBO(46, 99, 238, 1),
+                                                                                            fontWeight: FontWeight.bold,
+                                                                                            fontSize: 20,
+                                                                                          ),
+                                                                                        ),
+                                                                                        actions: <Widget>[
+                                                                                          TextButton(
+                                                                                            child: Text(
+                                                                                              'Cancelar',
+                                                                                              style: TextStyle(
+                                                                                                color: Color.fromRGBO(46, 99, 238, 1),
+                                                                                                fontWeight: FontWeight.bold,
+                                                                                                fontSize: 15,
+                                                                                              ),
+                                                                                            ),
+                                                                                            onPressed: () {
+                                                                                              Navigator.pop(context);
+                                                                                            },
+                                                                                          ),
+                                                                                          TextButton(
+                                                                                            child: Text(
+                                                                                              'Continuar',
+                                                                                              style: TextStyle(
+                                                                                                color: Color.fromRGBO(46, 99, 238, 1),
+                                                                                                fontWeight: FontWeight.bold,
+                                                                                                fontSize: 15,
+                                                                                              ),
+                                                                                            ),
+                                                                                            onPressed: null,
+                                                                                          ),
+                                                                                        ],
+                                                                                      ));
+                                                                            }),
+                                                                      ],
+                                                                    ),
+                                                                  ])
                                                             ],
                                                           ),
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  ],
-                                                );
+                                                        )),
+                                                  )
+                                                ]);
                                               },
                                             ),
                                             SizedBox(

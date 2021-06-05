@@ -8,6 +8,7 @@ import 'package:reciclaje_app/data/network/api_provider.dart';
 abstract class VisitasDatasource {
   Future<VisitaCivilList> visitasDisponibles();
   Future<VisitaCivil> agendar(Agendar agenda);
+  Future<VisitaCivilList> misVisitasAgendadasReciclador(String email);
 }
 
 class VisitasDatasourceImpl implements VisitasDatasource {
@@ -27,5 +28,12 @@ class VisitasDatasourceImpl implements VisitasDatasource {
     final response = await _apiProvider.put("/api/v1/visitas/agendar", body);
     print(response);
     return VisitaCivil.fromJson(response);
+  }
+
+  @override
+  Future<VisitaCivilList> misVisitasAgendadasReciclador(String email) async {
+    final response = await _apiProvider
+        .get("/api/v1/visitas/misVisitasAgendadasReciclador/" + email);
+    return VisitaCivilList.fromJson(response);
   }
 }
