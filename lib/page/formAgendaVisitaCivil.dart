@@ -13,6 +13,7 @@ class _FormAgendaVisitaCivilState extends State<FormAgendaVisitaCivil> {
   Preferences preferencias = new Preferences();
   String _email;
   DateTime dateTime;
+  DateTime hora;
   TimeOfDay timeOfDay;
   final fromKey = GlobalKey<FormState>();
 
@@ -117,20 +118,35 @@ class _FormAgendaVisitaCivilState extends State<FormAgendaVisitaCivil> {
                                           fontWeight: FontWeight.bold,
                                           fontSize: 18),
                                     ),
-                                    ListTile(
-                                      title: Text(
-                                        "Fecha: ${dateTime.day} / ${dateTime.month} / ${dateTime.year}",
-                                        style: TextStyle(
-                                            color:
-                                                Color.fromRGBO(46, 99, 238, 1),
-                                            fontWeight: FontWeight.normal,
-                                            fontSize: 20),
-                                      ),
-                                      trailing: Icon(
-                                        Icons.keyboard_arrow_down,
-                                        color: Color.fromRGBO(46, 99, 238, 1),
+                                    TextFormField(
+                                      decoration: InputDecoration(
+                                        hintText:
+                                            "Fecha: ${dateTime.day}-${dateTime.month}-${dateTime.year}",
+                                        icon: Icon(
+                                          Icons.keyboard_arrow_down,
+                                          color: Color.fromRGBO(46, 99, 238, 1),
+                                        ),
                                       ),
                                       onTap: _pickDate,
+                                      onSaved: (value) {
+                                        dateTime = DateTime.parse(value);
+                                        if (value != null) {
+                                          dateTime = dateTime;
+                                        }
+                                      },
+                                      onChanged: (value) {
+                                        dateTime = DateTime.parse(value);
+                                        if (value != null) {
+                                          dateTime = dateTime;
+                                        }
+                                      },
+                                      validator: (value) {
+                                        if (value.isEmpty) {
+                                          return "Llenar el campo";
+                                        } else {
+                                          return null;
+                                        }
+                                      },
                                     ),
                                     SizedBox(
                                       height: 10,
@@ -142,20 +158,37 @@ class _FormAgendaVisitaCivilState extends State<FormAgendaVisitaCivil> {
                                           fontWeight: FontWeight.bold,
                                           fontSize: 18),
                                     ),
-                                    ListTile(
-                                      title: Text(
-                                        "Hora: ${timeOfDay.hour}:${timeOfDay.minute} ",
-                                        style: TextStyle(
-                                            color:
-                                                Color.fromRGBO(46, 99, 238, 1),
-                                            fontWeight: FontWeight.normal,
-                                            fontSize: 20),
-                                      ),
-                                      trailing: Icon(
-                                        Icons.keyboard_arrow_down,
-                                        color: Color.fromRGBO(46, 99, 238, 1),
+                                    TextFormField(
+                                      decoration: InputDecoration(
+                                        hintText:
+                                            "Hora: ${timeOfDay.hour}:${timeOfDay.minute} ",
+                                        icon: Icon(
+                                          Icons.keyboard_arrow_down,
+                                          color: Color.fromRGBO(46, 99, 238, 1),
+                                        ),
                                       ),
                                       onTap: _pickTime,
+                                      onSaved: (value) {
+                                        timeOfDay = TimeOfDay.fromDateTime(
+                                            DateTime.parse(value));
+                                        if (value != null) {
+                                          timeOfDay = timeOfDay;
+                                        }
+                                      },
+                                      onChanged: (value) {
+                                        timeOfDay = TimeOfDay.fromDateTime(
+                                            DateTime.parse(value));
+                                        if (value != null) {
+                                          timeOfDay = timeOfDay;
+                                        }
+                                      },
+                                      validator: (value) {
+                                        if (value.isEmpty) {
+                                          return "Llenar el campo";
+                                        } else {
+                                          return null;
+                                        }
+                                      },
                                     ),
                                   ],
                                 ),
