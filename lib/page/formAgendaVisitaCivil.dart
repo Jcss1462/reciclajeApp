@@ -15,6 +15,7 @@ class _FormAgendaVisitaCivilState extends State<FormAgendaVisitaCivil> {
   DateTime dateTime;
   DateTime hora;
   TimeOfDay timeOfDay;
+  String fecha;
   final fromKey = GlobalKey<FormState>();
 
   Future<String> getEmail() async {
@@ -132,13 +133,13 @@ class _FormAgendaVisitaCivilState extends State<FormAgendaVisitaCivil> {
                                       onTap: _pickDate,
                                       onSaved: (value) {
                                         dateTime = DateTime.parse(value);
-                                        if (value != null) {
+                                        if (dateTime != null) {
                                           dateTime = dateTime;
                                         }
                                       },
                                       onChanged: (value) {
                                         dateTime = DateTime.parse(value);
-                                        if (value != null) {
+                                        if (dateTime != null) {
                                           dateTime = dateTime;
                                         }
                                       },
@@ -173,14 +174,14 @@ class _FormAgendaVisitaCivilState extends State<FormAgendaVisitaCivil> {
                                       onSaved: (value) {
                                         timeOfDay = TimeOfDay.fromDateTime(
                                             DateTime.parse(value));
-                                        if (value != null) {
+                                        if (timeOfDay != null) {
                                           timeOfDay = timeOfDay;
                                         }
                                       },
                                       onChanged: (value) {
                                         timeOfDay = TimeOfDay.fromDateTime(
                                             DateTime.parse(value));
-                                        if (value != null) {
+                                        if (timeOfDay != null) {
                                           timeOfDay = timeOfDay;
                                         }
                                       },
@@ -210,64 +211,11 @@ class _FormAgendaVisitaCivilState extends State<FormAgendaVisitaCivil> {
                                     ),
                                   ),
                                   onPressed: () async {
-                                    if (fromKey.currentState.validate()) {
-                                      fromKey.currentState.save();
-                                      print(dateTime);
-                                      print(timeOfDay);
-                                      showDialog(
-                                        context: context,
-                                        builder: (context) => AlertDialog(
-                                          title: Text(
-                                            "Agendar Visita",
-                                            style: TextStyle(
-                                              color: Color.fromRGBO(
-                                                  46, 99, 238, 1),
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: 20,
-                                            ),
-                                          ),
-                                          content: Text(
-                                            "Se Agrego Exitosamente la Visita",
-                                          ),
-                                          actions: <Widget>[
-                                            TextButton(
-                                              child: Text(
-                                                'Ok',
-                                                style: TextStyle(
-                                                  color: Color.fromRGBO(
-                                                      46, 99, 238, 1),
-                                                  fontWeight: FontWeight.bold,
-                                                  fontSize: 15,
-                                                ),
-                                              ),
-                                              onPressed: () {
-                                                Navigator.push(
-                                                    context,
-                                                    MaterialPageRoute(
-                                                        builder: (context) =>
-                                                            ListaVistasAgendadas()));
-                                              },
-                                            ),
-                                            TextButton(
-                                              child: Text(
-                                                "Cambiar Agenda",
-                                                style: TextStyle(
-                                                  color: Color.fromRGBO(
-                                                      46, 99, 238, 1),
-                                                  fontWeight: FontWeight.bold,
-                                                  fontSize: 15,
-                                                ),
-                                              ),
-                                              onPressed: () {
-                                                MaterialPageRoute(
-                                                    builder: (context) =>
-                                                        FormAgendaVisitaCivil());
-                                              },
-                                            )
-                                          ],
-                                        ),
-                                      );
-                                    }
+                                    fecha =
+                                        "${dateTime.year}-${dateTime.day}-${dateTime.month}T${timeOfDay.hour}:${timeOfDay.minute}";
+                                    print(fecha);
+                                    print(dateTime);
+                                    print(timeOfDay);
                                   },
                                 ),
                               ],
