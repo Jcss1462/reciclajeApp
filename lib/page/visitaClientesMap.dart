@@ -204,7 +204,7 @@ class _VisitaClientesMapState extends State<VisitaClientesMap> {
                     color: Color.fromRGBO(46, 99, 238, 1),
                     textColor: Colors.white,
                     child: new Text(
-                      "Eliminar Visita",
+                      "Agendar Visita",
                       style:
                           TextStyle(fontWeight: FontWeight.bold, fontSize: 25),
                     ),
@@ -225,7 +225,9 @@ class _VisitaClientesMapState extends State<VisitaClientesMap> {
                           builder: (context) => DialogBox("Aplicación exitosa",
                               "Esperar la aceptación del usuario civil"),
                         ).then((value) {
-                          setState(() {});
+                          setState(() {
+                            markers.clear();
+                          });
                         });
                       }).onError((error, stackTrace) {
                         showDialog(
