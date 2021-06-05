@@ -16,3 +16,4 @@ const String rutadelDia = '/rutadelDia';
 const String donacionesenEspera = '/donacionesenEspera';
 const String listaVisitasAgendadas = '/listaVisitasAgendadas';
 const String visitaProgramadas = '/visitaProgramadas';
+const String visitaDisponibleProgramada = '/visitaDisponibleProgramada';

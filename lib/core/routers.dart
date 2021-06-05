@@ -13,6 +13,7 @@ import 'package:flutter/material.dart'
     show Center, MaterialPageRoute, Route, RouteSettings, Scaffold, Text;
 import 'package:reciclaje_app/page/visitaAgendada.dart';
 import 'package:reciclaje_app/page/visitaClientesMap.dart';
+import 'package:reciclaje_app/page/visitaDisponibleProgramada.dart';
 import 'package:reciclaje_app/page/visitaDisponibles.dart';
 import 'package:reciclaje_app/page/visitaProgramadas.dart';
 import 'constants.dart';
@@ -57,6 +58,8 @@ class Routers {
         return MaterialPageRoute(builder: (_) => ListaVistasAgendadas());
       case visitaProgramadas:
         return MaterialPageRoute(builder: (_) => VisitaProgramadas());
+      case visitaDisponibleProgramada:
+        return MaterialPageRoute(builder: (_) => VisitaDisponibleProgramada());
       default:
         return MaterialPageRoute(
           builder: (_) => Scaffold(
