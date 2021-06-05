@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:reciclaje_app/data/datasources/visitas_datasource.dart';
+import 'package:reciclaje_app/data/model/agendar.dart';
 import 'package:reciclaje_app/data/model/vistasCivilList.dart';
 import 'package:reciclaje_app/page/visitaDisponibleProgramada.dart';
 import 'package:reciclaje_app/service/preferences.dart';
@@ -444,7 +445,40 @@ class _VisitaProgramadasState extends State<VisitaProgramadas> {
                                                                                                 fontSize: 15,
                                                                                               ),
                                                                                             ),
-                                                                                            onPressed: null,
+                                                                                            onPressed: () {
+                                                                                              Agendar agenda = new Agendar(solicitudes.visitas[index].idVisita, _email);
+                                                                                              visitasDatasourceImpl.cancelarVisitaReciclador(agenda).then((value) {
+                                                                                                showDialog(
+                                                                                                    context: context,
+                                                                                                    builder: (context) => AlertDialog(
+                                                                                                          title: Text(
+                                                                                                            "Vista Cancelada",
+                                                                                                            style: TextStyle(
+                                                                                                              color: Color.fromRGBO(46, 99, 238, 1),
+                                                                                                              fontWeight: FontWeight.bold,
+                                                                                                              fontSize: 20,
+                                                                                                            ),
+                                                                                                          ),
+                                                                                                          actions: <Widget>[
+                                                                                                            TextButton(
+                                                                                                              child: Text(
+                                                                                                                'Ok',
+                                                                                                                style: TextStyle(
+                                                                                                                  color: Color.fromRGBO(46, 99, 238, 1),
+                                                                                                                  fontWeight: FontWeight.bold,
+                                                                                                                  fontSize: 15,
+                                                                                                                ),
+                                                                                                              ),
+                                                                                                              onPressed: () {
+                                                                                                                Navigator.pop(context);
+                                                                                                                Navigator.pop(context);
+                                                                                                                setState(() {});
+                                                                                                              },
+                                                                                                            ),
+                                                                                                          ],
+                                                                                                        ));
+                                                                                              });
+                                                                                            },
                                                                                           ),
                                                                                         ],
                                                                                       ));
