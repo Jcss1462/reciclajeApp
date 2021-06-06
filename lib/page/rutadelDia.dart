@@ -66,10 +66,8 @@ class _RutadelDiaState extends State<RutadelDia> {
           solicitudes.solicitudes[i].direccionRecoleccion);
       var direcion = coordenadas.first;
       coordinates.add(direcion.coordinates);
-      //print(direcion.coordinates);
-      print(coordinates);
-      //setPolylines(coordinates);
     }
+    //setPolylines(coordinates);
     return coordinates;
   }
 
@@ -103,6 +101,7 @@ class _RutadelDiaState extends State<RutadelDia> {
         await getCoordenadas(listaCarros).then((listaCoordenadas) async {
           print("Conversion terminada");
           await initMarker(listaCoordenadas, listaCarros);
+          print("Creacion de ruta");
           await setPolylines(listaCoordenadas);
         }).onError((error, stackTrace) {
           showDialog(
@@ -119,6 +118,41 @@ class _RutadelDiaState extends State<RutadelDia> {
             "Problema obteniendo la lista del carros deisponibles del back"),
       );
     });
+  }
+
+  Future<void> setPolylines(List<Coordinates> cordenadas) async {
+    print("iniciando cracion de ruta");
+    for (var i = 0; i < cordenadas.length; i++) {
+      print("Se inicia a pintar");
+      PolylineResult result = await polylinePoints.getRouteBetweenCoordinates(
+          "",
+          PointLatLng(currentLocation.latitude, currentLocation.longitude),
+          PointLatLng(cordenadas[i].latitude, cordenadas[i].longitude),
+          travelMode: TravelMode.driving);
+      PolylineResult result2 = await polylinePoints.getRouteBetweenCoordinates(
+          "",
+          PointLatLng(cordenadas[i].latitude, cordenadas[i].longitude),
+          PointLatLng(cordenadas[i].latitude, cordenadas[i].longitude),
+          travelMode: TravelMode.driving);
+      if (result.points.isNotEmpty) {
+        print(result.points);
+        result.points.forEach((PointLatLng point) {
+          polylineCoordinates.add(LatLng(point.latitude, point.longitude));
+        });
+        result2.points.forEach((PointLatLng point) {
+          polylineCoordinates.add(LatLng(point.latitude, point.longitude));
+        });
+        print(polylineCoordinates);
+      }
+      PolylineId id = PolylineId(cordenadas.length.toString());
+      Polyline polyline = Polyline(
+        polylineId: id,
+        color: Colors.red,
+        points: polylineCoordinates,
+        width: 3,
+      );
+      polylines[id] = polyline;
+    }
   }
 
   Future<void> onCardInfo(CarrodeDonacion carrodeDonacion) async {
@@ -296,6 +330,8 @@ class _RutadelDiaState extends State<RutadelDia> {
                                                         Navigator.pop(context);
                                                         setState(() {
                                                           markers.clear();
+                                                          polylineCoordinates
+                                                              .clear();
                                                         });
                                                       },
                                                     ),
@@ -319,38 +355,6 @@ class _RutadelDiaState extends State<RutadelDia> {
             ),
           );
         });
-  }
-
-  Future<void> setPolylines(List<Coordinates> cordenadas) async {
-    polylinePoints = PolylinePoints();
-    for (int i = 0; i < cordenadas.length; i++) {
-      PolylineResult result = await polylinePoints.getRouteBetweenCoordinates(
-          "",
-          PointLatLng(currentLocation.latitude, currentLocation.longitude),
-          PointLatLng(cordenadas[i].latitude, cordenadas[i].longitude),
-          travelMode: TravelMode.transit);
-      PolylineResult result2 = await polylinePoints.getRouteBetweenCoordinates(
-          "",
-          PointLatLng(cordenadas[i].latitude, cordenadas[i].longitude),
-          PointLatLng(cordenadas[i + 1].latitude, cordenadas[i + 1].longitude),
-          travelMode: TravelMode.transit);
-      if (result.points.isNotEmpty && result2.points.isNotEmpty) {
-        result.points.forEach((PointLatLng point) {
-          polylineCoordinates.add(LatLng(point.latitude, point.longitude));
-        });
-        result2.points.forEach((PointLatLng point1) {
-          polylineCoordinates.add(LatLng(point1.latitude, point1.longitude));
-        });
-      }
-      PolylineId id = PolylineId('Id');
-      Polyline polyline = Polyline(
-        polylineId: id,
-        color: Colors.red,
-        points: polylineCoordinates,
-        width: 3,
-      );
-      polylines[id] = polyline;
-    }
   }
 
   @override
