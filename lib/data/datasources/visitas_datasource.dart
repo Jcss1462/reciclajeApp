@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:reciclaje_app/data/model/agendar.dart';
+import 'package:reciclaje_app/data/model/idVisita.dart';
 import 'package:reciclaje_app/data/model/visitaCivil.dart';
 import 'package:reciclaje_app/data/model/vistasCivilList.dart';
 import 'package:reciclaje_app/data/network/api_provider.dart';
@@ -13,6 +14,7 @@ abstract class VisitasDatasource {
   Future<VisitaCivil> cancelarVisitaReciclador(Agendar agenda);
   Future<VisitaCivil> nuevaVisita(VisitaCivil visitaCivil);
   Future<dynamic> eliminarVisitaCivil(int idVisita);
+  Future<VisitaCivil> confirmarRecoleccion(IdVista idVista);
 }
 
 class VisitasDatasourceImpl implements VisitasDatasource {
@@ -72,5 +74,15 @@ class VisitasDatasourceImpl implements VisitasDatasource {
   Future<dynamic> eliminarVisitaCivil(int idVisita) async {
     return await _apiProvider
         .del("/api/v1/visitas/eliminarVisitaCivil/" + idVisita.toString());
+  }
+
+  @override
+  Future<VisitaCivil> confirmarRecoleccion(IdVista idVista) async {
+    String body = jsonEncode(idVista.toJson());
+    print(body);
+    final response =
+        await _apiProvider.put("/api/v1/visitas/confirmarRecoleccion", body);
+    print(response);
+    return VisitaCivil.fromJson(response);
   }
 }

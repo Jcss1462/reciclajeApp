@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:reciclaje_app/data/datasources/visitas_datasource.dart';
+import 'package:reciclaje_app/data/model/idVisita.dart';
 import 'package:reciclaje_app/data/model/vistasCivilList.dart';
 import 'package:reciclaje_app/service/preferences.dart';
 import 'package:reciclaje_app/widgets/dialogBox.dart';
@@ -334,7 +335,7 @@ class _ListaVistasAgendadasState extends State<ListaVistasAgendadas> {
                                                                                   context: context,
                                                                                   builder: (context) => AlertDialog(
                                                                                         title: Text(
-                                                                                          "Esta seguro que desas eliminar este residuo?",
+                                                                                          "Esta seguro que desas confirmar la recolección?",
                                                                                           style: TextStyle(
                                                                                             color: Color.fromRGBO(46, 99, 238, 1),
                                                                                             fontWeight: FontWeight.bold,
@@ -364,7 +365,42 @@ class _ListaVistasAgendadasState extends State<ListaVistasAgendadas> {
                                                                                                 fontSize: 15,
                                                                                               ),
                                                                                             ),
-                                                                                            onPressed: null,
+                                                                                            onPressed: () {
+                                                                                              IdVista idVista = new IdVista(solicitudes.visitas[index].idVisita);
+                                                                                              visitasDatasourceImpl.confirmarRecoleccion(idVista).then((value) {
+                                                                                                showDialog(
+                                                                                                    context: context,
+                                                                                                    builder: (context) => AlertDialog(
+                                                                                                          title: Text(
+                                                                                                            "Recolección Realizada",
+                                                                                                            style: TextStyle(
+                                                                                                              color: Color.fromRGBO(46, 99, 238, 1),
+                                                                                                              fontWeight: FontWeight.bold,
+                                                                                                              fontSize: 20,
+                                                                                                            ),
+                                                                                                          ),
+                                                                                                          actions: <Widget>[
+                                                                                                            TextButton(
+                                                                                                              child: Text(
+                                                                                                                'Ok',
+                                                                                                                style: TextStyle(
+                                                                                                                  color: Color.fromRGBO(46, 99, 238, 1),
+                                                                                                                  fontWeight: FontWeight.bold,
+                                                                                                                  fontSize: 15,
+                                                                                                                ),
+                                                                                                              ),
+                                                                                                              onPressed: () {
+                                                                                                                Navigator.pop(context);
+                                                                                                                Navigator.pop(context);
+                                                                                                                setState(() {});
+                                                                                                              },
+                                                                                                            ),
+                                                                                                          ],
+                                                                                                        ));
+                                                                                              }).onError((error, stackTrace) {
+                                                                                                showDialog(context: context, builder: (context) => DialogBox("Error al confirmar la recolección", error.toString()));
+                                                                                              });
+                                                                                            },
                                                                                           ),
                                                                                         ],
                                                                                       ));
@@ -385,7 +421,7 @@ class _ListaVistasAgendadasState extends State<ListaVistasAgendadas> {
                                                                                   context: context,
                                                                                   builder: (context) => AlertDialog(
                                                                                         title: Text(
-                                                                                          "Esta seguro que desas eliminar este residuo?",
+                                                                                          "Esta seguro que desas cambiar de residuo?",
                                                                                           style: TextStyle(
                                                                                             color: Color.fromRGBO(46, 99, 238, 1),
                                                                                             fontWeight: FontWeight.bold,
