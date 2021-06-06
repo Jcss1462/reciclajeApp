@@ -121,37 +121,36 @@ class _RutadelDiaState extends State<RutadelDia> {
   }
 
   Future<void> setPolylines(List<Coordinates> cordenadas) async {
-    print("iniciando cracion de ruta");
+    print("iniciando cracion  de ruta");
+    Coordinates ubicacionActual =
+        new Coordinates(currentLocation.latitude, currentLocation.longitude);
+    coordinates.add(ubicacionActual);
     for (var i = 0; i < cordenadas.length; i++) {
-      print("Se inicia a pintar");
-      PolylineResult result = await polylinePoints.getRouteBetweenCoordinates(
-          "",
-          PointLatLng(currentLocation.latitude, currentLocation.longitude),
-          PointLatLng(cordenadas[i].latitude, cordenadas[i].longitude),
-          travelMode: TravelMode.driving);
-      PolylineResult result2 = await polylinePoints.getRouteBetweenCoordinates(
-          "",
-          PointLatLng(cordenadas[i].latitude, cordenadas[i].longitude),
-          PointLatLng(cordenadas[i].latitude, cordenadas[i].longitude),
-          travelMode: TravelMode.driving);
-      if (result.points.isNotEmpty) {
-        print(result.points);
-        result.points.forEach((PointLatLng point) {
-          polylineCoordinates.add(LatLng(point.latitude, point.longitude));
-        });
-        result2.points.forEach((PointLatLng point) {
-          polylineCoordinates.add(LatLng(point.latitude, point.longitude));
-        });
-        print(polylineCoordinates);
+      if (i < cordenadas.length - 1) {
+        print("Se inicia a pintar");
+        PolylineResult result = await polylinePoints.getRouteBetweenCoordinates(
+            "",
+            PointLatLng(cordenadas[i].latitude, cordenadas[i].longitude),
+            PointLatLng(
+                cordenadas[i + 1].latitude, cordenadas[i + 1].longitude),
+            travelMode: TravelMode.driving);
+
+        if (result.points.isNotEmpty) {
+          print(result.points);
+          result.points.forEach((PointLatLng point) {
+            polylineCoordinates.add(LatLng(point.latitude, point.longitude));
+          });
+        }
+
+        PolylineId id = PolylineId(cordenadas.length.toString());
+        Polyline polyline = Polyline(
+          polylineId: id,
+          color: Colors.red,
+          points: polylineCoordinates,
+          width: 3,
+        );
+        polylines[id] = polyline;
       }
-      PolylineId id = PolylineId(cordenadas.length.toString());
-      Polyline polyline = Polyline(
-        polylineId: id,
-        color: Colors.red,
-        points: polylineCoordinates,
-        width: 3,
-      );
-      polylines[id] = polyline;
     }
   }
 
@@ -330,6 +329,7 @@ class _RutadelDiaState extends State<RutadelDia> {
                                                         Navigator.pop(context);
                                                         setState(() {
                                                           markers.clear();
+                                                          coordinates.clear();
                                                           polylineCoordinates
                                                               .clear();
                                                         });
