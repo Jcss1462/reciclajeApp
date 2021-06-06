@@ -9,6 +9,7 @@ abstract class VisitasDatasource {
   Future<VisitaCivilList> visitasDisponibles();
   Future<VisitaCivil> agendar(Agendar agenda);
   Future<VisitaCivilList> misVisitasAgendadasReciclador(String email);
+  Future<VisitaCivilList> misVisitasActivasCivil(String email);
   Future<VisitaCivil> cancelarVisitaReciclador(Agendar agenda);
   Future<VisitaCivil> nuevaVisita(VisitaCivil visitaCivil);
 }
@@ -57,5 +58,12 @@ class VisitasDatasourceImpl implements VisitasDatasource {
         await _apiProvider.post("/api/v1/visitas/nuevaVisita", body);
     print(response);
     return VisitaCivil.fromJson(response);
+  }
+
+  @override
+  Future<VisitaCivilList> misVisitasActivasCivil(String email) async {
+    final response = await _apiProvider
+        .get("/api/v1/visitas/misVisitasActivasCivil/" + email);
+    return VisitaCivilList.fromJson(response);
   }
 }

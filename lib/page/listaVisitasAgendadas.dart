@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:reciclaje_app/data/datasources/recoleccionDonacion_datasource.dart';
-import 'package:reciclaje_app/data/model/solicituddeRecoleccionList.dart';
+import 'package:reciclaje_app/data/datasources/visitas_datasource.dart';
+import 'package:reciclaje_app/data/model/vistasCivilList.dart';
 import 'package:reciclaje_app/service/preferences.dart';
 import 'package:reciclaje_app/widgets/navbarCiudadanoCivil.dart';
 
@@ -14,9 +14,8 @@ class ListaVistasAgendadas extends StatefulWidget {
 class _ListaVistasAgendadasState extends State<ListaVistasAgendadas> {
   Preferences preferencias = new Preferences();
   String _email;
-  RecoleccionDonacionDataSourceImpl recoleccionDonacionDataSourceImpl =
-      new RecoleccionDonacionDataSourceImpl();
-  SolicituddeRecoleccionList solicitudes = new SolicituddeRecoleccionList();
+  VisitasDatasourceImpl visitasDatasourceImpl = new VisitasDatasourceImpl();
+  VisitaCivilList solicitudes = new VisitaCivilList();
 
   @override
   void initState() {
@@ -30,8 +29,8 @@ class _ListaVistasAgendadasState extends State<ListaVistasAgendadas> {
     });
   }
 
-  Future<SolicituddeRecoleccionList> getListSolicitudes() async {
-    return await this.recoleccionDonacionDataSourceImpl.misSolicitudes(_email);
+  Future<VisitaCivilList> getMisVisitasActivas() async {
+    return await this.visitasDatasourceImpl.misVisitasActivasCivil(_email);
   }
 
   @override
@@ -68,7 +67,7 @@ class _ListaVistasAgendadasState extends State<ListaVistasAgendadas> {
                       return Text('Error: ${snapshot.error}');
                     } else {
                       return FutureBuilder(
-                        future: getListSolicitudes(),
+                        future: getMisVisitasActivas(),
                         builder:
                             (BuildContext context, AsyncSnapshot snapshot) {
                           switch (snapshot.connectionState) {
@@ -91,10 +90,8 @@ class _ListaVistasAgendadasState extends State<ListaVistasAgendadas> {
                                           ListView.builder(
                                             physics:
                                                 const NeverScrollableScrollPhysics(),
-                                            itemCount: this
-                                                .solicitudes
-                                                .solicituddeRecoleccion
-                                                .length,
+                                            itemCount:
+                                                this.solicitudes.visitas.length,
                                             shrinkWrap: true,
                                             itemBuilder: (context, index) {
                                               return Column(
@@ -170,10 +167,12 @@ class _ListaVistasAgendadasState extends State<ListaVistasAgendadas> {
                                                                     ),
                                                                   ),
                                                                   Text(
-                                                                    solicitudes
-                                                                        .solicituddeRecoleccion[
-                                                                            index]
-                                                                        .emailReciclador,
+                                                                    solicitudes.visitas[index].emailRecolector ==
+                                                                            null
+                                                                        ? ""
+                                                                        : solicitudes
+                                                                            .visitas[index]
+                                                                            .emailRecolector,
                                                                     textAlign:
                                                                         TextAlign
                                                                             .left,
@@ -201,7 +200,7 @@ class _ListaVistasAgendadasState extends State<ListaVistasAgendadas> {
                                                             Row(
                                                               children: [
                                                                 Text(
-                                                                  "Fecha: ",
+                                                                  "Fecha y Hora: ",
                                                                   textAlign:
                                                                       TextAlign
                                                                           .left,
@@ -221,54 +220,21 @@ class _ListaVistasAgendadasState extends State<ListaVistasAgendadas> {
                                                                   ),
                                                                 ),
                                                                 Text(
-                                                                  "13-12-2021",
-                                                                  textAlign:
-                                                                      TextAlign
-                                                                          .left,
-                                                                  style:
-                                                                      TextStyle(
-                                                                    color: Color
-                                                                        .fromRGBO(
-                                                                            46,
-                                                                            99,
-                                                                            238,
-                                                                            1),
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .normal,
-                                                                    fontSize:
-                                                                        18,
-                                                                  ),
-                                                                ),
-                                                              ],
-                                                            ),
-                                                            SizedBox(
-                                                              height: 5,
-                                                            ),
-                                                            Row(
-                                                              children: [
-                                                                Text(
-                                                                  "Hora: ",
-                                                                  textAlign:
-                                                                      TextAlign
-                                                                          .left,
-                                                                  style:
-                                                                      TextStyle(
-                                                                    color: Color
-                                                                        .fromRGBO(
-                                                                            46,
-                                                                            99,
-                                                                            238,
-                                                                            1),
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .bold,
-                                                                    fontSize:
-                                                                        18,
-                                                                  ),
-                                                                ),
-                                                                Text(
-                                                                  "13:00",
+                                                                  solicitudes
+                                                                          .visitas[
+                                                                              index]
+                                                                          .fechaHora
+                                                                          .substring(
+                                                                              0,
+                                                                              10) +
+                                                                      "     " +
+                                                                      solicitudes
+                                                                          .visitas[
+                                                                              index]
+                                                                          .fechaHora
+                                                                          .substring(
+                                                                              11,
+                                                                              16),
                                                                   textAlign:
                                                                       TextAlign
                                                                           .left,
@@ -315,7 +281,10 @@ class _ListaVistasAgendadasState extends State<ListaVistasAgendadas> {
                                                                   ),
                                                                 ),
                                                                 Text(
-                                                                  "Agendado",
+                                                                  solicitudes
+                                                                      .visitas[
+                                                                          index]
+                                                                      .estado,
                                                                   textAlign:
                                                                       TextAlign
                                                                           .left,
