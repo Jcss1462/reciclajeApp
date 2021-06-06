@@ -264,52 +264,40 @@ class _FormAgendaVisitaCivilState extends State<FormAgendaVisitaCivil> {
                                                       String dia;
                                                       String hora;
                                                       String minuto;
-                                                      if (dateTime.month >= 1 ||
+                                                      if (dateTime.month >= 1 &&
                                                           dateTime.month <= 9) {
                                                         mes =
                                                             "0${dateTime.month}";
+                                                      } else {
+                                                        mes = dateTime.month
+                                                            .toString();
                                                       }
-                                                      if (dateTime.month >=
-                                                              10 ||
-                                                          dateTime.month <=
-                                                              24) {
-                                                        mes =
-                                                            "${dateTime.month}";
-                                                      }
-                                                      if (dateTime.day >= 1 ||
+                                                      if (dateTime.day >= 1 &&
                                                           dateTime.day <= 9) {
                                                         dia =
                                                             "0${dateTime.day}";
+                                                      } else {
+                                                        dia = dateTime.day
+                                                            .toString();
                                                       }
-                                                      if (dateTime.day >= 10 ||
-                                                          dateTime.day <= 31) {
-                                                        dia = "${dateTime.day}";
-                                                      }
-                                                      if (timeOfDay.hour >= 1 ||
+                                                      if (timeOfDay.hour >= 0 &&
                                                           timeOfDay.hour <= 9) {
                                                         hora =
                                                             "0${timeOfDay.hour}";
-                                                      }
-                                                      if (timeOfDay.hour >=
-                                                              10 ||
-                                                          timeOfDay.minute <=
-                                                              24) {
-                                                        hora =
-                                                            "${timeOfDay.hour}";
+                                                      } else {
+                                                        hora = timeOfDay.hour
+                                                            .toString();
                                                       }
                                                       if (timeOfDay.minute >=
-                                                              1 ||
+                                                              0 &&
                                                           timeOfDay.minute <=
                                                               9) {
                                                         minuto =
                                                             "0${timeOfDay.minute}";
-                                                      }
-                                                      if (timeOfDay.minute >=
-                                                              10 ||
-                                                          timeOfDay.minute <=
-                                                              24) {
-                                                        minuto =
-                                                            "${timeOfDay.minute}";
+                                                      } else {
+                                                        minuto = timeOfDay
+                                                            .minute
+                                                            .toString();
                                                       }
 
                                                       fecha =
