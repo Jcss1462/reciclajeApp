@@ -15,6 +15,7 @@ abstract class VisitasDatasource {
   Future<VisitaCivil> nuevaVisita(VisitaCivil visitaCivil);
   Future<dynamic> eliminarVisitaCivil(int idVisita);
   Future<VisitaCivil> confirmarRecoleccion(IdVista idVista);
+  Future<VisitaCivil> solicitarOtroReciclador(IdVista idVista);
 }
 
 class VisitasDatasourceImpl implements VisitasDatasource {
@@ -82,6 +83,16 @@ class VisitasDatasourceImpl implements VisitasDatasource {
     print(body);
     final response =
         await _apiProvider.put("/api/v1/visitas/confirmarRecoleccion", body);
+    print(response);
+    return VisitaCivil.fromJson(response);
+  }
+
+  @override
+  Future<VisitaCivil> solicitarOtroReciclador(IdVista idVista) async {
+    String body = jsonEncode(idVista.toJson());
+    print(body);
+    final response =
+        await _apiProvider.put("/api/v1/visitas/solicitarOtroRecilador", body);
     print(response);
     return VisitaCivil.fromJson(response);
   }

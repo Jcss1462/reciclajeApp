@@ -421,7 +421,7 @@ class _ListaVistasAgendadasState extends State<ListaVistasAgendadas> {
                                                                                   context: context,
                                                                                   builder: (context) => AlertDialog(
                                                                                         title: Text(
-                                                                                          "Esta seguro que desas cambiar de residuo?",
+                                                                                          "Esta seguro que deseas cambiar de reciclador?",
                                                                                           style: TextStyle(
                                                                                             color: Color.fromRGBO(46, 99, 238, 1),
                                                                                             fontWeight: FontWeight.bold,
@@ -451,7 +451,42 @@ class _ListaVistasAgendadasState extends State<ListaVistasAgendadas> {
                                                                                                 fontSize: 15,
                                                                                               ),
                                                                                             ),
-                                                                                            onPressed: null,
+                                                                                            onPressed: () {
+                                                                                              IdVista idVista = new IdVista(solicitudes.visitas[index].idVisita);
+                                                                                              visitasDatasourceImpl.solicitarOtroReciclador(idVista).then((value) {
+                                                                                                showDialog(
+                                                                                                    context: context,
+                                                                                                    builder: (context) => AlertDialog(
+                                                                                                          title: Text(
+                                                                                                            "Tu vista es pública nuevamente",
+                                                                                                            style: TextStyle(
+                                                                                                              color: Color.fromRGBO(46, 99, 238, 1),
+                                                                                                              fontWeight: FontWeight.bold,
+                                                                                                              fontSize: 20,
+                                                                                                            ),
+                                                                                                          ),
+                                                                                                          actions: <Widget>[
+                                                                                                            TextButton(
+                                                                                                              child: Text(
+                                                                                                                'Ok',
+                                                                                                                style: TextStyle(
+                                                                                                                  color: Color.fromRGBO(46, 99, 238, 1),
+                                                                                                                  fontWeight: FontWeight.bold,
+                                                                                                                  fontSize: 15,
+                                                                                                                ),
+                                                                                                              ),
+                                                                                                              onPressed: () {
+                                                                                                                Navigator.pop(context);
+                                                                                                                Navigator.pop(context);
+                                                                                                                setState(() {});
+                                                                                                              },
+                                                                                                            ),
+                                                                                                          ],
+                                                                                                        ));
+                                                                                              }).onError((error, stackTrace) {
+                                                                                                showDialog(context: context, builder: (context) => DialogBox("Error al cambiar de recolector", error.toString()));
+                                                                                              });
+                                                                                            },
                                                                                           ),
                                                                                         ],
                                                                                       ));
