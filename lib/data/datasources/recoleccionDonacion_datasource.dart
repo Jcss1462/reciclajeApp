@@ -18,6 +18,7 @@ abstract class RecoleccionDonacionDataSource {
   Future<CarrodeDonacionList> recicladorCarrosAsignados(String email);
   Future<CarrodeDonacionList> findMyAplicationsReciclador(String email);
   Future<CarrodeDonacion> removerDeLaRuta(IdCarrodeDonacion idCarrodeDonacion);
+  Future<dynamic> eliminarSolicitud(int idSolicitud);
 }
 
 class RecoleccionDonacionDataSourceImpl
@@ -95,5 +96,11 @@ class RecoleccionDonacionDataSourceImpl
         await _apiProvider.put("/api/v1/recoleccion/removerDeLaRuta", body);
     print(response);
     return CarrodeDonacion.fromJson(response);
+  }
+
+  @override
+  Future<dynamic> eliminarSolicitud(int idSolicitud) async {
+    return await _apiProvider
+        .del("/api/v1/recoleccion/eliminarSolicitud/" + idSolicitud.toString());
   }
 }

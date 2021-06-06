@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:reciclaje_app/core/constants.dart';
 import 'package:reciclaje_app/data/datasources/recoleccionDonacion_datasource.dart';
 import 'package:reciclaje_app/data/model/aceptarSolicitud.dart';
 import 'package:reciclaje_app/data/model/solicituddeRecoleccionList.dart';
@@ -205,158 +206,217 @@ class _ListaRecicladoresState extends State<ListaRecicladores> {
                                                             Column(
                                                               children: <
                                                                   Widget>[
-                                                                Row(
-                                                                  mainAxisAlignment:
-                                                                      MainAxisAlignment
-                                                                          .end,
-                                                                  children: [
-                                                                    MaterialButton(
-                                                                      height:
-                                                                          40,
-                                                                      minWidth:
-                                                                          50,
-                                                                      color: Color
-                                                                          .fromRGBO(
-                                                                              46,
-                                                                              99,
-                                                                              238,
-                                                                              1),
-                                                                      textColor:
-                                                                          Colors
-                                                                              .white,
-                                                                      child:
-                                                                          new Text(
-                                                                        "Aceptar",
-                                                                        style:
-                                                                            TextStyle(
-                                                                          fontWeight:
-                                                                              FontWeight.bold,
-                                                                          fontSize:
-                                                                              18,
+                                                                Center(
+                                                                  child: Row(
+                                                                    mainAxisAlignment:
+                                                                        MainAxisAlignment
+                                                                            .end,
+                                                                    children: [
+                                                                      MaterialButton(
+                                                                        height:
+                                                                            40,
+                                                                        minWidth:
+                                                                            50,
+                                                                        color: Color.fromRGBO(
+                                                                            46,
+                                                                            99,
+                                                                            238,
+                                                                            1),
+                                                                        textColor:
+                                                                            Colors.white,
+                                                                        child:
+                                                                            new Text(
+                                                                          "Aceptar",
+                                                                          style:
+                                                                              TextStyle(
+                                                                            fontWeight:
+                                                                                FontWeight.bold,
+                                                                            fontSize:
+                                                                                18,
+                                                                          ),
                                                                         ),
+                                                                        onPressed:
+                                                                            () {
+                                                                          showDialog(
+                                                                              context: context,
+                                                                              builder: (context) => AlertDialog(
+                                                                                    title: Text(
+                                                                                      "Aceptando Visita",
+                                                                                      style: TextStyle(
+                                                                                        color: Color.fromRGBO(46, 99, 238, 1),
+                                                                                        fontWeight: FontWeight.bold,
+                                                                                        fontSize: 20,
+                                                                                      ),
+                                                                                    ),
+                                                                                    actions: <Widget>[
+                                                                                      TextButton(
+                                                                                        child: Text(
+                                                                                          'Cancelar',
+                                                                                          style: TextStyle(
+                                                                                            color: Color.fromRGBO(46, 99, 238, 1),
+                                                                                            fontWeight: FontWeight.bold,
+                                                                                            fontSize: 15,
+                                                                                          ),
+                                                                                        ),
+                                                                                        onPressed: () {
+                                                                                          Navigator.pop(context);
+                                                                                        },
+                                                                                      ),
+                                                                                      TextButton(
+                                                                                        child: Text(
+                                                                                          'Continuar',
+                                                                                          style: TextStyle(
+                                                                                            color: Color.fromRGBO(46, 99, 238, 1),
+                                                                                            fontWeight: FontWeight.bold,
+                                                                                            fontSize: 15,
+                                                                                          ),
+                                                                                        ),
+                                                                                        onPressed: () {
+                                                                                          AceptarSolicitud aceptarSolicitud = new AceptarSolicitud(solicitudes.solicituddeRecoleccion[index].idcarroDonacion, solicitudes.solicituddeRecoleccion[index].emailReciclador);
+                                                                                          this.recoleccionDonacionDataSourceImpl.aceptarSolicitud(aceptarSolicitud).then((value) {
+                                                                                            showDialog(
+                                                                                                context: context,
+                                                                                                builder: (context) => AlertDialog(
+                                                                                                      title: Text(
+                                                                                                        "Solicitud Aceptada",
+                                                                                                        style: TextStyle(
+                                                                                                          color: Color.fromRGBO(46, 99, 238, 1),
+                                                                                                          fontWeight: FontWeight.bold,
+                                                                                                          fontSize: 20,
+                                                                                                        ),
+                                                                                                      ),
+                                                                                                      actions: <Widget>[
+                                                                                                        TextButton(
+                                                                                                          child: Text(
+                                                                                                            'Ok',
+                                                                                                            style: TextStyle(
+                                                                                                              color: Color.fromRGBO(46, 99, 238, 1),
+                                                                                                              fontWeight: FontWeight.bold,
+                                                                                                              fontSize: 15,
+                                                                                                            ),
+                                                                                                          ),
+                                                                                                          onPressed: () {
+                                                                                                            Navigator.pushNamed(context, carrodeDonacionCivil);
+                                                                                                            setState(() {});
+                                                                                                          },
+                                                                                                        ),
+                                                                                                      ],
+                                                                                                    ));
+                                                                                          }).onError((error, stackTrace) {
+                                                                                            showDialog(context: context, builder: (context) => DialogBox("Error al eliminar la visita", error.toString()));
+                                                                                          });
+                                                                                        },
+                                                                                      ),
+                                                                                    ],
+                                                                                  ));
+                                                                        },
                                                                       ),
-                                                                      onPressed:
-                                                                          () {
-                                                                        showDialog(
-                                                                            context:
-                                                                                context,
-                                                                            builder: (context) =>
-                                                                                AlertDialog(
-                                                                                  title: Text(
-                                                                                    "Aceptando Visita",
-                                                                                    style: TextStyle(
-                                                                                      color: Color.fromRGBO(46, 99, 238, 1),
-                                                                                      fontWeight: FontWeight.bold,
-                                                                                      fontSize: 20,
-                                                                                    ),
-                                                                                  ),
-                                                                                  actions: <Widget>[
-                                                                                    TextButton(
-                                                                                      child: Text(
-                                                                                        'Cancelar',
-                                                                                        style: TextStyle(
-                                                                                          color: Color.fromRGBO(46, 99, 238, 1),
-                                                                                          fontWeight: FontWeight.bold,
-                                                                                          fontSize: 15,
-                                                                                        ),
-                                                                                      ),
-                                                                                      onPressed: null,
-                                                                                    ),
-                                                                                    TextButton(
-                                                                                      child: Text(
-                                                                                        'Continuar',
-                                                                                        style: TextStyle(
-                                                                                          color: Color.fromRGBO(46, 99, 238, 1),
-                                                                                          fontWeight: FontWeight.bold,
-                                                                                          fontSize: 15,
-                                                                                        ),
-                                                                                      ),
-                                                                                      onPressed: () {
-                                                                                        AceptarSolicitud aceptarSolicitud = new AceptarSolicitud(solicitudes.solicituddeRecoleccion[index].idcarroDonacion, solicitudes.solicituddeRecoleccion[index].emailReciclador);
-                                                                                        this.recoleccionDonacionDataSourceImpl.aceptarSolicitud(aceptarSolicitud).then((value) {
-                                                                                          showDialog(
-                                                                                            context: context,
-                                                                                            builder: (context) => DialogBox("Solicitud aceptada", "Esperar la visita de tu reciclador"),
-                                                                                          );
-                                                                                        }).onError((error, stackTrace) {
-                                                                                          showDialog(
-                                                                                            context: context,
-                                                                                            builder: (context) => DialogBox("Error al aceptar solicitud", error.toString()),
-                                                                                          );
-                                                                                        });
-                                                                                      },
-                                                                                    ),
-                                                                                  ],
-                                                                                ));
-                                                                      },
-                                                                    ),
-                                                                    SizedBox(
-                                                                      width: 45,
-                                                                    ),
-                                                                    MaterialButton(
-                                                                      height:
-                                                                          40,
-                                                                      minWidth:
-                                                                          50,
-                                                                      color: Colors
-                                                                          .red,
-                                                                      textColor:
-                                                                          Colors
-                                                                              .white,
-                                                                      child:
-                                                                          new Text(
-                                                                        "Cancelar",
-                                                                        style:
-                                                                            TextStyle(
-                                                                          fontWeight:
-                                                                              FontWeight.bold,
-                                                                          fontSize:
-                                                                              18,
+                                                                      SizedBox(
+                                                                        width:
+                                                                            45,
+                                                                      ),
+                                                                      MaterialButton(
+                                                                        height:
+                                                                            40,
+                                                                        minWidth:
+                                                                            50,
+                                                                        color: Colors
+                                                                            .red,
+                                                                        textColor:
+                                                                            Colors.white,
+                                                                        child:
+                                                                            new Text(
+                                                                          "Eliminar",
+                                                                          style:
+                                                                              TextStyle(
+                                                                            fontWeight:
+                                                                                FontWeight.bold,
+                                                                            fontSize:
+                                                                                18,
+                                                                          ),
                                                                         ),
+                                                                        onPressed:
+                                                                            () {
+                                                                          showDialog(
+                                                                              context: context,
+                                                                              builder: (context) => AlertDialog(
+                                                                                    title: Text(
+                                                                                      "Eliminando Visita",
+                                                                                      style: TextStyle(
+                                                                                        color: Color.fromRGBO(46, 99, 238, 1),
+                                                                                        fontWeight: FontWeight.bold,
+                                                                                        fontSize: 20,
+                                                                                      ),
+                                                                                    ),
+                                                                                    actions: <Widget>[
+                                                                                      TextButton(
+                                                                                        child: Text(
+                                                                                          'Cancelar',
+                                                                                          style: TextStyle(
+                                                                                            color: Color.fromRGBO(46, 99, 238, 1),
+                                                                                            fontWeight: FontWeight.bold,
+                                                                                            fontSize: 15,
+                                                                                          ),
+                                                                                        ),
+                                                                                        onPressed: () {
+                                                                                          Navigator.pop(context);
+                                                                                        },
+                                                                                      ),
+                                                                                      TextButton(
+                                                                                        child: Text(
+                                                                                          'Continuar',
+                                                                                          style: TextStyle(
+                                                                                            color: Color.fromRGBO(46, 99, 238, 1),
+                                                                                            fontWeight: FontWeight.bold,
+                                                                                            fontSize: 15,
+                                                                                          ),
+                                                                                        ),
+                                                                                        onPressed: () {
+                                                                                          this.recoleccionDonacionDataSourceImpl.eliminarSolicitud(solicitudes.solicituddeRecoleccion[index].idsolicitud).then((value) {
+                                                                                            showDialog(
+                                                                                                context: context,
+                                                                                                builder: (context) => AlertDialog(
+                                                                                                      title: Text(
+                                                                                                        "Solicitud Eliminada",
+                                                                                                        style: TextStyle(
+                                                                                                          color: Color.fromRGBO(46, 99, 238, 1),
+                                                                                                          fontWeight: FontWeight.bold,
+                                                                                                          fontSize: 20,
+                                                                                                        ),
+                                                                                                      ),
+                                                                                                      actions: <Widget>[
+                                                                                                        TextButton(
+                                                                                                          child: Text(
+                                                                                                            'Ok',
+                                                                                                            style: TextStyle(
+                                                                                                              color: Color.fromRGBO(46, 99, 238, 1),
+                                                                                                              fontWeight: FontWeight.bold,
+                                                                                                              fontSize: 15,
+                                                                                                            ),
+                                                                                                          ),
+                                                                                                          onPressed: () {
+                                                                                                            Navigator.pop(context);
+                                                                                                            Navigator.pop(context);
+                                                                                                            setState(() {});
+                                                                                                          },
+                                                                                                        ),
+                                                                                                      ],
+                                                                                                    ));
+                                                                                          }).onError((error, stackTrace) {
+                                                                                            showDialog(context: context, builder: (context) => DialogBox("Error al eliminar la visita", error.toString()));
+                                                                                          });
+                                                                                        },
+                                                                                      ),
+                                                                                    ],
+                                                                                  ));
+                                                                        },
                                                                       ),
-                                                                      onPressed:
-                                                                          () {
-                                                                        showDialog(
-                                                                            context:
-                                                                                context,
-                                                                            builder: (context) =>
-                                                                                AlertDialog(
-                                                                                  title: Text(
-                                                                                    "Cancelando Visita",
-                                                                                    style: TextStyle(
-                                                                                      color: Color.fromRGBO(46, 99, 238, 1),
-                                                                                      fontWeight: FontWeight.bold,
-                                                                                      fontSize: 20,
-                                                                                    ),
-                                                                                  ),
-                                                                                  actions: <Widget>[
-                                                                                    TextButton(
-                                                                                      child: Text(
-                                                                                        'Cancelar',
-                                                                                        style: TextStyle(
-                                                                                          color: Color.fromRGBO(46, 99, 238, 1),
-                                                                                          fontWeight: FontWeight.bold,
-                                                                                          fontSize: 15,
-                                                                                        ),
-                                                                                      ),
-                                                                                      onPressed: null,
-                                                                                    ),
-                                                                                    TextButton(
-                                                                                      child: Text(
-                                                                                        'Continuar',
-                                                                                        style: TextStyle(
-                                                                                          color: Color.fromRGBO(46, 99, 238, 1),
-                                                                                          fontWeight: FontWeight.bold,
-                                                                                          fontSize: 15,
-                                                                                        ),
-                                                                                      ),
-                                                                                      onPressed: null,
-                                                                                    ),
-                                                                                  ],
-                                                                                ));
-                                                                      },
-                                                                    )
-                                                                  ],
+                                                                      SizedBox(
+                                                                        width:
+                                                                            15,
+                                                                      ),
+                                                                    ],
+                                                                  ),
                                                                 )
                                                               ],
                                                             )
