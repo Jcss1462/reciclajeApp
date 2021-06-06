@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:reciclaje_app/core/constants.dart';
 import 'package:reciclaje_app/data/datasources/carroDonacion_datasource.dart';
 import 'package:reciclaje_app/data/model/donacionesList.dart';
+import 'package:reciclaje_app/data/model/emailUsuario.dart';
 import 'package:reciclaje_app/service/preferences.dart';
+import 'package:reciclaje_app/widgets/dialogBox.dart';
 import 'package:reciclaje_app/widgets/navbarCiudadanoCivil.dart';
 
 class CarrodeDonacionCivil extends StatefulWidget {
@@ -72,7 +74,55 @@ class _CarrodeDonacionCivilState extends State<CarrodeDonacionCivil> {
                           builder:
                               (BuildContext context, AsyncSnapshot snapshot) {
                             if (snapshot.hasError) {
-                              return Text(snapshot.error.toString());
+                              return Container(
+                                width: MediaQuery.of(context).size.width,
+                                height: MediaQuery.of(context).size.height,
+                                padding: EdgeInsets.only(
+                                    top: 20.0,
+                                    bottom: 20.0,
+                                    left: 20,
+                                    right: 20),
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text(snapshot.error.toString()),
+                                    SizedBox(
+                                      height: 15,
+                                    ),
+                                    MaterialButton(
+                                        height: 50,
+                                        minWidth: 250,
+                                        color: Color.fromRGBO(46, 99, 238, 1),
+                                        textColor: Colors.white,
+                                        child: new Text(
+                                          "Crear Nuevo Carro",
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 23,
+                                          ),
+                                        ),
+                                        onPressed: () {
+                                          EmailUsuario emailUsuario =
+                                              new EmailUsuario(_email);
+                                          carroDonacionDataSourceImpl
+                                              .inabilitarCarroDeDonacion(
+                                                  emailUsuario)
+                                              .then((value) {
+                                            setState(() {});
+                                          })
+                                                ..onError((error, stackTrace) {
+                                                  showDialog(
+                                                      context: context,
+                                                      builder: (context) =>
+                                                          DialogBox(
+                                                              "Error al inabilitar carros",
+                                                              error
+                                                                  .toString()));
+                                                });
+                                        })
+                                  ],
+                                ),
+                              );
                             } else {
                               switch (snapshot.connectionState) {
                                 //mientras espera
