@@ -112,7 +112,7 @@ class _ListaVistasAgendadasState extends State<ListaVistasAgendadas> {
                                                       constraints:
                                                           BoxConstraints(
                                                         minWidth: 300,
-                                                        minHeight: 200,
+                                                        minHeight: 180,
                                                       ),
                                                       padding: EdgeInsets.only(
                                                           top: 20.0,
@@ -197,63 +197,65 @@ class _ListaVistasAgendadasState extends State<ListaVistasAgendadas> {
                                                             SizedBox(
                                                               height: 5,
                                                             ),
-                                                            Row(
-                                                              children: [
-                                                                Text(
-                                                                  "Fecha y Hora: ",
-                                                                  textAlign:
-                                                                      TextAlign
-                                                                          .left,
-                                                                  style:
-                                                                      TextStyle(
-                                                                    color: Color
-                                                                        .fromRGBO(
-                                                                            46,
-                                                                            99,
-                                                                            238,
-                                                                            1),
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .bold,
-                                                                    fontSize:
-                                                                        18,
+                                                            SingleChildScrollView(
+                                                              scrollDirection:
+                                                                  Axis.horizontal,
+                                                              child: Row(
+                                                                children: [
+                                                                  Text(
+                                                                    "Fecha y Hora: ",
+                                                                    textAlign:
+                                                                        TextAlign
+                                                                            .left,
+                                                                    style:
+                                                                        TextStyle(
+                                                                      color: Color
+                                                                          .fromRGBO(
+                                                                              46,
+                                                                              99,
+                                                                              238,
+                                                                              1),
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .bold,
+                                                                      fontSize:
+                                                                          18,
+                                                                    ),
                                                                   ),
-                                                                ),
-                                                                Text(
-                                                                  solicitudes
-                                                                          .visitas[
-                                                                              index]
-                                                                          .fechaHora
-                                                                          .substring(
-                                                                              0,
-                                                                              10) +
-                                                                      "     " +
-                                                                      solicitudes
-                                                                          .visitas[
-                                                                              index]
-                                                                          .fechaHora
-                                                                          .substring(
-                                                                              11,
-                                                                              16),
-                                                                  textAlign:
-                                                                      TextAlign
-                                                                          .left,
-                                                                  style:
-                                                                      TextStyle(
-                                                                    color: Color
-                                                                        .fromRGBO(
-                                                                            46,
-                                                                            99,
-                                                                            238,
-                                                                            1),
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .normal,
-                                                                    fontSize:
-                                                                        18,
+                                                                  Text(
+                                                                    solicitudes
+                                                                            .visitas[
+                                                                                index]
+                                                                            .fechaHora
+                                                                            .substring(0,
+                                                                                10) +
+                                                                        "     " +
+                                                                        solicitudes
+                                                                            .visitas[
+                                                                                index]
+                                                                            .fechaHora
+                                                                            .substring(11,
+                                                                                16),
+                                                                    textAlign:
+                                                                        TextAlign
+                                                                            .left,
+                                                                    style:
+                                                                        TextStyle(
+                                                                      color: Color
+                                                                          .fromRGBO(
+                                                                              46,
+                                                                              99,
+                                                                              238,
+                                                                              1),
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .normal,
+                                                                      fontSize:
+                                                                          18,
+                                                                    ),
                                                                   ),
-                                                                ),
-                                                              ],
+                                                                ],
+                                                              ),
                                                             ),
                                                             SizedBox(
                                                               height: 5,
@@ -290,15 +292,15 @@ class _ListaVistasAgendadasState extends State<ListaVistasAgendadas> {
                                                                           .left,
                                                                   style:
                                                                       TextStyle(
-                                                                    color: Color
-                                                                        .fromRGBO(
-                                                                            46,
-                                                                            99,
-                                                                            238,
-                                                                            1),
+                                                                    color: solicitudes.visitas[index].idEstadoVisita ==
+                                                                            2
+                                                                        ? Colors
+                                                                            .orange
+                                                                        : Colors
+                                                                            .green,
                                                                     fontWeight:
                                                                         FontWeight
-                                                                            .normal,
+                                                                            .bold,
                                                                     fontSize:
                                                                         18,
                                                                   ),
@@ -316,114 +318,108 @@ class _ListaVistasAgendadasState extends State<ListaVistasAgendadas> {
                                                                       MainAxisAlignment
                                                                           .end,
                                                                   children: [
-                                                                    IconButton(
-                                                                        icon:
-                                                                            Icon(
-                                                                          Icons
-                                                                              .check_circle_outline,
-                                                                          color: Color.fromRGBO(
-                                                                              46,
-                                                                              99,
-                                                                              238,
-                                                                              1),
-                                                                          size:
-                                                                              30,
-                                                                        ),
-                                                                        onPressed:
-                                                                            () {
-                                                                          showDialog(
-                                                                              context: context,
-                                                                              builder: (context) => AlertDialog(
-                                                                                    title: Text(
-                                                                                      "Esta seguro que desas eliminar este residuo?",
-                                                                                      style: TextStyle(
-                                                                                        color: Color.fromRGBO(46, 99, 238, 1),
-                                                                                        fontWeight: FontWeight.bold,
-                                                                                        fontSize: 20,
-                                                                                      ),
-                                                                                    ),
-                                                                                    actions: <Widget>[
-                                                                                      TextButton(
-                                                                                        child: Text(
-                                                                                          'Cancelar',
+                                                                    solicitudes.visitas[index].idEstadoVisita ==
+                                                                            2
+                                                                        ? IconButton(
+                                                                            icon:
+                                                                                Icon(
+                                                                              Icons.check_circle_outline,
+                                                                              color: Color.fromRGBO(46, 99, 238, 1),
+                                                                              size: 30,
+                                                                            ),
+                                                                            onPressed:
+                                                                                () {
+                                                                              showDialog(
+                                                                                  context: context,
+                                                                                  builder: (context) => AlertDialog(
+                                                                                        title: Text(
+                                                                                          "Esta seguro que desas eliminar este residuo?",
                                                                                           style: TextStyle(
                                                                                             color: Color.fromRGBO(46, 99, 238, 1),
                                                                                             fontWeight: FontWeight.bold,
-                                                                                            fontSize: 15,
+                                                                                            fontSize: 20,
                                                                                           ),
                                                                                         ),
-                                                                                        onPressed: () {
-                                                                                          Navigator.pop(context);
-                                                                                        },
-                                                                                      ),
-                                                                                      TextButton(
-                                                                                        child: Text(
-                                                                                          'Continuar',
+                                                                                        actions: <Widget>[
+                                                                                          TextButton(
+                                                                                            child: Text(
+                                                                                              'Cancelar',
+                                                                                              style: TextStyle(
+                                                                                                color: Color.fromRGBO(46, 99, 238, 1),
+                                                                                                fontWeight: FontWeight.bold,
+                                                                                                fontSize: 15,
+                                                                                              ),
+                                                                                            ),
+                                                                                            onPressed: () {
+                                                                                              Navigator.pop(context);
+                                                                                            },
+                                                                                          ),
+                                                                                          TextButton(
+                                                                                            child: Text(
+                                                                                              'Continuar',
+                                                                                              style: TextStyle(
+                                                                                                color: Color.fromRGBO(46, 99, 238, 1),
+                                                                                                fontWeight: FontWeight.bold,
+                                                                                                fontSize: 15,
+                                                                                              ),
+                                                                                            ),
+                                                                                            onPressed: null,
+                                                                                          ),
+                                                                                        ],
+                                                                                      ));
+                                                                            })
+                                                                        : Center(),
+                                                                    solicitudes.visitas[index].idEstadoVisita ==
+                                                                            2
+                                                                        ? IconButton(
+                                                                            icon:
+                                                                                Icon(
+                                                                              Icons.person_add_alt_1_outlined,
+                                                                              color: Color.fromRGBO(46, 99, 238, 1),
+                                                                              size: 30,
+                                                                            ),
+                                                                            onPressed:
+                                                                                () {
+                                                                              showDialog(
+                                                                                  context: context,
+                                                                                  builder: (context) => AlertDialog(
+                                                                                        title: Text(
+                                                                                          "Esta seguro que desas eliminar este residuo?",
                                                                                           style: TextStyle(
                                                                                             color: Color.fromRGBO(46, 99, 238, 1),
                                                                                             fontWeight: FontWeight.bold,
-                                                                                            fontSize: 15,
+                                                                                            fontSize: 20,
                                                                                           ),
                                                                                         ),
-                                                                                        onPressed: null,
-                                                                                      ),
-                                                                                    ],
-                                                                                  ));
-                                                                        }),
-                                                                    IconButton(
-                                                                        icon:
-                                                                            Icon(
-                                                                          Icons
-                                                                              .person_add_alt_1_outlined,
-                                                                          color: Color.fromRGBO(
-                                                                              46,
-                                                                              99,
-                                                                              238,
-                                                                              1),
-                                                                          size:
-                                                                              30,
-                                                                        ),
-                                                                        onPressed:
-                                                                            () {
-                                                                          showDialog(
-                                                                              context: context,
-                                                                              builder: (context) => AlertDialog(
-                                                                                    title: Text(
-                                                                                      "Esta seguro que desas eliminar este residuo?",
-                                                                                      style: TextStyle(
-                                                                                        color: Color.fromRGBO(46, 99, 238, 1),
-                                                                                        fontWeight: FontWeight.bold,
-                                                                                        fontSize: 20,
-                                                                                      ),
-                                                                                    ),
-                                                                                    actions: <Widget>[
-                                                                                      TextButton(
-                                                                                        child: Text(
-                                                                                          'Cancelar',
-                                                                                          style: TextStyle(
-                                                                                            color: Color.fromRGBO(46, 99, 238, 1),
-                                                                                            fontWeight: FontWeight.bold,
-                                                                                            fontSize: 15,
+                                                                                        actions: <Widget>[
+                                                                                          TextButton(
+                                                                                            child: Text(
+                                                                                              'Cancelar',
+                                                                                              style: TextStyle(
+                                                                                                color: Color.fromRGBO(46, 99, 238, 1),
+                                                                                                fontWeight: FontWeight.bold,
+                                                                                                fontSize: 15,
+                                                                                              ),
+                                                                                            ),
+                                                                                            onPressed: () {
+                                                                                              Navigator.pop(context);
+                                                                                            },
                                                                                           ),
-                                                                                        ),
-                                                                                        onPressed: () {
-                                                                                          Navigator.pop(context);
-                                                                                        },
-                                                                                      ),
-                                                                                      TextButton(
-                                                                                        child: Text(
-                                                                                          'Continuar',
-                                                                                          style: TextStyle(
-                                                                                            color: Color.fromRGBO(46, 99, 238, 1),
-                                                                                            fontWeight: FontWeight.bold,
-                                                                                            fontSize: 15,
+                                                                                          TextButton(
+                                                                                            child: Text(
+                                                                                              'Continuar',
+                                                                                              style: TextStyle(
+                                                                                                color: Color.fromRGBO(46, 99, 238, 1),
+                                                                                                fontWeight: FontWeight.bold,
+                                                                                                fontSize: 15,
+                                                                                              ),
+                                                                                            ),
+                                                                                            onPressed: null,
                                                                                           ),
-                                                                                        ),
-                                                                                        onPressed: null,
-                                                                                      ),
-                                                                                    ],
-                                                                                  ));
-                                                                        }),
+                                                                                        ],
+                                                                                      ));
+                                                                            })
+                                                                        : Center(),
                                                                     IconButton(
                                                                         icon:
                                                                             Icon(
