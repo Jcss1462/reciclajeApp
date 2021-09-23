@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:reciclaje_app/core/constants.dart';
-import 'package:reciclaje_app/widgets/navbarCiudadanoCivil.dart';
+import 'package:reciclaje_app/widgets/navbarCentrodeAcopio.dart';
 
 class InicioCentrodeAcopio extends StatefulWidget {
   const InicioCentrodeAcopio({Key key}) : super(key: key);
@@ -13,11 +13,11 @@ class _InicioCentrodeAcopioState extends State<InicioCentrodeAcopio> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: NavBarCiudadanoCivil(),
+      drawer: NavBarCentrodeAcopio(),
       appBar: AppBar(
         backgroundColor: Color.fromRGBO(46, 99, 238, 1),
         title: Text(
-          "Ciudadano Civil",
+          "Centro de Acopio",
           style: TextStyle(
               color: Colors.white, fontWeight: FontWeight.bold, fontSize: 20),
         ),
