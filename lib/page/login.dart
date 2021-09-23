@@ -221,6 +221,14 @@ class _LoginState extends State<Login> {
                                           "Inicio secion un Ciudadano Civil");
                                       Navigator.pushNamed(
                                           context, inicioCiudadanoCivil);
+                                    } else if (value.idtipousuario == 3) {
+                                      setState(() {
+                                        isLoad = false;
+                                      });
+                                      debugPrint(
+                                          "Inicio secion un Centro de Acopio");
+                                      Navigator.pushNamed(
+                                          context, inicioCentrodeAcopio);
                                     } else {
                                       setState(() {
                                         isLoad = false;
