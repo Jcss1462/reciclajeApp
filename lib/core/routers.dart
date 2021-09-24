@@ -1,6 +1,7 @@
 import 'package:reciclaje_app/page/formAgendaVisitaCivil.dart';
 import 'package:reciclaje_app/page/carrodeDonacionCivil.dart';
 import 'package:reciclaje_app/page/donacionFormCivil.dart';
+import 'package:reciclaje_app/page/fromOfertasCentrodeAcopio.dart';
 import 'package:reciclaje_app/page/inicioCentrodeAcopio.dart';
 import 'package:reciclaje_app/page/inicioCiudadanoCivil.dart';
 import 'package:reciclaje_app/page/listaRecicladores.dart';
@@ -63,6 +64,8 @@ class Routers {
         return MaterialPageRoute(builder: (_) => VisitaDisponibleProgramada());
       case inicioCentrodeAcopio:
         return MaterialPageRoute(builder: (_) => InicioCentrodeAcopio());
+      case fromOfertasCentrodeAcopio:
+        return MaterialPageRoute(builder: (_) => OfertasCentrosdeAcopio());
       default:
         return MaterialPageRoute(
           builder: (_) => Scaffold(

@@ -35,14 +35,14 @@ class NavBarCentrodeAcopio extends StatelessWidget {
               color: Color.fromRGBO(46, 99, 238, 1),
             ),
             title: Text(
-              "Ofertas de Material",
+              "Ofertas de Residuos",
               style: TextStyle(
                   color: Color.fromRGBO(46, 99, 238, 1),
                   fontWeight: FontWeight.normal,
                   fontSize: 18),
             ),
             onTap: () {
-              Navigator.pushNamed(context, formAgendaVisitaCivil);
+              Navigator.pushNamed(context, fromOfertasCentrodeAcopio);
             },
           ),
           ListTile(
