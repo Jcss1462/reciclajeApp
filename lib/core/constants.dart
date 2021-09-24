@@ -19,3 +19,4 @@ const String visitaProgramadas = '/visitaProgramadas';
 const String visitaDisponibleProgramada = '/visitaDisponibleProgramada';
 const String inicioCentrodeAcopio = '/inicioCentrodeAcopio';
 const String fromOfertasCentrodeAcopio = '/fromOfertasCentrodeAcopio';
+const String carrodeOfertas = '/carrodeOfertas';

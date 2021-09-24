@@ -3,6 +3,7 @@ import 'package:reciclaje_app/data/datasources/carroVenta_datasource.dart';
 import 'package:reciclaje_app/data/model/nuevaVenta.dart';
 import 'package:reciclaje_app/data/model/tipoResiduo.dart';
 import 'package:reciclaje_app/data/model/tipoResiduoList.dart';
+import 'package:reciclaje_app/page/carrodeOfertas.dart';
 import 'package:reciclaje_app/page/carrodeVentas.dart';
 import 'package:reciclaje_app/service/preferences.dart';
 import 'package:reciclaje_app/widgets/dialogBox.dart';
@@ -83,7 +84,7 @@ class _OfertasCentrosdeAcopioState extends State<OfertasCentrosdeAcopio> {
               icon: Icon(Icons.shopping_cart_outlined, color: Colors.white),
               onPressed: () {
                 Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => CarroDeVentas()));
+                    MaterialPageRoute(builder: (context) => CarrodeOfertas()));
               }),
           IconButton(
               icon: Icon(Icons.logout_outlined, color: Colors.white),

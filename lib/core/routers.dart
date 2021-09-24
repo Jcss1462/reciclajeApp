@@ -1,3 +1,4 @@
+import 'package:reciclaje_app/page/carrodeOfertas.dart';
 import 'package:reciclaje_app/page/formAgendaVisitaCivil.dart';
 import 'package:reciclaje_app/page/carrodeDonacionCivil.dart';
 import 'package:reciclaje_app/page/donacionFormCivil.dart';
@@ -66,6 +67,8 @@ class Routers {
         return MaterialPageRoute(builder: (_) => InicioCentrodeAcopio());
       case fromOfertasCentrodeAcopio:
         return MaterialPageRoute(builder: (_) => OfertasCentrosdeAcopio());
+      case carrodeOfertas:
+        return MaterialPageRoute(builder: (_) => CarrodeOfertas());
       default:
         return MaterialPageRoute(
           builder: (_) => Scaffold(

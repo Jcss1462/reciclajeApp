@@ -51,14 +51,14 @@ class NavBarCentrodeAcopio extends StatelessWidget {
               color: Color.fromRGBO(46, 99, 238, 1),
             ),
             title: Text(
-              "Compras a Clientes",
+              "Carro de Ofertas",
               style: TextStyle(
                   color: Color.fromRGBO(46, 99, 238, 1),
                   fontWeight: FontWeight.normal,
                   fontSize: 18),
             ),
             onTap: () {
-              Navigator.pushNamed(context, listaVisitasAgendadas);
+              Navigator.pushNamed(context, carrodeOfertas);
             },
           ),
           ListTile(
