@@ -20,3 +20,5 @@ const String visitaDisponibleProgramada = '/visitaDisponibleProgramada';
 const String inicioCentrodeAcopio = '/inicioCentrodeAcopio';
 const String fromOfertasCentrodeAcopio = '/fromOfertasCentrodeAcopio';
 const String carrodeOfertas = '/carrodeOfertas';
+const String ofertasCentrodeAcopioReciclador =
+    '/ofertasCentrodeAcopioReciclador';

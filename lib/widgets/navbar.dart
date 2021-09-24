@@ -199,7 +199,9 @@ class NavBar extends StatelessWidget {
                   fontWeight: FontWeight.normal,
                   fontSize: 20),
             ),
-            onTap: null,
+            onTap: () {
+              Navigator.pushNamed(context, ofertasCentrodeAcopioReciclador);
+            },
           ),
           ListTile(
             leading: Icon(

@@ -69,6 +69,8 @@ class Routers {
         return MaterialPageRoute(builder: (_) => OfertasCentrosdeAcopio());
       case carrodeOfertas:
         return MaterialPageRoute(builder: (_) => CarrodeOfertas());
+      case ofertasCentrodeAcopioReciclador:
+        return MaterialPageRoute(builder: (_) => OfertasCentrosdeAcopio());
       default:
         return MaterialPageRoute(
           builder: (_) => Scaffold(
