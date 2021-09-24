@@ -79,7 +79,7 @@ class NavBarCentrodeAcopio extends StatelessWidget {
           ),
           ListTile(
             leading: Icon(
-              Icons.note_alt_outlined,
+              Icons.notes_outlined,
               color: Color.fromRGBO(46, 99, 238, 1),
             ),
             title: Text(

@@ -261,7 +261,7 @@ class _VisitaClientesMapState extends State<VisitaClientesMap> {
         ),
         actions: <Widget>[
           IconButton(
-              icon: Icon(Icons.logout_outlined, color: Colors.white),
+              icon: Icon(Icons.logout, color: Colors.white),
               onPressed: () {
                 showDialog(
                     context: context,

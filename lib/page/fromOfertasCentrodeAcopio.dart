@@ -87,7 +87,7 @@ class _OfertasCentrosdeAcopioState extends State<OfertasCentrosdeAcopio> {
                     MaterialPageRoute(builder: (context) => CarrodeOfertas()));
               }),
           IconButton(
-              icon: Icon(Icons.logout_outlined, color: Colors.white),
+              icon: Icon(Icons.logout, color: Colors.white),
               onPressed: () {
                 showDialog(
                     context: context,
