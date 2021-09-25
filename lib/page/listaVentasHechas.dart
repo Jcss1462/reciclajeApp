@@ -5,15 +5,14 @@ import 'package:reciclaje_app/service/preferences.dart';
 import 'package:reciclaje_app/widgets/dialogBox.dart';
 import 'package:reciclaje_app/widgets/navbar.dart';
 
-class ListaVistaHechasdeCentro extends StatefulWidget {
-  const ListaVistaHechasdeCentro({Key key}) : super(key: key);
+class ListaVentasHechas extends StatefulWidget {
+  const ListaVentasHechas({Key key}) : super(key: key);
 
   @override
-  _ListaVistaHechasdeCentroState createState() =>
-      _ListaVistaHechasdeCentroState();
+  _ListaVentasHechasState createState() => _ListaVentasHechasState();
 }
 
-class _ListaVistaHechasdeCentroState extends State<ListaVistaHechasdeCentro> {
+class _ListaVentasHechasState extends State<ListaVentasHechas> {
   Preferences preferencias = new Preferences();
   String _email;
   VisitasDatasourceImpl visitasDatasourceImpl = new VisitasDatasourceImpl();
@@ -42,7 +41,7 @@ class _ListaVistaHechasdeCentroState extends State<ListaVistaHechasdeCentro> {
       appBar: AppBar(
         backgroundColor: Color.fromRGBO(46, 99, 238, 1),
         title: Text(
-          "Lista de Visitas Hechas",
+          "Lista de Ventas Hechas",
           style: TextStyle(
               color: Colors.white, fontWeight: FontWeight.bold, fontSize: 20),
         ),

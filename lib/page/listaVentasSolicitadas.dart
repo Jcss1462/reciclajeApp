@@ -45,7 +45,7 @@ class _ListaVentasSolicitadasState extends State<ListaVentasSolicitadas> {
       appBar: AppBar(
         backgroundColor: Color.fromRGBO(46, 99, 238, 1),
         title: Text(
-          "Ventas SolicitadasS",
+          "Ventas Solicitadas",
           style: TextStyle(
               color: Colors.white, fontWeight: FontWeight.bold, fontSize: 20),
         ),
