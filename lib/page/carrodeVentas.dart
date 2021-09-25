@@ -527,6 +527,46 @@ class _CarroDeVentasState extends State<CarroDeVentas> {
                                                                                         ),
                                                                                       ),
                                                                                       onPressed: () {
+                                                                                        showDialog(
+                                                                                            context: context,
+                                                                                            builder: (context) => AlertDialog(
+                                                                                                  title: Text(
+                                                                                                    "Venta de residuo",
+                                                                                                    style: TextStyle(
+                                                                                                      color: Color.fromRGBO(46, 99, 238, 1),
+                                                                                                      fontWeight: FontWeight.bold,
+                                                                                                      fontSize: 20,
+                                                                                                    ),
+                                                                                                  ),
+                                                                                                  actions: <Widget>[
+                                                                                                    TextButton(
+                                                                                                      child: Text(
+                                                                                                        'Cancelar',
+                                                                                                        style: TextStyle(
+                                                                                                          color: Color.fromRGBO(46, 99, 238, 1),
+                                                                                                          fontWeight: FontWeight.bold,
+                                                                                                          fontSize: 15,
+                                                                                                        ),
+                                                                                                      ),
+                                                                                                      onPressed: () {
+                                                                                                        Navigator.pop(context);
+                                                                                                      },
+                                                                                                    ),
+                                                                                                    TextButton(
+                                                                                                      child: Text(
+                                                                                                        'Contiunar',
+                                                                                                        style: TextStyle(
+                                                                                                          color: Color.fromRGBO(46, 99, 238, 1),
+                                                                                                          fontWeight: FontWeight.bold,
+                                                                                                          fontSize: 15,
+                                                                                                        ),
+                                                                                                      ),
+                                                                                                      onPressed: () {
+                                                                                                        Navigator.popAndPushNamed(context, agendaCompraReciclador);
+                                                                                                      },
+                                                                                                    )
+                                                                                                  ],
+                                                                                                ));
                                                                                         print(ventas.ventas[index].idventa);
                                                                                         print(ventas.ventas[index].emailUsuario);
                                                                                         print(ventas.ventas[index].peso);
