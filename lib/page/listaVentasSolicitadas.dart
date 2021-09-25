@@ -6,13 +6,13 @@ import 'package:reciclaje_app/service/preferences.dart';
 import 'package:reciclaje_app/widgets/dialogBox.dart';
 import 'package:reciclaje_app/widgets/navbar.dart';
 
-class ListaVisitaCentroAopio extends StatefulWidget {
-  const ListaVisitaCentroAopio({Key key}) : super(key: key);
+class ListaVentasSolicitadas extends StatefulWidget {
+  const ListaVentasSolicitadas({Key key}) : super(key: key);
   @override
-  _ListaVisitaCentroAopioState createState() => _ListaVisitaCentroAopioState();
+  _ListaVentasSolicitadasState createState() => _ListaVentasSolicitadasState();
 }
 
-class _ListaVisitaCentroAopioState extends State<ListaVisitaCentroAopio> {
+class _ListaVentasSolicitadasState extends State<ListaVentasSolicitadas> {
   Preferences preferencias = new Preferences();
   String _email;
   final formKey = GlobalKey<FormState>();
@@ -45,7 +45,7 @@ class _ListaVisitaCentroAopioState extends State<ListaVisitaCentroAopio> {
       appBar: AppBar(
         backgroundColor: Color.fromRGBO(46, 99, 238, 1),
         title: Text(
-          "Visita Centro Acopio",
+          "Ventas SolicitadasS",
           style: TextStyle(
               color: Colors.white, fontWeight: FontWeight.bold, fontSize: 20),
         ),
@@ -434,7 +434,7 @@ class _ListaVisitaCentroAopioState extends State<ListaVisitaCentroAopio> {
                                                                                     ),
                                                                                   ),
                                                                                   onPressed: () {
-                                                                                    MaterialPageRoute(builder: (context) => ListaVisitaCentroAopio());
+                                                                                    MaterialPageRoute(builder: (context) => ListaVentasSolicitadas());
                                                                                   },
                                                                                 )
                                                                               ],

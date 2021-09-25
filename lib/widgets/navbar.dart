@@ -172,7 +172,7 @@ class NavBar extends StatelessWidget {
                   fontSize: 18),
             ),
             onTap: () {
-              Navigator.pushNamed(context, listaVisitasCentroAcopio);
+              Navigator.pushNamed(context, listaVentasSolicitadas);
             },
           ),
           ListTile(

@@ -26,4 +26,4 @@ const String agendaCompraCentrodeAcopio = '/agendaCompraCentrodeAcopio';
 const String listadeOfertasReciclador = '/listadeOfertasReciclador';
 const String listaVisitasAceptadasdeCentro = '/listaVisitasAceptadasdeCentro';
 const String aceptarVisitaCentro = '/aceptarVisitaCentro';
-const String listaVisitasCentroAcopio = '/listaVisitasCentroAcopio';
+const String listaVentasSolicitadas = '/listaVentasSolicitadas';
