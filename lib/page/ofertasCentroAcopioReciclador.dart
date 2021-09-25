@@ -5,6 +5,7 @@ import 'package:reciclaje_app/data/model/vistasCivilList.dart';
 import 'package:reciclaje_app/service/preferences.dart';
 import 'package:reciclaje_app/widgets/dialogBox.dart';
 import 'package:reciclaje_app/widgets/navbar.dart';
+import 'package:reciclaje_app/widgets/navbarCentrodeAcopio.dart';
 
 class OfertaCentroAcopioReciclador extends StatefulWidget {
   const OfertaCentroAcopioReciclador({Key key}) : super(key: key);
@@ -39,7 +40,7 @@ class _OfertaCentroAcopioRecicladorState
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: NavBar(),
+      drawer: NavBarCentrodeAcopio(),
       appBar: AppBar(
         backgroundColor: Color.fromRGBO(46, 99, 238, 1),
         title: Text(

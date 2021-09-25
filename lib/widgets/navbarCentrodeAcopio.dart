@@ -63,11 +63,11 @@ class NavBarCentrodeAcopio extends StatelessWidget {
           ),
           ListTile(
             leading: Icon(
-              Icons.calendar_today_outlined,
+              Icons.person_outline,
               color: Color.fromRGBO(46, 99, 238, 1),
             ),
             title: Text(
-              "Agenda",
+              "Clientes",
               style: TextStyle(
                   color: Color.fromRGBO(46, 99, 238, 1),
                   fontWeight: FontWeight.normal,

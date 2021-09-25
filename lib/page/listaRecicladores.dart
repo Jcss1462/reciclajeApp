@@ -326,7 +326,7 @@ class _ListaRecicladoresState extends State<ListaRecicladores> {
                                                                             Colors.white,
                                                                         child:
                                                                             new Text(
-                                                                          "Eliminar",
+                                                                          "Rechazar",
                                                                           style:
                                                                               TextStyle(
                                                                             fontWeight:
