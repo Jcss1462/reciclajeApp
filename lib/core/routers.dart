@@ -20,6 +20,7 @@ import 'package:reciclaje_app/page/visitaClientesMap.dart';
 import 'package:reciclaje_app/page/visitaDisponibleProgramada.dart';
 import 'package:reciclaje_app/page/visitaDisponibles.dart';
 import 'package:reciclaje_app/page/visitaProgramadas.dart';
+import 'package:reciclaje_app/page/visitasDisponiblesdeReciclador.dart';
 import 'constants.dart';
 
 class Routers {
@@ -74,6 +75,9 @@ class Routers {
         return MaterialPageRoute(builder: (_) => OfertasCentrosdeAcopio());
       case agendaCompraReciclador:
         return MaterialPageRoute(builder: (_) => AgendaCompraReciclador());
+      case visitasDisponiblesReciclador:
+        return MaterialPageRoute(
+            builder: (_) => VisitaDisponiblesdeReciclador());
       default:
         return MaterialPageRoute(
           builder: (_) => Scaffold(

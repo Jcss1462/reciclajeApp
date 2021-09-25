@@ -6,7 +6,7 @@ import 'package:reciclaje_app/data/model/vistasCivilList.dart';
 import 'package:reciclaje_app/page/listaVisitasAgendadas.dart';
 import 'package:reciclaje_app/service/preferences.dart';
 import 'package:reciclaje_app/widgets/dialogBox.dart';
-import 'package:reciclaje_app/widgets/navbarCiudadanoCivil.dart';
+import 'package:reciclaje_app/widgets/navbar.dart';
 
 class AgendaCompraReciclador extends StatefulWidget {
   const AgendaCompraReciclador({Key key}) : super(key: key);
@@ -44,7 +44,7 @@ class _AgendaCompraRecicladorState extends State<AgendaCompraReciclador> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: NavBarCiudadanoCivil(),
+      drawer: NavBar(),
       appBar: AppBar(
         backgroundColor: Color.fromRGBO(46, 99, 238, 1),
         title: Text(

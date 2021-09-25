@@ -23,3 +23,4 @@ const String carrodeOfertas = '/carrodeOfertas';
 const String ofertasCentrodeAcopioReciclador =
     '/ofertasCentrodeAcopioReciclador';
 const String agendaCompraReciclador = '/agendaCompraReciclador';
+const String visitasDisponiblesReciclador = '/visitasDisponiblesReciclador';

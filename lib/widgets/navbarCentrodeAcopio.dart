@@ -83,14 +83,14 @@ class NavBarCentrodeAcopio extends StatelessWidget {
               color: Color.fromRGBO(46, 99, 238, 1),
             ),
             title: Text(
-              "Solicitudes Aceptadas",
+              "Visitas en Espera",
               style: TextStyle(
                   color: Color.fromRGBO(46, 99, 238, 1),
                   fontWeight: FontWeight.normal,
                   fontSize: 18),
             ),
             onTap: () {
-              Navigator.pushNamed(context, carrodeDonacionCivil);
+              Navigator.pushNamed(context, visitasDisponiblesReciclador);
             },
           ),
           ListTile(
