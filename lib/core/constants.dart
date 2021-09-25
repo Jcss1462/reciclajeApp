@@ -27,3 +27,4 @@ const String listadeOfertasReciclador = '/listadeOfertasReciclador';
 const String listaVentasHechas = '/listaVentasHechas';
 const String aceptarVisitaCentro = '/aceptarVisitaCentro';
 const String listaVentasSolicitadas = '/listaVentasSolicitadas';
+const String comprasDisponibles = '/comprasDisponibles';
