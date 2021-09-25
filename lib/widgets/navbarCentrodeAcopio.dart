@@ -79,22 +79,6 @@ class NavBarCentrodeAcopio extends StatelessWidget {
           ),
           ListTile(
             leading: Icon(
-              Icons.notes_outlined,
-              color: Color.fromRGBO(46, 99, 238, 1),
-            ),
-            title: Text(
-              "Visitas en Espera",
-              style: TextStyle(
-                  color: Color.fromRGBO(46, 99, 238, 1),
-                  fontWeight: FontWeight.normal,
-                  fontSize: 18),
-            ),
-            onTap: () {
-              Navigator.pushNamed(context, visitasDisponiblesReciclador);
-            },
-          ),
-          ListTile(
-            leading: Icon(
               Icons.logout,
               color: Color.fromRGBO(46, 99, 238, 1),
             ),

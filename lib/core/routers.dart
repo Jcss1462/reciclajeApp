@@ -1,3 +1,4 @@
+import 'package:reciclaje_app/page/aceptarVisitaCentro.dart';
 import 'package:reciclaje_app/page/agendaCompraCentrodeAcopio.dart';
 import 'package:reciclaje_app/page/carrodeOfertas.dart';
 import 'package:reciclaje_app/page/formAgendaVisitaCivil.dart';
@@ -9,6 +10,7 @@ import 'package:reciclaje_app/page/inicioCiudadanoCivil.dart';
 import 'package:reciclaje_app/page/listaRecicladores.dart';
 import 'package:reciclaje_app/page/listaVisitasAcpetadasdeCentro.dart';
 import 'package:reciclaje_app/page/listaVisitasAgendadas.dart';
+import 'package:reciclaje_app/page/listaVistasCentroAcopio.dart';
 import 'package:reciclaje_app/page/listadeOfertasReciclador.dart';
 import 'package:reciclaje_app/page/pageEditar.dart';
 import 'package:reciclaje_app/page/rutadelDia.dart';
@@ -22,7 +24,6 @@ import 'package:reciclaje_app/page/visitaClientesMap.dart';
 import 'package:reciclaje_app/page/visitaDisponibleProgramada.dart';
 import 'package:reciclaje_app/page/visitaDisponibles.dart';
 import 'package:reciclaje_app/page/visitaProgramadas.dart';
-import 'package:reciclaje_app/page/visitasDisponiblesdeReciclador.dart';
 import 'constants.dart';
 
 class Routers {
@@ -77,13 +78,14 @@ class Routers {
         return MaterialPageRoute(builder: (_) => OfertasCentrosdeAcopio());
       case agendaCompraCentrodeAcopio:
         return MaterialPageRoute(builder: (_) => AgendaCompraCentrodeAcopio());
-      case visitasDisponiblesReciclador:
-        return MaterialPageRoute(
-            builder: (_) => VisitaDisponiblesdeReciclador());
       case listadeOfertasReciclador:
         return MaterialPageRoute(builder: (_) => ListaOfertasReciclador());
       case listaVisitasAceptadasdeCentro:
         return MaterialPageRoute(builder: (_) => ListaVistaHechasdeCentro());
+      case aceptarVisitaCentro:
+        return MaterialPageRoute(builder: (_) => AceptarVisitaCentro());
+      case listaVisitasCentroAcopio:
+        return MaterialPageRoute(builder: (_) => ListaVisitaCentroAopio());
       default:
         return MaterialPageRoute(
           builder: (_) => Scaffold(

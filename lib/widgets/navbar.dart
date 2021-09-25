@@ -3,8 +3,6 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:reciclaje_app/core/constants.dart';
 import 'package:reciclaje_app/page/index.dart';
-import 'package:reciclaje_app/service/preferences.dart';
-import 'package:reciclaje_app/widgets/dialogBox.dart';
 
 class NavBar extends StatelessWidget {
   @override
@@ -167,15 +165,14 @@ class NavBar extends StatelessWidget {
               color: Color.fromRGBO(46, 99, 238, 1),
             ),
             title: Text(
-              "Venta en Espera",
+              "Ventas en Espera",
               style: TextStyle(
                   color: Color.fromRGBO(46, 99, 238, 1),
                   fontWeight: FontWeight.normal,
                   fontSize: 18),
             ),
             onTap: () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => InicioReciclador()));
+              Navigator.pushNamed(context, listaVisitasCentroAcopio);
             },
           ),
           ListTile(
