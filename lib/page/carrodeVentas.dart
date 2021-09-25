@@ -187,13 +187,13 @@ class _CarroDeVentasState extends State<CarroDeVentas> {
                                                             constraints:
                                                                 BoxConstraints(
                                                               minWidth: 150,
-                                                              minHeight: 240,
+                                                              minHeight: 160,
                                                             ),
                                                             padding:
                                                                 EdgeInsets.only(
                                                                     top: 20.0,
                                                                     bottom:
-                                                                        30.0,
+                                                                        20.0,
                                                                     left: 20,
                                                                     right: 20),
                                                             decoration:
@@ -473,122 +473,6 @@ class _CarroDeVentasState extends State<CarroDeVentas> {
                                                                       ),
                                                                     ],
                                                                   ),
-                                                                  SizedBox(
-                                                                      height:
-                                                                          15),
-                                                                  MaterialButton(
-                                                                      height:
-                                                                          50,
-                                                                      minWidth:
-                                                                          250,
-                                                                      color: Color
-                                                                          .fromRGBO(
-                                                                              46,
-                                                                              99,
-                                                                              238,
-                                                                              1),
-                                                                      textColor:
-                                                                          Colors
-                                                                              .white,
-                                                                      child:
-                                                                          new Text(
-                                                                        "Vender Residuo",
-                                                                        style: TextStyle(
-                                                                            fontWeight:
-                                                                                FontWeight.bold,
-                                                                            fontSize: 25),
-                                                                      ),
-                                                                      onPressed:
-                                                                          () {
-                                                                        showDialog(
-                                                                            context:
-                                                                                context,
-                                                                            builder: (context) =>
-                                                                                AlertDialog(
-                                                                                  title: Text(
-                                                                                    "Vender Residuo",
-                                                                                    style: TextStyle(
-                                                                                      color: Color.fromRGBO(46, 99, 238, 1),
-                                                                                      fontWeight: FontWeight.bold,
-                                                                                      fontSize: 20,
-                                                                                    ),
-                                                                                  ),
-                                                                                  content: Text(
-                                                                                    "Venta de Residuo Exitosamente",
-                                                                                  ),
-                                                                                  actions: <Widget>[
-                                                                                    TextButton(
-                                                                                      child: Text(
-                                                                                        'Ok',
-                                                                                        style: TextStyle(
-                                                                                          color: Color.fromRGBO(46, 99, 238, 1),
-                                                                                          fontWeight: FontWeight.bold,
-                                                                                          fontSize: 15,
-                                                                                        ),
-                                                                                      ),
-                                                                                      onPressed: () {
-                                                                                        showDialog(
-                                                                                            context: context,
-                                                                                            builder: (context) => AlertDialog(
-                                                                                                  title: Text(
-                                                                                                    "Venta de residuo",
-                                                                                                    style: TextStyle(
-                                                                                                      color: Color.fromRGBO(46, 99, 238, 1),
-                                                                                                      fontWeight: FontWeight.bold,
-                                                                                                      fontSize: 20,
-                                                                                                    ),
-                                                                                                  ),
-                                                                                                  actions: <Widget>[
-                                                                                                    TextButton(
-                                                                                                      child: Text(
-                                                                                                        'Cancelar',
-                                                                                                        style: TextStyle(
-                                                                                                          color: Color.fromRGBO(46, 99, 238, 1),
-                                                                                                          fontWeight: FontWeight.bold,
-                                                                                                          fontSize: 15,
-                                                                                                        ),
-                                                                                                      ),
-                                                                                                      onPressed: () {
-                                                                                                        Navigator.pop(context);
-                                                                                                      },
-                                                                                                    ),
-                                                                                                    TextButton(
-                                                                                                      child: Text(
-                                                                                                        'Contiunar',
-                                                                                                        style: TextStyle(
-                                                                                                          color: Color.fromRGBO(46, 99, 238, 1),
-                                                                                                          fontWeight: FontWeight.bold,
-                                                                                                          fontSize: 15,
-                                                                                                        ),
-                                                                                                      ),
-                                                                                                      onPressed: () {
-                                                                                                        Navigator.popAndPushNamed(context, agendaCompraReciclador);
-                                                                                                      },
-                                                                                                    )
-                                                                                                  ],
-                                                                                                ));
-                                                                                        print(ventas.ventas[index].idventa);
-                                                                                        print(ventas.ventas[index].emailUsuario);
-                                                                                        print(ventas.ventas[index].peso);
-                                                                                        print(ventas.ventas[index].total);
-                                                                                      },
-                                                                                    ),
-                                                                                    TextButton(
-                                                                                      child: Text(
-                                                                                        "Vender Más",
-                                                                                        style: TextStyle(
-                                                                                          color: Color.fromRGBO(46, 99, 238, 1),
-                                                                                          fontWeight: FontWeight.bold,
-                                                                                          fontSize: 15,
-                                                                                        ),
-                                                                                      ),
-                                                                                      onPressed: () {
-                                                                                        MaterialPageRoute(builder: (context) => CarroDeVentas());
-                                                                                      },
-                                                                                    )
-                                                                                  ],
-                                                                                ));
-                                                                      }),
                                                                 ],
                                                               ),
                                                             ),

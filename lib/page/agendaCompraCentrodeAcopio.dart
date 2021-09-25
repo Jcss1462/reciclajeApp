@@ -8,13 +8,15 @@ import 'package:reciclaje_app/service/preferences.dart';
 import 'package:reciclaje_app/widgets/dialogBox.dart';
 import 'package:reciclaje_app/widgets/navbar.dart';
 
-class AgendaCompraReciclador extends StatefulWidget {
-  const AgendaCompraReciclador({Key key}) : super(key: key);
+class AgendaCompraCentrodeAcopio extends StatefulWidget {
+  const AgendaCompraCentrodeAcopio({Key key}) : super(key: key);
   @override
-  _AgendaCompraRecicladorState createState() => _AgendaCompraRecicladorState();
+  _AgendaCompraCentrodeAcopioState createState() =>
+      _AgendaCompraCentrodeAcopioState();
 }
 
-class _AgendaCompraRecicladorState extends State<AgendaCompraReciclador> {
+class _AgendaCompraCentrodeAcopioState
+    extends State<AgendaCompraCentrodeAcopio> {
   Preferences preferencias = new Preferences();
   String _email;
   DateTime dateTime;

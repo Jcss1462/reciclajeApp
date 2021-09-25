@@ -5,15 +5,15 @@ import 'package:reciclaje_app/data/model/aceptarSolicitud.dart';
 import 'package:reciclaje_app/data/model/solicituddeRecoleccionList.dart';
 import 'package:reciclaje_app/service/preferences.dart';
 import 'package:reciclaje_app/widgets/dialogBox.dart';
-import 'package:reciclaje_app/widgets/navbarCiudadanoCivil.dart';
+import 'package:reciclaje_app/widgets/navbar.dart';
 
-class ListaRecicladores extends StatefulWidget {
-  ListaRecicladores({Key key}) : super(key: key);
+class ListaOfertasReciclador extends StatefulWidget {
+  ListaOfertasReciclador({Key key}) : super(key: key);
   @override
-  _ListaRecicladoresState createState() => _ListaRecicladoresState();
+  _ListaOfertasRecicladorState createState() => _ListaOfertasRecicladorState();
 }
 
-class _ListaRecicladoresState extends State<ListaRecicladores> {
+class _ListaOfertasRecicladorState extends State<ListaOfertasReciclador> {
   Preferences preferencias = new Preferences();
   String _email;
   RecoleccionDonacionDataSourceImpl recoleccionDonacionDataSourceImpl =
@@ -39,7 +39,7 @@ class _ListaRecicladoresState extends State<ListaRecicladores> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: NavBarCiudadanoCivil(),
+      drawer: NavBar(),
       appBar: AppBar(
         backgroundColor: Color.fromRGBO(46, 99, 238, 1),
         title: Text(

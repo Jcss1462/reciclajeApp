@@ -4,7 +4,6 @@ import 'package:reciclaje_app/data/model/agendar.dart';
 import 'package:reciclaje_app/data/model/vistasCivilList.dart';
 import 'package:reciclaje_app/service/preferences.dart';
 import 'package:reciclaje_app/widgets/dialogBox.dart';
-import 'package:reciclaje_app/widgets/navbar.dart';
 import 'package:reciclaje_app/widgets/navbarCentrodeAcopio.dart';
 
 class OfertaCentroAcopioReciclador extends StatefulWidget {

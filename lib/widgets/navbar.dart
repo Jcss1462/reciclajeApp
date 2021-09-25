@@ -3,6 +3,8 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:reciclaje_app/core/constants.dart';
 import 'package:reciclaje_app/page/index.dart';
+import 'package:reciclaje_app/service/preferences.dart';
+import 'package:reciclaje_app/widgets/dialogBox.dart';
 
 class NavBar extends StatelessWidget {
   @override
@@ -46,20 +48,6 @@ class NavBar extends StatelessWidget {
             onTap: () {
               Navigator.pushNamed(context, ventasForm);
             },
-          ),
-          ListTile(
-            leading: Icon(
-              Icons.monetization_on_outlined,
-              color: Color.fromRGBO(46, 99, 238, 1),
-            ),
-            title: Text(
-              "Precios Estandares",
-              style: TextStyle(
-                  color: Color.fromRGBO(46, 99, 238, 1),
-                  fontWeight: FontWeight.normal,
-                  fontSize: 18),
-            ),
-            onTap: null,
           ),
           ListTile(
             leading: Icon(
@@ -108,20 +96,6 @@ class NavBar extends StatelessWidget {
             onTap: () {
               Navigator.pushNamed(context, rutadelDia);
             },
-          ),
-          ListTile(
-            leading: Icon(
-              Icons.point_of_sale_sharp,
-              color: Color.fromRGBO(46, 99, 238, 1),
-            ),
-            title: Text(
-              "Estadistica de Ventas",
-              style: TextStyle(
-                  color: Color.fromRGBO(46, 99, 238, 1),
-                  fontWeight: FontWeight.normal,
-                  fontSize: 18),
-            ),
-            onTap: null,
           ),
           ListTile(
             leading: Icon(
@@ -189,6 +163,39 @@ class NavBar extends StatelessWidget {
           ),
           ListTile(
             leading: Icon(
+              Icons.add_shopping_cart_outlined,
+              color: Color.fromRGBO(46, 99, 238, 1),
+            ),
+            title: Text(
+              "Venta en Espera",
+              style: TextStyle(
+                  color: Color.fromRGBO(46, 99, 238, 1),
+                  fontWeight: FontWeight.normal,
+                  fontSize: 18),
+            ),
+            onTap: () {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => InicioReciclador()));
+            },
+          ),
+          ListTile(
+            leading: Icon(
+              Icons.shop_2_outlined,
+              color: Color.fromRGBO(46, 99, 238, 1),
+            ),
+            title: Text(
+              "Ventas Hechas C.A",
+              style: TextStyle(
+                  color: Color.fromRGBO(46, 99, 238, 1),
+                  fontWeight: FontWeight.normal,
+                  fontSize: 18),
+            ),
+            onTap: () {
+              Navigator.pushNamed(context, listaVisitasAceptadasdeCentro);
+            },
+          ),
+          ListTile(
+            leading: Icon(
               Icons.money_off,
               color: Color.fromRGBO(46, 99, 238, 1),
             ),
@@ -200,7 +207,7 @@ class NavBar extends StatelessWidget {
                   fontSize: 20),
             ),
             onTap: () {
-              Navigator.pushNamed(context, ofertasCentrodeAcopioReciclador);
+              Navigator.pushNamed(context, listadeOfertasReciclador);
             },
           ),
           ListTile(
