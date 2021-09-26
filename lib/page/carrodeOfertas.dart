@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:reciclaje_app/core/constants.dart';
-import 'package:reciclaje_app/data/datasources/carroDonacion_datasource.dart';
-import 'package:reciclaje_app/data/model/donacionesList.dart';
-import 'package:reciclaje_app/data/model/emailUsuario.dart';
+import 'package:reciclaje_app/data/datasources/ofertas_datasource.dart';
+import 'package:reciclaje_app/data/model/ofertaList.dart';
+import 'package:reciclaje_app/page/solicitantesOfertas.dart';
 import 'package:reciclaje_app/service/preferences.dart';
 import 'package:reciclaje_app/widgets/dialogBox.dart';
 import 'package:reciclaje_app/widgets/navbarCentrodeAcopio.dart';
@@ -17,9 +16,8 @@ class CarrodeOfertas extends StatefulWidget {
 class _CarrodeOfertasState extends State<CarrodeOfertas> {
   Preferences preferencias = new Preferences();
   String _email;
-  CarroDonacionesDataSourceImpl carroDonacionDataSourceImpl =
-      new CarroDonacionesDataSourceImpl();
-  DonacionesList donaciones = new DonacionesList();
+  OfertasDatasourceImpl ofertasDatasourceImpl = new OfertasDatasourceImpl();
+  OfertaList ofertas = new OfertaList();
 
   @override
   void initState() {
@@ -33,8 +31,8 @@ class _CarrodeOfertasState extends State<CarrodeOfertas> {
     });
   }
 
-  Future<DonacionesList> getListDonaciones() async {
-    return await this.carroDonacionDataSourceImpl.misDonaciones(_email);
+  Future<OfertaList> getOfertas() async {
+    return await this.ofertasDatasourceImpl.getMyOfertasCentrodeAcopio(_email);
   }
 
   @override
@@ -132,7 +130,7 @@ class _CarrodeOfertasState extends State<CarrodeOfertas> {
                       return Text('Error: ${snapshot.error}');
                     } else {
                       return FutureBuilder(
-                          future: getListDonaciones(),
+                          future: getOfertas(),
                           builder:
                               (BuildContext context, AsyncSnapshot snapshot) {
                             if (snapshot.hasError) {
@@ -148,38 +146,6 @@ class _CarrodeOfertasState extends State<CarrodeOfertas> {
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     Text(snapshot.error.toString()),
-                                    SizedBox(
-                                      height: 15,
-                                    ),
-                                    MaterialButton(
-                                        height: 50,
-                                        minWidth: 250,
-                                        color: Color.fromRGBO(46, 99, 238, 1),
-                                        textColor: Colors.white,
-                                        child: new Text(
-                                          "Crear Nueva Oferta",
-                                          style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 23,
-                                          ),
-                                        ),
-                                        onPressed: () {
-                                          EmailUsuario emailUsuario =
-                                              new EmailUsuario(_email);
-                                          carroDonacionDataSourceImpl
-                                              .inabilitarCarroDeDonacion(
-                                                  emailUsuario)
-                                              .then((value) {
-                                            setState(() {});
-                                          })
-                                            ..onError((error, stackTrace) {
-                                              showDialog(
-                                                  context: context,
-                                                  builder: (context) => DialogBox(
-                                                      "Error al inabilitar carros",
-                                                      error.toString()));
-                                            });
-                                        })
                                   ],
                                 ),
                               );
@@ -192,7 +158,7 @@ class _CarrodeOfertasState extends State<CarrodeOfertas> {
                                   if (snapshot.hasError) {
                                     return Text('Error: ${snapshot.error}');
                                   } else {
-                                    this.donaciones = snapshot.data;
+                                    this.ofertas = snapshot.data;
                                     return Container(
                                       width: MediaQuery.of(context).size.width,
                                       height:
@@ -206,10 +172,8 @@ class _CarrodeOfertasState extends State<CarrodeOfertas> {
                                               ListView.builder(
                                                 physics:
                                                     const NeverScrollableScrollPhysics(),
-                                                itemCount: this
-                                                    .donaciones
-                                                    .donaciones
-                                                    .length,
+                                                itemCount:
+                                                    this.ofertas.ofertas.length,
                                                 shrinkWrap: true,
                                                 itemBuilder: (context, index) {
                                                   return Column(
@@ -230,7 +194,7 @@ class _CarrodeOfertasState extends State<CarrodeOfertas> {
                                                           constraints:
                                                               BoxConstraints(
                                                             minWidth: 100,
-                                                            minHeight: 100,
+                                                            minHeight: 160,
                                                           ),
                                                           padding:
                                                               EdgeInsets.only(
@@ -287,10 +251,10 @@ class _CarrodeOfertasState extends State<CarrodeOfertas> {
                                                                       ),
                                                                     ),
                                                                     Text(
-                                                                      donaciones
-                                                                          .donaciones[
+                                                                      ofertas
+                                                                          .ofertas[
                                                                               index]
-                                                                          .tipo
+                                                                          .tipoResiduo
                                                                           .toString(),
                                                                       textAlign:
                                                                           TextAlign
@@ -334,10 +298,47 @@ class _CarrodeOfertasState extends State<CarrodeOfertas> {
                                                                       ),
                                                                     ),
                                                                     Text(
-                                                                      donaciones
-                                                                          .donaciones[
+                                                                      ofertas
+                                                                          .ofertas[
                                                                               index]
-                                                                          .tipo
+                                                                          .cupos
+                                                                          .toString(),
+                                                                      textAlign:
+                                                                          TextAlign
+                                                                              .left,
+                                                                      style:
+                                                                          TextStyle(
+                                                                        color: Color.fromRGBO(
+                                                                            46,
+                                                                            99,
+                                                                            238,
+                                                                            1),
+                                                                        fontWeight:
+                                                                            FontWeight.normal,
+                                                                        fontSize:
+                                                                            18,
+                                                                      ),
+                                                                    ),
+                                                                    Text(
+                                                                      "/",
+                                                                      style:
+                                                                          TextStyle(
+                                                                        color: Color.fromRGBO(
+                                                                            46,
+                                                                            99,
+                                                                            238,
+                                                                            1),
+                                                                        fontWeight:
+                                                                            FontWeight.normal,
+                                                                        fontSize:
+                                                                            15,
+                                                                      ),
+                                                                    ),
+                                                                    Text(
+                                                                      ofertas
+                                                                          .ofertas[
+                                                                              index]
+                                                                          .numeroDeAplicantes
                                                                           .toString(),
                                                                       textAlign:
                                                                           TextAlign
@@ -365,63 +366,104 @@ class _CarrodeOfertasState extends State<CarrodeOfertas> {
                                                                           MainAxisAlignment
                                                                               .end,
                                                                       children: [
-                                                                        IconButton(
-                                                                            icon:
-                                                                                Icon(
-                                                                              Icons.delete_outline,
-                                                                              color: Color.fromRGBO(46, 99, 238, 1),
-                                                                            ),
-                                                                            onPressed:
-                                                                                () {
-                                                                              showDialog(
-                                                                                  context: context,
-                                                                                  builder: (context) => AlertDialog(
-                                                                                        title: Text(
-                                                                                          "Esta seguro que desas eliminar esta oferta?",
-                                                                                          style: TextStyle(
-                                                                                            color: Color.fromRGBO(46, 99, 238, 1),
-                                                                                            fontWeight: FontWeight.bold,
-                                                                                            fontSize: 20,
-                                                                                          ),
-                                                                                        ),
-                                                                                        actions: <Widget>[
-                                                                                          TextButton(
-                                                                                            child: Text(
-                                                                                              'Cancelar',
+                                                                        ofertas.ofertas[index].numeroDeAplicantes >
+                                                                                0
+                                                                            ? Text("")
+                                                                            : IconButton(
+                                                                                icon: Icon(
+                                                                                  Icons.delete_outline,
+                                                                                  color: Color.fromRGBO(46, 99, 238, 1),
+                                                                                ),
+                                                                                onPressed: () {
+                                                                                  showDialog(
+                                                                                      context: context,
+                                                                                      builder: (context) => AlertDialog(
+                                                                                            title: Text(
+                                                                                              "Esta seguro que desas eliminar esta oferta?",
                                                                                               style: TextStyle(
                                                                                                 color: Color.fromRGBO(46, 99, 238, 1),
                                                                                                 fontWeight: FontWeight.bold,
-                                                                                                fontSize: 15,
+                                                                                                fontSize: 20,
                                                                                               ),
                                                                                             ),
-                                                                                            onPressed: () {
-                                                                                              Navigator.pop(context);
-                                                                                            },
-                                                                                          ),
-                                                                                          TextButton(
-                                                                                            child: Text(
-                                                                                              'Continuar',
-                                                                                              style: TextStyle(
-                                                                                                color: Color.fromRGBO(46, 99, 238, 1),
-                                                                                                fontWeight: FontWeight.bold,
-                                                                                                fontSize: 15,
+                                                                                            actions: <Widget>[
+                                                                                              TextButton(
+                                                                                                child: Text(
+                                                                                                  'Cancelar',
+                                                                                                  style: TextStyle(
+                                                                                                    color: Color.fromRGBO(46, 99, 238, 1),
+                                                                                                    fontWeight: FontWeight.bold,
+                                                                                                    fontSize: 15,
+                                                                                                  ),
+                                                                                                ),
+                                                                                                onPressed: () {
+                                                                                                  Navigator.pop(context);
+                                                                                                },
                                                                                               ),
-                                                                                            ),
-                                                                                            onPressed: () {
-                                                                                              print(donaciones.donaciones[index].idDonacion);
-                                                                                              this.carroDonacionDataSourceImpl.delDonacion(donaciones.donaciones[index].idDonacion).then((value) {
-                                                                                                setState(() {});
-                                                                                              });
-                                                                                              Navigator.pop(context);
-                                                                                            },
-                                                                                          ),
-                                                                                        ],
-                                                                                      ));
-                                                                            }),
+                                                                                              TextButton(
+                                                                                                child: Text(
+                                                                                                  'Continuar',
+                                                                                                  style: TextStyle(
+                                                                                                    color: Color.fromRGBO(46, 99, 238, 1),
+                                                                                                    fontWeight: FontWeight.bold,
+                                                                                                    fontSize: 15,
+                                                                                                  ),
+                                                                                                ),
+                                                                                                onPressed: () {
+                                                                                                  print(ofertas.ofertas[index].idoferta);
+                                                                                                  this.ofertasDatasourceImpl.eliminarOferta(ofertas.ofertas[index].idoferta).then((value) {
+                                                                                                    setState(() {});
+                                                                                                    Navigator.pop(context);
+                                                                                                  }).onError((error, stackTrace) {
+                                                                                                    showDialog(context: context, builder: (context) => DialogBox("Error al crear oferta", error.toString()));
+                                                                                                  });
+                                                                                                },
+                                                                                              ),
+                                                                                            ],
+                                                                                          ));
+                                                                                }),
                                                                       ],
                                                                     )
                                                                   ],
                                                                 ),
+                                                                SizedBox(
+                                                                  height: 15,
+                                                                ),
+                                                                ofertas.ofertas[index].numeroDeAplicantes >
+                                                                        0
+                                                                    ? MaterialButton(
+                                                                        height:
+                                                                            50,
+                                                                        minWidth:
+                                                                            250,
+                                                                        color: Color.fromRGBO(
+                                                                            46,
+                                                                            99,
+                                                                            238,
+                                                                            1),
+                                                                        textColor:
+                                                                            Colors
+                                                                                .white,
+                                                                        child:
+                                                                            new Text(
+                                                                          "Ver Solicitantes",
+                                                                          style:
+                                                                              TextStyle(
+                                                                            fontWeight:
+                                                                                FontWeight.bold,
+                                                                            fontSize:
+                                                                                23,
+                                                                          ),
+                                                                        ),
+                                                                        onPressed:
+                                                                            () {
+                                                                          setState(
+                                                                              () {
+                                                                            Navigator.push(context,
+                                                                                MaterialPageRoute(builder: (context) => SolicitantesOfertas(ofertas.ofertas[index].idoferta)));
+                                                                          });
+                                                                        })
+                                                                    : Text("")
                                                               ],
                                                             ),
                                                           ),
@@ -431,98 +473,6 @@ class _CarrodeOfertasState extends State<CarrodeOfertas> {
                                                   );
                                                 },
                                               ),
-                                              SizedBox(
-                                                height: 15,
-                                              ),
-                                              MaterialButton(
-                                                  height: 50,
-                                                  minWidth: 250,
-                                                  color: Color.fromRGBO(
-                                                      46, 99, 238, 1),
-                                                  textColor: Colors.white,
-                                                  child: new Text(
-                                                    "Enviar Oferta",
-                                                    style: TextStyle(
-                                                      fontWeight:
-                                                          FontWeight.bold,
-                                                      fontSize: 23,
-                                                    ),
-                                                  ),
-                                                  onPressed: () {
-                                                    showDialog(
-                                                        context: context,
-                                                        builder:
-                                                            (context) =>
-                                                                AlertDialog(
-                                                                  title: Text(
-                                                                    "Enviando oferta",
-                                                                    style:
-                                                                        TextStyle(
-                                                                      color: Color
-                                                                          .fromRGBO(
-                                                                              46,
-                                                                              99,
-                                                                              238,
-                                                                              1),
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .bold,
-                                                                      fontSize:
-                                                                          20,
-                                                                    ),
-                                                                  ),
-                                                                  actions: <
-                                                                      Widget>[
-                                                                    TextButton(
-                                                                      child:
-                                                                          Text(
-                                                                        'Cancelar',
-                                                                        style:
-                                                                            TextStyle(
-                                                                          color: Color.fromRGBO(
-                                                                              46,
-                                                                              99,
-                                                                              238,
-                                                                              1),
-                                                                          fontWeight:
-                                                                              FontWeight.bold,
-                                                                          fontSize:
-                                                                              15,
-                                                                        ),
-                                                                      ),
-                                                                      onPressed:
-                                                                          () {
-                                                                        Navigator.pop(
-                                                                            context);
-                                                                      },
-                                                                    ),
-                                                                    TextButton(
-                                                                      child:
-                                                                          Text(
-                                                                        'Contiunar',
-                                                                        style:
-                                                                            TextStyle(
-                                                                          color: Color.fromRGBO(
-                                                                              46,
-                                                                              99,
-                                                                              238,
-                                                                              1),
-                                                                          fontWeight:
-                                                                              FontWeight.bold,
-                                                                          fontSize:
-                                                                              15,
-                                                                        ),
-                                                                      ),
-                                                                      onPressed:
-                                                                          () {
-                                                                        Navigator.popAndPushNamed(
-                                                                            context,
-                                                                            listaRecicladores);
-                                                                      },
-                                                                    )
-                                                                  ],
-                                                                ));
-                                                  })
                                             ],
                                           ),
                                         ),

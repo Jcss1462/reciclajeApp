@@ -17,6 +17,7 @@ import 'package:reciclaje_app/page/listadeOfertasReciclador.dart';
 import 'package:reciclaje_app/page/pageEditar.dart';
 import 'package:reciclaje_app/page/rutadelDia.dart';
 import 'package:reciclaje_app/page/donacienenEspera.dart';
+import 'package:reciclaje_app/page/solicitantesOfertas.dart';
 import 'package:reciclaje_app/page/ventasForm.dart';
 import 'package:reciclaje_app/page/index.dart';
 import 'package:flutter/material.dart'
@@ -92,6 +93,9 @@ class Routers {
         return MaterialPageRoute(builder: (_) => ComprasDisponibles());
       case listaClientesRecicladores:
         return MaterialPageRoute(builder: (_) => ListaClientesRecicladores());
+      case solicitantesOfetas:
+        final int args = settings.arguments;
+        return MaterialPageRoute(builder: (_) => SolicitantesOfertas(args));
       default:
         return MaterialPageRoute(
           builder: (_) => Scaffold(

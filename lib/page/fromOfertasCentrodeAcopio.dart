@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:reciclaje_app/data/datasources/carroVenta_datasource.dart';
-import 'package:reciclaje_app/data/model/nuevaVenta.dart';
+import 'package:reciclaje_app/data/datasources/ofertas_datasource.dart';
+import 'package:reciclaje_app/data/model/oferta.dart';
 import 'package:reciclaje_app/data/model/tipoResiduo.dart';
 import 'package:reciclaje_app/data/model/tipoResiduoList.dart';
 import 'package:reciclaje_app/page/carrodeOfertas.dart';
-import 'package:reciclaje_app/page/carrodeVentas.dart';
 import 'package:reciclaje_app/service/preferences.dart';
 import 'package:reciclaje_app/widgets/dialogBox.dart';
 import 'package:reciclaje_app/widgets/navbarCentrodeAcopio.dart';
@@ -22,12 +22,14 @@ class _OfertasCentrosdeAcopioState extends State<OfertasCentrosdeAcopio> {
   Preferences preferencias = new Preferences();
   String _email;
   double precio;
-  double cupos;
+  int cupos;
   final oCcy = new NumberFormat("#,##0.00", "en_US");
   final formKey = GlobalKey<FormState>();
 
   CarroVentasDataSourceImpl carroVentasDataSourceImpl =
       new CarroVentasDataSourceImpl();
+
+  OfertasDatasourceImpl ofertasDatasourceImpl = new OfertasDatasourceImpl();
 
   List<DropdownMenuItem<TipoResiduo>> dropListaresiduo;
 
@@ -395,48 +397,60 @@ class _OfertasCentrosdeAcopioState extends State<OfertasCentrosdeAcopio> {
                                                 }
                                               }),
                                         ),
+                                        SizedBox(height: 15),
+                                        new Container(
+                                          child: TextFormField(
+                                              initialValue: cupos != null
+                                                  ? cupos.toString()
+                                                  : "",
+                                              keyboardType:
+                                                  TextInputType.number,
+                                              decoration: InputDecoration(
+                                                  hintText:
+                                                      "Ingrese los cupos limitados",
+                                                  contentPadding:
+                                                      EdgeInsets.all(11),
+                                                  enabledBorder:
+                                                      OutlineInputBorder(
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(
+                                                                      30.0),
+                                                          borderSide:
+                                                              BorderSide(
+                                                            color:
+                                                                Color.fromRGBO(
+                                                                    46,
+                                                                    99,
+                                                                    238,
+                                                                    1),
+                                                            width: 0.5,
+                                                          ))),
+
+                                              //Validacion
+                                              onSaved: (value) {
+                                                cupos = int.parse(value);
+                                                //actualizo el precio
+                                                if (cupos == 0) {
+                                                  cupos = 0;
+                                                } else if (selectResiduo ==
+                                                    null) {
+                                                  cupos = 0;
+                                                } else {
+                                                  cupos = cupos;
+                                                  print(cupos);
+                                                }
+                                              },
+                                              validator: (value) {
+                                                if (value.isEmpty) {
+                                                  return "LLenar el campo";
+                                                } else {
+                                                  return null;
+                                                }
+                                              }),
+                                        ),
                                       ],
                                     ),
-                                  ),
-                                  SizedBox(height: 15),
-                                  new Container(
-                                    child: TextFormField(
-                                        initialValue: cupos != null
-                                            ? cupos.toString()
-                                            : "",
-                                        keyboardType: TextInputType.number,
-                                        decoration: InputDecoration(
-                                            hintText:
-                                                "Ingrese los cupos limitados",
-                                            contentPadding: EdgeInsets.all(11),
-                                            enabledBorder: OutlineInputBorder(
-                                                borderRadius:
-                                                    BorderRadius.circular(30.0),
-                                                borderSide: BorderSide(
-                                                  color: Color.fromRGBO(
-                                                      46, 99, 238, 1),
-                                                  width: 0.5,
-                                                ))),
-
-                                        //Validacion
-                                        onSaved: (value) {
-                                          cupos = double.parse(value);
-                                          //actualizo el precio
-                                          if (cupos == 0) {
-                                            cupos = 0;
-                                          } else if (selectResiduo == null) {
-                                            cupos = 0;
-                                          } else {
-                                            cupos = cupos;
-                                          }
-                                        },
-                                        validator: (value) {
-                                          if (value.isEmpty) {
-                                            return "LLenar el campo";
-                                          } else {
-                                            return null;
-                                          }
-                                        }),
                                   ),
                                   SizedBox(height: 25),
                                   MaterialButton(
@@ -454,7 +468,6 @@ class _OfertasCentrosdeAcopioState extends State<OfertasCentrosdeAcopio> {
                                     onPressed: () async {
                                       if (formKey.currentState.validate()) {
                                         formKey.currentState.save();
-                                        print(precio);
                                         //valido que se seleccionara el tipo
                                         if (selectResiduo == null) {
                                           showDialog(
@@ -464,20 +477,23 @@ class _OfertasCentrosdeAcopioState extends State<OfertasCentrosdeAcopio> {
                                                   "Debes de seleccionar el tipo de residuo"));
                                         } else {
                                           //gurado la venta
-                                          NuevaVenta nuevaVenta = NuevaVenta(
-                                              cupos,
-                                              precio,
-                                              _email,
-                                              selectResiduo.idtiporesiduo);
+
+                                          Oferta nuevaOferta = Oferta();
+                                          nuevaOferta.cupos = cupos;
+                                          nuevaOferta.precioofrecidokl = precio;
+                                          nuevaOferta.emailCentroAcopi = _email;
+                                          nuevaOferta.idTiporesiduo =
+                                              selectResiduo.idtiporesiduo;
+                                          print(nuevaOferta);
                                           this
-                                              .carroVentasDataSourceImpl
-                                              .crearVenta(nuevaVenta)
+                                              .ofertasDatasourceImpl
+                                              .crearOferta(nuevaOferta)
                                               .then((value) {
                                             showDialog(
                                               context: context,
                                               builder: (context) => AlertDialog(
                                                 title: Text(
-                                                  "Oferta Agregada",
+                                                  "Oferta Creada",
                                                   style: TextStyle(
                                                     color: Color.fromRGBO(
                                                         46, 99, 238, 1),
@@ -504,12 +520,12 @@ class _OfertasCentrosdeAcopioState extends State<OfertasCentrosdeAcopio> {
                                                           context,
                                                           MaterialPageRoute(
                                                               builder: (context) =>
-                                                                  CarroDeVentas()));
+                                                                  CarrodeOfertas()));
                                                     },
                                                   ),
                                                   TextButton(
                                                       child: Text(
-                                                        'Vender Más',
+                                                        'Crear nueva oferta',
                                                         style: TextStyle(
                                                           color: Color.fromRGBO(
                                                               46, 99, 238, 1),
@@ -520,8 +536,12 @@ class _OfertasCentrosdeAcopioState extends State<OfertasCentrosdeAcopio> {
                                                       ),
                                                       onPressed: () {
                                                         setState(() {
-                                                          Navigator.pop(
-                                                              context);
+                                                          Navigator.push(
+                                                              context,
+                                                              MaterialPageRoute(
+                                                                  builder:
+                                                                      (context) =>
+                                                                          OfertasCentrosdeAcopio()));
                                                         });
                                                       }),
                                                 ],
@@ -531,7 +551,7 @@ class _OfertasCentrosdeAcopioState extends State<OfertasCentrosdeAcopio> {
                                             showDialog(
                                                 context: context,
                                                 builder: (context) => DialogBox(
-                                                    "Error al guardar la oferta",
+                                                    "Error al crear oferta",
                                                     error.toString()));
                                           });
                                         }
