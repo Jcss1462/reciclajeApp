@@ -1,22 +1,23 @@
 import 'package:flutter/material.dart';
-import 'package:reciclaje_app/data/datasources/visitas_datasource.dart';
-import 'package:reciclaje_app/data/model/vistasCivilList.dart';
+import 'package:reciclaje_app/data/datasources/recoleccionDonacion_datasource.dart';
+import 'package:reciclaje_app/data/model/solicituddeRecoleccionList.dart';
 import 'package:reciclaje_app/service/preferences.dart';
 import 'package:reciclaje_app/widgets/dialogBox.dart';
-import 'package:reciclaje_app/widgets/navbar.dart';
+import 'package:reciclaje_app/widgets/navbarCiudadanoCivil.dart';
 
-class ListaVentasHechas extends StatefulWidget {
-  const ListaVentasHechas({Key key}) : super(key: key);
-
+class ListaClientesRecicladores extends StatefulWidget {
+  ListaClientesRecicladores({Key key}) : super(key: key);
   @override
-  _ListaVentasHechasState createState() => _ListaVentasHechasState();
+  _ListaClientesRecicladoresState createState() =>
+      _ListaClientesRecicladoresState();
 }
 
-class _ListaVentasHechasState extends State<ListaVentasHechas> {
+class _ListaClientesRecicladoresState extends State<ListaClientesRecicladores> {
   Preferences preferencias = new Preferences();
   String _email;
-  VisitasDatasourceImpl visitasDatasourceImpl = new VisitasDatasourceImpl();
-  VisitaCivilList solicitudes = new VisitaCivilList();
+  RecoleccionDonacionDataSourceImpl recoleccionDonacionDataSourceImpl =
+      new RecoleccionDonacionDataSourceImpl();
+  SolicituddeRecoleccionList solicitudes = new SolicituddeRecoleccionList();
 
   @override
   void initState() {
@@ -30,18 +31,18 @@ class _ListaVentasHechasState extends State<ListaVentasHechas> {
     });
   }
 
-  Future<VisitaCivilList> getMisVisitasActivas() async {
-    return await this.visitasDatasourceImpl.misVisitasActivasCivil(_email);
+  Future<SolicituddeRecoleccionList> getListSolicitudes() async {
+    return await this.recoleccionDonacionDataSourceImpl.misSolicitudes(_email);
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: NavBar(),
+      drawer: NavBarCiudadanoCivil(),
       appBar: AppBar(
         backgroundColor: Color.fromRGBO(46, 99, 238, 1),
         title: Text(
-          "Lista de Ventas Hechas",
+          "Lista de Clientes",
           style: TextStyle(
               color: Colors.white, fontWeight: FontWeight.bold, fontSize: 20),
         ),
@@ -126,37 +127,10 @@ class _ListaVentasHechasState extends State<ListaVentasHechas> {
                     return CircularProgressIndicator();
                   default:
                     if (snapshot.hasError) {
-                      return Container(
-                        width: MediaQuery.of(context).size.width,
-                        height: MediaQuery.of(context).size.height,
-                        padding: EdgeInsets.only(
-                            top: 20.0, bottom: 20.0, left: 20, right: 20),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text(snapshot.error.toString()),
-                            SizedBox(
-                              height: 15,
-                            ),
-                            MaterialButton(
-                                height: 50,
-                                minWidth: 250,
-                                color: Color.fromRGBO(46, 99, 238, 1),
-                                textColor: Colors.white,
-                                child: new Text(
-                                  "Volver no hay ofertas",
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 23,
-                                  ),
-                                ),
-                                onPressed: () {})
-                          ],
-                        ),
-                      );
+                      return Text('Error: ${snapshot.error}');
                     } else {
                       return FutureBuilder(
-                        future: getMisVisitasActivas(),
+                        future: getListSolicitudes(),
                         builder:
                             (BuildContext context, AsyncSnapshot snapshot) {
                           switch (snapshot.connectionState) {
@@ -179,8 +153,10 @@ class _ListaVentasHechasState extends State<ListaVentasHechas> {
                                           ListView.builder(
                                             physics:
                                                 const NeverScrollableScrollPhysics(),
-                                            itemCount:
-                                                this.solicitudes.visitas.length,
+                                            itemCount: this
+                                                .solicitudes
+                                                .solicituddeRecoleccion
+                                                .length,
                                             shrinkWrap: true,
                                             itemBuilder: (context, index) {
                                               return Column(
@@ -200,8 +176,8 @@ class _ListaVentasHechasState extends State<ListaVentasHechas> {
                                                               7,
                                                       constraints:
                                                           BoxConstraints(
-                                                        minWidth: 300,
-                                                        minHeight: 180,
+                                                        minWidth: 150,
+                                                        minHeight: 150,
                                                       ),
                                                       padding: EdgeInsets.only(
                                                           top: 20.0,
@@ -233,7 +209,7 @@ class _ListaVentasHechasState extends State<ListaVentasHechas> {
                                                               child: Row(
                                                                 children: [
                                                                   Text(
-                                                                    "Centro: ",
+                                                                    "Reciclador: ",
                                                                     textAlign:
                                                                         TextAlign
                                                                             .left,
@@ -256,12 +232,10 @@ class _ListaVentasHechasState extends State<ListaVentasHechas> {
                                                                     ),
                                                                   ),
                                                                   Text(
-                                                                    solicitudes.visitas[index].emailRecolector ==
-                                                                            null
-                                                                        ? ""
-                                                                        : solicitudes
-                                                                            .visitas[index]
-                                                                            .emailRecolector,
+                                                                    solicitudes
+                                                                        .solicituddeRecoleccion[
+                                                                            index]
+                                                                        .emailReciclador,
                                                                     textAlign:
                                                                         TextAlign
                                                                             .left,
@@ -286,118 +260,8 @@ class _ListaVentasHechasState extends State<ListaVentasHechas> {
                                                             SizedBox(
                                                               height: 5,
                                                             ),
-                                                            SingleChildScrollView(
-                                                              scrollDirection:
-                                                                  Axis.horizontal,
-                                                              child: Row(
-                                                                children: [
-                                                                  Text(
-                                                                    "Fecha y Hora: ",
-                                                                    textAlign:
-                                                                        TextAlign
-                                                                            .left,
-                                                                    style:
-                                                                        TextStyle(
-                                                                      color: Color
-                                                                          .fromRGBO(
-                                                                              46,
-                                                                              99,
-                                                                              238,
-                                                                              1),
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .bold,
-                                                                      fontSize:
-                                                                          18,
-                                                                    ),
-                                                                  ),
-                                                                  Text(
-                                                                    solicitudes
-                                                                            .visitas[
-                                                                                index]
-                                                                            .fechaHora
-                                                                            .substring(0,
-                                                                                10) +
-                                                                        "     " +
-                                                                        solicitudes
-                                                                            .visitas[
-                                                                                index]
-                                                                            .fechaHora
-                                                                            .substring(11,
-                                                                                16),
-                                                                    textAlign:
-                                                                        TextAlign
-                                                                            .left,
-                                                                    style:
-                                                                        TextStyle(
-                                                                      color: Color
-                                                                          .fromRGBO(
-                                                                              46,
-                                                                              99,
-                                                                              238,
-                                                                              1),
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .normal,
-                                                                      fontSize:
-                                                                          18,
-                                                                    ),
-                                                                  ),
-                                                                ],
-                                                              ),
-                                                            ),
                                                             SizedBox(
-                                                              height: 5,
-                                                            ),
-                                                            Row(
-                                                              children: [
-                                                                Text(
-                                                                  "Estado: ",
-                                                                  textAlign:
-                                                                      TextAlign
-                                                                          .left,
-                                                                  style:
-                                                                      TextStyle(
-                                                                    color: Color
-                                                                        .fromRGBO(
-                                                                            46,
-                                                                            99,
-                                                                            238,
-                                                                            1),
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .bold,
-                                                                    fontSize:
-                                                                        18,
-                                                                  ),
-                                                                ),
-                                                                Text(
-                                                                  solicitudes
-                                                                      .visitas[
-                                                                          index]
-                                                                      .estado,
-                                                                  textAlign:
-                                                                      TextAlign
-                                                                          .left,
-                                                                  style:
-                                                                      TextStyle(
-                                                                    color: solicitudes.visitas[index].idEstadoVisita ==
-                                                                            2
-                                                                        ? Colors
-                                                                            .orange
-                                                                        : Colors
-                                                                            .green,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .bold,
-                                                                    fontSize:
-                                                                        18,
-                                                                  ),
-                                                                ),
-                                                              ],
-                                                            ),
-                                                            SizedBox(
-                                                              height: 10,
+                                                              height: 15,
                                                             ),
                                                           ],
                                                         ),

@@ -74,7 +74,7 @@ class NavBarCentrodeAcopio extends StatelessWidget {
                   fontSize: 18),
             ),
             onTap: () {
-              Navigator.pushNamed(context, donacionFormCivil);
+              Navigator.pushNamed(context, listaClientesRecicladores);
             },
           ),
           ListTile(
@@ -90,7 +90,7 @@ class NavBarCentrodeAcopio extends StatelessWidget {
                   fontSize: 18),
             ),
             onTap: () {
-              Navigator.pushNamed(context, fromOfertasCentrodeAcopio);
+              Navigator.pushNamed(context, comprasDisponibles);
             },
           ),
           ListTile(

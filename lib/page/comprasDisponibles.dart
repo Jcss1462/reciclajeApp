@@ -46,7 +46,7 @@ class _ComprasDisponiblesState extends State<ComprasDisponibles> {
       appBar: AppBar(
         backgroundColor: Color.fromRGBO(46, 99, 238, 1),
         title: Text(
-          "Bienvenido Compras Disponibles",
+          "Carro de Compras",
           style: TextStyle(
               color: Colors.white, fontWeight: FontWeight.bold, fontSize: 20),
         ),

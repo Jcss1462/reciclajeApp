@@ -18,7 +18,7 @@ class _InicioCentrodeAcopioState extends State<InicioCentrodeAcopio> {
       appBar: AppBar(
         backgroundColor: Color.fromRGBO(46, 99, 238, 1),
         title: Text(
-          "Reciclador Oficial",
+          "Centro de Acopio",
           style: TextStyle(
               color: Colors.white, fontWeight: FontWeight.bold, fontSize: 20),
         ),

@@ -43,7 +43,7 @@ class _LoginState extends State<Login> {
           //recuadro blanco contenedor
           child: Container(
             width: MediaQuery.of(context).size.width / 1.3,
-            height: MediaQuery.of(context).size.height / 1.57,
+            height: MediaQuery.of(context).size.height / 1.48,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10),
               color: Colors.white,
@@ -292,6 +292,29 @@ class _LoginState extends State<Login> {
                         textColor: Colors.white,
                         child: new Text(
                           "Crear cuenta aqui",
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 15,
+                              color: Color.fromRGBO(46, 99, 238, 1)),
+                        ),
+                        //valido y guardo
+                        onPressed: () =>
+                            Navigator.pushNamed(context, registerRoute),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30.0),
+                        ),
+                      ),
+                      SizedBox(height: 30),
+                      Text("¿Olvidaste tu contraseña?"),
+                      SizedBox(height: 5),
+                      //boton a registro
+                      MaterialButton(
+                        height: 40,
+                        minWidth: 220,
+                        color: Colors.white,
+                        textColor: Colors.white,
+                        child: new Text(
+                          "Recuperar contraseña",
                           style: TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 15,
