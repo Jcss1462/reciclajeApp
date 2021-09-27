@@ -8,6 +8,7 @@ class Ventas {
   String emailUsuario;
   String tipo;
   double precioPorKiloTipo;
+  String emailCentroAcopio;
 
   Ventas(
       this.fechaventa,
@@ -29,6 +30,7 @@ class Ventas {
     this.emailUsuario = json['email_Usuario'];
     this.tipo = json['tipo'];
     this.precioPorKiloTipo = json['precioPorKiloTipo'];
+    this.emailCentroAcopio = json['emailCentroDeAcopio'];
   }
 
   Map<String, dynamic> toJson() {
@@ -41,7 +43,8 @@ class Ventas {
       'idtiporesiduo_Tiporesiduo': this.idtiporesiduo,
       'email_Usuario': this.emailUsuario,
       'tipo': this.tipo,
-      'precioPorKiloTipo': this.precioPorKiloTipo
+      'precioPorKiloTipo': this.precioPorKiloTipo,
+      'emailCentroDeAcopio': this.emailCentroAcopio
     };
   }
 }
