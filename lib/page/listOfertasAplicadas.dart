@@ -1,23 +1,21 @@
 import 'package:flutter/material.dart';
-import 'package:reciclaje_app/core/constants.dart';
 import 'package:reciclaje_app/data/datasources/ofertas_datasource.dart';
-import 'package:reciclaje_app/data/model/aplicarOferta.dart';
-import 'package:reciclaje_app/data/model/ofertaList.dart';
+import 'package:reciclaje_app/data/model/aplicantesOfertasList.dart';
 import 'package:reciclaje_app/service/preferences.dart';
 import 'package:reciclaje_app/widgets/dialogBox.dart';
 import 'package:reciclaje_app/widgets/navbar.dart';
 
-class ListaOfertasReciclador extends StatefulWidget {
-  ListaOfertasReciclador({Key key}) : super(key: key);
+class ListaOfertasAplicadas extends StatefulWidget {
+  ListaOfertasAplicadas({Key key}) : super(key: key);
   @override
-  _ListaOfertasRecicladorState createState() => _ListaOfertasRecicladorState();
+  _ListaOfertasAplicadasState createState() => _ListaOfertasAplicadasState();
 }
 
-class _ListaOfertasRecicladorState extends State<ListaOfertasReciclador> {
+class _ListaOfertasAplicadasState extends State<ListaOfertasAplicadas> {
   Preferences preferencias = new Preferences();
   String _email;
   OfertasDatasourceImpl ofertasDatasourceImpl = new OfertasDatasourceImpl();
-  OfertaList ofertaList = new OfertaList();
+  AplicanteOfertasList listaOfertasAplicadas = new AplicanteOfertasList();
 
   @override
   void initState() {
@@ -31,10 +29,8 @@ class _ListaOfertasRecicladorState extends State<ListaOfertasReciclador> {
     });
   }
 
-  Future<OfertaList> getListOfertasbyReciclador() async {
-    return await this
-        .ofertasDatasourceImpl
-        .getOfertasDisponiblesbyReciclador(_email);
+  Future<AplicanteOfertasList> getMisAplicaciones() async {
+    return await this.ofertasDatasourceImpl.getMisAplicaciones(_email);
   }
 
   @override
@@ -132,7 +128,7 @@ class _ListaOfertasRecicladorState extends State<ListaOfertasReciclador> {
                       return Text('Error: ${snapshot.error}');
                     } else {
                       return FutureBuilder(
-                        future: getListOfertasbyReciclador(),
+                        future: getMisAplicaciones(),
                         builder:
                             (BuildContext context, AsyncSnapshot snapshot) {
                           if (snapshot.hasError) {
@@ -156,7 +152,7 @@ class _ListaOfertasRecicladorState extends State<ListaOfertasReciclador> {
                               if (snapshot.hasError) {
                                 return Text('Error: ${snapshot.error}');
                               } else {
-                                this.ofertaList = snapshot.data;
+                                this.listaOfertasAplicadas = snapshot.data;
                                 return Container(
                                   width: MediaQuery.of(context).size.width,
                                   height: MediaQuery.of(context).size.height,
@@ -169,8 +165,10 @@ class _ListaOfertasRecicladorState extends State<ListaOfertasReciclador> {
                                           ListView.builder(
                                             physics:
                                                 const NeverScrollableScrollPhysics(),
-                                            itemCount:
-                                                this.ofertaList.ofertas.length,
+                                            itemCount: this
+                                                .listaOfertasAplicadas
+                                                .aplicantes
+                                                .length,
                                             shrinkWrap: true,
                                             itemBuilder: (context, index) {
                                               return Column(
@@ -191,7 +189,7 @@ class _ListaOfertasRecicladorState extends State<ListaOfertasReciclador> {
                                                       constraints:
                                                           BoxConstraints(
                                                         minWidth: 150,
-                                                        minHeight: 170,
+                                                        minHeight: 130,
                                                       ),
                                                       padding: EdgeInsets.only(
                                                           top: 20.0,
@@ -225,7 +223,7 @@ class _ListaOfertasRecicladorState extends State<ListaOfertasReciclador> {
                                                                   Row(
                                                                       children: [
                                                                         Text(
-                                                                          "Tipo de Residuo: ",
+                                                                          "idOferta: ",
                                                                           textAlign:
                                                                               TextAlign.left,
                                                                           overflow:
@@ -244,9 +242,10 @@ class _ListaOfertasRecicladorState extends State<ListaOfertasReciclador> {
                                                                           ),
                                                                         ),
                                                                         Text(
-                                                                          ofertaList
-                                                                              .ofertas[index]
-                                                                              .tipoResiduo,
+                                                                          listaOfertasAplicadas
+                                                                              .aplicantes[index]
+                                                                              .idOfertas
+                                                                              .toString(),
                                                                           textAlign:
                                                                               TextAlign.left,
                                                                           style:
@@ -263,142 +262,6 @@ class _ListaOfertasRecicladorState extends State<ListaOfertasReciclador> {
                                                                           ),
                                                                         ),
                                                                       ]),
-                                                                  Row(
-                                                                    children: [
-                                                                      Text(
-                                                                        "Precio por Kilo: ",
-                                                                        textAlign:
-                                                                            TextAlign.left,
-                                                                        overflow:
-                                                                            TextOverflow.ellipsis,
-                                                                        style:
-                                                                            TextStyle(
-                                                                          color: Color.fromRGBO(
-                                                                              46,
-                                                                              99,
-                                                                              238,
-                                                                              1),
-                                                                          fontWeight:
-                                                                              FontWeight.bold,
-                                                                          fontSize:
-                                                                              18,
-                                                                        ),
-                                                                      ),
-                                                                      Text(
-                                                                        "\$",
-                                                                        style:
-                                                                            TextStyle(
-                                                                          color: Color.fromRGBO(
-                                                                              46,
-                                                                              99,
-                                                                              238,
-                                                                              1),
-                                                                          fontWeight:
-                                                                              FontWeight.normal,
-                                                                          fontSize:
-                                                                              15,
-                                                                        ),
-                                                                      ),
-                                                                      Text(
-                                                                        ofertaList
-                                                                            .ofertas[index]
-                                                                            .precioofrecidokl
-                                                                            .toString(),
-                                                                        textAlign:
-                                                                            TextAlign.left,
-                                                                        style:
-                                                                            TextStyle(
-                                                                          color: Color.fromRGBO(
-                                                                              46,
-                                                                              99,
-                                                                              238,
-                                                                              1),
-                                                                          fontWeight:
-                                                                              FontWeight.normal,
-                                                                          fontSize:
-                                                                              18,
-                                                                        ),
-                                                                      ),
-                                                                    ],
-                                                                  ),
-                                                                  Row(
-                                                                    children: [
-                                                                      Text(
-                                                                        "Cupos: ",
-                                                                        textAlign:
-                                                                            TextAlign.left,
-                                                                        overflow:
-                                                                            TextOverflow.ellipsis,
-                                                                        style:
-                                                                            TextStyle(
-                                                                          color: Color.fromRGBO(
-                                                                              46,
-                                                                              99,
-                                                                              238,
-                                                                              1),
-                                                                          fontWeight:
-                                                                              FontWeight.bold,
-                                                                          fontSize:
-                                                                              18,
-                                                                        ),
-                                                                      ),
-                                                                      Text(
-                                                                        ofertaList
-                                                                            .ofertas[index]
-                                                                            .cupos
-                                                                            .toString(),
-                                                                        textAlign:
-                                                                            TextAlign.left,
-                                                                        style:
-                                                                            TextStyle(
-                                                                          color: Color.fromRGBO(
-                                                                              46,
-                                                                              99,
-                                                                              238,
-                                                                              1),
-                                                                          fontWeight:
-                                                                              FontWeight.normal,
-                                                                          fontSize:
-                                                                              18,
-                                                                        ),
-                                                                      ),
-                                                                      Text(
-                                                                        "/",
-                                                                        style:
-                                                                            TextStyle(
-                                                                          color: Color.fromRGBO(
-                                                                              46,
-                                                                              99,
-                                                                              238,
-                                                                              1),
-                                                                          fontWeight:
-                                                                              FontWeight.normal,
-                                                                          fontSize:
-                                                                              15,
-                                                                        ),
-                                                                      ),
-                                                                      Text(
-                                                                        ofertaList
-                                                                            .ofertas[index]
-                                                                            .numeroDeAplicantes
-                                                                            .toString(),
-                                                                        textAlign:
-                                                                            TextAlign.left,
-                                                                        style:
-                                                                            TextStyle(
-                                                                          color: Color.fromRGBO(
-                                                                              46,
-                                                                              99,
-                                                                              238,
-                                                                              1),
-                                                                          fontWeight:
-                                                                              FontWeight.normal,
-                                                                          fontSize:
-                                                                              18,
-                                                                        ),
-                                                                      )
-                                                                    ],
-                                                                  )
                                                                 ],
                                                               ),
                                                             ),
@@ -422,16 +285,13 @@ class _ListaOfertasRecicladorState extends State<ListaOfertasReciclador> {
                                                                             40,
                                                                         minWidth:
                                                                             50,
-                                                                        color: Color.fromRGBO(
-                                                                            46,
-                                                                            99,
-                                                                            238,
-                                                                            1),
+                                                                        color: Colors
+                                                                            .red,
                                                                         textColor:
                                                                             Colors.white,
                                                                         child:
                                                                             new Text(
-                                                                          "Aceptar",
+                                                                          "Eliminar Aplicaciòn",
                                                                           style:
                                                                               TextStyle(
                                                                             fontWeight:
@@ -446,7 +306,7 @@ class _ListaOfertasRecicladorState extends State<ListaOfertasReciclador> {
                                                                               context: context,
                                                                               builder: (context) => AlertDialog(
                                                                                     title: Text(
-                                                                                      "Aceptando Oferta",
+                                                                                      "Rechazando Oferta",
                                                                                       style: TextStyle(
                                                                                         color: Color.fromRGBO(46, 99, 238, 1),
                                                                                         fontWeight: FontWeight.bold,
@@ -477,15 +337,12 @@ class _ListaOfertasRecicladorState extends State<ListaOfertasReciclador> {
                                                                                           ),
                                                                                         ),
                                                                                         onPressed: () {
-                                                                                          AplicarOferta aplicarOferta = new AplicarOferta();
-                                                                                          aplicarOferta.emailUsuario = _email;
-                                                                                          aplicarOferta.idOferta = ofertaList.ofertas[index].idoferta;
-                                                                                          this.ofertasDatasourceImpl.aplicarOferta(aplicarOferta).then((value) {
+                                                                                          this.ofertasDatasourceImpl.eliminarAplicacion(listaOfertasAplicadas.aplicantes[index].idaplicacion).then((value) {
                                                                                             showDialog(
                                                                                                 context: context,
                                                                                                 builder: (context) => AlertDialog(
                                                                                                       title: Text(
-                                                                                                        "Aplicación Realizada",
+                                                                                                        "Solicitud Rechazada",
                                                                                                         style: TextStyle(
                                                                                                           color: Color.fromRGBO(46, 99, 238, 1),
                                                                                                           fontWeight: FontWeight.bold,
@@ -503,7 +360,8 @@ class _ListaOfertasRecicladorState extends State<ListaOfertasReciclador> {
                                                                                                             ),
                                                                                                           ),
                                                                                                           onPressed: () {
-                                                                                                            Navigator.pushNamed(context, listadeOfertasReciclador);
+                                                                                                            Navigator.pop(context);
+                                                                                                            Navigator.pop(context);
                                                                                                             setState(() {});
                                                                                                           },
                                                                                                         ),
