@@ -13,7 +13,7 @@ abstract class VisitasRecicladoresDataSource {
       VisitaReciclador visitaReciclador);
   Future<VentasList> visitasaceptadas(String email);
   Future<VentasList> ventasAplicadas(String email);
-  Future<VisitaRecicladorList> vistasByVentas(int idVenta);
+  Future<VisitaRecicladorList> visitasByVentas(int idVenta);
   Future<Ventas> aceptarVisita(AceptarVisita aceptarVisita);
   Future<dynamic> delSolicitudVisita(int idVisita);
   Future<VentasList> getListaVentasVendidas(String email);
@@ -66,7 +66,7 @@ class VisitasRecicladoresDataSourceImpl
 
 // Reciclador para aplicar o rechazar a la venta
   @override
-  Future<VisitaRecicladorList> vistasByVentas(int idVenta) async {
+  Future<VisitaRecicladorList> visitasByVentas(int idVenta) async {
     final response = await _apiProvider.get(
         "/api/v1/visitasRecicladores/visitasByVentas/" + idVenta.toString());
     return VisitaRecicladorList.fromJson(response);

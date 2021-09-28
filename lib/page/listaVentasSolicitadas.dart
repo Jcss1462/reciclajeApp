@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:reciclaje_app/core/constants.dart';
-import 'package:reciclaje_app/data/datasources/recoleccionDonacion_datasource.dart';
-import 'package:reciclaje_app/data/model/carrodeDonacionList.dart';
+import 'package:reciclaje_app/data/datasources/visitasRecicladoresDataSource.dart';
+import 'package:reciclaje_app/data/model/ventaList.dart';
 import 'package:reciclaje_app/service/preferences.dart';
 import 'package:reciclaje_app/widgets/dialogBox.dart';
 import 'package:reciclaje_app/widgets/navbar.dart';
@@ -16,9 +16,9 @@ class _ListaVentasSolicitadasState extends State<ListaVentasSolicitadas> {
   Preferences preferencias = new Preferences();
   String _email;
   final formKey = GlobalKey<FormState>();
-  RecoleccionDonacionDataSourceImpl recoleccionDonacionDataSourceImpl =
-      new RecoleccionDonacionDataSourceImpl();
-  CarrodeDonacionList solicitudes = new CarrodeDonacionList();
+  VisitasRecicladoresDataSourceImpl visitasRecicladoresDataSourceImpl =
+      new VisitasRecicladoresDataSourceImpl();
+  VentasList ventasList = new VentasList();
 
   @override
   void initState() {
@@ -32,10 +32,8 @@ class _ListaVentasSolicitadasState extends State<ListaVentasSolicitadas> {
     });
   }
 
-  Future<CarrodeDonacionList> getListSolicitudesAgendadas() async {
-    return await this
-        .recoleccionDonacionDataSourceImpl
-        .recicladorCarrosAsignados(_email);
+  Future<VentasList> getVentasAplicadas() async {
+    return await this.visitasRecicladoresDataSourceImpl.ventasAplicadas(_email);
   }
 
   @override
@@ -133,7 +131,7 @@ class _ListaVentasSolicitadasState extends State<ListaVentasSolicitadas> {
                       return Text('Error: ${snapshot.error}');
                     } else {
                       return FutureBuilder(
-                        future: getListSolicitudesAgendadas(),
+                        future: getVentasAplicadas(),
                         builder:
                             (BuildContext context, AsyncSnapshot snapshot) {
                           switch (snapshot.connectionState) {
@@ -143,7 +141,7 @@ class _ListaVentasSolicitadasState extends State<ListaVentasSolicitadas> {
                               if (snapshot.hasError) {
                                 return Text('Error: ${snapshot.error}');
                               } else {
-                                this.solicitudes = snapshot.data;
+                                this.ventasList = snapshot.data;
                                 return Container(
                                   width: MediaQuery.of(context).size.width,
                                   height: MediaQuery.of(context).size.height,
@@ -157,10 +155,8 @@ class _ListaVentasSolicitadasState extends State<ListaVentasSolicitadas> {
                                             ListView.builder(
                                               physics:
                                                   const NeverScrollableScrollPhysics(),
-                                              itemCount: this
-                                                  .solicitudes
-                                                  .solicitudes
-                                                  .length,
+                                              itemCount:
+                                                  this.ventasList.ventas.length,
                                               shrinkWrap: true,
                                               itemBuilder: (context, index) {
                                                 return Column(
@@ -213,7 +209,7 @@ class _ListaVentasSolicitadasState extends State<ListaVentasSolicitadas> {
                                                               Row(
                                                                 children: [
                                                                   Text(
-                                                                    "Centro",
+                                                                    "Tipo de Residuo: ",
                                                                     textAlign:
                                                                         TextAlign
                                                                             .left,
@@ -234,19 +230,13 @@ class _ListaVentasSolicitadasState extends State<ListaVentasSolicitadas> {
                                                                       fontSize:
                                                                           18,
                                                                     ),
-                                                                  )
-                                                                ],
-                                                              ),
-                                                              SizedBox(
-                                                                height: 2,
-                                                              ),
-                                                              Row(
-                                                                children: [
+                                                                  ),
                                                                   Text(
-                                                                    solicitudes
-                                                                        .solicitudes[
+                                                                    ventasList
+                                                                        .ventas[
                                                                             index]
-                                                                        .emailCivil,
+                                                                        .tipo
+                                                                        .toString(),
                                                                     textAlign:
                                                                         TextAlign
                                                                             .left,
@@ -262,18 +252,17 @@ class _ListaVentasSolicitadasState extends State<ListaVentasSolicitadas> {
                                                                           FontWeight
                                                                               .normal,
                                                                       fontSize:
-                                                                          15,
+                                                                          18,
                                                                     ),
-                                                                  )
+                                                                  ),
                                                                 ],
                                                               ),
                                                               SizedBox(
-                                                                height: 5,
-                                                              ),
+                                                                  height: 5),
                                                               Row(
                                                                 children: [
                                                                   Text(
-                                                                    "Dirección: ",
+                                                                    "Peso: ",
                                                                     textAlign:
                                                                         TextAlign
                                                                             .left,
@@ -294,40 +283,85 @@ class _ListaVentasSolicitadasState extends State<ListaVentasSolicitadas> {
                                                                       fontSize:
                                                                           18,
                                                                     ),
-                                                                  )
+                                                                  ),
+                                                                  Text(
+                                                                    ventasList
+                                                                        .ventas[
+                                                                            index]
+                                                                        .peso
+                                                                        .toString(),
+                                                                    textAlign:
+                                                                        TextAlign
+                                                                            .left,
+                                                                    style:
+                                                                        TextStyle(
+                                                                      color: Color
+                                                                          .fromRGBO(
+                                                                              46,
+                                                                              99,
+                                                                              238,
+                                                                              1),
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .normal,
+                                                                      fontSize:
+                                                                          18,
+                                                                    ),
+                                                                  ),
                                                                 ],
                                                               ),
                                                               SizedBox(
-                                                                height: 2,
-                                                              ),
-                                                              SingleChildScrollView(
-                                                                scrollDirection:
-                                                                    Axis.horizontal,
-                                                                child: Row(
-                                                                  children: [
-                                                                    Text(
-                                                                      solicitudes
-                                                                          .solicitudes[
-                                                                              index]
-                                                                          .direccionRecoleccion,
-                                                                      textAlign:
-                                                                          TextAlign
-                                                                              .left,
-                                                                      style:
-                                                                          TextStyle(
-                                                                        color: Color.fromRGBO(
-                                                                            46,
-                                                                            99,
-                                                                            238,
-                                                                            1),
-                                                                        fontWeight:
-                                                                            FontWeight.normal,
-                                                                        fontSize:
-                                                                            15,
-                                                                      ),
+                                                                  height: 5),
+                                                              Row(
+                                                                children: [
+                                                                  Text(
+                                                                    "Precio por Kilo: ",
+                                                                    textAlign:
+                                                                        TextAlign
+                                                                            .left,
+                                                                    overflow:
+                                                                        TextOverflow
+                                                                            .ellipsis,
+                                                                    style:
+                                                                        TextStyle(
+                                                                      color: Color
+                                                                          .fromRGBO(
+                                                                              46,
+                                                                              99,
+                                                                              238,
+                                                                              1),
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .bold,
+                                                                      fontSize:
+                                                                          18,
                                                                     ),
-                                                                  ],
-                                                                ),
+                                                                  ),
+                                                                  Text(
+                                                                    ventasList
+                                                                        .ventas[
+                                                                            index]
+                                                                        .precioPorKiloTipo
+                                                                        .toString(),
+                                                                    textAlign:
+                                                                        TextAlign
+                                                                            .left,
+                                                                    style:
+                                                                        TextStyle(
+                                                                      color: Color
+                                                                          .fromRGBO(
+                                                                              46,
+                                                                              99,
+                                                                              238,
+                                                                              1),
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .normal,
+                                                                      fontSize:
+                                                                          18,
+                                                                    ),
+                                                                  ),
+                                                                ],
                                                               ),
                                                               SizedBox(
                                                                   height: 15),
@@ -345,7 +379,7 @@ class _ListaVentasSolicitadasState extends State<ListaVentasSolicitadas> {
                                                                           .white,
                                                                   child:
                                                                       new Text(
-                                                                    "Ver Solicitud",
+                                                                    "Vender",
                                                                     style: TextStyle(
                                                                         fontWeight:
                                                                             FontWeight
@@ -417,7 +451,7 @@ class _ListaVentasSolicitadasState extends State<ListaVentasSolicitadas> {
                                                                                                     ),
                                                                                                   ),
                                                                                                   onPressed: () {
-                                                                                                    Navigator.popAndPushNamed(context, aceptarVisitaCentro);
+                                                                                                    Navigator.pushNamed(context, aceptarVisitaCentro, arguments: ventasList.ventas[index].idventa);
                                                                                                   },
                                                                                                 )
                                                                                               ],

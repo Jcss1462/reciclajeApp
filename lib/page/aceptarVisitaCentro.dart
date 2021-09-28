@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:reciclaje_app/core/constants.dart';
-import 'package:reciclaje_app/data/datasources/recoleccionDonacion_datasource.dart';
-import 'package:reciclaje_app/data/model/aceptarSolicitud.dart';
-import 'package:reciclaje_app/data/model/solicituddeRecoleccionList.dart';
+import 'package:reciclaje_app/data/datasources/visitasRecicladoresDataSource.dart';
+import 'package:reciclaje_app/data/model/visitaRecicladorList.dart';
 import 'package:reciclaje_app/service/preferences.dart';
 import 'package:reciclaje_app/widgets/dialogBox.dart';
 import 'package:reciclaje_app/widgets/navbar.dart';
 
 class AceptarVisitaCentro extends StatefulWidget {
-  AceptarVisitaCentro({Key key}) : super(key: key);
+  final int idVenta;
+  AceptarVisitaCentro(this.idVenta);
   @override
   _AceptarVisitaCentroState createState() => _AceptarVisitaCentroState();
 }
@@ -16,13 +15,15 @@ class AceptarVisitaCentro extends StatefulWidget {
 class _AceptarVisitaCentroState extends State<AceptarVisitaCentro> {
   Preferences preferencias = new Preferences();
   String _email;
-  RecoleccionDonacionDataSourceImpl recoleccionDonacionDataSourceImpl =
-      new RecoleccionDonacionDataSourceImpl();
-  SolicituddeRecoleccionList solicitudes = new SolicituddeRecoleccionList();
+  int _idVenta;
+  VisitasRecicladoresDataSourceImpl visitasRecicladoresDataSourceImpl =
+      new VisitasRecicladoresDataSourceImpl();
+  VisitaRecicladorList visitaRecicladorList = new VisitaRecicladorList();
 
   @override
   void initState() {
     super.initState();
+    _idVenta = this.widget.idVenta;
   }
 
   Future<String> getEmail() async {
@@ -32,8 +33,10 @@ class _AceptarVisitaCentroState extends State<AceptarVisitaCentro> {
     });
   }
 
-  Future<SolicituddeRecoleccionList> getListSolicitudes() async {
-    return await this.recoleccionDonacionDataSourceImpl.misSolicitudes(_email);
+  Future<VisitaRecicladorList> getVisitasByVentas() async {
+    return await this
+        .visitasRecicladoresDataSourceImpl
+        .visitasByVentas(_idVenta);
   }
 
   @override
@@ -131,7 +134,7 @@ class _AceptarVisitaCentroState extends State<AceptarVisitaCentro> {
                       return Text('Error: ${snapshot.error}');
                     } else {
                       return FutureBuilder(
-                        future: getListSolicitudes(),
+                        future: getVisitasByVentas(),
                         builder:
                             (BuildContext context, AsyncSnapshot snapshot) {
                           switch (snapshot.connectionState) {
@@ -141,7 +144,7 @@ class _AceptarVisitaCentroState extends State<AceptarVisitaCentro> {
                               if (snapshot.hasError) {
                                 return Text('Error: ${snapshot.error}');
                               } else {
-                                this.solicitudes = snapshot.data;
+                                this.visitaRecicladorList = snapshot.data;
                                 return Container(
                                   width: MediaQuery.of(context).size.width,
                                   height: MediaQuery.of(context).size.height,
@@ -155,8 +158,8 @@ class _AceptarVisitaCentroState extends State<AceptarVisitaCentro> {
                                             physics:
                                                 const NeverScrollableScrollPhysics(),
                                             itemCount: this
-                                                .solicitudes
-                                                .solicituddeRecoleccion
+                                                .visitaRecicladorList
+                                                .visitaReciclador
                                                 .length,
                                             shrinkWrap: true,
                                             itemBuilder: (context, index) {
@@ -177,8 +180,8 @@ class _AceptarVisitaCentroState extends State<AceptarVisitaCentro> {
                                                               7,
                                                       constraints:
                                                           BoxConstraints(
-                                                        minWidth: 150,
-                                                        minHeight: 150,
+                                                        minWidth: 160,
+                                                        minHeight: 200,
                                                       ),
                                                       padding: EdgeInsets.only(
                                                           top: 20.0,
@@ -207,7 +210,7 @@ class _AceptarVisitaCentroState extends State<AceptarVisitaCentro> {
                                                             SingleChildScrollView(
                                                               scrollDirection:
                                                                   Axis.horizontal,
-                                                              child: Row(
+                                                              child: Column(
                                                                 children: [
                                                                   Text(
                                                                     "Centro: ",
@@ -233,10 +236,10 @@ class _AceptarVisitaCentroState extends State<AceptarVisitaCentro> {
                                                                     ),
                                                                   ),
                                                                   Text(
-                                                                    solicitudes
-                                                                        .solicituddeRecoleccion[
+                                                                    visitaRecicladorList
+                                                                        .visitaReciclador[
                                                                             index]
-                                                                        .emailReciclador,
+                                                                        .emailCentroDeAcopio,
                                                                     textAlign:
                                                                         TextAlign
                                                                             .left,
@@ -257,6 +260,59 @@ class _AceptarVisitaCentroState extends State<AceptarVisitaCentro> {
                                                                   )
                                                                 ],
                                                               ),
+                                                            ),
+                                                            SizedBox(
+                                                              height: 10,
+                                                            ),
+                                                            Column(
+                                                              children: [
+                                                                Text(
+                                                                  "Fecha: ",
+                                                                  textAlign:
+                                                                      TextAlign
+                                                                          .left,
+                                                                  overflow:
+                                                                      TextOverflow
+                                                                          .ellipsis,
+                                                                  style:
+                                                                      TextStyle(
+                                                                    color: Color
+                                                                        .fromRGBO(
+                                                                            46,
+                                                                            99,
+                                                                            238,
+                                                                            1),
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .bold,
+                                                                    fontSize:
+                                                                        18,
+                                                                  ),
+                                                                ),
+                                                                Text(
+                                                                  visitaRecicladorList
+                                                                      .visitaReciclador[
+                                                                          index]
+                                                                      .fechaHora,
+                                                                  textAlign:
+                                                                      TextAlign
+                                                                          .left,
+                                                                  style:
+                                                                      TextStyle(
+                                                                    color: Color
+                                                                        .fromRGBO(
+                                                                            46,
+                                                                            99,
+                                                                            238,
+                                                                            1),
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .normal,
+                                                                    fontSize:
+                                                                        18,
+                                                                  ),
+                                                                )
+                                                              ],
                                                             ),
                                                             SizedBox(
                                                               height: 5,
@@ -333,7 +389,7 @@ class _AceptarVisitaCentroState extends State<AceptarVisitaCentro> {
                                                                                           ),
                                                                                         ),
                                                                                         onPressed: () {
-                                                                                          AceptarSolicitud aceptarSolicitud = new AceptarSolicitud(solicitudes.solicituddeRecoleccion[index].idcarroDonacion, solicitudes.solicituddeRecoleccion[index].emailReciclador);
+                                                                                          /*AceptarSolicitud aceptarSolicitud = new AceptarSolicitud(visitaRecicladorList.visitaReciclador[index].idcarroDonacion, solicitudes.solicituddeRecoleccion[index].emailReciclador);
                                                                                           this.recoleccionDonacionDataSourceImpl.aceptarSolicitud(aceptarSolicitud).then((value) {
                                                                                             showDialog(
                                                                                                 context: context,
@@ -366,6 +422,7 @@ class _AceptarVisitaCentroState extends State<AceptarVisitaCentro> {
                                                                                           }).onError((error, stackTrace) {
                                                                                             showDialog(context: context, builder: (context) => DialogBox("Error al eliminar la visita", error.toString()));
                                                                                           });
+                                                                                        */
                                                                                         },
                                                                                       ),
                                                                                     ],
@@ -398,6 +455,7 @@ class _AceptarVisitaCentroState extends State<AceptarVisitaCentro> {
                                                                         ),
                                                                         onPressed:
                                                                             () {
+                                                                          /*
                                                                           showDialog(
                                                                               context: context,
                                                                               builder: (context) => AlertDialog(
@@ -470,6 +528,7 @@ class _AceptarVisitaCentroState extends State<AceptarVisitaCentro> {
                                                                                       ),
                                                                                     ],
                                                                                   ));
+                                                                        */
                                                                         },
                                                                       ),
                                                                       SizedBox(

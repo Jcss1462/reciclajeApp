@@ -89,7 +89,8 @@ class Routers {
       case listaVentasHechas:
         return MaterialPageRoute(builder: (_) => ListaVentasHechas());
       case aceptarVisitaCentro:
-        return MaterialPageRoute(builder: (_) => AceptarVisitaCentro());
+        final int args = settings.arguments;
+        return MaterialPageRoute(builder: (_) => AceptarVisitaCentro(args));
       case listaVentasSolicitadas:
         return MaterialPageRoute(builder: (_) => ListaVentasSolicitadas());
       case comprasDisponibles:
