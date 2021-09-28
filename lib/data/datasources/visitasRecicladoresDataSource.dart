@@ -7,19 +7,20 @@ import 'package:reciclaje_app/data/model/visitaRecicladorList.dart';
 import 'package:reciclaje_app/data/model/vistaRecicladore.dart';
 import 'package:reciclaje_app/data/network/api_provider.dart';
 
-abstract class VisitasDatasource {
+abstract class VisitasRecicladoresDataSource {
   Future<VentasList> ventasDisponiblesporCentrodeAcopio(String email);
   Future<VisitaReciclador> aplicarVistaVentas(
       VisitaReciclador visitaReciclador);
   Future<VentasList> visitasaceptadas(String email);
   Future<VentasList> ventasAplicadas(String email);
-  Future<VistaRecicladorList> vistasByVentas(int idVenta);
+  Future<VisitaRecicladorList> vistasByVentas(int idVenta);
   Future<Ventas> aceptarVisita(AceptarVisita aceptarVisita);
   Future<dynamic> delSolicitudVisita(int idVisita);
   Future<VentasList> getListaVentasVendidas(String email);
 }
 
-class VisitasDatasourceImpl implements VisitasDatasource {
+class VisitasRecicladoresDataSourceImpl
+    implements VisitasRecicladoresDataSource {
   ApiProvider _apiProvider = ApiProvider();
 
 // pantalla centro de acopio
@@ -65,10 +66,10 @@ class VisitasDatasourceImpl implements VisitasDatasource {
 
 // Reciclador para aplicar o rechazar a la venta
   @override
-  Future<VistaRecicladorList> vistasByVentas(int idVenta) async {
+  Future<VisitaRecicladorList> vistasByVentas(int idVenta) async {
     final response = await _apiProvider.get(
         "/api/v1/visitasRecicladores/visitasByVentas/" + idVenta.toString());
-    return VistaRecicladorList.fromJson(response);
+    return VisitaRecicladorList.fromJson(response);
   }
 
 //Aceptar visita al centro de acopio en reciclador

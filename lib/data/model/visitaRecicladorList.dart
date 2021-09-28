@@ -1,13 +1,13 @@
 import 'package:reciclaje_app/data/model/vistaRecicladore.dart';
 
-class VistaRecicladorList {
+class VisitaRecicladorList {
   final List<VisitaReciclador> visitaReciclador;
 
-  VistaRecicladorList({
+  VisitaRecicladorList({
     this.visitaReciclador,
   });
 
-  factory VistaRecicladorList.fromJson(List<dynamic> parsedJson) {
+  factory VisitaRecicladorList.fromJson(List<dynamic> parsedJson) {
     // ignore: deprecated_member_use
     List<VisitaReciclador> visitaReciclador =
         // ignore: deprecated_member_use
@@ -16,7 +16,7 @@ class VistaRecicladorList {
     visitaReciclador =
         parsedJson.map((i) => VisitaReciclador.fromJson(i)).toList();
 
-    return new VistaRecicladorList(
+    return new VisitaRecicladorList(
       visitaReciclador: visitaReciclador,
     );
   }

@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:reciclaje_app/data/datasources/visitas_datasource.dart';
-import 'package:reciclaje_app/data/model/visitaCivil.dart';
-import 'package:reciclaje_app/data/model/vistasCivilList.dart';
+import 'package:reciclaje_app/data/datasources/visitasRecicladoresDataSource.dart';
+import 'package:reciclaje_app/data/model/visitaRecicladorList.dart';
+import 'package:reciclaje_app/data/model/vistaRecicladore.dart';
 import 'package:reciclaje_app/page/listaVisitasAgendadas.dart';
 import 'package:reciclaje_app/service/preferences.dart';
 import 'package:reciclaje_app/widgets/dialogBox.dart';
-import 'package:reciclaje_app/widgets/navbar.dart';
+import 'package:reciclaje_app/widgets/navbarCentrodeAcopio.dart';
 
 class AgendaCompraCentrodeAcopio extends StatefulWidget {
-  const AgendaCompraCentrodeAcopio({Key key}) : super(key: key);
+  final int idVenta;
+  AgendaCompraCentrodeAcopio(this.idVenta);
   @override
   _AgendaCompraCentrodeAcopioState createState() =>
       _AgendaCompraCentrodeAcopioState();
@@ -22,12 +23,14 @@ class _AgendaCompraCentrodeAcopioState
   DateTime dateTime;
   DateTime hora;
   TimeOfDay timeOfDay;
+  int _idVenta;
   final f = new DateFormat('yyyy-MM-dd');
   String fecha;
   final fromKey = GlobalKey<FormState>();
 
-  VisitasDatasourceImpl visitasDatasourceImpl = new VisitasDatasourceImpl();
-  VisitaCivilList solicitudes = new VisitaCivilList();
+  VisitasRecicladoresDataSourceImpl visitasRecicladoresDataSourceImpl =
+      new VisitasRecicladoresDataSourceImpl();
+  VisitaRecicladorList solicitudes = new VisitaRecicladorList();
 
   Future<String> getEmail() async {
     return await preferencias.obtenerEmail().then((value) async {
@@ -41,12 +44,14 @@ class _AgendaCompraCentrodeAcopioState
     dateTime = DateTime.now();
     timeOfDay = TimeOfDay.now();
     super.initState();
+    _idVenta = this.widget.idVenta;
+    print("idOferta: " + _idVenta.toString());
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: NavBar(),
+      drawer: NavBarCentrodeAcopio(),
       appBar: AppBar(
         backgroundColor: Color.fromRGBO(46, 99, 238, 1),
         title: Text(
@@ -373,18 +378,20 @@ class _AgendaCompraCentrodeAcopioState
                                                       print(fecha);
                                                       print(timeOfDay.minute
                                                           .toString());
-                                                      VisitaCivil visitaCivil =
-                                                          new VisitaCivil(
-                                                              fecha,
-                                                              null,
-                                                              null,
-                                                              _email,
-                                                              null,
-                                                              null,
-                                                              null);
-                                                      visitasDatasourceImpl
-                                                          .nuevaVisita(
-                                                              visitaCivil)
+                                                      print(_idVenta);
+                                                      VisitaReciclador
+                                                          visitaReciclador =
+                                                          new VisitaReciclador();
+                                                      visitaReciclador
+                                                              .emailCentroDeAcopio =
+                                                          _email;
+                                                      visitaReciclador
+                                                          .fechaHora = fecha;
+                                                      visitaReciclador.idventa =
+                                                          _idVenta;
+                                                      visitasRecicladoresDataSourceImpl
+                                                          .aplicarVistaVentas(
+                                                              visitaReciclador)
                                                           .then((value) {
                                                         showDialog(
                                                           context: context,

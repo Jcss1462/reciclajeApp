@@ -4,7 +4,7 @@ import 'package:reciclaje_app/data/model/idVisita.dart';
 import 'package:reciclaje_app/data/model/vistasCivilList.dart';
 import 'package:reciclaje_app/service/preferences.dart';
 import 'package:reciclaje_app/widgets/dialogBox.dart';
-import 'package:reciclaje_app/widgets/navbarCiudadanoCivil.dart';
+import 'package:reciclaje_app/widgets/navbarCentrodeAcopio.dart';
 
 class ListaVistasAgendadas extends StatefulWidget {
   const ListaVistasAgendadas({Key key}) : super(key: key);
@@ -38,7 +38,7 @@ class _ListaVistasAgendadasState extends State<ListaVistasAgendadas> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: NavBarCiudadanoCivil(),
+      drawer: NavBarCentrodeAcopio(),
       appBar: AppBar(
         backgroundColor: Color.fromRGBO(46, 99, 238, 1),
         title: Text(

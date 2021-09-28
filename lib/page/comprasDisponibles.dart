@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:reciclaje_app/core/constants.dart';
-import 'package:reciclaje_app/data/datasources/carroVenta_datasource.dart';
+import 'package:reciclaje_app/data/datasources/visitasRecicladoresDataSource.dart';
 import 'package:reciclaje_app/data/model/ventaList.dart';
+import 'package:reciclaje_app/page/agendaCompraCentrodeAcopio.dart';
 import 'package:reciclaje_app/service/preferences.dart';
 import 'package:reciclaje_app/widgets/dialogBox.dart';
 import 'package:intl/intl.dart';
@@ -20,8 +21,9 @@ class _ComprasDisponiblesState extends State<ComprasDisponibles> {
   String _email;
   final formKey = GlobalKey<FormState>();
   final oCcy = new NumberFormat("#,##0.00", "en_US");
-  CarroVentasDataSourceImpl carroVentasDataSourceImpl =
-      new CarroVentasDataSourceImpl();
+
+  VisitasRecicladoresDataSourceImpl visitasRecicladoresDataSourceImpl =
+      new VisitasRecicladoresDataSourceImpl();
   VentasList ventas = new VentasList();
   @override
   void initState() {
@@ -35,8 +37,10 @@ class _ComprasDisponiblesState extends State<ComprasDisponibles> {
     });
   }
 
-  Future<VentasList> getListVentas() async {
-    return await this.carroVentasDataSourceImpl.misVentas(_email);
+  Future<VentasList> getVentasDisponiblesporCentrodeAcopio() async {
+    return await this
+        .visitasRecicladoresDataSourceImpl
+        .ventasDisponiblesporCentrodeAcopio(_email);
   }
 
   @override
@@ -136,7 +140,7 @@ class _ComprasDisponiblesState extends State<ComprasDisponibles> {
                         return Text('Error: ${snapshot.error}');
                       } else {
                         return FutureBuilder(
-                            future: getListVentas(),
+                            future: getVentasDisponiblesporCentrodeAcopio(),
                             builder:
                                 (BuildContext context, AsyncSnapshot snapshot) {
                               switch (snapshot.connectionState) {
@@ -182,12 +186,12 @@ class _ComprasDisponiblesState extends State<ComprasDisponibles> {
                                                                         context)
                                                                     .size
                                                                     .height /
-                                                                5,
+                                                                4.5,
                                                             //tamaño minimo de altura
                                                             constraints:
                                                                 BoxConstraints(
                                                               minWidth: 150,
-                                                              minHeight: 160,
+                                                              minHeight: 150,
                                                             ),
                                                             padding:
                                                                 EdgeInsets.only(
@@ -447,7 +451,7 @@ class _ComprasDisponiblesState extends State<ComprasDisponibles> {
                                                                                                         ),
                                                                                                       ),
                                                                                                       onPressed: () {
-                                                                                                        Navigator.popAndPushNamed(context, agendaCompraCentrodeAcopio);
+                                                                                                        Navigator.pushNamed(context, agendaCompraCentrodeAcopio, arguments: ventas.ventas[index].idventa);
                                                                                                       },
                                                                                                     )
                                                                                                   ],

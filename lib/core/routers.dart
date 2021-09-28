@@ -81,7 +81,9 @@ class Routers {
       case ofertasCentrodeAcopioReciclador:
         return MaterialPageRoute(builder: (_) => OfertasCentrosdeAcopio());
       case agendaCompraCentrodeAcopio:
-        return MaterialPageRoute(builder: (_) => AgendaCompraCentrodeAcopio());
+        final int args = settings.arguments;
+        return MaterialPageRoute(
+            builder: (_) => AgendaCompraCentrodeAcopio(args));
       case listadeOfertasReciclador:
         return MaterialPageRoute(builder: (_) => ListaOfertasReciclador());
       case listaVentasHechas:
