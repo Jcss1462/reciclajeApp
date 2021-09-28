@@ -31,3 +31,4 @@ const String comprasDisponibles = '/comprasDisponibles';
 const String listaClientesRecicladores = '/listaClientesRecicladores';
 const String solicitantesOfetas = '/solicitantesOfetas';
 const String listaOfertasAplicadas = '/listaOfertasAplicadas';
+const String recuperarContrasena = '/recuperarContrasena';

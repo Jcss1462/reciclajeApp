@@ -309,24 +309,57 @@ class _LoginState extends State<Login> {
                       SizedBox(height: 5),
                       //boton a registro
                       MaterialButton(
-                        height: 40,
-                        minWidth: 220,
-                        color: Colors.white,
-                        textColor: Colors.white,
-                        child: new Text(
-                          "Recuperar contraseña",
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 15,
-                              color: Color.fromRGBO(46, 99, 238, 1)),
-                        ),
-                        //valido y guardo
-                        onPressed: () =>
-                            Navigator.pushNamed(context, registerRoute),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(30.0),
-                        ),
-                      ),
+                          height: 40,
+                          minWidth: 220,
+                          color: Colors.white,
+                          textColor: Colors.white,
+                          child: new Text(
+                            "Recuperar contraseña",
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 15,
+                                color: Color.fromRGBO(46, 99, 238, 1)),
+                          ),
+                          //valido y guardo
+                          onPressed: () {
+                            showDialog(
+                                context: context,
+                                builder: (context) => AlertDialog(
+                                      title: Text(
+                                        "¿Desea recuperara su contraseña?",
+                                        style: TextStyle(
+                                          color: Color.fromRGBO(46, 99, 238, 1),
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 20,
+                                        ),
+                                      ),
+                                      actions: <Widget>[
+                                        TextButton(
+                                          child: Text(
+                                            'Ok',
+                                            style: TextStyle(
+                                              color: Color.fromRGBO(
+                                                  46, 99, 238, 1),
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 15,
+                                            ),
+                                          ),
+                                          onPressed: () {
+                                            Navigator.pop(context);
+                                            Navigator.pushNamed(
+                                                context, recuperarContrasena);
+                                            setState(() {});
+                                          },
+                                        ),
+                                      ],
+                                    )).onError((error, stackTrace) {
+                              showDialog(
+                                  context: context,
+                                  builder: (context) => DialogBox(
+                                      "Error al eliminar la visita",
+                                      error.toString()));
+                            });
+                          }),
                     ],
                   ),
                 ),

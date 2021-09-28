@@ -16,6 +16,7 @@ import 'package:reciclaje_app/page/listaVisitasAgendadas.dart';
 import 'package:reciclaje_app/page/listaVentasSolicitadas.dart';
 import 'package:reciclaje_app/page/listadeOfertasReciclador.dart';
 import 'package:reciclaje_app/page/pageEditar.dart';
+import 'package:reciclaje_app/page/recuperarContrase%C3%B1a.dart';
 import 'package:reciclaje_app/page/rutadelDia.dart';
 import 'package:reciclaje_app/page/donacienenEspera.dart';
 import 'package:reciclaje_app/page/solicitantesOfertas.dart';
@@ -102,6 +103,8 @@ class Routers {
         return MaterialPageRoute(builder: (_) => SolicitantesOfertas(args));
       case listaOfertasAplicadas:
         return MaterialPageRoute(builder: (_) => ListaOfertasAplicadas());
+      case recuperarContrasena:
+        return MaterialPageRoute(builder: (_) => RecuperarContrasena());
       default:
         return MaterialPageRoute(
           builder: (_) => Scaffold(
