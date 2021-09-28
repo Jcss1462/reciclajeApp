@@ -212,7 +212,7 @@ class NavBar extends StatelessWidget {
                 ),
                 ListTile(
                   leading: Icon(
-                    Icons.home_outlined,
+                    Icons.moving_outlined,
                     color: Color.fromRGBO(46, 99, 238, 1),
                   ),
                   title: Text(
@@ -232,14 +232,14 @@ class NavBar extends StatelessWidget {
                     color: Color.fromRGBO(46, 99, 238, 1),
                   ),
                   title: Text(
-                    "Ofertas Aplicadas",
+                    "Home",
                     style: TextStyle(
                         color: Color.fromRGBO(46, 99, 238, 1),
                         fontWeight: FontWeight.normal,
                         fontSize: 18),
                   ),
                   onTap: () {
-                    Navigator.pushNamed(context, listaOfertasAplicadas);
+                    Navigator.pushNamed(context, inicioCentrodeAcopio);
                   },
                 ),
               ],

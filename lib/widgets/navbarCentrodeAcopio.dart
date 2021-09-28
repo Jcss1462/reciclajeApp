@@ -29,140 +29,148 @@ class NavBarCentrodeAcopio extends StatelessWidget {
               ],
             ),
           ),
-          ListTile(
-            leading: Icon(
-              Icons.monetization_on_outlined,
-              color: Color.fromRGBO(46, 99, 238, 1),
-            ),
-            title: Text(
-              "Ofertas de Residuos",
-              style: TextStyle(
-                  color: Color.fromRGBO(46, 99, 238, 1),
-                  fontWeight: FontWeight.normal,
-                  fontSize: 18),
-            ),
-            onTap: () {
-              Navigator.pushNamed(context, fromOfertasCentrodeAcopio);
-            },
-          ),
-          ListTile(
-            leading: Icon(
-              Icons.shop_outlined,
-              color: Color.fromRGBO(46, 99, 238, 1),
-            ),
-            title: Text(
-              "Carro de Ofertas",
-              style: TextStyle(
-                  color: Color.fromRGBO(46, 99, 238, 1),
-                  fontWeight: FontWeight.normal,
-                  fontSize: 18),
-            ),
-            onTap: () {
-              Navigator.pushNamed(context, carrodeOfertas);
-            },
-          ),
-          ListTile(
-            leading: Icon(
-              Icons.person_outline,
-              color: Color.fromRGBO(46, 99, 238, 1),
-            ),
-            title: Text(
-              "Visitas Agendadas",
-              style: TextStyle(
-                  color: Color.fromRGBO(46, 99, 238, 1),
-                  fontWeight: FontWeight.normal,
-                  fontSize: 18),
-            ),
-            onTap: () {
-              Navigator.pushNamed(context, listaClientesRecicladores);
-            },
-          ),
-          ListTile(
-            leading: Icon(
-              Icons.check_box,
-              color: Color.fromRGBO(46, 99, 238, 1),
-            ),
-            title: Text(
-              "Compras Disponibles",
-              style: TextStyle(
-                  color: Color.fromRGBO(46, 99, 238, 1),
-                  fontWeight: FontWeight.normal,
-                  fontSize: 18),
-            ),
-            onTap: () {
-              Navigator.pushNamed(context, listaVisitasAgendadas);
-            },
-          ),
-          ListTile(
-            leading: Icon(
-              Icons.logout,
-              color: Color.fromRGBO(46, 99, 238, 1),
-            ),
-            title: Text(
-              "Log Out",
-              style: TextStyle(
-                  color: Color.fromRGBO(46, 99, 238, 1),
-                  fontWeight: FontWeight.normal,
-                  fontSize: 18),
-            ),
-            onTap: () {
-              showDialog(
-                  context: context,
-                  builder: (context) => AlertDialog(
-                          title: Text(
-                            "Cerrar Sesión",
-                            style: TextStyle(
-                              color: Color.fromRGBO(46, 99, 238, 1),
-                              fontWeight: FontWeight.bold,
-                              fontSize: 20,
-                            ),
-                          ),
-                          content: Text(
-                            "Esta seguro que desea cerrar la sesión",
-                          ),
-                          actions: <Widget>[
-                            TextButton(
-                                child: Text(
-                                  'Ok',
+          Expanded(
+              child: SingleChildScrollView(
+            child: Column(
+              children: [
+                ListTile(
+                  leading: Icon(
+                    Icons.monetization_on_outlined,
+                    color: Color.fromRGBO(46, 99, 238, 1),
+                  ),
+                  title: Text(
+                    "Ofertas de Residuos",
+                    style: TextStyle(
+                        color: Color.fromRGBO(46, 99, 238, 1),
+                        fontWeight: FontWeight.normal,
+                        fontSize: 18),
+                  ),
+                  onTap: () {
+                    Navigator.pushNamed(context, fromOfertasCentrodeAcopio);
+                  },
+                ),
+                ListTile(
+                  leading: Icon(
+                    Icons.shop_outlined,
+                    color: Color.fromRGBO(46, 99, 238, 1),
+                  ),
+                  title: Text(
+                    "Carro de Ofertas",
+                    style: TextStyle(
+                        color: Color.fromRGBO(46, 99, 238, 1),
+                        fontWeight: FontWeight.normal,
+                        fontSize: 18),
+                  ),
+                  onTap: () {
+                    Navigator.pushNamed(context, carrodeOfertas);
+                  },
+                ),
+                ListTile(
+                  leading: Icon(
+                    Icons.person_outline,
+                    color: Color.fromRGBO(46, 99, 238, 1),
+                  ),
+                  title: Text(
+                    "Visitas Agendadas",
+                    style: TextStyle(
+                        color: Color.fromRGBO(46, 99, 238, 1),
+                        fontWeight: FontWeight.normal,
+                        fontSize: 18),
+                  ),
+                  onTap: () {
+                    Navigator.pushNamed(context, listaClientesRecicladores);
+                  },
+                ),
+                ListTile(
+                  leading: Icon(
+                    Icons.check_box,
+                    color: Color.fromRGBO(46, 99, 238, 1),
+                  ),
+                  title: Text(
+                    "Compras Disponibles",
+                    style: TextStyle(
+                        color: Color.fromRGBO(46, 99, 238, 1),
+                        fontWeight: FontWeight.normal,
+                        fontSize: 18),
+                  ),
+                  onTap: () {
+                    Navigator.pushNamed(context, listaVisitasAgendadas);
+                  },
+                ),
+                ListTile(
+                  leading: Icon(
+                    Icons.logout,
+                    color: Color.fromRGBO(46, 99, 238, 1),
+                  ),
+                  title: Text(
+                    "Log Out",
+                    style: TextStyle(
+                        color: Color.fromRGBO(46, 99, 238, 1),
+                        fontWeight: FontWeight.normal,
+                        fontSize: 18),
+                  ),
+                  onTap: () {
+                    showDialog(
+                        context: context,
+                        builder: (context) => AlertDialog(
+                                title: Text(
+                                  "Cerrar Sesión",
                                   style: TextStyle(
                                     color: Color.fromRGBO(46, 99, 238, 1),
                                     fontWeight: FontWeight.bold,
-                                    fontSize: 15,
+                                    fontSize: 20,
                                   ),
                                 ),
-                                onPressed: () {
-                                  //eliminamos todas las preferencias y re dirigimos a Login
-                                  Preferences preferences = new Preferences();
-                                  preferences
-                                      .eliminarPreferencias()
-                                      .then((value) {
-                                    Navigator.of(context)
-                                        .popUntil((route) => route.isFirst);
-                                  }).onError((error, stackTrace) {
-                                    showDialog(
-                                      context: context,
-                                      builder: (context) => DialogBox(
-                                          "Error al cerrar sesión",
-                                          error.toString()),
-                                    );
-                                  });
-                                }),
-                            TextButton(
-                              child: Text(
-                                "Cancelar",
-                                style: TextStyle(
-                                  color: Color.fromRGBO(46, 99, 238, 1),
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 15,
+                                content: Text(
+                                  "Esta seguro que desea cerrar la sesión",
                                 ),
-                              ),
-                              onPressed: () {
-                                Navigator.pop(context);
-                              },
-                            )
-                          ]));
-            },
-          ),
+                                actions: <Widget>[
+                                  TextButton(
+                                      child: Text(
+                                        'Ok',
+                                        style: TextStyle(
+                                          color: Color.fromRGBO(46, 99, 238, 1),
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 15,
+                                        ),
+                                      ),
+                                      onPressed: () {
+                                        //eliminamos todas las preferencias y re dirigimos a Login
+                                        Preferences preferences =
+                                            new Preferences();
+                                        preferences
+                                            .eliminarPreferencias()
+                                            .then((value) {
+                                          Navigator.of(context).popUntil(
+                                              (route) => route.isFirst);
+                                        }).onError((error, stackTrace) {
+                                          showDialog(
+                                            context: context,
+                                            builder: (context) => DialogBox(
+                                                "Error al cerrar sesión",
+                                                error.toString()),
+                                          );
+                                        });
+                                      }),
+                                  TextButton(
+                                    child: Text(
+                                      "Cancelar",
+                                      style: TextStyle(
+                                        color: Color.fromRGBO(46, 99, 238, 1),
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 15,
+                                      ),
+                                    ),
+                                    onPressed: () {
+                                      Navigator.pop(context);
+                                    },
+                                  )
+                                ]));
+                  },
+                ),
+              ],
+            ),
+          ))
         ],
       ),
     );
