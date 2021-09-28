@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:reciclaje_app/core/constants.dart';
 import 'package:reciclaje_app/data/datasources/visitasRecicladoresDataSource.dart';
 import 'package:reciclaje_app/data/model/ventaList.dart';
-import 'package:reciclaje_app/page/agendaCompraCentrodeAcopio.dart';
 import 'package:reciclaje_app/service/preferences.dart';
 import 'package:reciclaje_app/widgets/dialogBox.dart';
 import 'package:intl/intl.dart';

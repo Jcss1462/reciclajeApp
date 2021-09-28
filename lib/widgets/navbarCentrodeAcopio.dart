@@ -67,7 +67,7 @@ class NavBarCentrodeAcopio extends StatelessWidget {
               color: Color.fromRGBO(46, 99, 238, 1),
             ),
             title: Text(
-              "Clientes",
+              "Visitas Agendadas",
               style: TextStyle(
                   color: Color.fromRGBO(46, 99, 238, 1),
                   fontWeight: FontWeight.normal,
@@ -79,7 +79,7 @@ class NavBarCentrodeAcopio extends StatelessWidget {
           ),
           ListTile(
             leading: Icon(
-              Icons.shopping_cart_outlined,
+              Icons.check_box,
               color: Color.fromRGBO(46, 99, 238, 1),
             ),
             title: Text(
@@ -90,7 +90,7 @@ class NavBarCentrodeAcopio extends StatelessWidget {
                   fontSize: 18),
             ),
             onTap: () {
-              Navigator.pushNamed(context, comprasDisponibles);
+              Navigator.pushNamed(context, listaVisitasAgendadas);
             },
           ),
           ListTile(
