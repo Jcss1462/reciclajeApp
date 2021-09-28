@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:reciclaje_app/data/datasources/visitas_datasource.dart';
-import 'package:reciclaje_app/data/model/vistasCivilList.dart';
+import 'package:reciclaje_app/data/datasources/visitasRecicladoresDataSource.dart';
+import 'package:reciclaje_app/data/model/ventaList.dart';
 import 'package:reciclaje_app/service/preferences.dart';
 import 'package:reciclaje_app/widgets/dialogBox.dart';
 import 'package:reciclaje_app/widgets/navbar.dart';
@@ -15,8 +15,9 @@ class ListaVentasHechas extends StatefulWidget {
 class _ListaVentasHechasState extends State<ListaVentasHechas> {
   Preferences preferencias = new Preferences();
   String _email;
-  VisitasDatasourceImpl visitasDatasourceImpl = new VisitasDatasourceImpl();
-  VisitaCivilList solicitudes = new VisitaCivilList();
+  VisitasRecicladoresDataSourceImpl visitasRecicladoresDataSourceImpl =
+      new VisitasRecicladoresDataSourceImpl();
+  VentasList ventasList = new VentasList();
 
   @override
   void initState() {
@@ -30,8 +31,10 @@ class _ListaVentasHechasState extends State<ListaVentasHechas> {
     });
   }
 
-  Future<VisitaCivilList> getMisVisitasActivas() async {
-    return await this.visitasDatasourceImpl.misVisitasActivasCivil(_email);
+  Future<VentasList> getListaVentaVendidas() async {
+    return await this
+        .visitasRecicladoresDataSourceImpl
+        .getListaVentasVendidas(_email);
   }
 
   @override
@@ -156,7 +159,7 @@ class _ListaVentasHechasState extends State<ListaVentasHechas> {
                       );
                     } else {
                       return FutureBuilder(
-                        future: getMisVisitasActivas(),
+                        future: getListaVentaVendidas(),
                         builder:
                             (BuildContext context, AsyncSnapshot snapshot) {
                           switch (snapshot.connectionState) {
@@ -166,7 +169,7 @@ class _ListaVentasHechasState extends State<ListaVentasHechas> {
                               if (snapshot.hasError) {
                                 return Text('Error: ${snapshot.error}');
                               } else {
-                                this.solicitudes = snapshot.data;
+                                this.ventasList = snapshot.data;
                                 return Container(
                                   width: MediaQuery.of(context).size.width,
                                   height: MediaQuery.of(context).size.height,
@@ -180,7 +183,7 @@ class _ListaVentasHechasState extends State<ListaVentasHechas> {
                                             physics:
                                                 const NeverScrollableScrollPhysics(),
                                             itemCount:
-                                                this.solicitudes.visitas.length,
+                                                this.ventasList.ventas.length,
                                             shrinkWrap: true,
                                             itemBuilder: (context, index) {
                                               return Column(
@@ -201,7 +204,7 @@ class _ListaVentasHechasState extends State<ListaVentasHechas> {
                                                       constraints:
                                                           BoxConstraints(
                                                         minWidth: 300,
-                                                        minHeight: 180,
+                                                        minHeight: 120,
                                                       ),
                                                       padding: EdgeInsets.only(
                                                           top: 20.0,
@@ -256,12 +259,12 @@ class _ListaVentasHechasState extends State<ListaVentasHechas> {
                                                                     ),
                                                                   ),
                                                                   Text(
-                                                                    solicitudes.visitas[index].emailRecolector ==
+                                                                    ventasList.ventas[index].emailCentroAcopio ==
                                                                             null
                                                                         ? ""
-                                                                        : solicitudes
-                                                                            .visitas[index]
-                                                                            .emailRecolector,
+                                                                        : ventasList
+                                                                            .ventas[index]
+                                                                            .emailCentroAcopio,
                                                                     textAlign:
                                                                         TextAlign
                                                                             .left,
@@ -292,7 +295,7 @@ class _ListaVentasHechasState extends State<ListaVentasHechas> {
                                                               child: Row(
                                                                 children: [
                                                                   Text(
-                                                                    "Fecha y Hora: ",
+                                                                    "Peso: ",
                                                                     textAlign:
                                                                         TextAlign
                                                                             .left,
@@ -312,19 +315,11 @@ class _ListaVentasHechasState extends State<ListaVentasHechas> {
                                                                     ),
                                                                   ),
                                                                   Text(
-                                                                    solicitudes
-                                                                            .visitas[
-                                                                                index]
-                                                                            .fechaHora
-                                                                            .substring(0,
-                                                                                10) +
-                                                                        "     " +
-                                                                        solicitudes
-                                                                            .visitas[
-                                                                                index]
-                                                                            .fechaHora
-                                                                            .substring(11,
-                                                                                16),
+                                                                    ventasList
+                                                                        .ventas[
+                                                                            index]
+                                                                        .peso
+                                                                        .toString(),
                                                                     textAlign:
                                                                         TextAlign
                                                                             .left,
@@ -352,7 +347,7 @@ class _ListaVentasHechasState extends State<ListaVentasHechas> {
                                                             Row(
                                                               children: [
                                                                 Text(
-                                                                  "Estado: ",
+                                                                  "Precio por Kg: ",
                                                                   textAlign:
                                                                       TextAlign
                                                                           .left,
@@ -372,21 +367,22 @@ class _ListaVentasHechasState extends State<ListaVentasHechas> {
                                                                   ),
                                                                 ),
                                                                 Text(
-                                                                  solicitudes
-                                                                      .visitas[
+                                                                  ventasList
+                                                                      .ventas[
                                                                           index]
-                                                                      .estado,
+                                                                      .precioPorKiloTipo
+                                                                      .toString(),
                                                                   textAlign:
                                                                       TextAlign
                                                                           .left,
                                                                   style:
                                                                       TextStyle(
-                                                                    color: solicitudes.visitas[index].idEstadoVisita ==
-                                                                            2
-                                                                        ? Colors
-                                                                            .orange
-                                                                        : Colors
-                                                                            .green,
+                                                                    color: Color
+                                                                        .fromRGBO(
+                                                                            46,
+                                                                            99,
+                                                                            238,
+                                                                            1),
                                                                     fontWeight:
                                                                         FontWeight
                                                                             .bold,

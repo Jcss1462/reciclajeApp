@@ -515,7 +515,7 @@ class _AceptarVisitaCentroState extends State<AceptarVisitaCentro> {
                                                                                                           ),
                                                                                                           onPressed: () {
                                                                                                             Navigator.pop(context);
-                                                                                                            Navigator.pop(context);
+                                                                                                            Navigator.pushNamed(context, listaVentasSolicitadas);
                                                                                                             setState(() {});
                                                                                                           },
                                                                                                         ),
