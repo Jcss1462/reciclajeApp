@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:reciclaje_app/core/constants.dart';
 import 'package:reciclaje_app/data/datasources/visitasRecicladoresDataSource.dart';
+import 'package:reciclaje_app/data/model/aceptarVista.dart';
 import 'package:reciclaje_app/data/model/visitaRecicladorList.dart';
 import 'package:reciclaje_app/service/preferences.dart';
 import 'package:reciclaje_app/widgets/dialogBox.dart';
@@ -358,7 +360,7 @@ class _AceptarVisitaCentroState extends State<AceptarVisitaCentro> {
                                                                               context: context,
                                                                               builder: (context) => AlertDialog(
                                                                                     title: Text(
-                                                                                      "Aceptando Visita",
+                                                                                      "Aceptando Venta",
                                                                                       style: TextStyle(
                                                                                         color: Color.fromRGBO(46, 99, 238, 1),
                                                                                         fontWeight: FontWeight.bold,
@@ -389,8 +391,8 @@ class _AceptarVisitaCentroState extends State<AceptarVisitaCentro> {
                                                                                           ),
                                                                                         ),
                                                                                         onPressed: () {
-                                                                                          /*AceptarSolicitud aceptarSolicitud = new AceptarSolicitud(visitaRecicladorList.visitaReciclador[index].idcarroDonacion, solicitudes.solicituddeRecoleccion[index].emailReciclador);
-                                                                                          this.recoleccionDonacionDataSourceImpl.aceptarSolicitud(aceptarSolicitud).then((value) {
+                                                                                          AceptarVisita aceptarVisita = new AceptarVisita(visitaRecicladorList.visitaReciclador[index].idvisitareciclador);
+                                                                                          this.visitasRecicladoresDataSourceImpl.aceptarVisita(aceptarVisita).then((value) {
                                                                                             showDialog(
                                                                                                 context: context,
                                                                                                 builder: (context) => AlertDialog(
@@ -413,7 +415,7 @@ class _AceptarVisitaCentroState extends State<AceptarVisitaCentro> {
                                                                                                             ),
                                                                                                           ),
                                                                                                           onPressed: () {
-                                                                                                            Navigator.pushNamed(context, carrodeDonacionCivil);
+                                                                                                            Navigator.pushNamed(context, listaVentasSolicitadas);
                                                                                                             setState(() {});
                                                                                                           },
                                                                                                         ),
@@ -422,7 +424,6 @@ class _AceptarVisitaCentroState extends State<AceptarVisitaCentro> {
                                                                                           }).onError((error, stackTrace) {
                                                                                             showDialog(context: context, builder: (context) => DialogBox("Error al eliminar la visita", error.toString()));
                                                                                           });
-                                                                                        */
                                                                                         },
                                                                                       ),
                                                                                     ],
@@ -455,7 +456,6 @@ class _AceptarVisitaCentroState extends State<AceptarVisitaCentro> {
                                                                         ),
                                                                         onPressed:
                                                                             () {
-                                                                          /*
                                                                           showDialog(
                                                                               context: context,
                                                                               builder: (context) => AlertDialog(
@@ -491,7 +491,7 @@ class _AceptarVisitaCentroState extends State<AceptarVisitaCentro> {
                                                                                           ),
                                                                                         ),
                                                                                         onPressed: () {
-                                                                                          this.recoleccionDonacionDataSourceImpl.eliminarSolicitud(solicitudes.solicituddeRecoleccion[index].idsolicitud).then((value) {
+                                                                                          this.visitasRecicladoresDataSourceImpl.delSolicitudVisita(visitaRecicladorList.visitaReciclador[index].idvisitareciclador).then((value) {
                                                                                             showDialog(
                                                                                                 context: context,
                                                                                                 builder: (context) => AlertDialog(
@@ -528,7 +528,6 @@ class _AceptarVisitaCentroState extends State<AceptarVisitaCentro> {
                                                                                       ),
                                                                                     ],
                                                                                   ));
-                                                                        */
                                                                         },
                                                                       ),
                                                                       SizedBox(
