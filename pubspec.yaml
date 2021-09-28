@@ -50,8 +50,8 @@ dev_dependencies:
 flutter_icons:
   android: 'launcher_icon'
   ios: false
-  image_path: 'assets/images/iconApp.png'
-  adaptive_icon_background: 'assets/images/iconApp.png'
+  image_path: 'assets/images/iconApp2.png'
+  adaptive_icon_background: 'assets/images/iconApp2.png'
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -67,6 +67,7 @@ flutter:
     - assets/images/background.png
     - assets/images/fondo.png
     - assets/images/iconApp.png
+    - assets/images/iconApp2.png
     - .env
     
 

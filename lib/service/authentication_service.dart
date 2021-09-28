@@ -24,4 +24,8 @@ class AutenticationService {
   Future<void> sendEmailVerification() async {
     await _firebaseAuth.currentUser.sendEmailVerification();
   }
+
+  Future<void> restablecerPassword({String email}) async {
+    await _firebaseAuth.sendPasswordResetEmail(email: email);
+  }
 }

@@ -307,7 +307,7 @@ class _LoginState extends State<Login> {
                       SizedBox(height: 30),
                       Text("¿Olvidaste tu contraseña?"),
                       SizedBox(height: 5),
-                      //boton a registro
+                      //botonde recuperar contraseña
                       MaterialButton(
                           height: 40,
                           minWidth: 220,
@@ -322,44 +322,12 @@ class _LoginState extends State<Login> {
                           ),
                           //valido y guardo
                           onPressed: () {
-                            showDialog(
-                                context: context,
-                                builder: (context) => AlertDialog(
-                                      title: Text(
-                                        "¿Desea recuperara su contraseña?",
-                                        style: TextStyle(
-                                          color: Color.fromRGBO(46, 99, 238, 1),
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 20,
-                                        ),
-                                      ),
-                                      actions: <Widget>[
-                                        TextButton(
-                                          child: Text(
-                                            'Ok',
-                                            style: TextStyle(
-                                              color: Color.fromRGBO(
-                                                  46, 99, 238, 1),
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: 15,
-                                            ),
-                                          ),
-                                          onPressed: () {
-                                            Navigator.pop(context);
-                                            Navigator.pushNamed(
-                                                context, recuperarContrasena);
-                                            setState(() {});
-                                          },
-                                        ),
-                                      ],
-                                    )).onError((error, stackTrace) {
-                              showDialog(
-                                  context: context,
-                                  builder: (context) => DialogBox(
-                                      "Error al eliminar la visita",
-                                      error.toString()));
-                            });
-                          }),
+                            Navigator.pushNamed(context, recuperarContrasena);
+                            setState(() {});
+                          },
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(30.0),
+                          )),
                     ],
                   ),
                 ),
