@@ -2,9 +2,10 @@ import 'package:http/http.dart' as http;
 import 'package:reciclaje_app/data/model/place.dart';
 import 'dart:convert' as convert;
 import 'package:reciclaje_app/data/model/placeSearch.dart';
+import 'package:reciclaje_app/globalVariables/globalVariables.dart';
 
 class PlacesService {
-  final key = '';
+  final key = apiKeYMaps;
 
   Future<List<PlaceSearch>> getAutocomplete(String search) async {
     var url = Uri.parse(
