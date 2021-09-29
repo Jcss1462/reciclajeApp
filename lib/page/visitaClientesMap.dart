@@ -362,7 +362,7 @@ class _VisitaClientesMapState extends State<VisitaClientesMap> {
                                             child: GoogleMap(
                                               markers: Set<Marker>.of(
                                                   markers.values),
-                                              mapType: MapType.satellite,
+                                              mapType: MapType.normal,
                                               myLocationEnabled: true,
                                               initialCameraPosition:
                                                   CameraPosition(
