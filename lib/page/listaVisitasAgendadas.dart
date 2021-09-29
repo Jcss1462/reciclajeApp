@@ -177,7 +177,7 @@ class _ListaVistasAgendadasState extends State<ListaVistasAgendadas> {
                                                       constraints:
                                                           BoxConstraints(
                                                         minWidth: 300,
-                                                        minHeight: 180,
+                                                        minHeight: 150,
                                                       ),
                                                       padding: EdgeInsets.only(
                                                           top: 20.0,

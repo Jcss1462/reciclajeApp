@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:reciclaje_app/core/constants.dart';
 import 'package:reciclaje_app/data/datasources/visitasRecicladoresDataSource.dart';
 import 'package:reciclaje_app/data/model/visitaRecicladorList.dart';
 import 'package:reciclaje_app/data/model/vistaRecicladore.dart';
@@ -436,10 +437,9 @@ class _AgendaCompraCentrodeAcopioState
                                                                   ),
                                                                   onPressed:
                                                                       () {
-                                                                    Navigator.pop(
-                                                                        context);
-                                                                    Navigator.pop(
-                                                                        context);
+                                                                    Navigator.pushNamed(
+                                                                        context,
+                                                                        comprasDisponibles);
                                                                   },
                                                                 ),
                                                               ]),
