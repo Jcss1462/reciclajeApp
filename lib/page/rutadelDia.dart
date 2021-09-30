@@ -9,6 +9,7 @@ import 'package:reciclaje_app/data/datasources/recoleccionDonacion_datasource.da
 import 'package:reciclaje_app/data/model/carrodeDonacion.dart';
 import 'package:reciclaje_app/data/model/carrodeDonacionList.dart';
 import 'package:reciclaje_app/data/model/idCarrdodeDonacion.dart';
+import 'package:reciclaje_app/globalVariables/globalVariables.dart';
 import 'package:reciclaje_app/service/geolocator.dart';
 import 'package:reciclaje_app/service/preferences.dart';
 import 'package:reciclaje_app/widgets/dialogBox.dart';
@@ -129,7 +130,7 @@ class _RutadelDiaState extends State<RutadelDia> {
       if (i < cordenadas.length - 1) {
         print("Se inicia a pintar");
         PolylineResult result = await polylinePoints.getRouteBetweenCoordinates(
-            "",
+            apiKeYMaps,
             PointLatLng(cordenadas[i].latitude, cordenadas[i].longitude),
             PointLatLng(
                 cordenadas[i + 1].latitude, cordenadas[i + 1].longitude),
