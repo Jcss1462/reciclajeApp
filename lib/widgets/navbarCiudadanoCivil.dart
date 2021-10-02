@@ -49,7 +49,7 @@ class NavBarCiudadanoCivil extends StatelessWidget {
                     Navigator.pushNamed(context, formAgendaVisitaCivil);
                   },
                 ),
-                /* ListTile(
+                ListTile(
                   leading: Icon(
                     Icons.perm_contact_calendar_outlined,
                     color: Color.fromRGBO(46, 99, 238, 1),
@@ -62,9 +62,9 @@ class NavBarCiudadanoCivil extends StatelessWidget {
                         fontSize: 18),
                   ),
                   onTap: () {
-                    Navigator.pushNamed(context, visitaAgendada);
+                    Navigator.pushNamed(context, listasVistaAgendadparaCivil);
                   },
-                ),*/
+                ),
                 ListTile(
                   leading: Icon(
                     Icons.shop_outlined,

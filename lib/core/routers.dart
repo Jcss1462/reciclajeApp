@@ -12,6 +12,7 @@ import 'package:reciclaje_app/page/listOfertasAplicadas.dart';
 import 'package:reciclaje_app/page/listaClientesRecicladores.dart';
 import 'package:reciclaje_app/page/listaRecicladores.dart';
 import 'package:reciclaje_app/page/listaVentasHechas.dart';
+import 'package:reciclaje_app/page/listaVisitasAgendadparaCivil.dart';
 import 'package:reciclaje_app/page/listaVisitasAgendadas.dart';
 import 'package:reciclaje_app/page/listaVentasSolicitadas.dart';
 import 'package:reciclaje_app/page/listadeOfertasReciclador.dart';
@@ -105,6 +106,9 @@ class Routers {
         return MaterialPageRoute(builder: (_) => ListaOfertasAplicadas());
       case recuperarContrasena:
         return MaterialPageRoute(builder: (_) => RecuperarContrasena());
+      case listasVistaAgendadparaCivil:
+        return MaterialPageRoute(
+            builder: (_) => ListaVistasAgendadasparaCivil());
       default:
         return MaterialPageRoute(
           builder: (_) => Scaffold(

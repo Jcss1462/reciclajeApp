@@ -3,7 +3,7 @@ import 'package:intl/intl.dart';
 import 'package:reciclaje_app/data/datasources/visitas_datasource.dart';
 import 'package:reciclaje_app/data/model/visitaCivil.dart';
 import 'package:reciclaje_app/data/model/vistasCivilList.dart';
-import 'package:reciclaje_app/page/listaVisitasAgendadas.dart';
+import 'package:reciclaje_app/page/listaVisitasAgendadparaCivil.dart';
 import 'package:reciclaje_app/service/preferences.dart';
 import 'package:reciclaje_app/widgets/dialogBox.dart';
 import 'package:reciclaje_app/widgets/navbarCiudadanoCivil.dart';
@@ -60,7 +60,7 @@ class _FormAgendaVisitaCivilState extends State<FormAgendaVisitaCivil> {
               Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => ListaVistasAgendadas()));
+                      builder: (context) => ListaVistasAgendadasparaCivil()));
             },
           ),
           IconButton(
