@@ -43,7 +43,7 @@ class _VisitaDisponibleProgramadaState
       appBar: AppBar(
         backgroundColor: Color.fromRGBO(46, 99, 238, 1),
         title: Text(
-          "Visita a Disponibles a Programar",
+          "Visita Disponibles a Programar",
           style: TextStyle(
               color: Colors.white, fontWeight: FontWeight.bold, fontSize: 20),
         ),
@@ -226,30 +226,35 @@ class _VisitaDisponibleProgramadaState
                                                         SizedBox(
                                                           height: 2,
                                                         ),
-                                                        Row(
-                                                          children: [
-                                                            Text(
-                                                              solicitudes
-                                                                  .visitas[
-                                                                      index]
-                                                                  .emailPropietario,
-                                                              textAlign:
-                                                                  TextAlign
-                                                                      .left,
-                                                              style: TextStyle(
-                                                                color: Color
-                                                                    .fromRGBO(
-                                                                        46,
-                                                                        99,
-                                                                        238,
-                                                                        1),
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .normal,
-                                                                fontSize: 18,
-                                                              ),
-                                                            )
-                                                          ],
+                                                        SingleChildScrollView(
+                                                          scrollDirection:
+                                                              Axis.horizontal,
+                                                          child: Row(
+                                                            children: [
+                                                              Text(
+                                                                solicitudes
+                                                                    .visitas[
+                                                                        index]
+                                                                    .emailPropietario,
+                                                                textAlign:
+                                                                    TextAlign
+                                                                        .left,
+                                                                style:
+                                                                    TextStyle(
+                                                                  color: Color
+                                                                      .fromRGBO(
+                                                                          46,
+                                                                          99,
+                                                                          238,
+                                                                          1),
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .normal,
+                                                                  fontSize: 18,
+                                                                ),
+                                                              )
+                                                            ],
+                                                          ),
                                                         ),
                                                         SizedBox(
                                                           height: 6,
