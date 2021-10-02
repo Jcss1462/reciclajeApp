@@ -99,6 +99,22 @@ class NavBarCentrodeAcopio extends StatelessWidget {
                 ),
                 ListTile(
                   leading: Icon(
+                    Icons.home_outlined,
+                    color: Color.fromRGBO(46, 99, 238, 1),
+                  ),
+                  title: Text(
+                    "Home",
+                    style: TextStyle(
+                        color: Color.fromRGBO(46, 99, 238, 1),
+                        fontWeight: FontWeight.normal,
+                        fontSize: 18),
+                  ),
+                  onTap: () {
+                    Navigator.pushNamed(context, inicioCentrodeAcopio);
+                  },
+                ),
+                ListTile(
+                  leading: Icon(
                     Icons.logout,
                     color: Color.fromRGBO(46, 99, 238, 1),
                   ),
