@@ -180,7 +180,7 @@ class NavBar extends StatelessWidget {
                 ),
                 ListTile(
                   leading: Icon(
-                    Icons.shop_2_outlined,
+                    Icons.shop_outlined,
                     color: Color.fromRGBO(46, 99, 238, 1),
                   ),
                   title: Text(
@@ -212,7 +212,7 @@ class NavBar extends StatelessWidget {
                 ),
                 ListTile(
                   leading: Icon(
-                    Icons.moving_outlined,
+                    Icons.money_outlined,
                     color: Color.fromRGBO(46, 99, 238, 1),
                   ),
                   title: Text(
@@ -239,7 +239,7 @@ class NavBar extends StatelessWidget {
                         fontSize: 18),
                   ),
                   onTap: () {
-                    Navigator.pushNamed(context, inicioCentrodeAcopio);
+                    Navigator.pushNamed(context, inicioReciclador);
                   },
                 ),
               ],
