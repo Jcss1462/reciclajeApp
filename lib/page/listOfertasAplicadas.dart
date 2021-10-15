@@ -40,7 +40,7 @@ class _ListaOfertasAplicadasState extends State<ListaOfertasAplicadas> {
       appBar: AppBar(
         backgroundColor: Color.fromRGBO(46, 99, 238, 1),
         title: Text(
-          "Lista de Ofertas",
+          "Ofertas Aplicadas",
           style: TextStyle(
               color: Colors.white, fontWeight: FontWeight.bold, fontSize: 20),
         ),

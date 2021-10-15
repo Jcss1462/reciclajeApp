@@ -88,7 +88,7 @@ class NavBar extends StatelessWidget {
                     color: Color.fromRGBO(46, 99, 238, 1),
                   ),
                   title: Text(
-                    "Ruta del Dia",
+                    "Ruta del Día",
                     style: TextStyle(
                         color: Color.fromRGBO(46, 99, 238, 1),
                         fontWeight: FontWeight.normal,

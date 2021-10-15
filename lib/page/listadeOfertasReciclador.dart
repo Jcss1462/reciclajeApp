@@ -50,6 +50,11 @@ class _ListaOfertasRecicladorState extends State<ListaOfertasReciclador> {
         ),
         actions: <Widget>[
           IconButton(
+              icon: Icon(Icons.money_outlined, color: Colors.white),
+              onPressed: () {
+                Navigator.pushNamed(context, listaOfertasAplicadas);
+              }),
+          IconButton(
               icon: Icon(Icons.logout, color: Colors.white),
               onPressed: () {
                 showDialog(

@@ -367,7 +367,7 @@ class _RutadelDiaState extends State<RutadelDia> {
       appBar: AppBar(
         backgroundColor: Color.fromRGBO(46, 99, 238, 1),
         title: Text(
-          "Ruta del Dia",
+          "Ruta del Día",
           style: TextStyle(
               color: Colors.white, fontWeight: FontWeight.bold, fontSize: 20),
         ),
