@@ -63,11 +63,15 @@ class _RutadelDiaState extends State<RutadelDia> {
   Future<List<Coordinates>> getCoordenadas(
       CarrodeDonacionList solicitudes) async {
     for (int i = 0; i < solicitudes.solicitudes.length; i++) {
-      var coordenadas = await Geocoder.google(apiKeYMaps)
-          .findAddressesFromQuery(
-              solicitudes.solicitudes[i].direccionRecoleccion);
-      var direcion = coordenadas.first;
-      coordinates.add(direcion.coordinates);
+      try {
+        var coordenadas = await Geocoder.google(apiKeYMaps)
+            .findAddressesFromQuery(
+                solicitudes.solicitudes[i].direccionRecoleccion);
+        var direcion = coordenadas.first;
+        coordinates.add(direcion.coordinates);
+      } catch (e) {
+        print("error");
+      }
     }
     //setPolylines(coordinates);
     return coordinates;

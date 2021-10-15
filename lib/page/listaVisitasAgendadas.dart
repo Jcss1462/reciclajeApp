@@ -152,287 +152,267 @@ class _ListaVistasAgendadasState extends State<ListaVistasAgendadas> {
                                         mainAxisAlignment:
                                             MainAxisAlignment.center,
                                         children: [
-                                          ListView.builder(
-                                            physics:
-                                                const NeverScrollableScrollPhysics(),
-                                            itemCount:
-                                                this.ventasList.ventas.length,
-                                            shrinkWrap: true,
-                                            itemBuilder: (context, index) {
-                                              return Column(
-                                                children: [
-                                                  Card(
-                                                    elevation: 5,
-                                                    child: Container(
-                                                      width:
-                                                          MediaQuery.of(context)
-                                                                  .size
-                                                                  .width -
-                                                              80,
-                                                      height:
-                                                          MediaQuery.of(context)
-                                                                  .size
-                                                                  .height /
-                                                              7,
-                                                      constraints:
-                                                          BoxConstraints(
-                                                        minWidth: 300,
-                                                        minHeight: 150,
-                                                      ),
-                                                      padding: EdgeInsets.only(
-                                                          top: 20.0,
-                                                          bottom: 20.0,
-                                                          left: 20,
-                                                          right: 20),
-                                                      decoration: BoxDecoration(
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(10),
-                                                          color: Colors.white,
-                                                          boxShadow: [
-                                                            BoxShadow(
-                                                              color: Colors.grey
-                                                                  .withOpacity(
-                                                                      0.25),
-                                                              spreadRadius: 5,
-                                                              offset:
-                                                                  Offset(0, 3),
+                                          this.ventasList.ventas.length == 0
+                                              ? Text(
+                                                  "No tienes visitas agendadas",
+                                                  style: TextStyle(
+                                                    fontWeight: FontWeight.bold,
+                                                    fontSize: 15,
+                                                  ),
+                                                )
+                                              : ListView.builder(
+                                                  physics:
+                                                      const NeverScrollableScrollPhysics(),
+                                                  itemCount: this
+                                                      .ventasList
+                                                      .ventas
+                                                      .length,
+                                                  shrinkWrap: true,
+                                                  itemBuilder:
+                                                      (context, index) {
+                                                    return Column(
+                                                      children: [
+                                                        Card(
+                                                          elevation: 5,
+                                                          child: Container(
+                                                            width: MediaQuery.of(
+                                                                        context)
+                                                                    .size
+                                                                    .width -
+                                                                80,
+                                                            height: MediaQuery.of(
+                                                                        context)
+                                                                    .size
+                                                                    .height /
+                                                                7,
+                                                            constraints:
+                                                                BoxConstraints(
+                                                              minWidth: 300,
+                                                              minHeight: 150,
                                                             ),
-                                                          ]),
-                                                      child:
-                                                          SingleChildScrollView(
-                                                        child: Column(
-                                                          children: <Widget>[
-                                                            SingleChildScrollView(
-                                                              scrollDirection:
-                                                                  Axis.horizontal,
-                                                              child: Row(
-                                                                children: [
-                                                                  Text(
-                                                                    "Reciclador: ",
-                                                                    textAlign:
-                                                                        TextAlign
-                                                                            .left,
-                                                                    overflow:
-                                                                        TextOverflow
-                                                                            .ellipsis,
-                                                                    style:
-                                                                        TextStyle(
-                                                                      color: Color
-                                                                          .fromRGBO(
-                                                                              46,
-                                                                              99,
-                                                                              238,
-                                                                              1),
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .bold,
-                                                                      fontSize:
-                                                                          18,
+                                                            padding:
+                                                                EdgeInsets.only(
+                                                                    top: 20.0,
+                                                                    bottom:
+                                                                        20.0,
+                                                                    left: 20,
+                                                                    right: 20),
+                                                            decoration: BoxDecoration(
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .circular(
+                                                                            10),
+                                                                color: Colors
+                                                                    .white,
+                                                                boxShadow: [
+                                                                  BoxShadow(
+                                                                    color: Colors
+                                                                        .grey
+                                                                        .withOpacity(
+                                                                            0.25),
+                                                                    spreadRadius:
+                                                                        5,
+                                                                    offset:
+                                                                        Offset(
+                                                                            0,
+                                                                            3),
+                                                                  ),
+                                                                ]),
+                                                            child:
+                                                                SingleChildScrollView(
+                                                              child: Column(
+                                                                children: <
+                                                                    Widget>[
+                                                                  SingleChildScrollView(
+                                                                    scrollDirection:
+                                                                        Axis.horizontal,
+                                                                    child: Row(
+                                                                      children: [
+                                                                        Text(
+                                                                          "Reciclador: ",
+                                                                          textAlign:
+                                                                              TextAlign.left,
+                                                                          overflow:
+                                                                              TextOverflow.ellipsis,
+                                                                          style:
+                                                                              TextStyle(
+                                                                            color: Color.fromRGBO(
+                                                                                46,
+                                                                                99,
+                                                                                238,
+                                                                                1),
+                                                                            fontWeight:
+                                                                                FontWeight.bold,
+                                                                            fontSize:
+                                                                                18,
+                                                                          ),
+                                                                        ),
+                                                                        Text(
+                                                                          ventasList.ventas[index].emailUsuario == null
+                                                                              ? ""
+                                                                              : ventasList.ventas[index].emailUsuario,
+                                                                          textAlign:
+                                                                              TextAlign.left,
+                                                                          style:
+                                                                              TextStyle(
+                                                                            color: Color.fromRGBO(
+                                                                                46,
+                                                                                99,
+                                                                                238,
+                                                                                1),
+                                                                            fontWeight:
+                                                                                FontWeight.normal,
+                                                                            fontSize:
+                                                                                18,
+                                                                          ),
+                                                                        )
+                                                                      ],
                                                                     ),
                                                                   ),
-                                                                  Text(
-                                                                    ventasList.ventas[index].emailUsuario ==
-                                                                            null
-                                                                        ? ""
-                                                                        : ventasList
-                                                                            .ventas[index]
-                                                                            .emailUsuario,
-                                                                    textAlign:
-                                                                        TextAlign
-                                                                            .left,
-                                                                    style:
-                                                                        TextStyle(
-                                                                      color: Color
-                                                                          .fromRGBO(
-                                                                              46,
-                                                                              99,
-                                                                              238,
-                                                                              1),
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .normal,
-                                                                      fontSize:
-                                                                          18,
-                                                                    ),
-                                                                  )
-                                                                ],
-                                                              ),
-                                                            ),
-                                                            SizedBox(
-                                                              height: 5,
-                                                            ),
-                                                            SingleChildScrollView(
-                                                              scrollDirection:
-                                                                  Axis.horizontal,
-                                                              child: Row(
-                                                                children: [
-                                                                  Text(
-                                                                    "Fecha y Hora: ",
-                                                                    textAlign:
-                                                                        TextAlign
-                                                                            .left,
-                                                                    style:
-                                                                        TextStyle(
-                                                                      color: Color
-                                                                          .fromRGBO(
-                                                                              46,
-                                                                              99,
-                                                                              238,
-                                                                              1),
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .bold,
-                                                                      fontSize:
-                                                                          18,
+                                                                  SizedBox(
+                                                                    height: 5,
+                                                                  ),
+                                                                  SingleChildScrollView(
+                                                                    scrollDirection:
+                                                                        Axis.horizontal,
+                                                                    child: Row(
+                                                                      children: [
+                                                                        Text(
+                                                                          "Fecha y Hora: ",
+                                                                          textAlign:
+                                                                              TextAlign.left,
+                                                                          style:
+                                                                              TextStyle(
+                                                                            color: Color.fromRGBO(
+                                                                                46,
+                                                                                99,
+                                                                                238,
+                                                                                1),
+                                                                            fontWeight:
+                                                                                FontWeight.bold,
+                                                                            fontSize:
+                                                                                18,
+                                                                          ),
+                                                                        ),
+                                                                        Text(
+                                                                          ventasList.ventas[index].fechaventa.substring(0, 10) +
+                                                                              "     " +
+                                                                              ventasList.ventas[index].fechaventa.substring(11, 16),
+                                                                          textAlign:
+                                                                              TextAlign.left,
+                                                                          style:
+                                                                              TextStyle(
+                                                                            color: Color.fromRGBO(
+                                                                                46,
+                                                                                99,
+                                                                                238,
+                                                                                1),
+                                                                            fontWeight:
+                                                                                FontWeight.normal,
+                                                                            fontSize:
+                                                                                18,
+                                                                          ),
+                                                                        ),
+                                                                      ],
                                                                     ),
                                                                   ),
-                                                                  Text(
-                                                                    ventasList
-                                                                            .ventas[
-                                                                                index]
-                                                                            .fechaventa
-                                                                            .substring(0,
-                                                                                10) +
-                                                                        "     " +
+                                                                  SizedBox(
+                                                                    height: 5,
+                                                                  ),
+                                                                  Row(
+                                                                    children: [
+                                                                      Text(
+                                                                        "Peso: ",
+                                                                        textAlign:
+                                                                            TextAlign.left,
+                                                                        style:
+                                                                            TextStyle(
+                                                                          color: Color.fromRGBO(
+                                                                              46,
+                                                                              99,
+                                                                              238,
+                                                                              1),
+                                                                          fontWeight:
+                                                                              FontWeight.bold,
+                                                                          fontSize:
+                                                                              18,
+                                                                        ),
+                                                                      ),
+                                                                      Text(
                                                                         ventasList
-                                                                            .ventas[
-                                                                                index]
-                                                                            .fechaventa
-                                                                            .substring(11,
-                                                                                16),
-                                                                    textAlign:
-                                                                        TextAlign
-                                                                            .left,
-                                                                    style:
-                                                                        TextStyle(
-                                                                      color: Color
-                                                                          .fromRGBO(
+                                                                            .ventas[index]
+                                                                            .peso
+                                                                            .toString(),
+                                                                        textAlign:
+                                                                            TextAlign.left,
+                                                                        style:
+                                                                            TextStyle(
+                                                                          color: Color.fromRGBO(
                                                                               46,
                                                                               99,
                                                                               238,
                                                                               1),
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .normal,
-                                                                      fontSize:
-                                                                          18,
-                                                                    ),
+                                                                          fontWeight:
+                                                                              FontWeight.normal,
+                                                                          fontSize:
+                                                                              18,
+                                                                        ),
+                                                                      ),
+                                                                    ],
+                                                                  ),
+                                                                  SizedBox(
+                                                                    height: 5,
+                                                                  ),
+                                                                  Row(
+                                                                    children: [
+                                                                      Text(
+                                                                        "Precio: ",
+                                                                        textAlign:
+                                                                            TextAlign.left,
+                                                                        style:
+                                                                            TextStyle(
+                                                                          color: Color.fromRGBO(
+                                                                              46,
+                                                                              99,
+                                                                              238,
+                                                                              1),
+                                                                          fontWeight:
+                                                                              FontWeight.bold,
+                                                                          fontSize:
+                                                                              18,
+                                                                        ),
+                                                                      ),
+                                                                      Text(
+                                                                        ventasList
+                                                                            .ventas[index]
+                                                                            .precioPorKiloTipo
+                                                                            .toString(),
+                                                                        textAlign:
+                                                                            TextAlign.left,
+                                                                        style:
+                                                                            TextStyle(
+                                                                          color: Color.fromRGBO(
+                                                                              46,
+                                                                              99,
+                                                                              238,
+                                                                              1),
+                                                                          fontWeight:
+                                                                              FontWeight.normal,
+                                                                          fontSize:
+                                                                              18,
+                                                                        ),
+                                                                      ),
+                                                                    ],
                                                                   ),
                                                                 ],
                                                               ),
                                                             ),
-                                                            SizedBox(
-                                                              height: 5,
-                                                            ),
-                                                            Row(
-                                                              children: [
-                                                                Text(
-                                                                  "Peso: ",
-                                                                  textAlign:
-                                                                      TextAlign
-                                                                          .left,
-                                                                  style:
-                                                                      TextStyle(
-                                                                    color: Color
-                                                                        .fromRGBO(
-                                                                            46,
-                                                                            99,
-                                                                            238,
-                                                                            1),
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .bold,
-                                                                    fontSize:
-                                                                        18,
-                                                                  ),
-                                                                ),
-                                                                Text(
-                                                                  ventasList
-                                                                      .ventas[
-                                                                          index]
-                                                                      .peso
-                                                                      .toString(),
-                                                                  textAlign:
-                                                                      TextAlign
-                                                                          .left,
-                                                                  style:
-                                                                      TextStyle(
-                                                                    color: Color
-                                                                        .fromRGBO(
-                                                                            46,
-                                                                            99,
-                                                                            238,
-                                                                            1),
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .normal,
-                                                                    fontSize:
-                                                                        18,
-                                                                  ),
-                                                                ),
-                                                              ],
-                                                            ),
-                                                            SizedBox(
-                                                              height: 5,
-                                                            ),
-                                                            Row(
-                                                              children: [
-                                                                Text(
-                                                                  "Precio: ",
-                                                                  textAlign:
-                                                                      TextAlign
-                                                                          .left,
-                                                                  style:
-                                                                      TextStyle(
-                                                                    color: Color
-                                                                        .fromRGBO(
-                                                                            46,
-                                                                            99,
-                                                                            238,
-                                                                            1),
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .bold,
-                                                                    fontSize:
-                                                                        18,
-                                                                  ),
-                                                                ),
-                                                                Text(
-                                                                  ventasList
-                                                                      .ventas[
-                                                                          index]
-                                                                      .precioPorKiloTipo
-                                                                      .toString(),
-                                                                  textAlign:
-                                                                      TextAlign
-                                                                          .left,
-                                                                  style:
-                                                                      TextStyle(
-                                                                    color: Color
-                                                                        .fromRGBO(
-                                                                            46,
-                                                                            99,
-                                                                            238,
-                                                                            1),
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .normal,
-                                                                    fontSize:
-                                                                        18,
-                                                                  ),
-                                                                ),
-                                                              ],
-                                                            ),
-                                                          ],
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  )
-                                                ],
-                                              );
-                                            },
-                                          )
+                                                          ),
+                                                        )
+                                                      ],
+                                                    );
+                                                  },
+                                                )
                                         ],
                                       ),
                                     ),
