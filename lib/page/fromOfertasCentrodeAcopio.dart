@@ -77,7 +77,7 @@ class _OfertasCentrosdeAcopioState extends State<OfertasCentrosdeAcopio> {
       appBar: AppBar(
         backgroundColor: Color.fromRGBO(46, 99, 238, 1),
         title: Text(
-          "Centro de Acopio",
+          "Crear oferta",
           style: TextStyle(
               color: Colors.white, fontWeight: FontWeight.bold, fontSize: 20),
         ),
