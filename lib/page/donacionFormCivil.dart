@@ -76,13 +76,13 @@ class _DonacionFormCivilState extends State<DonacionFormCivil> {
       appBar: AppBar(
         backgroundColor: Color.fromRGBO(46, 99, 238, 1),
         title: Text(
-          "Ciudadano Civil",
+          "Donar Residuo",
           style: TextStyle(
               color: Colors.white, fontWeight: FontWeight.bold, fontSize: 20),
         ),
         actions: <Widget>[
           IconButton(
-            icon: Icon(Icons.shopping_cart_outlined, color: Colors.white),
+            icon: Icon(Icons.inbox_rounded, color: Colors.white),
             onPressed: () {
               Navigator.push(
                   context,

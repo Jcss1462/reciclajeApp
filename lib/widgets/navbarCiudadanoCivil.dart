@@ -83,11 +83,11 @@ class NavBarCiudadanoCivil extends StatelessWidget {
                 ),
                 ListTile(
                   leading: Icon(
-                    Icons.shopping_cart_outlined,
+                    Icons.inbox_rounded,
                     color: Color.fromRGBO(46, 99, 238, 1),
                   ),
                   title: Text(
-                    "Carro de Donacion",
+                    "Donaciones",
                     style: TextStyle(
                         color: Color.fromRGBO(46, 99, 238, 1),
                         fontWeight: FontWeight.normal,

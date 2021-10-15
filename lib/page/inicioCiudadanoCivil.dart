@@ -22,7 +22,7 @@ class _InicioCiudadanoCivilState extends State<InicioCiudadanoCivil> {
       appBar: AppBar(
         backgroundColor: Color.fromRGBO(46, 99, 238, 1),
         title: Text(
-          "Ciudadano Civil",
+          "Ciudadano consciente",
           style: TextStyle(
               color: Colors.white, fontWeight: FontWeight.bold, fontSize: 20),
         ),
@@ -101,7 +101,7 @@ class _InicioCiudadanoCivilState extends State<InicioCiudadanoCivil> {
               child: Column(
                 children: [
                   SizedBox(
-                    height: 20,
+                    height: 12,
                   ),
                   new Text(
                     "Bienvenido",
@@ -147,18 +147,148 @@ class _InicioCiudadanoCivilState extends State<InicioCiudadanoCivil> {
             child: Column(
               children: [
                 MaterialButton(
-                  child: new Text(
-                    "Donar Residuos",
-                    textAlign: TextAlign.center,
-                    overflow: TextOverflow.ellipsis,
-                    style: TextStyle(
-                      color: Color.fromRGBO(46, 99, 238, 1),
-                      fontWeight: FontWeight.bold,
-                      fontSize: 35,
+                  child: SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Icon(
+                          Icons.shop_outlined,
+                          color: Color.fromRGBO(46, 99, 238, 1),
+                        ),
+                        SizedBox(
+                          width: 5,
+                        ),
+                        new Text(
+                          "Donar Residuos",
+                          textAlign: TextAlign.center,
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(
+                            color: Color.fromRGBO(46, 99, 238, 1),
+                            fontWeight: FontWeight.bold,
+                            fontSize: 22,
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                   onPressed: () =>
                       Navigator.pushNamed(context, donacionFormCivil),
+                ),
+              ],
+            ),
+          ),
+        ),
+        SizedBox(
+          height: 10,
+        ),
+        Card(
+          elevation: 5,
+          child: Container(
+            width: MediaQuery.of(context).size.width - 80,
+            height: MediaQuery.of(context).size.height / 8,
+            constraints: BoxConstraints(minHeight: 80, maxHeight: 80),
+            padding:
+                EdgeInsets.only(top: 15.0, bottom: 10.0, left: 10, right: 10),
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                color: Colors.white,
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.withOpacity(0.25),
+                    spreadRadius: 5,
+                    offset: Offset(0, 3),
+                  )
+                ]),
+            child: Column(
+              children: [
+                MaterialButton(
+                  child: SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Icon(
+                          Icons.inbox_rounded,
+                          color: Color.fromRGBO(46, 99, 238, 1),
+                        ),
+                        SizedBox(
+                          width: 5,
+                        ),
+                        new Text(
+                          "Donaciones",
+                          textAlign: TextAlign.center,
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(
+                            color: Color.fromRGBO(46, 99, 238, 1),
+                            fontWeight: FontWeight.bold,
+                            fontSize: 22,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  onPressed: () =>
+                      Navigator.pushNamed(context, carrodeDonacionCivil),
+                ),
+              ],
+            ),
+          ),
+        ),
+        SizedBox(
+          height: 10,
+        ),
+        Card(
+          elevation: 5,
+          child: Container(
+            width: MediaQuery.of(context).size.width - 80,
+            height: MediaQuery.of(context).size.height / 8,
+            constraints: BoxConstraints(minHeight: 80, maxHeight: 80),
+            padding:
+                EdgeInsets.only(top: 15.0, bottom: 10.0, left: 10, right: 10),
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                color: Colors.white,
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.withOpacity(0.25),
+                    spreadRadius: 5,
+                    offset: Offset(0, 3),
+                  )
+                ]),
+            child: Column(
+              children: [
+                MaterialButton(
+                  child: SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Icon(
+                          Icons.calendar_today_outlined,
+                          color: Color.fromRGBO(46, 99, 238, 1),
+                        ),
+                        SizedBox(
+                          width: 5,
+                        ),
+                        new Text(
+                          "Agendar Visita",
+                          textAlign: TextAlign.center,
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(
+                            color: Color.fromRGBO(46, 99, 238, 1),
+                            fontWeight: FontWeight.bold,
+                            fontSize: 22,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  onPressed: () =>
+                      Navigator.pushNamed(context, formAgendaVisitaCivil),
                 ),
               ],
             ),

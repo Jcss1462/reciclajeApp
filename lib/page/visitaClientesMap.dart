@@ -49,14 +49,18 @@ class _VisitaClientesMapState extends State<VisitaClientesMap> {
     List<Coordinates> coordinates = [];
 
     for (int i = 0; i < solicitudes.solicitudes.length; i++) {
-      var coordenadas = await Geocoder.google(apiKeYMaps)
-          .findAddressesFromQuery(
-              solicitudes.solicitudes[i].direccionRecoleccion);
-      var direcion = coordenadas.first;
-      coordinates.add(direcion.coordinates);
-      //print(direcion.coordinates);
-      //print(coordinates);
-      print(i);
+      try {
+        var coordenadas = await Geocoder.google(apiKeYMaps)
+            .findAddressesFromQuery(
+                solicitudes.solicitudes[i].direccionRecoleccion);
+        var direcion = coordenadas.first;
+        coordinates.add(direcion.coordinates);
+        //print(direcion.coordinates);
+        //print(coordinates);
+        print(i);
+      } catch (e) {
+        print("error");
+      }
     }
     return coordinates;
   }
@@ -92,7 +96,7 @@ class _VisitaClientesMapState extends State<VisitaClientesMap> {
           print("Conversion terminada");
           await initMarker(listaCoordenadas, listaCarros);
         }).onError((error, stackTrace) {
-          print("Erro convirtiendo las coordenadas:");
+          print("Error convirtiendo las coordenadas:");
           print(error);
           showDialog(
             context: context,
