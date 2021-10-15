@@ -33,9 +33,9 @@ class _RegitroState extends State<RegistroPage> {
   @override
   void initState() {
     userList.add(CheckBoxModal(
-        title: 'Civil',
+        title: 'Ciudadano Consciente',
         id: 2,
-        descripcion: 'Ciudadano qye recicle en su hogar',
+        descripcion: 'Ciudadano que recicla en su hogar',
         value: false));
     userList.add(CheckBoxModal(
         title: 'Reciclador',
