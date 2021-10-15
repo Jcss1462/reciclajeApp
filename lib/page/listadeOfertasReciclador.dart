@@ -166,235 +166,283 @@ class _ListaOfertasRecicladorState extends State<ListaOfertasReciclador> {
                                         mainAxisAlignment:
                                             MainAxisAlignment.center,
                                         children: [
-                                          ListView.builder(
-                                            physics:
-                                                const NeverScrollableScrollPhysics(),
-                                            itemCount:
-                                                this.ofertaList.ofertas.length,
-                                            shrinkWrap: true,
-                                            itemBuilder: (context, index) {
-                                              return Column(
-                                                children: [
-                                                  Card(
-                                                    elevation: 5,
-                                                    child: Container(
-                                                      width:
-                                                          MediaQuery.of(context)
-                                                                  .size
-                                                                  .width -
-                                                              80,
-                                                      height:
-                                                          MediaQuery.of(context)
-                                                                  .size
-                                                                  .height /
-                                                              7,
-                                                      constraints:
-                                                          BoxConstraints(
-                                                        minWidth: 150,
-                                                        minHeight: 170,
-                                                      ),
-                                                      padding: EdgeInsets.only(
-                                                          top: 20.0,
-                                                          bottom: 5.0,
-                                                          left: 10,
-                                                          right: 20),
-                                                      decoration: BoxDecoration(
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(10),
-                                                          color: Colors.white,
-                                                          boxShadow: [
-                                                            BoxShadow(
-                                                              color: Colors.grey
-                                                                  .withOpacity(
-                                                                      0.25),
-                                                              spreadRadius: 5,
-                                                              offset:
-                                                                  Offset(0, 3),
+                                          this.ofertaList.ofertas.length == 0
+                                              ? Text(
+                                                  "No hay ofertas disponibles",
+                                                  style: TextStyle(
+                                                    fontWeight: FontWeight.bold,
+                                                    fontSize: 15,
+                                                  ),
+                                                )
+                                              : ListView.builder(
+                                                  physics:
+                                                      const NeverScrollableScrollPhysics(),
+                                                  itemCount: this
+                                                      .ofertaList
+                                                      .ofertas
+                                                      .length,
+                                                  shrinkWrap: true,
+                                                  itemBuilder:
+                                                      (context, index) {
+                                                    return Column(
+                                                      children: [
+                                                        Card(
+                                                          elevation: 5,
+                                                          child: Container(
+                                                            width: MediaQuery.of(
+                                                                        context)
+                                                                    .size
+                                                                    .width -
+                                                                80,
+                                                            height: MediaQuery.of(
+                                                                        context)
+                                                                    .size
+                                                                    .height /
+                                                                7,
+                                                            constraints:
+                                                                BoxConstraints(
+                                                              minWidth: 150,
+                                                              minHeight: 170,
                                                             ),
-                                                          ]),
-                                                      child:
-                                                          SingleChildScrollView(
-                                                        child: Column(
-                                                          children: <Widget>[
-                                                            SingleChildScrollView(
-                                                              scrollDirection:
-                                                                  Axis.horizontal,
-                                                              child: Column(
-                                                                children: [
-                                                                  Row(
-                                                                      children: [
-                                                                        Text(
-                                                                          "Tipo de Residuo: ",
-                                                                          textAlign:
-                                                                              TextAlign.left,
-                                                                          overflow:
-                                                                              TextOverflow.ellipsis,
-                                                                          style:
-                                                                              TextStyle(
-                                                                            color: Color.fromRGBO(
-                                                                                46,
-                                                                                99,
-                                                                                238,
-                                                                                1),
-                                                                            fontWeight:
-                                                                                FontWeight.bold,
-                                                                            fontSize:
-                                                                                18,
-                                                                          ),
-                                                                        ),
-                                                                        Text(
-                                                                          ofertaList
-                                                                              .ofertas[index]
-                                                                              .tipoResiduo,
-                                                                          textAlign:
-                                                                              TextAlign.left,
-                                                                          style:
-                                                                              TextStyle(
-                                                                            color: Color.fromRGBO(
-                                                                                46,
-                                                                                99,
-                                                                                238,
-                                                                                1),
-                                                                            fontWeight:
-                                                                                FontWeight.normal,
-                                                                            fontSize:
-                                                                                18,
-                                                                          ),
-                                                                        ),
-                                                                      ]),
-                                                                  Row(
-                                                                    children: [
-                                                                      Text(
-                                                                        "Precio por Kilo: ",
-                                                                        textAlign:
-                                                                            TextAlign.left,
-                                                                        overflow:
-                                                                            TextOverflow.ellipsis,
-                                                                        style:
-                                                                            TextStyle(
-                                                                          color: Color.fromRGBO(
-                                                                              46,
-                                                                              99,
-                                                                              238,
-                                                                              1),
-                                                                          fontWeight:
-                                                                              FontWeight.bold,
-                                                                          fontSize:
-                                                                              18,
-                                                                        ),
-                                                                      ),
-                                                                      Text(
-                                                                        "\$",
-                                                                        style:
-                                                                            TextStyle(
-                                                                          color: Color.fromRGBO(
-                                                                              46,
-                                                                              99,
-                                                                              238,
-                                                                              1),
-                                                                          fontWeight:
-                                                                              FontWeight.normal,
-                                                                          fontSize:
-                                                                              15,
-                                                                        ),
-                                                                      ),
-                                                                      Text(
-                                                                        ofertaList
-                                                                            .ofertas[index]
-                                                                            .precioofrecidokl
-                                                                            .toString(),
-                                                                        textAlign:
-                                                                            TextAlign.left,
-                                                                        style:
-                                                                            TextStyle(
-                                                                          color: Color.fromRGBO(
-                                                                              46,
-                                                                              99,
-                                                                              238,
-                                                                              1),
-                                                                          fontWeight:
-                                                                              FontWeight.normal,
-                                                                          fontSize:
-                                                                              18,
-                                                                        ),
-                                                                      ),
-                                                                    ],
+                                                            padding:
+                                                                EdgeInsets.only(
+                                                                    top: 20.0,
+                                                                    bottom: 5.0,
+                                                                    left: 10,
+                                                                    right: 20),
+                                                            decoration: BoxDecoration(
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .circular(
+                                                                            10),
+                                                                color: Colors
+                                                                    .white,
+                                                                boxShadow: [
+                                                                  BoxShadow(
+                                                                    color: Colors
+                                                                        .grey
+                                                                        .withOpacity(
+                                                                            0.25),
+                                                                    spreadRadius:
+                                                                        5,
+                                                                    offset:
+                                                                        Offset(
+                                                                            0,
+                                                                            3),
                                                                   ),
-                                                                  Row(
-                                                                    children: [
-                                                                      Text(
-                                                                        "Cupos: ",
-                                                                        textAlign:
-                                                                            TextAlign.left,
-                                                                        overflow:
-                                                                            TextOverflow.ellipsis,
-                                                                        style:
-                                                                            TextStyle(
-                                                                          color: Color.fromRGBO(
-                                                                              46,
-                                                                              99,
-                                                                              238,
-                                                                              1),
-                                                                          fontWeight:
-                                                                              FontWeight.bold,
-                                                                          fontSize:
-                                                                              18,
+                                                                ]),
+                                                            child:
+                                                                SingleChildScrollView(
+                                                              child: Column(
+                                                                children: <
+                                                                    Widget>[
+                                                                  SingleChildScrollView(
+                                                                    scrollDirection:
+                                                                        Axis.horizontal,
+                                                                    child:
+                                                                        Column(
+                                                                      children: [
+                                                                        Row(
+                                                                            children: [
+                                                                              Text(
+                                                                                "Tipo de Residuo: ",
+                                                                                textAlign: TextAlign.left,
+                                                                                overflow: TextOverflow.ellipsis,
+                                                                                style: TextStyle(
+                                                                                  color: Color.fromRGBO(46, 99, 238, 1),
+                                                                                  fontWeight: FontWeight.bold,
+                                                                                  fontSize: 18,
+                                                                                ),
+                                                                              ),
+                                                                              Text(
+                                                                                ofertaList.ofertas[index].tipoResiduo,
+                                                                                textAlign: TextAlign.left,
+                                                                                style: TextStyle(
+                                                                                  color: Color.fromRGBO(46, 99, 238, 1),
+                                                                                  fontWeight: FontWeight.normal,
+                                                                                  fontSize: 18,
+                                                                                ),
+                                                                              ),
+                                                                            ]),
+                                                                        Row(
+                                                                          children: [
+                                                                            Text(
+                                                                              "Precio por Kilo: ",
+                                                                              textAlign: TextAlign.left,
+                                                                              overflow: TextOverflow.ellipsis,
+                                                                              style: TextStyle(
+                                                                                color: Color.fromRGBO(46, 99, 238, 1),
+                                                                                fontWeight: FontWeight.bold,
+                                                                                fontSize: 18,
+                                                                              ),
+                                                                            ),
+                                                                            Text(
+                                                                              "\$",
+                                                                              style: TextStyle(
+                                                                                color: Color.fromRGBO(46, 99, 238, 1),
+                                                                                fontWeight: FontWeight.normal,
+                                                                                fontSize: 15,
+                                                                              ),
+                                                                            ),
+                                                                            Text(
+                                                                              ofertaList.ofertas[index].precioofrecidokl.toString(),
+                                                                              textAlign: TextAlign.left,
+                                                                              style: TextStyle(
+                                                                                color: Color.fromRGBO(46, 99, 238, 1),
+                                                                                fontWeight: FontWeight.normal,
+                                                                                fontSize: 18,
+                                                                              ),
+                                                                            ),
+                                                                          ],
                                                                         ),
-                                                                      ),
-                                                                      Text(
-                                                                        ofertaList
-                                                                            .ofertas[index]
-                                                                            .cupos
-                                                                            .toString(),
-                                                                        textAlign:
-                                                                            TextAlign.left,
-                                                                        style:
-                                                                            TextStyle(
-                                                                          color: Color.fromRGBO(
-                                                                              46,
-                                                                              99,
-                                                                              238,
-                                                                              1),
-                                                                          fontWeight:
-                                                                              FontWeight.normal,
-                                                                          fontSize:
-                                                                              18,
-                                                                        ),
-                                                                      ),
-                                                                      Text(
-                                                                        "/",
-                                                                        style:
-                                                                            TextStyle(
-                                                                          color: Color.fromRGBO(
-                                                                              46,
-                                                                              99,
-                                                                              238,
-                                                                              1),
-                                                                          fontWeight:
-                                                                              FontWeight.normal,
-                                                                          fontSize:
-                                                                              15,
-                                                                        ),
-                                                                      ),
-                                                                      Text(
-                                                                        ofertaList
-                                                                            .ofertas[index]
-                                                                            .numeroDeAplicantes
-                                                                            .toString(),
-                                                                        textAlign:
-                                                                            TextAlign.left,
-                                                                        style:
-                                                                            TextStyle(
-                                                                          color: Color.fromRGBO(
-                                                                              46,
-                                                                              99,
-                                                                              238,
-                                                                              1),
-                                                                          fontWeight:
-                                                                              FontWeight.normal,
-                                                                          fontSize:
-                                                                              18,
+                                                                        Row(
+                                                                          children: [
+                                                                            Text(
+                                                                              "Cupos: ",
+                                                                              textAlign: TextAlign.left,
+                                                                              overflow: TextOverflow.ellipsis,
+                                                                              style: TextStyle(
+                                                                                color: Color.fromRGBO(46, 99, 238, 1),
+                                                                                fontWeight: FontWeight.bold,
+                                                                                fontSize: 18,
+                                                                              ),
+                                                                            ),
+                                                                            Text(
+                                                                              ofertaList.ofertas[index].cupos.toString(),
+                                                                              textAlign: TextAlign.left,
+                                                                              style: TextStyle(
+                                                                                color: Color.fromRGBO(46, 99, 238, 1),
+                                                                                fontWeight: FontWeight.normal,
+                                                                                fontSize: 18,
+                                                                              ),
+                                                                            ),
+                                                                            Text(
+                                                                              "/",
+                                                                              style: TextStyle(
+                                                                                color: Color.fromRGBO(46, 99, 238, 1),
+                                                                                fontWeight: FontWeight.normal,
+                                                                                fontSize: 15,
+                                                                              ),
+                                                                            ),
+                                                                            Text(
+                                                                              ofertaList.ofertas[index].numeroDeAplicantes.toString(),
+                                                                              textAlign: TextAlign.left,
+                                                                              style: TextStyle(
+                                                                                color: Color.fromRGBO(46, 99, 238, 1),
+                                                                                fontWeight: FontWeight.normal,
+                                                                                fontSize: 18,
+                                                                              ),
+                                                                            )
+                                                                          ],
+                                                                        )
+                                                                      ],
+                                                                    ),
+                                                                  ),
+                                                                  SizedBox(
+                                                                    height: 5,
+                                                                  ),
+                                                                  SizedBox(
+                                                                    height: 15,
+                                                                  ),
+                                                                  Column(
+                                                                    children: <
+                                                                        Widget>[
+                                                                      Center(
+                                                                        child:
+                                                                            Column(
+                                                                          mainAxisAlignment:
+                                                                              MainAxisAlignment.end,
+                                                                          children: [
+                                                                            MaterialButton(
+                                                                              height: 40,
+                                                                              minWidth: 50,
+                                                                              color: Color.fromRGBO(46, 99, 238, 1),
+                                                                              textColor: Colors.white,
+                                                                              child: new Text(
+                                                                                "Aceptar",
+                                                                                style: TextStyle(
+                                                                                  fontWeight: FontWeight.bold,
+                                                                                  fontSize: 18,
+                                                                                ),
+                                                                              ),
+                                                                              onPressed: () {
+                                                                                showDialog(
+                                                                                    context: context,
+                                                                                    builder: (context) => AlertDialog(
+                                                                                          title: Text(
+                                                                                            "Aceptando Oferta",
+                                                                                            style: TextStyle(
+                                                                                              color: Color.fromRGBO(46, 99, 238, 1),
+                                                                                              fontWeight: FontWeight.bold,
+                                                                                              fontSize: 20,
+                                                                                            ),
+                                                                                          ),
+                                                                                          actions: <Widget>[
+                                                                                            TextButton(
+                                                                                              child: Text(
+                                                                                                'Cancelar',
+                                                                                                style: TextStyle(
+                                                                                                  color: Color.fromRGBO(46, 99, 238, 1),
+                                                                                                  fontWeight: FontWeight.bold,
+                                                                                                  fontSize: 15,
+                                                                                                ),
+                                                                                              ),
+                                                                                              onPressed: () {
+                                                                                                Navigator.pop(context);
+                                                                                              },
+                                                                                            ),
+                                                                                            TextButton(
+                                                                                              child: Text(
+                                                                                                'Continuar',
+                                                                                                style: TextStyle(
+                                                                                                  color: Color.fromRGBO(46, 99, 238, 1),
+                                                                                                  fontWeight: FontWeight.bold,
+                                                                                                  fontSize: 15,
+                                                                                                ),
+                                                                                              ),
+                                                                                              onPressed: () {
+                                                                                                AplicarOferta aplicarOferta = new AplicarOferta();
+                                                                                                aplicarOferta.emailUsuario = _email;
+                                                                                                aplicarOferta.idOferta = ofertaList.ofertas[index].idoferta;
+                                                                                                this.ofertasDatasourceImpl.aplicarOferta(aplicarOferta).then((value) {
+                                                                                                  showDialog(
+                                                                                                      context: context,
+                                                                                                      builder: (context) => AlertDialog(
+                                                                                                            title: Text(
+                                                                                                              "Aplicación Realizada",
+                                                                                                              style: TextStyle(
+                                                                                                                color: Color.fromRGBO(46, 99, 238, 1),
+                                                                                                                fontWeight: FontWeight.bold,
+                                                                                                                fontSize: 20,
+                                                                                                              ),
+                                                                                                            ),
+                                                                                                            actions: <Widget>[
+                                                                                                              TextButton(
+                                                                                                                child: Text(
+                                                                                                                  'Ok',
+                                                                                                                  style: TextStyle(
+                                                                                                                    color: Color.fromRGBO(46, 99, 238, 1),
+                                                                                                                    fontWeight: FontWeight.bold,
+                                                                                                                    fontSize: 15,
+                                                                                                                  ),
+                                                                                                                ),
+                                                                                                                onPressed: () {
+                                                                                                                  Navigator.pushNamed(context, listadeOfertasReciclador);
+                                                                                                                  setState(() {});
+                                                                                                                },
+                                                                                                              ),
+                                                                                                            ],
+                                                                                                          ));
+                                                                                                }).onError((error, stackTrace) {
+                                                                                                  showDialog(context: context, builder: (context) => DialogBox("Error al eliminar la visita", error.toString()));
+                                                                                                });
+                                                                                              },
+                                                                                            ),
+                                                                                          ],
+                                                                                        ));
+                                                                              },
+                                                                            ),
+                                                                          ],
                                                                         ),
                                                                       )
                                                                     ],
@@ -402,136 +450,12 @@ class _ListaOfertasRecicladorState extends State<ListaOfertasReciclador> {
                                                                 ],
                                                               ),
                                                             ),
-                                                            SizedBox(
-                                                              height: 5,
-                                                            ),
-                                                            SizedBox(
-                                                              height: 15,
-                                                            ),
-                                                            Column(
-                                                              children: <
-                                                                  Widget>[
-                                                                Center(
-                                                                  child: Column(
-                                                                    mainAxisAlignment:
-                                                                        MainAxisAlignment
-                                                                            .end,
-                                                                    children: [
-                                                                      MaterialButton(
-                                                                        height:
-                                                                            40,
-                                                                        minWidth:
-                                                                            50,
-                                                                        color: Color.fromRGBO(
-                                                                            46,
-                                                                            99,
-                                                                            238,
-                                                                            1),
-                                                                        textColor:
-                                                                            Colors.white,
-                                                                        child:
-                                                                            new Text(
-                                                                          "Aceptar",
-                                                                          style:
-                                                                              TextStyle(
-                                                                            fontWeight:
-                                                                                FontWeight.bold,
-                                                                            fontSize:
-                                                                                18,
-                                                                          ),
-                                                                        ),
-                                                                        onPressed:
-                                                                            () {
-                                                                          showDialog(
-                                                                              context: context,
-                                                                              builder: (context) => AlertDialog(
-                                                                                    title: Text(
-                                                                                      "Aceptando Oferta",
-                                                                                      style: TextStyle(
-                                                                                        color: Color.fromRGBO(46, 99, 238, 1),
-                                                                                        fontWeight: FontWeight.bold,
-                                                                                        fontSize: 20,
-                                                                                      ),
-                                                                                    ),
-                                                                                    actions: <Widget>[
-                                                                                      TextButton(
-                                                                                        child: Text(
-                                                                                          'Cancelar',
-                                                                                          style: TextStyle(
-                                                                                            color: Color.fromRGBO(46, 99, 238, 1),
-                                                                                            fontWeight: FontWeight.bold,
-                                                                                            fontSize: 15,
-                                                                                          ),
-                                                                                        ),
-                                                                                        onPressed: () {
-                                                                                          Navigator.pop(context);
-                                                                                        },
-                                                                                      ),
-                                                                                      TextButton(
-                                                                                        child: Text(
-                                                                                          'Continuar',
-                                                                                          style: TextStyle(
-                                                                                            color: Color.fromRGBO(46, 99, 238, 1),
-                                                                                            fontWeight: FontWeight.bold,
-                                                                                            fontSize: 15,
-                                                                                          ),
-                                                                                        ),
-                                                                                        onPressed: () {
-                                                                                          AplicarOferta aplicarOferta = new AplicarOferta();
-                                                                                          aplicarOferta.emailUsuario = _email;
-                                                                                          aplicarOferta.idOferta = ofertaList.ofertas[index].idoferta;
-                                                                                          this.ofertasDatasourceImpl.aplicarOferta(aplicarOferta).then((value) {
-                                                                                            showDialog(
-                                                                                                context: context,
-                                                                                                builder: (context) => AlertDialog(
-                                                                                                      title: Text(
-                                                                                                        "Aplicación Realizada",
-                                                                                                        style: TextStyle(
-                                                                                                          color: Color.fromRGBO(46, 99, 238, 1),
-                                                                                                          fontWeight: FontWeight.bold,
-                                                                                                          fontSize: 20,
-                                                                                                        ),
-                                                                                                      ),
-                                                                                                      actions: <Widget>[
-                                                                                                        TextButton(
-                                                                                                          child: Text(
-                                                                                                            'Ok',
-                                                                                                            style: TextStyle(
-                                                                                                              color: Color.fromRGBO(46, 99, 238, 1),
-                                                                                                              fontWeight: FontWeight.bold,
-                                                                                                              fontSize: 15,
-                                                                                                            ),
-                                                                                                          ),
-                                                                                                          onPressed: () {
-                                                                                                            Navigator.pushNamed(context, listadeOfertasReciclador);
-                                                                                                            setState(() {});
-                                                                                                          },
-                                                                                                        ),
-                                                                                                      ],
-                                                                                                    ));
-                                                                                          }).onError((error, stackTrace) {
-                                                                                            showDialog(context: context, builder: (context) => DialogBox("Error al eliminar la visita", error.toString()));
-                                                                                          });
-                                                                                        },
-                                                                                      ),
-                                                                                    ],
-                                                                                  ));
-                                                                        },
-                                                                      ),
-                                                                    ],
-                                                                  ),
-                                                                )
-                                                              ],
-                                                            )
-                                                          ],
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  )
-                                                ],
-                                              );
-                                            },
-                                          )
+                                                          ),
+                                                        )
+                                                      ],
+                                                    );
+                                                  },
+                                                )
                                         ],
                                       ),
                                     ),

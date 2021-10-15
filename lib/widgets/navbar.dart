@@ -66,7 +66,7 @@ class NavBar extends StatelessWidget {
                     Navigator.pushNamed(context, visitaClientesMap);
                   },
                 ),
-                ListTile(
+                /**ListTile(
                   leading: Icon(
                     Icons.view_list_outlined,
                     color: Color.fromRGBO(46, 99, 238, 1),
@@ -81,7 +81,7 @@ class NavBar extends StatelessWidget {
                   onTap: () {
                     Navigator.pushNamed(context, visitaDisponibles);
                   },
-                ),
+                ),*/
                 ListTile(
                   leading: Icon(
                     Icons.alt_route,
@@ -114,7 +114,7 @@ class NavBar extends StatelessWidget {
                     Navigator.pushNamed(context, carrodeVentas);
                   },
                 ),
-                ListTile(
+                /**ListTile(
                   leading: Icon(
                     Icons.campaign_outlined,
                     color: Color.fromRGBO(46, 99, 238, 1),
@@ -129,8 +129,8 @@ class NavBar extends StatelessWidget {
                   onTap: () {
                     Navigator.pushNamed(context, donacionesenEspera);
                   },
-                ),
-                ListTile(
+                ),*/
+                /**ListTile(
                   leading: Icon(
                     Icons.view_agenda_outlined,
                     color: Color.fromRGBO(46, 99, 238, 1),
@@ -145,7 +145,7 @@ class NavBar extends StatelessWidget {
                   onTap: () {
                     Navigator.pushNamed(context, visitaAgendada);
                   },
-                ),
+                ),*/
                 ListTile(
                   leading: Icon(
                     Icons.calendar_today_outlined,

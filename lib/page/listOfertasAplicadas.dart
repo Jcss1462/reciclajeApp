@@ -162,234 +162,227 @@ class _ListaOfertasAplicadasState extends State<ListaOfertasAplicadas> {
                                         mainAxisAlignment:
                                             MainAxisAlignment.center,
                                         children: [
-                                          ListView.builder(
-                                            physics:
-                                                const NeverScrollableScrollPhysics(),
-                                            itemCount: this
-                                                .listaOfertasAplicadas
-                                                .aplicantes
-                                                .length,
-                                            shrinkWrap: true,
-                                            itemBuilder: (context, index) {
-                                              return Column(
-                                                children: [
-                                                  Card(
-                                                    elevation: 5,
-                                                    child: Container(
-                                                      width:
-                                                          MediaQuery.of(context)
-                                                                  .size
-                                                                  .width -
-                                                              80,
-                                                      height:
-                                                          MediaQuery.of(context)
-                                                                  .size
-                                                                  .height /
-                                                              7,
-                                                      constraints:
-                                                          BoxConstraints(
-                                                        minWidth: 150,
-                                                        minHeight: 130,
-                                                      ),
-                                                      padding: EdgeInsets.only(
-                                                          top: 20.0,
-                                                          bottom: 5.0,
-                                                          left: 10,
-                                                          right: 20),
-                                                      decoration: BoxDecoration(
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(10),
-                                                          color: Colors.white,
-                                                          boxShadow: [
-                                                            BoxShadow(
-                                                              color: Colors.grey
-                                                                  .withOpacity(
-                                                                      0.25),
-                                                              spreadRadius: 5,
-                                                              offset:
-                                                                  Offset(0, 3),
+                                          this
+                                                      .listaOfertasAplicadas
+                                                      .aplicantes
+                                                      .length ==
+                                                  0
+                                              ? Text(
+                                                  "No has aplicado a una oferta disponible",
+                                                  style: TextStyle(
+                                                    fontWeight: FontWeight.bold,
+                                                    fontSize: 15,
+                                                  ),
+                                                )
+                                              : ListView.builder(
+                                                  physics:
+                                                      const NeverScrollableScrollPhysics(),
+                                                  itemCount: this
+                                                      .listaOfertasAplicadas
+                                                      .aplicantes
+                                                      .length,
+                                                  shrinkWrap: true,
+                                                  itemBuilder:
+                                                      (context, index) {
+                                                    return Column(
+                                                      children: [
+                                                        Card(
+                                                          elevation: 5,
+                                                          child: Container(
+                                                            width: MediaQuery.of(
+                                                                        context)
+                                                                    .size
+                                                                    .width -
+                                                                80,
+                                                            height: MediaQuery.of(
+                                                                        context)
+                                                                    .size
+                                                                    .height /
+                                                                7,
+                                                            constraints:
+                                                                BoxConstraints(
+                                                              minWidth: 150,
+                                                              minHeight: 130,
                                                             ),
-                                                          ]),
-                                                      child:
-                                                          SingleChildScrollView(
-                                                        child: Column(
-                                                          children: <Widget>[
-                                                            SingleChildScrollView(
-                                                              scrollDirection:
-                                                                  Axis.horizontal,
+                                                            padding:
+                                                                EdgeInsets.only(
+                                                                    top: 20.0,
+                                                                    bottom: 5.0,
+                                                                    left: 10,
+                                                                    right: 20),
+                                                            decoration: BoxDecoration(
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .circular(
+                                                                            10),
+                                                                color: Colors
+                                                                    .white,
+                                                                boxShadow: [
+                                                                  BoxShadow(
+                                                                    color: Colors
+                                                                        .grey
+                                                                        .withOpacity(
+                                                                            0.25),
+                                                                    spreadRadius:
+                                                                        5,
+                                                                    offset:
+                                                                        Offset(
+                                                                            0,
+                                                                            3),
+                                                                  ),
+                                                                ]),
+                                                            child:
+                                                                SingleChildScrollView(
                                                               child: Column(
-                                                                children: [
-                                                                  Row(
+                                                                children: <
+                                                                    Widget>[
+                                                                  SingleChildScrollView(
+                                                                    scrollDirection:
+                                                                        Axis.horizontal,
+                                                                    child:
+                                                                        Column(
                                                                       children: [
-                                                                        Text(
-                                                                          "idOferta: ",
-                                                                          textAlign:
-                                                                              TextAlign.left,
-                                                                          overflow:
-                                                                              TextOverflow.ellipsis,
-                                                                          style:
-                                                                              TextStyle(
-                                                                            color: Color.fromRGBO(
-                                                                                46,
-                                                                                99,
-                                                                                238,
-                                                                                1),
-                                                                            fontWeight:
-                                                                                FontWeight.bold,
-                                                                            fontSize:
-                                                                                18,
-                                                                          ),
+                                                                        Row(
+                                                                            children: [
+                                                                              Text(
+                                                                                "idOferta: ",
+                                                                                textAlign: TextAlign.left,
+                                                                                overflow: TextOverflow.ellipsis,
+                                                                                style: TextStyle(
+                                                                                  color: Color.fromRGBO(46, 99, 238, 1),
+                                                                                  fontWeight: FontWeight.bold,
+                                                                                  fontSize: 18,
+                                                                                ),
+                                                                              ),
+                                                                              Text(
+                                                                                listaOfertasAplicadas.aplicantes[index].idOfertas.toString(),
+                                                                                textAlign: TextAlign.left,
+                                                                                style: TextStyle(
+                                                                                  color: Color.fromRGBO(46, 99, 238, 1),
+                                                                                  fontWeight: FontWeight.normal,
+                                                                                  fontSize: 18,
+                                                                                ),
+                                                                              ),
+                                                                            ]),
+                                                                      ],
+                                                                    ),
+                                                                  ),
+                                                                  SizedBox(
+                                                                    height: 5,
+                                                                  ),
+                                                                  SizedBox(
+                                                                    height: 15,
+                                                                  ),
+                                                                  Column(
+                                                                    children: <
+                                                                        Widget>[
+                                                                      Center(
+                                                                        child:
+                                                                            Column(
+                                                                          mainAxisAlignment:
+                                                                              MainAxisAlignment.end,
+                                                                          children: [
+                                                                            MaterialButton(
+                                                                              height: 40,
+                                                                              minWidth: 50,
+                                                                              color: Colors.red,
+                                                                              textColor: Colors.white,
+                                                                              child: new Text(
+                                                                                "Eliminar Aplicaciòn",
+                                                                                style: TextStyle(
+                                                                                  fontWeight: FontWeight.bold,
+                                                                                  fontSize: 18,
+                                                                                ),
+                                                                              ),
+                                                                              onPressed: () {
+                                                                                showDialog(
+                                                                                    context: context,
+                                                                                    builder: (context) => AlertDialog(
+                                                                                          title: Text(
+                                                                                            "Rechazando Oferta",
+                                                                                            style: TextStyle(
+                                                                                              color: Color.fromRGBO(46, 99, 238, 1),
+                                                                                              fontWeight: FontWeight.bold,
+                                                                                              fontSize: 20,
+                                                                                            ),
+                                                                                          ),
+                                                                                          actions: <Widget>[
+                                                                                            TextButton(
+                                                                                              child: Text(
+                                                                                                'Cancelar',
+                                                                                                style: TextStyle(
+                                                                                                  color: Color.fromRGBO(46, 99, 238, 1),
+                                                                                                  fontWeight: FontWeight.bold,
+                                                                                                  fontSize: 15,
+                                                                                                ),
+                                                                                              ),
+                                                                                              onPressed: () {
+                                                                                                Navigator.pop(context);
+                                                                                              },
+                                                                                            ),
+                                                                                            TextButton(
+                                                                                              child: Text(
+                                                                                                'Continuar',
+                                                                                                style: TextStyle(
+                                                                                                  color: Color.fromRGBO(46, 99, 238, 1),
+                                                                                                  fontWeight: FontWeight.bold,
+                                                                                                  fontSize: 15,
+                                                                                                ),
+                                                                                              ),
+                                                                                              onPressed: () {
+                                                                                                this.ofertasDatasourceImpl.eliminarAplicacion(listaOfertasAplicadas.aplicantes[index].idaplicacion).then((value) {
+                                                                                                  showDialog(
+                                                                                                      context: context,
+                                                                                                      builder: (context) => AlertDialog(
+                                                                                                            title: Text(
+                                                                                                              "Solicitud Rechazada",
+                                                                                                              style: TextStyle(
+                                                                                                                color: Color.fromRGBO(46, 99, 238, 1),
+                                                                                                                fontWeight: FontWeight.bold,
+                                                                                                                fontSize: 20,
+                                                                                                              ),
+                                                                                                            ),
+                                                                                                            actions: <Widget>[
+                                                                                                              TextButton(
+                                                                                                                child: Text(
+                                                                                                                  'Ok',
+                                                                                                                  style: TextStyle(
+                                                                                                                    color: Color.fromRGBO(46, 99, 238, 1),
+                                                                                                                    fontWeight: FontWeight.bold,
+                                                                                                                    fontSize: 15,
+                                                                                                                  ),
+                                                                                                                ),
+                                                                                                                onPressed: () {
+                                                                                                                  Navigator.pop(context);
+                                                                                                                  Navigator.pop(context);
+                                                                                                                  setState(() {});
+                                                                                                                },
+                                                                                                              ),
+                                                                                                            ],
+                                                                                                          ));
+                                                                                                }).onError((error, stackTrace) {
+                                                                                                  showDialog(context: context, builder: (context) => DialogBox("Error al eliminar la visita", error.toString()));
+                                                                                                });
+                                                                                              },
+                                                                                            ),
+                                                                                          ],
+                                                                                        ));
+                                                                              },
+                                                                            ),
+                                                                          ],
                                                                         ),
-                                                                        Text(
-                                                                          listaOfertasAplicadas
-                                                                              .aplicantes[index]
-                                                                              .idOfertas
-                                                                              .toString(),
-                                                                          textAlign:
-                                                                              TextAlign.left,
-                                                                          style:
-                                                                              TextStyle(
-                                                                            color: Color.fromRGBO(
-                                                                                46,
-                                                                                99,
-                                                                                238,
-                                                                                1),
-                                                                            fontWeight:
-                                                                                FontWeight.normal,
-                                                                            fontSize:
-                                                                                18,
-                                                                          ),
-                                                                        ),
-                                                                      ]),
+                                                                      )
+                                                                    ],
+                                                                  )
                                                                 ],
                                                               ),
                                                             ),
-                                                            SizedBox(
-                                                              height: 5,
-                                                            ),
-                                                            SizedBox(
-                                                              height: 15,
-                                                            ),
-                                                            Column(
-                                                              children: <
-                                                                  Widget>[
-                                                                Center(
-                                                                  child: Column(
-                                                                    mainAxisAlignment:
-                                                                        MainAxisAlignment
-                                                                            .end,
-                                                                    children: [
-                                                                      MaterialButton(
-                                                                        height:
-                                                                            40,
-                                                                        minWidth:
-                                                                            50,
-                                                                        color: Colors
-                                                                            .red,
-                                                                        textColor:
-                                                                            Colors.white,
-                                                                        child:
-                                                                            new Text(
-                                                                          "Eliminar Aplicaciòn",
-                                                                          style:
-                                                                              TextStyle(
-                                                                            fontWeight:
-                                                                                FontWeight.bold,
-                                                                            fontSize:
-                                                                                18,
-                                                                          ),
-                                                                        ),
-                                                                        onPressed:
-                                                                            () {
-                                                                          showDialog(
-                                                                              context: context,
-                                                                              builder: (context) => AlertDialog(
-                                                                                    title: Text(
-                                                                                      "Rechazando Oferta",
-                                                                                      style: TextStyle(
-                                                                                        color: Color.fromRGBO(46, 99, 238, 1),
-                                                                                        fontWeight: FontWeight.bold,
-                                                                                        fontSize: 20,
-                                                                                      ),
-                                                                                    ),
-                                                                                    actions: <Widget>[
-                                                                                      TextButton(
-                                                                                        child: Text(
-                                                                                          'Cancelar',
-                                                                                          style: TextStyle(
-                                                                                            color: Color.fromRGBO(46, 99, 238, 1),
-                                                                                            fontWeight: FontWeight.bold,
-                                                                                            fontSize: 15,
-                                                                                          ),
-                                                                                        ),
-                                                                                        onPressed: () {
-                                                                                          Navigator.pop(context);
-                                                                                        },
-                                                                                      ),
-                                                                                      TextButton(
-                                                                                        child: Text(
-                                                                                          'Continuar',
-                                                                                          style: TextStyle(
-                                                                                            color: Color.fromRGBO(46, 99, 238, 1),
-                                                                                            fontWeight: FontWeight.bold,
-                                                                                            fontSize: 15,
-                                                                                          ),
-                                                                                        ),
-                                                                                        onPressed: () {
-                                                                                          this.ofertasDatasourceImpl.eliminarAplicacion(listaOfertasAplicadas.aplicantes[index].idaplicacion).then((value) {
-                                                                                            showDialog(
-                                                                                                context: context,
-                                                                                                builder: (context) => AlertDialog(
-                                                                                                      title: Text(
-                                                                                                        "Solicitud Rechazada",
-                                                                                                        style: TextStyle(
-                                                                                                          color: Color.fromRGBO(46, 99, 238, 1),
-                                                                                                          fontWeight: FontWeight.bold,
-                                                                                                          fontSize: 20,
-                                                                                                        ),
-                                                                                                      ),
-                                                                                                      actions: <Widget>[
-                                                                                                        TextButton(
-                                                                                                          child: Text(
-                                                                                                            'Ok',
-                                                                                                            style: TextStyle(
-                                                                                                              color: Color.fromRGBO(46, 99, 238, 1),
-                                                                                                              fontWeight: FontWeight.bold,
-                                                                                                              fontSize: 15,
-                                                                                                            ),
-                                                                                                          ),
-                                                                                                          onPressed: () {
-                                                                                                            Navigator.pop(context);
-                                                                                                            Navigator.pop(context);
-                                                                                                            setState(() {});
-                                                                                                          },
-                                                                                                        ),
-                                                                                                      ],
-                                                                                                    ));
-                                                                                          }).onError((error, stackTrace) {
-                                                                                            showDialog(context: context, builder: (context) => DialogBox("Error al eliminar la visita", error.toString()));
-                                                                                          });
-                                                                                        },
-                                                                                      ),
-                                                                                    ],
-                                                                                  ));
-                                                                        },
-                                                                      ),
-                                                                    ],
-                                                                  ),
-                                                                )
-                                                              ],
-                                                            )
-                                                          ],
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  )
-                                                ],
-                                              );
-                                            },
-                                          )
+                                                          ),
+                                                        )
+                                                      ],
+                                                    );
+                                                  },
+                                                )
                                         ],
                                       ),
                                     ),
