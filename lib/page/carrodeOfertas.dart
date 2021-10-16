@@ -242,33 +242,37 @@ class _CarrodeOfertasState extends State<CarrodeOfertas> {
                                                                   child: Column(
                                                                     children: <
                                                                         Widget>[
-                                                                      Row(
-                                                                        children: [
-                                                                          Text(
-                                                                            "Tipo de Residuo: ",
-                                                                            textAlign:
-                                                                                TextAlign.left,
-                                                                            overflow:
-                                                                                TextOverflow.ellipsis,
-                                                                            style:
-                                                                                TextStyle(
-                                                                              color: Color.fromRGBO(46, 99, 238, 1),
-                                                                              fontWeight: FontWeight.bold,
-                                                                              fontSize: 18,
+                                                                      SingleChildScrollView(
+                                                                        scrollDirection:
+                                                                            Axis.horizontal,
+                                                                        child:
+                                                                            Column(
+                                                                          children: [
+                                                                            Row(
+                                                                              children: [
+                                                                                Text(
+                                                                                  "Tipo de Residuo: ",
+                                                                                  textAlign: TextAlign.left,
+                                                                                  overflow: TextOverflow.ellipsis,
+                                                                                  style: TextStyle(
+                                                                                    color: Color.fromRGBO(46, 99, 238, 1),
+                                                                                    fontWeight: FontWeight.bold,
+                                                                                    fontSize: 18,
+                                                                                  ),
+                                                                                ),
+                                                                                Text(
+                                                                                  ofertas.ofertas[index].tipoResiduo.toString(),
+                                                                                  textAlign: TextAlign.left,
+                                                                                  style: TextStyle(
+                                                                                    color: Color.fromRGBO(46, 99, 238, 1),
+                                                                                    fontWeight: FontWeight.normal,
+                                                                                    fontSize: 18,
+                                                                                  ),
+                                                                                )
+                                                                              ],
                                                                             ),
-                                                                          ),
-                                                                          Text(
-                                                                            ofertas.ofertas[index].tipoResiduo.toString(),
-                                                                            textAlign:
-                                                                                TextAlign.left,
-                                                                            style:
-                                                                                TextStyle(
-                                                                              color: Color.fromRGBO(46, 99, 238, 1),
-                                                                              fontWeight: FontWeight.normal,
-                                                                              fontSize: 18,
-                                                                            ),
-                                                                          )
-                                                                        ],
+                                                                          ],
+                                                                        ),
                                                                       ),
                                                                       Row(
                                                                         children: [

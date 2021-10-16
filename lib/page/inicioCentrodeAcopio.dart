@@ -144,7 +144,7 @@ class _InicioCentrodeAcopioState extends State<InicioCentrodeAcopio> {
                                       width: 5,
                                     ),
                                     new Text(
-                                      "Crear Oferta",
+                                      "Ofertas de Residuos",
                                       textAlign: TextAlign.center,
                                       overflow: TextOverflow.ellipsis,
                                       style: TextStyle(

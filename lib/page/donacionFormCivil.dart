@@ -391,9 +391,7 @@ class _DonacionFormCivilState extends State<DonacionFormCivil> {
                                                         ),
                                                       ),
                                                       onPressed: () {
-                                                        MaterialPageRoute(
-                                                            builder: (context) =>
-                                                                DonacionFormCivil());
+                                                        Navigator.pop(context);
                                                       },
                                                     ),
                                                   ],
